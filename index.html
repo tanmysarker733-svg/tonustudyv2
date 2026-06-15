@@ -1,19 +1,19 @@
 <!doctype html>
 <html lang="en" data-theme="dark">
   <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>HSC Study OS</title>
-        <meta name="description" content="Non-functional modular scaffold for the HSC Study OS remake." />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-        <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js" defer></script>
-        <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.min.js" defer></script>
-        <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-dragdata@2.3.1/dist/chartjs-plugin-dragdata.min.js" defer></script>
-        <script src="https://www.gstatic.com/firebasejs/12.12.0/firebase-app-compat.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/12.12.0/firebase-firestore-compat.js"></script>
-        <style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HSC Study OS</title>
+    <meta name="description" content="Non-functional modular scaffold for the HSC Study OS remake." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-dragdata@2.3.1/dist/chartjs-plugin-dragdata.min.js" defer></script>
+    <script src="https://www.gstatic.com/firebasejs/12.12.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/12.12.0/firebase-firestore-compat.js"></script>
+    <style>
 :root {
   color-scheme: dark;
   --bg: #07131b;
@@ -5352,8 +5352,9 @@ h4 {
             muted
             playsinline
             preload="auto"
+            poster="https://raw.githubusercontent.com/tanmysarker733-svg/tonustudyv2/main/Assets/Image/live%20study.png"
           >
-            <source src="live_study.mp4" type="video/mp4" />
+            <source src="https://raw.githubusercontent.com/tanmysarker733-svg/tonustudyv2/main/Assets/Videos/live_study.mp4" type="video/mp4" />
           </video>
         </div>
       </div>
@@ -8019,6 +8020,8 @@ const refreshChapterRow = (si, pi, ci, fullRender = false) => {
   // Fast-path: just update numbers
   const setV = (sel, val) => { const el = plate.querySelector(sel); if (el) el.textContent = val; };
   setV(`[data-val="dl-${si}-${pi}-${ci}"]`,  ch.doneDL);
+  setV(`[data-val="adv-${si}-${pi}-${ci}"]`, ch.doneAdv || 0);
+  setV(`[data-val="adm-${si}-${pi}-${ci}"]`, ch.doneAdm || 0);
   setV(`[data-val="frb-${si}-${pi}-${ci}"]`, ch.doneFRB);
   setV(`[data-val="os-${si}-${pi}-${ci}"]`,  ch.doneOS);
   setV(`[data-val="qs-${si}-${pi}-${ci}"]`,  ch.solvedQS);
@@ -8053,6 +8056,8 @@ const refreshChapterRow = (si, pi, ci, fullRender = false) => {
     const tv = row.querySelector(".cls-total-val");
     if (!tv) return;
     if (act === 'dl-dec')  tv.textContent = `(${ch.totalDL})`;
+    if (act === 'adv-dec') tv.textContent = `(${ch.totalAdv})`;
+    if (act === 'adm-dec') tv.textContent = `(${ch.totalAdm})`;
     if (act === 'frb-dec') tv.textContent = `(${ch.totalFRB})`;
     if (act === 'os-dec')  tv.textContent = `(${ch.totalOS})`;
     if (act === 'qs-dec')  tv.textContent = `(${ch.totalQS})`;
