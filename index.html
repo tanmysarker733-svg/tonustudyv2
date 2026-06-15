@@ -22,7 +22,7 @@
   --panel-bg: rgba(11, 29, 43, 0.68);
   --panel-soft: rgba(173, 216, 255, 0.038);
   --text-main: #dceaf6;
-  --text-sub: #8da6bb;
+  --text-sub: #c2d6e5;
   --border: rgba(122, 156, 186, 0.16);
   --accent-blue: #4f97bb;
   --accent-cyan: #0b6e72;
@@ -517,7 +517,7 @@ h4 {
 
 .study-shell {
   min-height: 100vh;
-  padding-top: 72px;
+  padding-top: 132px;
   padding-bottom: 72px;
 }
 
@@ -565,10 +565,8 @@ h4 {
   z-index: 1001;
   width: 100%;
   padding: 8px 16px;
-  background: rgba(9, 11, 18, 0.9);
+  background: rgba(9, 11, 18, 0.98);
   border-bottom: 1px solid rgba(96, 165, 250, 0.14);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
 }
 
 .quick-action-track {
@@ -736,8 +734,9 @@ h4 {
 }
 
 .top-nav {
-  position: sticky;
+  position: fixed;
   top: 72px;
+  left: 0;
   z-index: 1000;
   display: flex;
   width: 100%;
@@ -747,10 +746,8 @@ h4 {
   gap: 14px;
   padding: 0 20px;
   border-bottom: 1px solid var(--border);
-  background: var(--nav-bg);
+  background: rgba(6, 18, 28, 0.97);
   box-shadow: 0 1px 0 var(--border), 0 10px 32px rgba(0, 0, 0, 0.18);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
   transition:
     transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
     height 0.24s ease,
@@ -760,7 +757,7 @@ h4 {
 
 .top-nav.nav-scrolled {
   height: 54px;
-  background: rgba(9, 11, 18, 0.94);
+  background: rgba(9, 11, 18, 0.98);
   box-shadow: 0 1px 0 var(--border), 0 16px 38px rgba(0, 0, 0, 0.28);
 }
 
@@ -894,10 +891,8 @@ h4 {
   border-radius: 28px;
   background:
     linear-gradient(135deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.025)),
-    rgba(9, 11, 18, 0.3);
+    rgba(9, 11, 18, 0.78);
   box-shadow: 0 24px 70px rgba(0, 0, 0, 0.18);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
   transform-style: preserve-3d;
   transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
 }
@@ -981,7 +976,7 @@ h4 {
   border: 0;
   border-radius: 0;
   background: transparent;
-  color: #94a3b8;
+  color: #cbd5e1;
   font-size: 0.82rem;
   font-weight: 800;
   backdrop-filter: none;
@@ -1040,6 +1035,111 @@ h4 {
 .unit-section {
   min-width: 0;
   scroll-margin-top: 148px;
+  position: relative;
+  background: rgba(10, 26, 40, 0.35); /* Translucent dark background card */
+  border: 1px solid var(--unit-border, rgba(255, 255, 255, 0.05));
+  border-radius: 24px;
+  padding: 36px;
+  margin-bottom: 40px;
+  box-shadow: 
+    0 10px 30px rgba(0, 0, 0, 0.35),
+    0 0 12px var(--unit-glow-effect-minor, rgba(255, 255, 255, 0.02)); /* starts with minor border glow */
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.unit-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 23px;
+  background: radial-gradient(circle at 50% 0%, var(--unit-ambient-glow, rgba(255, 255, 255, 0)), transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.8;
+  transition: opacity 0.4s ease;
+}
+
+.unit-section > * {
+  position: relative;
+  z-index: 1;
+}
+
+.unit-section:hover {
+  transform: translateY(-3px);
+  border-color: var(--unit-border-active);
+  box-shadow: 
+    0 16px 40px rgba(0, 0, 0, 0.55),
+    0 0 28px var(--unit-glow-effect-active);
+}
+
+/* Individual Unit Themes (Dynamic Neon & Ambient Glow) */
+#dashboard.unit-section {
+  --unit-border: rgba(6, 182, 212, 0.22);
+  --unit-border-active: rgba(6, 182, 212, 0.75);
+  --unit-ambient-glow: rgba(6, 182, 212, 0.12);
+  --unit-glow-effect-minor: rgba(6, 182, 212, 0.04);
+  --unit-glow-effect-active: rgba(6, 182, 212, 0.3);
+}
+
+#auth.unit-section {
+  --unit-border: rgba(234, 179, 8, 0.18);
+  --unit-border-active: rgba(234, 179, 8, 0.65);
+  --unit-ambient-glow: rgba(234, 179, 8, 0.08);
+  --unit-glow-effect-minor: rgba(234, 179, 8, 0.03);
+  --unit-glow-effect-active: rgba(234, 179, 8, 0.25);
+}
+
+#syllabus.unit-section {
+  --unit-border: rgba(16, 185, 129, 0.22);
+  --unit-border-active: rgba(16, 185, 129, 0.75);
+  --unit-ambient-glow: rgba(16, 185, 129, 0.12);
+  --unit-glow-effect-minor: rgba(16, 185, 129, 0.04);
+  --unit-glow-effect-active: rgba(16, 185, 129, 0.3);
+}
+
+#chart.unit-section {
+  --unit-border: rgba(244, 63, 94, 0.22);
+  --unit-border-active: rgba(244, 63, 94, 0.75);
+  --unit-ambient-glow: rgba(244, 63, 94, 0.12);
+  --unit-glow-effect-minor: rgba(244, 63, 94, 0.04);
+  --unit-glow-effect-active: rgba(244, 63, 94, 0.3);
+}
+
+#time-tools.unit-section {
+  --unit-border: rgba(249, 115, 22, 0.22);
+  --unit-border-active: rgba(249, 115, 22, 0.75);
+  --unit-ambient-glow: rgba(249, 115, 22, 0.12);
+  --unit-glow-effect-minor: rgba(249, 115, 22, 0.04);
+  --unit-glow-effect-active: rgba(249, 115, 22, 0.3);
+}
+
+#chat.unit-section {
+  --unit-border: rgba(168, 85, 247, 0.22);
+  --unit-border-active: rgba(168, 85, 247, 0.75);
+  --unit-ambient-glow: rgba(168, 85, 247, 0.12);
+  --unit-glow-effect-minor: rgba(168, 85, 247, 0.04);
+  --unit-glow-effect-active: rgba(168, 85, 247, 0.3);
+}
+
+#backup.unit-section {
+  --unit-border: rgba(20, 184, 166, 0.18);
+  --unit-border-active: rgba(20, 184, 166, 0.65);
+  --unit-ambient-glow: rgba(20, 184, 166, 0.08);
+  --unit-glow-effect-minor: rgba(20, 184, 166, 0.03);
+  --unit-glow-effect-active: rgba(20, 184, 166, 0.25);
+}
+
+#admin.unit-section {
+  --unit-border: rgba(239, 68, 68, 0.18);
+  --unit-border-active: rgba(239, 68, 68, 0.65);
+  --unit-ambient-glow: rgba(239, 68, 68, 0.08);
+  --unit-glow-effect-minor: rgba(239, 68, 68, 0.03);
+  --unit-glow-effect-active: rgba(239, 68, 68, 0.25);
 }
 
 .reveal-ready {
@@ -1064,10 +1164,10 @@ h4 {
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  width: min(100%, 1300px);
+  width: 100%;
   min-width: 0;
-  margin: 0 auto 16px;
-  padding: 0 2px 10px;
+  margin: 0 0 24px 0;
+  padding: 0 0 16px 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.055);
 }
 
@@ -1108,11 +1208,18 @@ h4 {
 .chat-shell,
 .settings-group,
 .backup-timeline > div {
-  border: 1px solid var(--border);
-  background: var(--card-bg);
-  box-shadow: 0 14px 42px rgba(0, 0, 0, 0.22);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  background: rgba(10, 26, 40, 0.45); /* More translucent for better ambient glow readability */
+  box-shadow: 0 14px 42px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(8px);
+}
+
+@media (max-width: 720px) {
+  .unit-section {
+    padding: 24px 20px;
+    margin-bottom: 28px;
+    border-radius: 18px;
+  }
 }
 
 .dashboard-panel {
@@ -1374,16 +1481,18 @@ h4 {
 .subject-card {
   position: relative;
   display: flex;
-  min-height: 340px;
+  min-height: 360px;
   flex-direction: column;
   overflow: hidden;
-  padding: 18px;
-  border: 1px solid rgba(148,163,184,.14);
-  border-radius: 18px;
+  padding: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-left: 1.5px solid color-mix(in srgb, var(--subject-accent) 30%, rgba(255, 255, 255, 0.08));
+  border-right: 1.5px solid color-mix(in srgb, var(--subject-accent) 30%, rgba(255, 255, 255, 0.08));
+  border-radius: var(--radius-lg);
   background:
-    linear-gradient(145deg, color-mix(in srgb, var(--subject-soft) 62%, transparent), rgba(255, 255, 255, 0.012) 42%),
-    rgba(15, 23, 42, .72);
-  box-shadow: 0 10px 28px rgba(2, 6, 23, 0.18);
+    linear-gradient(140deg, var(--subject-soft), rgba(255, 255, 255, 0.018) 38%),
+    rgba(18, 24, 36, 0.88);
+  box-shadow: 0 12px 34px rgba(0, 0, 0, 0.2);
   --tilt-x: 0deg;
   --tilt-y: 0deg;
   --glow-x: 50%;
@@ -1394,8 +1503,6 @@ h4 {
     transform 0.22s cubic-bezier(0.2, 0, 0, 1),
     box-shadow 0.22s cubic-bezier(0.2, 0, 0, 1),
     border-color 0.22s ease;
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
   will-change: transform, box-shadow;
 }
 
@@ -1406,22 +1513,28 @@ h4 {
 .subject-card::before {
   content: "";
   position: absolute;
-  top: 0;
-  right: 0;
-  left: 0;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, var(--subject-accent), transparent);
-  opacity: 0;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, transparent, var(--subject-accent), transparent) top / 100% 2px no-repeat,
+    linear-gradient(90deg, transparent, var(--subject-accent), transparent) bottom / 100% 2px no-repeat;
+  filter: drop-shadow(0 0 3px var(--subject-accent));
+  opacity: 1;
   transition: opacity 0.2s;
 }
 
-.subject-card:hover::before {
+.subject-card:hover::before,
+.subject-card.is-hovering::before,
+.subject-card.is-active::before {
   opacity: 1;
 }
 
-.subject-card.is-hovering {
-  border-color: color-mix(in srgb, var(--subject-accent) 28%, rgba(255, 255, 255, 0.1));
-  box-shadow: 0 16px 36px rgba(2, 6, 23, 0.24);
+.subject-card.is-hovering,
+.subject-card.is-active {
+  border-color: color-mix(in srgb, var(--subject-accent) 38%, rgba(255, 255, 255, 0.08));
+  border-left-color: color-mix(in srgb, var(--subject-accent) 60%, rgba(255, 255, 255, 0.08));
+  border-right-color: color-mix(in srgb, var(--subject-accent) 60%, rgba(255, 255, 255, 0.08));
+  box-shadow: 0 22px 52px var(--shadow-hover);
 }
 
 .subject-card::after {
@@ -1430,14 +1543,15 @@ h4 {
   inset: 0;
   pointer-events: none;
   background:
-    radial-gradient(circle at var(--glow-x) var(--glow-y), color-mix(in srgb, var(--subject-accent) 18%, transparent), transparent 30%),
-    linear-gradient(135deg, rgba(255, 255, 255, 0.055), transparent 24%);
-  opacity: 0.24;
+    radial-gradient(circle at var(--glow-x) var(--glow-y), color-mix(in srgb, var(--subject-accent) 28%, transparent), transparent 28%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.09), transparent 24%);
+  opacity: 0.32;
   transition: opacity 0.22s ease;
 }
 
-.subject-card.is-hovering::after {
-  opacity: 0.44;
+.subject-card.is-hovering::after,
+.subject-card.is-active::after {
+  opacity: 0.72;
 }
 
 .subject-card > * {
@@ -1480,19 +1594,20 @@ h4 {
 
 .subject-icon {
   display: grid;
-  width: 46px;
-  height: 46px;
+  width: 48px;
+  height: 48px;
   flex: 0 0 auto;
   place-items: center;
-  border: 1px solid color-mix(in srgb, var(--subject-accent) 22%, rgba(255,255,255,.1));
-  border-radius: 13px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
   background: var(--panel-bg);
   background:
     linear-gradient(135deg, color-mix(in srgb, var(--subject-accent) 34%, transparent), rgba(255, 255, 255, 0.03));
   color: #fff;
   font-size: 0.92rem;
   font-weight: 900;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 8px 18px rgba(2,6,23,.16);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  overflow: hidden;
 }
 
 .chapter-minibars {
@@ -1502,6 +1617,7 @@ h4 {
   flex: 1; height: 100%; border-radius: 3px; min-width: 4px;
   transition: opacity .3s, background .3s;
 }
+.vibe-bar-wrapper {
   width: 100%;
   height: 6px;
   margin-top: 16px;
@@ -1519,27 +1635,27 @@ h4 {
 }
 
 .vibe-red {
-  background: linear-gradient(90deg, #b91c1c, #ef4444);
+  background: linear-gradient(90deg, #ef4444, #f59e0b, #ef4444);
   animation: progressFlow 5s linear infinite;
 }
 
 .vibe-warning {
-  background: linear-gradient(90deg, #d97706, #f59e0b);
+  background: linear-gradient(90deg, #f59e0b, #84cc16, #10b981);
   animation: progressFlow 5s linear infinite;
 }
 
 .vibe-blue {
-  background: linear-gradient(90deg, #155e75, #256d9a);
+  background: linear-gradient(90deg, #2563eb, #7c3aed, #93c5fd);
   animation: progressFlow 5s linear infinite;
 }
 
 .vibe-green {
-  background: linear-gradient(90deg, #0f766e, #14b8a6);
+  background: linear-gradient(90deg, #059669, #10b981, #67e8f9);
   animation: progressFlow 5s linear infinite;
 }
 
 .vibe-rose {
-  background: linear-gradient(90deg, #6d287f, #8d47c7);
+  background: linear-gradient(90deg, #ec4899, #fb7185, #f59e0b);
   animation: progressFlow 5s linear infinite;
 }
 
@@ -1566,21 +1682,22 @@ h4 {
 
 .paper-panel {
   padding: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.055);
+  border: 1.5px solid rgba(255, 255, 255, 0.12); /* enhanced, seeable border */
   border-radius: 14px;
   background: rgba(255, 255, 255, 0.03);
-  transition: border-color 0.18s ease, background 0.18s ease, transform 0.18s ease;
+  transition: border-color 0.18s ease, background 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
 }
 
 .paper-panel:hover {
-  border-color: color-mix(in srgb, var(--subject-accent) 28%, rgba(255, 255, 255, 0.08));
-  background: rgba(255, 255, 255, 0.045);
-  transform: translateY(-1px);
+  border-color: color-mix(in srgb, var(--subject-accent) 35%, rgba(255, 255, 255, 0.22));
+  background: rgba(255, 255, 255, 0.055);
+  transform: translateY(-1.5px);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
 }
 
 .paper-panel + .paper-panel {
   padding-top: 12px;
-  border-top: 1px solid rgba(255, 255, 255, 0.055);
+  border-top: 1.5px solid rgba(255, 255, 255, 0.12);
 }
 
 .chapter-bars {
@@ -1825,7 +1942,7 @@ h4 {
   border-radius:999px;
   border:1px solid rgba(148,163,184,.18);
   background:rgba(255,255,255,.035);
-  color:#94a3b8;
+  color:#cbd5e1;
   font-size:.78rem;
   font-weight:800;
   cursor:pointer;
@@ -1845,7 +1962,7 @@ h4 {
 }
 .chronos-hint {
   margin: 0 0 14px;
-  color:#64748b;
+  color:#a1a1aa;
   font-size:.78rem;
   font-style:italic;
 }
@@ -1855,7 +1972,7 @@ h4 {
   border:1px solid rgba(148,163,184,.16);
   border-radius:14px;
   background:rgba(248,250,252,.035);
-  scrollbar-color: color-mix(in srgb, var(--accent) 45%, #94a3b8) transparent;
+  scrollbar-color: color-mix(in srgb, var(--accent) 45%, #cbd5e1) transparent;
 }
 .chronos-scroll::-webkit-scrollbar { height:8px; }
 .chronos-scroll::-webkit-scrollbar-thumb { background:rgba(148,163,184,.28); border-radius:999px; }
@@ -1943,7 +2060,7 @@ h4 {
   padding-bottom:4px;
 }
 .chronos-presets__label {
-  color:#94a3b8;
+  color:#cbd5e1;
   font-size:.76rem;
   font-weight:800;
   letter-spacing:.04em;
@@ -1971,7 +2088,7 @@ h4 {
 .chronos-field {
   display:grid;
   gap:5px;
-  color:#94a3b8;
+  color:#cbd5e1;
   font-size:.68rem;
   font-weight:800;
   text-transform:uppercase;
@@ -1995,8 +2112,7 @@ h4 {
   display:grid;
   place-items:center;
   padding:20px;
-  background:rgba(2,6,23,.58);
-  backdrop-filter:blur(8px);
+  background:rgba(2,6,23,.88);
 }
 .chronos-modal[hidden] { display:none; }
 .chronos-modal-card {
@@ -2015,7 +2131,7 @@ h4 {
   margin-bottom:14px;
 }
 .chronos-modal-head h3 { margin:0; font-size:1rem; }
-.chronos-modal-head p { margin:6px 0 0; color:#94a3b8; font-size:.82rem; }
+.chronos-modal-head p { margin:6px 0 0; color:#cbd5e1; font-size:.82rem; }
 .chronos-editor-grid {
   display:grid;
   grid-template-columns:1fr 1fr;
@@ -2033,7 +2149,7 @@ h4 {
   font-weight:900;
 }
 .chronos-series-title span {
-  color:#94a3b8;
+  color:#cbd5e1;
   font-size:.74rem;
   font-weight:800;
 }
@@ -2047,7 +2163,7 @@ h4 {
   text-align:center;
 }
 .chronos-stepper span {
-  color:#94a3b8;
+  color:#cbd5e1;
   font-size:.68rem;
   font-weight:800;
   text-transform:uppercase;
@@ -2241,7 +2357,7 @@ h4 {
 .settings-modal-card .settings-row small,
 .settings-modal-card .settings-row > span,
 .settings-modal-card .settings-about-card p {
-  color: #94a3b8;
+  color: #cbd5e1;
 }
 
 .settings-modal-card .settings-input {
@@ -2326,7 +2442,7 @@ h4 {
 
 .settings-row small,
 .settings-help {
-  color: #94a3b8;
+  color: #cbd5e1;
   font-size: 0.74rem;
   line-height: 1.55;
 }
@@ -2355,18 +2471,30 @@ h4 {
 
 .btn-small {
   display: inline-flex;
-  min-height: 34px;
+  min-height: 38px; /* taller height */
   align-items: center;
   justify-content: center;
-  gap: 6px;
-  padding: 7px 11px;
-  border: 1px solid var(--border);
+  gap: 8px;
+  padding: 8px 14px;
+  border: 1.5px solid var(--border); /* thicker border */
   border-radius: 8px;
   background: var(--panel-bg);
   color: var(--text-main);
   font-size: 0.78rem;
   font-weight: 800;
-  transition: border-color 0.18s ease, background 0.18s ease, transform 0.18s ease, color 0.18s ease;
+  cursor: pointer;
+  transition: border-color 0.18s ease, background 0.18s ease, transform 0.18s ease, color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.btn-small:hover {
+  border-color: rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.08);
+  transform: translateY(-1.5px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.btn-small:active {
+  transform: translateY(0.5px) scale(0.98);
 }
 
 .btn-small small {
@@ -2381,7 +2509,7 @@ h4 {
 }
 
 .btn-small--icon {
-  width: 34px;
+  width: 38px; /* matches height */
   padding: 0;
 }
 
@@ -2392,14 +2520,67 @@ h4 {
 }
 
 .btn-small--primary {
-  border-color: rgba(59, 130, 246, 0.4);
+  border-color: rgba(59, 130, 246, 0.5);
   background: var(--accent-gradient);
   color: #fff;
+}
+.btn-small--primary:hover {
+  border-color: rgba(59, 130, 246, 0.75);
+  box-shadow: 0 0 12px rgba(59, 130, 246, 0.35);
 }
 
 .btn-small--danger {
   border-color: rgba(239, 68, 68, 0.5);
   color: #fca5a5;
+}
+.btn-small--danger:hover {
+  border-color: rgba(239, 68, 68, 0.8);
+  background: rgba(239, 68, 68, 0.12);
+  box-shadow: 0 0 12px rgba(239, 68, 68, 0.25);
+}
+
+/* ── Smart Update button glow ─────────────────────────────────────────────── */
+.btn-small--accent {
+  background: linear-gradient(135deg, rgba(109, 40, 217, 0.28) 0%, rgba(49, 130, 206, 0.28) 100%);
+  border: 1.5px solid rgba(139, 92, 246, 0.5);
+  color: #c4b5fd;
+  font-weight: 800;
+  animation: smart-btn-glow 2.2s ease-in-out infinite;
+  transition: background 0.25s ease, transform 0.18s ease, border-color 0.25s ease;
+}
+
+.btn-small--accent:hover {
+  background: linear-gradient(135deg, rgba(109, 40, 217, 0.45) 0%, rgba(49, 130, 206, 0.45) 100%);
+  border-color: rgba(167, 139, 250, 0.85);
+  color: #ede9fe;
+  transform: translateY(-1px);
+}
+
+.btn-small--accent:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.btn-small--accent svg {
+  filter: drop-shadow(0 0 5px rgba(167, 139, 250, 0.85));
+  animation: smart-icon-pulse 2.2s ease-in-out infinite;
+}
+
+@keyframes smart-btn-glow {
+  0%, 100% {
+    box-shadow:
+      0 0 8px 1px rgba(139, 92, 246, 0.25),
+      0 0 0 0px rgba(139, 92, 246, 0.0);
+  }
+  50% {
+    box-shadow:
+      0 0 18px 5px rgba(139, 92, 246, 0.45),
+      0 0 32px 8px rgba(79, 151, 187, 0.18);
+  }
+}
+
+@keyframes smart-icon-pulse {
+  0%, 100% { filter: drop-shadow(0 0 4px rgba(167, 139, 250, 0.6)); }
+  50%       { filter: drop-shadow(0 0 9px rgba(167, 139, 250, 1.0)); }
 }
 
 .btn-small:disabled,
@@ -2432,21 +2613,40 @@ h4 {
 
 .settings-input,
 .cfg-val-input {
-  min-height: 34px;
-  border: 1px solid rgba(71, 85, 105, 0.92);
+  min-height: 38px; /* roomier height */
+  border: 1.5px solid rgba(71, 85, 105, 0.92); /* enhanced border */
   border-radius: 8px;
   background: rgba(30, 41, 59, 0.98);
   color: #f8fafc;
   font-weight: 800;
+  transition: border-color 0.15s, background-color 0.15s, box-shadow 0.15s;
+}
+
+.settings-input:hover,
+.cfg-val-input:hover {
+  background: rgba(40, 54, 78, 0.98);
+  border-color: rgba(100, 116, 139, 0.92);
+}
+
+.settings-input:focus,
+.cfg-val-input:focus {
+  outline: none;
+  border-color: var(--accent-blue);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.18);
 }
 
 .settings-input {
   width: 150px;
-  padding: 0 10px;
+  padding: 0 24px 0 12px; /* roomier padding */
   font-size: 0.76rem;
   appearance: none;
   -webkit-appearance: none;
   color-scheme: dark;
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2394a3b8' stroke-width='3'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19.5 8.25l-7.5 7.5-7.5-7.5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  background-size: 11px;
 }
 
 .settings-input option {
@@ -2466,8 +2666,7 @@ h4 {
   display:grid;
   place-items:center;
   padding:20px;
-  background:rgba(2,6,23,.62);
-  backdrop-filter:blur(10px);
+  background:rgba(2,6,23,.90);
 }
 .mission-modal[hidden] { display:none; }
 .mission-card {
@@ -2487,7 +2686,7 @@ h4 {
   margin-bottom:14px;
 }
 .mission-card__head h3 { margin:0; font-size:1rem; color:#f8fafc; }
-.mission-card__head p { margin:6px 0 0; color:#94a3b8; font-size:.82rem; line-height:1.5; }
+.mission-card__head p { margin:6px 0 0; color:#cbd5e1; font-size:.82rem; line-height:1.5; }
 .mission-form {
   display:grid;
   gap:12px;
@@ -2495,7 +2694,7 @@ h4 {
 .mission-field {
   display:grid;
   gap:7px;
-  color:#94a3b8;
+  color:#cbd5e1;
   font-size:.72rem;
   font-weight:800;
   text-transform:uppercase;
@@ -2589,7 +2788,7 @@ h4 {
 }
 .mission-picker__week {
   margin:12px 0 6px;
-  color:#94a3b8;
+  color:#cbd5e1;
   font-size:.68rem;
   font-weight:900;
   text-align:center;
@@ -2611,7 +2810,7 @@ h4 {
   border-color:rgba(56,189,248,.24);
   transform:translateY(-1px);
 }
-.mission-day.is-muted { color:#64748b; }
+.mission-day.is-muted { color:#a1a1aa; }
 .mission-day.is-today {
   border-color:rgba(250,204,21,.42);
   color:#fde68a;
@@ -2778,7 +2977,7 @@ h4 {
 /* Track dialog */
 .track-dialog[hidden] { display:none; }
 .track-dialog { position:fixed; inset:0; z-index:2000; display:grid; place-items:center; padding:20px; }
-.track-dialog__backdrop { position:absolute; inset:0; background:rgba(0,0,0,0.65); backdrop-filter:blur(6px); cursor:pointer; }
+.track-dialog__backdrop { position:absolute; inset:0; background:rgba(2, 6, 23, 0.88); cursor:pointer; }
 .track-dialog__card {
   position:relative; z-index:1; width:min(500px,100%);
   background:rgba(8,18,30,0.98); border:1px solid var(--border);
@@ -2854,6 +3053,15 @@ h4 {
   gap: 14px;
 }
 
+#chatExpandDialog [data-action="chat-expand"] {
+  display: none !important;
+}
+
+#chatExpandDialog .account-dialog__card {
+  border: 1px solid rgba(168, 85, 247, 0.3);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 30px rgba(168, 85, 247, 0.2);
+}
+
 .chat-toolbar {
   display: flex;
   align-items: center;
@@ -2878,7 +3086,7 @@ h4 {
   width: 10px;
   height: 10px;
   border-radius: 999px;
-  background: #64748b;
+  background: #a1a1aa;
   box-shadow: 0 0 0 4px rgba(100, 116, 139, 0.14);
   flex-shrink: 0;
 }
@@ -2988,17 +3196,32 @@ h4 {
 .chat-compose select,
 .chat-compose textarea {
   width: 100%;
-  border: 1px solid var(--border);
+  border: 1.5px solid rgba(255, 255, 255, 0.15); /* enhanced, seeable border */
   border-radius: 16px;
   background: rgba(15, 23, 42, 0.72);
   color: var(--text-main);
   font: inherit;
+  transition: border-color 0.15s, background-color 0.15s, box-shadow 0.15s;
 }
 
 .chat-settings-panel select,
 .chat-compose select {
   min-height: 44px;
-  padding: 0 12px;
+  padding: 0 24px 0 12px;
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2394a3b8' stroke-width='3'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19.5 8.25l-7.5 7.5-7.5-7.5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 12px;
+}
+
+.chat-settings-panel select:hover,
+.chat-compose select:hover,
+.chat-compose textarea:hover {
+  background-color: rgba(20, 28, 48, 0.85);
+  border-color: rgba(255, 255, 255, 0.35);
 }
 
 .chat-feed-shell {
@@ -3147,8 +3370,9 @@ h4 {
 .chat-compose textarea:focus,
 .chat-settings-panel select:focus,
 .chat-compose select:focus {
-  border-color: rgba(59, 130, 246, 0.66);
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.14);
+  outline: none;
+  border-color: rgba(59, 130, 246, 0.8);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
 }
 
 .chat-feedback.is-error {
@@ -3157,6 +3381,369 @@ h4 {
 
 .chat-feedback.is-success {
   color: #86efac;
+}
+
+/* Smart Update Composer Wizard */
+.chat-update-composer {
+  border-radius: 24px;
+  border: 1px solid var(--border);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.026), rgba(255, 255, 255, 0.01)),
+    rgba(10, 15, 26, 0.8);
+  box-shadow: 0 20px 44px rgba(2, 6, 23, 0.24);
+  padding: 16px;
+  display: grid;
+  gap: 16px;
+}
+
+.chat-compose[hidden],
+.chat-update-composer[hidden] {
+  display: none !important;
+}
+
+.composer-wizard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  padding-bottom: 12px;
+}
+.composer-wizard-title h3 {
+  margin: 0;
+  font-size: 1.05rem;
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.composer-wizard-title span {
+  font-size: 0.78rem;
+  color: var(--text-sub);
+}
+.composer-step-indicator {
+  font-size: 0.75rem;
+  font-weight: 800;
+  background: rgba(59, 130, 246, 0.12);
+  color: var(--accent-blue);
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(59, 130, 246, 0.22);
+}
+
+.composer-wizard-body {
+  min-height: 200px;
+}
+
+.composer-step-title {
+  font-size: 0.92rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: var(--text-main);
+}
+
+.composer-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.composer-grid--cols3 {
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+}
+.composer-grid--small {
+  grid-template-columns: repeat(auto-fill, minmax(76px, 1fr));
+}
+
+.composer-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 8px 14px;
+  border-radius: 12px;
+  border: 1.5px solid rgba(255, 255, 255, 0.15); /* bolder, seeable */
+  background: rgba(255,255,255,0.03);
+  color: var(--text-main);
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: border-color 0.18s ease, background-color 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
+}
+.composer-btn:hover {
+  background: rgba(255,255,255,0.09);
+  border-color: rgba(255,255,255,0.35);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+.composer-btn:active {
+  transform: translateY(0.5px) scale(0.97);
+}
+.composer-btn.is-selected {
+  background: rgba(59, 130, 246, 0.18);
+  border-color: var(--accent-blue);
+  color: #93c5fd;
+  box-shadow: 
+    0 0 12px rgba(59, 130, 246, 0.25),
+    inset 0 0 0 1px rgba(59, 130, 246, 0.12);
+}
+
+.composer-time-adjuster {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
+  border-radius: 16px;
+  background: rgba(255,255,255,0.015);
+  border: 1.5px solid rgba(255,255,255,0.12); /* enhanced border */
+  margin-bottom: 12px;
+}
+.adjuster-label {
+  font-size: 0.8rem;
+  color: var(--text-sub);
+}
+.adjuster-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.adjuster-value {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--text-main);
+  min-width: 90px;
+}
+.adjuster-actions {
+  display: flex;
+  gap: 6px;
+}
+.adjuster-actions button {
+  min-width: 46px;
+  min-height: 34px;
+  padding: 0 8px;
+  font-size: 0.72rem;
+  border-radius: 8px;
+  border: 1.5px solid rgba(255, 255, 255, 0.15); /* seeable border */
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text-sub);
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+.adjuster-actions button:hover {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 255, 255, 0.35);
+  color: var(--text-main);
+  transform: translateY(-1px);
+}
+.adjuster-actions button:active {
+  transform: translateY(0.5px) scale(0.95);
+}
+
+.composer-quality-row {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.composer-quality-info {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  color: var(--text-sub);
+}
+.composer-quality-info strong {
+  color: var(--accent-blue);
+}
+
+.composer-wizard-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  padding-top: 14px;
+  flex-wrap: wrap;
+}
+.wizard-footer-left {
+  display: flex;
+  gap: 8px;
+}
+.wizard-footer-right {
+  display: flex;
+  gap: 8px;
+}
+
+.composer-preview-pane {
+  background: rgba(14, 18, 28, .5);
+  border: 1.5px solid rgba(255, 255, 255, 0.12); /* enhanced border */
+  border-radius: 18px;
+  padding: 12px 14px;
+  margin-top: 10px;
+}
+.preview-pane-label {
+  font-size: 0.72rem;
+  color: var(--text-sub);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 6px;
+}
+.preview-pane-text {
+  font-family: monospace;
+  font-size: 0.85rem;
+  color: #a3e635;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.review-lines-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 240px;
+  overflow-y: auto;
+  margin-bottom: 12px;
+}
+.review-line-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+}
+.review-line-content {
+  font-family: monospace;
+  font-size: 0.82rem;
+  color: var(--text-main);
+}
+.review-line-actions {
+  display: flex;
+  gap: 6px;
+}
+.review-line-actions button {
+  background: none;
+  border: none;
+  color: var(--text-sub);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 6px;
+  transition: all 0.15s;
+}
+.review-line-actions button:hover {
+  background: rgba(255,255,255,0.06);
+  color: var(--text-main);
+}
+.review-line-actions button.btn-delete:hover {
+  color: #ef4444;
+}
+
+.composer-input-field {
+  width: 100%;
+  min-height: 44px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: rgba(15, 23, 42, 0.72);
+  color: var(--text-main);
+  font: inherit;
+  margin-bottom: 10px;
+  outline: none;
+}
+.composer-input-field:focus {
+  border-color: rgba(59, 130, 246, 0.66);
+}
+
+.composer-textarea {
+  width: 100%;
+  min-height: 180px;
+  max-height: 360px;
+  padding: 14px;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  background: rgba(15, 23, 42, 0.72);
+  color: var(--text-main);
+  font-family: monospace;
+  font-size: 0.85rem;
+  outline: none;
+  resize: vertical;
+  margin-bottom: 12px;
+}
+.composer-textarea:focus {
+  border-color: rgba(59, 130, 246, 0.66);
+}
+
+/* Accordion Styling */
+.composer-accordion {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.accordion-item {
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  background: rgba(255, 255, 255, 0.015);
+  overflow: hidden;
+  transition: all 0.2s ease;
+}
+.accordion-item.is-active {
+  border-color: rgba(59, 130, 246, 0.3);
+  background: rgba(10, 15, 26, 0.4);
+}
+.accordion-item.is-completed {
+  border-color: rgba(34, 197, 94, 0.15);
+}
+.accordion-header {
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  user-select: none;
+  background: rgba(255,255,255,0.01);
+}
+.accordion-header:hover {
+  background: rgba(255,255,255,0.03);
+}
+.accordion-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  font-size: 0.72rem;
+  font-weight: 800;
+  background: rgba(255,255,255,0.06);
+  color: var(--text-sub);
+}
+.is-active .accordion-number {
+  background: var(--accent-blue);
+  color: #fff;
+}
+.is-completed .accordion-number {
+  background: rgba(34, 197, 94, 0.2);
+  color: #4ade80;
+}
+.accordion-title {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--text-sub);
+}
+.is-active .accordion-title {
+  color: var(--text-main);
+}
+.accordion-value {
+  margin-left: auto;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #93c5fd;
+  background: rgba(59,130,246,0.1);
+  padding: 2px 8px;
+  border-radius: 6px;
+}
+.accordion-content {
+  padding: 14px;
+  border-top: 1px solid rgba(255,255,255,0.03);
 }
 
 .account-shell {
@@ -3184,11 +3771,9 @@ h4 {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(circle at 22% 18%, rgba(21, 94, 117, 0.2), transparent 28%),
-    radial-gradient(circle at 82% 78%, rgba(79, 151, 187, 0.16), transparent 30%),
-    rgba(2, 6, 23, 0.64);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+    radial-gradient(circle at 22% 18%, rgba(21, 94, 117, 0.25), transparent 28%),
+    radial-gradient(circle at 82% 78%, rgba(79, 151, 187, 0.2), transparent 30%),
+    rgba(2, 6, 23, 0.92);
 }
 
 .account-dialog__card {
@@ -3231,7 +3816,7 @@ h4 {
 .account-dialog__head > div > span {
   display: block;
   margin-top: 6px;
-  color: #94a3b8;
+  color: #cbd5e1;
   font-size: 0.92rem;
   line-height: 1.5;
 }
@@ -3311,7 +3896,7 @@ h4 {
 .backup-card p,
 .backup-vault-empty,
 .backup-settings-note {
-  color: #94a3b8;
+  color: #cbd5e1;
 }
 
 .backup-stats {
@@ -3374,7 +3959,7 @@ h4 {
 .backup-settings-row small {
   display: block;
   margin-top: 3px;
-  color: #94a3b8;
+  color: #cbd5e1;
 }
 
 .backup-vault-list {
@@ -3392,6 +3977,21 @@ h4 {
   padding: 14px;
 }
 
+.backup-vault-item[data-action="backup-restore-entry"] {
+  cursor: pointer;
+  transition: border-color 0.22s ease, background 0.22s ease, transform 0.22s ease;
+}
+
+.backup-vault-item[data-action="backup-restore-entry"]:hover {
+  border-color: rgba(96, 165, 250, 0.45);
+  background: rgba(30, 41, 59, 0.92);
+  transform: translateY(-1px);
+}
+
+.backup-vault-item[data-action="backup-restore-entry"]:active {
+  transform: translateY(0);
+}
+
 .backup-vault-item__head,
 .backup-vault-item__foot {
   display: flex;
@@ -3406,7 +4006,7 @@ h4 {
 
 .backup-vault-item__head span,
 .backup-vault-item__foot small {
-  color: #94a3b8;
+  color: #cbd5e1;
 }
 
 .backup-vault-item__foot {
@@ -3478,7 +4078,7 @@ h4 {
 .account-field span,
 .account-feed-empty,
 .account-feed-item__meta {
-  color: #64748b;
+  color: #a1a1aa;
   font-size: 0.82rem;
 }
 
@@ -3510,7 +4110,7 @@ h4 {
 .account-login-card span {
   display: block;
   margin-top: 3px;
-  color: #64748b;
+  color: #a1a1aa;
   font-size: 0.8rem;
 }
 
@@ -3524,7 +4124,7 @@ h4 {
 }
 
 .account-login-card--compact span {
-  color: #94a3b8;
+  color: #cbd5e1;
 }
 
 .account-login-actions {
@@ -3619,7 +4219,7 @@ h4 {
   justify-content: center;
   gap: 8px;
   margin: 8px 0 0;
-  color: #64748b;
+  color: #a1a1aa;
   font-size: 0.82rem;
 }
 
@@ -3742,7 +4342,7 @@ h4 {
 
 @media (max-width: 720px) {
   .study-shell {
-    padding-top: 66px;
+    padding-top: 124px;
   }
 
   .quick-action-rail {
@@ -3781,7 +4381,9 @@ h4 {
   }
 
   .top-nav {
+    position: fixed;
     top: 66px;
+    left: 0;
     height: 58px;
     padding: 0 12px;
     gap: 8px;
@@ -4099,9 +4701,8 @@ h4 {
 .stat-box {
   padding: 18px 14px;
   border-radius: 16px;
-  background: rgba(30, 41, 59, .6);
+  background: rgba(30, 41, 59, .88);
   border: 1px solid rgba(71, 85, 105, .25);
-  backdrop-filter: blur(10px);
   transition: all .3s cubic-bezier(.16, 1, .3, 1);
   position: relative;
   overflow: hidden;
@@ -4229,7 +4830,7 @@ h4 {
 
 .stat-label {
   font-size: 12px;
-  color: #64748b;
+  color: #a1a1aa;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: .05em;
@@ -4392,13 +4993,13 @@ h4 {
 
 .eta-days {
   font-size: 12px;
-  color: #94a3b8;
+  color: #cbd5e1;
   font-weight: 600;
 }
 
 .eta-sub-label {
   font-size: 11px;
-  color: #64748b;
+  color: #a1a1aa;
   margin-top: 6px;
   display: block;
 }
@@ -4417,17 +5018,17 @@ h4 {
   font-size: 11px;
   font-weight: 700;
   letter-spacing: .06em;
-  color: #888070;
+  color: #64748b;
   transition: color .3s;
 }
-.dashboard-modern.dark .toggle-label { color: #64748b; }
+.dashboard-modern.dark .toggle-label { color: #a1a1aa; }
 .toggle-track {
   width: 44px;
   height: 24px;
   border-radius: 999px;
   position: relative;
   cursor: pointer;
-  background: #d1c9b8;
+  background: #cbd5e1;
   transition: background .3s;
   flex-shrink: 0;
 }
@@ -4449,8 +5050,8 @@ h4 {
   border-radius: 20px;
   overflow: hidden;
   transition: background .3s, border .3s;
-  background: #faf8f4;
-  border: 1px solid #e5e0d5;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
 }
 .dash-card.dark {
   background: rgba(18, 24, 36, .82);
@@ -4468,15 +5069,15 @@ h4 {
   letter-spacing: .12em;
   text-transform: uppercase;
   margin-bottom: 5px;
-  color: #888070;
+  color: #64748b;
   transition: color .3s;
 }
-.dashboard-modern.dark .dash-eyebrow { color: #64748b; }
+.dashboard-modern.dark .dash-eyebrow { color: #a1a1aa; }
 .dash-greet {
   font-size: 22px;
   font-weight: 800;
   line-height: 1.1;
-  color: #1a1a1a;
+  color: #0f172a;
   transition: color .3s;
 }
 .dashboard-modern.dark .dash-greet { color: #f1f5f9; }
@@ -4487,10 +5088,10 @@ h4 {
   align-items: center;
   justify-content: center;
   gap: 7px;
-  color: #888070;
+  color: #64748b;
   transition: color .3s;
 }
-.dashboard-modern.dark .dash-mission { color: #64748b; }
+.dashboard-modern.dark .dash-mission { color: #a1a1aa; }
 .mdot {
   width: 5px;
   height: 5px;
@@ -4556,13 +5157,13 @@ h4 {
 .stat-card {
   padding: 13px 15px;
   border-radius: 12px;
-  background: #f0ece3;
-  border: 1px solid #e5e0d5;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
   transition: background .3s, border .3s;
 }
 .dashboard-modern.dark .stat-card {
   background: rgba(14, 18, 28, .7);
-  border: 1px solid rgba(255, 255, 255, .07);
+  border: 1px solid rgba(255, 255, 255, 0.12); /* seeable border */
 }
 .stat-label {
   font-size: 10px;
@@ -4573,10 +5174,10 @@ h4 {
   align-items: center;
   gap: 6px;
   margin-bottom: 7px;
-  color: #888070;
+  color: #64748b;
   transition: color .3s;
 }
-.dashboard-modern.dark .stat-label { color: #64748b; }
+.dashboard-modern.dark .stat-label { color: #a1a1aa; }
 .sc-dot {
   width: 7px;
   height: 7px;
@@ -4588,7 +5189,7 @@ h4 {
   font-weight: 800;
   letter-spacing: -1px;
   line-height: 1;
-  color: #1a1a1a;
+  color: #0f172a;
   transition: color .3s;
 }
 .dashboard-modern.dark .stat-val { color: #f1f5f9; }
@@ -4597,7 +5198,7 @@ h4 {
   border-radius: 999px;
   margin-top: 9px;
   overflow: hidden;
-  background: #e5e0d5;
+  background: #e2e8f0;
   transition: background .3s;
 }
 .dashboard-modern.dark .stat-bar { background: rgba(255, 255, 255, .08); }
@@ -4605,7 +5206,7 @@ h4 {
 .stat-detail {
   font-size: 11px;
   margin-top: 5px;
-  color: #aaa59a;
+  color: #64748b;
   transition: color .3s;
 }
 .dashboard-modern.dark .stat-detail { color: #475569; }
@@ -4613,13 +5214,13 @@ h4 {
 .count-card {
   padding: 13px 15px;
   border-radius: 12px;
-  background: #f0ece3;
-  border: 1px solid #e5e0d5;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
   transition: background .3s, border .3s;
 }
 .dashboard-modern.dark .count-card {
   background: rgba(14, 18, 28, .7);
-  border: 1px solid rgba(255, 255, 255, .07);
+  border: 1px solid rgba(255, 255, 255, 0.12); /* seeable border */
 }
 .count-label {
   font-size: 10px;
@@ -4630,10 +5231,10 @@ h4 {
   align-items: center;
   gap: 6px;
   margin-bottom: 6px;
-  color: #888070;
+  color: #64748b;
   transition: color .3s;
 }
-.dashboard-modern.dark .count-label { color: #64748b; }
+.dashboard-modern.dark .count-label { color: #a1a1aa; }
 .count-row {
   display: flex;
   align-items: baseline;
@@ -4647,7 +5248,7 @@ h4 {
 }
 .count-sub {
   font-size: 11px;
-  color: #aaa59a;
+  color: #64748b;
   transition: color .3s;
 }
 .dashboard-modern.dark .count-sub { color: #475569; }
@@ -4656,7 +5257,7 @@ h4 {
   border-radius: 999px;
   margin-top: 8px;
   overflow: hidden;
-  background: #e5e0d5;
+  background: #e2e8f0;
   transition: background .3s;
 }
 .dashboard-modern.dark .count-bar { background: rgba(255, 255, 255, .08); }
@@ -4696,13 +5297,12 @@ h4 {
   width: 100px;
   height: 100px;
   border-radius: 50%;
-  background: linear-gradient(135deg, rgba(6, 182, 212, .1), rgba(59, 130, 246, .08));
+  background: linear-gradient(135deg, rgba(6, 182, 212, .16), rgba(59, 130, 246, .12));
   border: 1.5px solid rgba(6, 182, 212, .3);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  backdrop-filter: blur(8px);
 }
 .gauge-clabel {
   font-size: 9px;
@@ -4710,10 +5310,10 @@ h4 {
   letter-spacing: .1em;
   text-transform: uppercase;
   display: block;
-  color: #64748b;
+  color: #a1a1aa;
   transition: color .3s;
 }
-.dashboard-modern.dark .gauge-clabel { color: #64748b; }
+.dashboard-modern.dark .gauge-clabel { color: #a1a1aa; }
 .gauge-cval {
   font-size: 28px;
   font-weight: 800;
@@ -4749,10 +5349,10 @@ h4 {
   gap: 5px;
   font-size: 11px;
   font-weight: 600;
-  color: #888070;
+  color: #64748b;
   transition: color .3s;
 }
-.dashboard-modern.dark .gleg { color: #64748b; }
+.dashboard-modern.dark .gleg { color: #a1a1aa; }
 .gleg-dot {
   width: 8px;
   height: 8px;
@@ -4764,8 +5364,8 @@ h4 {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 12px;
-  background: #f0ece3;
-  border-top: 1px solid #e5e0d5;
+  background: #f8fafc;
+  border-top: 1px solid #e2e8f0;
   transition: background .3s, border .3s;
 }
 .dashboard-modern.dark .dash-foot {
@@ -4784,16 +5384,16 @@ h4 {
   text-transform: uppercase;
   white-space: nowrap;
   min-width: 80px;
-  color: #888070;
+  color: #64748b;
   transition: color .3s;
 }
-.dashboard-modern.dark .foot-label { color: #64748b; }
+.dashboard-modern.dark .foot-label { color: #a1a1aa; }
 .foot-pct {
   font-size: 12px;
   font-weight: 800;
   white-space: nowrap;
   min-width: 30px;
-  color: #1a1a1a;
+  color: #0f172a;
   transition: color .3s;
 }
 .dashboard-modern.dark .foot-pct { color: #f1f5f9; }
@@ -4802,7 +5402,7 @@ h4 {
   height: 5px;
   border-radius: 999px;
   overflow: hidden;
-  background: #e5e0d5;
+  background: #e2e8f0;
   transition: background .3s;
 }
 .dashboard-modern.dark .foot-track { background: rgba(255, 255, 255, .08); }
@@ -4814,7 +5414,7 @@ h4 {
   padding: 10px;
   border-radius: 14px;
   background: rgba(15,23,42,.25);
-  border: 1px solid rgba(148,163,184,.065);
+  border: 1px solid rgba(255, 255, 255, 0.1); /* enhanced low-opacity border */
 }
 .paper-section__title {
   width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 10px;
@@ -4827,26 +5427,26 @@ h4 {
 .paper-section__title:hover,
 .paper-section__title:focus-visible { color: #f8fafc; opacity: .95; outline: none; }
 .paper-section.is-open .paper-section__title { color: #f8fafc; }
-.paper-section__chevron { flex: 0 0 auto; color: var(--subject-accent, #64748b); transition: transform .22s ease, color .18s ease; }
-.paper-section.is-open .paper-section__chevron { transform: rotate(180deg); color: var(--subject-accent, #64748b); }
+.paper-section__chevron { flex: 0 0 auto; color: var(--subject-accent, #a1a1aa); transition: transform .22s ease, color .18s ease; }
+.paper-section.is-open .paper-section__chevron { transform: rotate(180deg); color: var(--subject-accent, #a1a1aa); }
 .chapter-list { display: flex; flex-direction: column; gap: 8px; padding-top: 10px; }
 .chapter-list[hidden] { display: none; }
 .ch-row {
   display: flex; align-items: center; justify-content: space-between;
   padding: 10px 13px; border-radius: 12px; cursor: pointer;
-  background: rgba(255,255,255,.035); border: 1px solid rgba(255,255,255,.045);
+  background: rgba(255,255,255,.035); border: 1px solid rgba(255,255,255,0.1); /* enhanced border */
   transition: background .18s, border-color .18s, transform .18s; user-select: none;
 }
-.ch-row:hover { background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.08); transform: translateY(-1px); }
+.ch-row:hover { background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.15); transform: translateY(-1.5px); }
 .ch-row.is-open {
-  background: color-mix(in srgb, var(--subject-accent,#64748b) 10%, rgba(255,255,255,.04));
-  border-color: color-mix(in srgb, var(--subject-accent,#64748b) 36%, rgba(255,255,255,.06));
+  background: color-mix(in srgb, var(--subject-accent,#a1a1aa) 10%, rgba(255,255,255,.04));
+  border-color: color-mix(in srgb, var(--subject-accent,#a1a1aa) 36%, rgba(255,255,255,.12));
   border-bottom-left-radius:0; border-bottom-right-radius:0;
 }
 .ch-row__left { display: flex; align-items: center; gap: 9px; }
 .ch-row__right { display: flex; align-items: center; gap: 6px; }
 .ch-name { font-size: .82rem; font-weight: 500; color: #e2e8f0; }
-.ch-pct { font-size: .75rem; color: #94a3b8; font-variant-numeric: tabular-nums; }
+.ch-pct { font-size: .75rem; color: #cbd5e1; font-variant-numeric: tabular-nums; }
 .ch-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
 .ch-dot--done { background: #10b981; }
 .ch-dot--run  { background: #f59e0b; }
@@ -4855,14 +5455,14 @@ h4 {
 .ch-row.is-open .ch-chevron { transform: rotate(180deg); }
 .ch-plate {
   background: linear-gradient(180deg, rgba(8,13,28,.82), rgba(8,13,28,.66));
-  border: 1px solid color-mix(in srgb, var(--subject-accent,#334155) 30%, rgba(255,255,255,.07));
+  border: 1px solid color-mix(in srgb, var(--subject-accent,#334155) 30%, rgba(255,255,255,.12));
   border-top: none; border-radius: 0 0 14px 14px; padding: 14px; margin-top: -8px; margin-bottom: 2px;
   box-shadow: inset 0 1px 0 rgba(255,255,255,.028), 0 12px 28px rgba(2,6,23,.18);
   animation: plateIn .2s ease;
 }
 @keyframes plateIn { from{opacity:0;transform:translateY(-4px)} to{opacity:1;transform:none} }
 .ch-plate__inner { display: flex; flex-direction: column; gap: 12px; }
-.ch-plate__label { font-size:.7rem; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:#64748b; }
+.ch-plate__label { font-size:.7rem; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:#a1a1aa; }
 .ch-meta-row { display:grid; grid-template-columns:minmax(0,1fr) auto; align-items:center; gap:10px; }
 .ch-name-edit {
   width:100%; min-width:0; border:1px solid rgba(255,255,255,.075); border-radius:11px;
@@ -4875,7 +5475,7 @@ h4 {
   background:rgba(255,255,255,.045); border:1px solid rgba(255,255,255,.07);
 }
 .ch-style-option {
-  border:0; border-radius:9px; padding:7px 10px; background:transparent; color:#94a3b8;
+  border:0; border-radius:9px; padding:7px 10px; background:transparent; color:#cbd5e1;
   font:700 .68rem/1 inherit; cursor:pointer; white-space:nowrap; transition:background .15s,color .15s;
 }
 .ch-style-option:hover { color:#e2e8f0; background:rgba(255,255,255,.07); }
@@ -4883,17 +5483,21 @@ h4 {
 .ch-stepper {
   display: flex; align-items: center; justify-content:center; gap: 12px;
   padding:10px 12px; border-radius:13px;
-  background:rgba(255,255,255,.035); border:1px solid rgba(255,255,255,.06);
+  background:rgba(255,255,255,.035); border:1px solid rgba(255,255,255,0.12); /* enhanced border */
 }
 .ch-btn {
-  width:30px; height:30px; border-radius:9px; border:1px solid rgba(255,255,255,.11);
-  background:rgba(255,255,255,.055); color:#e2e8f0; font-size:1rem; cursor:pointer;
-  display:flex; align-items:center; justify-content:center; transition:background .15s,transform .1s;
+  width:32px; height:32px; border-radius:9px; border:1.5px solid rgba(255, 255, 255, 0.2); /* thicker border */
+  background:rgba(255,255,255,.07); color:#e2e8f0; font-size:1rem; cursor:pointer;
+  display:flex; align-items:center; justify-content:center; transition: all 0.18s ease;
 }
-.ch-btn:hover { background:rgba(255,255,255,.12); }
-.ch-btn:active { transform:scale(.92); }
+.ch-btn:hover {
+  background: rgba(255, 255, 255, 0.16);
+  border-color: rgba(255, 255, 255, 0.45);
+  transform: translateY(-1px);
+}
+.ch-btn:active { transform: translateY(0.5px) scale(.9); }
 .ch-val { font-size:1.05rem; font-weight:700; color:#f1f5f9; min-width:64px; text-align:center; font-variant-numeric:tabular-nums; }
-.ch-val small { font-size:.72rem; font-weight:400; color:#64748b; }
+.ch-val small { font-size:.72rem; font-weight:400; color:#a1a1aa; }
 .quick-delta-row {
   display:grid;
   grid-template-columns:repeat(4,minmax(0,1fr));
@@ -4902,22 +5506,23 @@ h4 {
   margin-top:7px;
 }
 .quick-delta-btn {
-  min-height:26px;
-  border:1px solid rgba(148,163,184,.16);
+  min-height:28px;
+  border:1.5px solid rgba(255, 255, 255, 0.15); /* enhanced border */
   border-radius:8px;
-  background:rgba(15,23,42,.58);
+  background:rgba(15,23,42,.68);
   color:#cbd5e1;
   font-size:.68rem;
   font-weight:900;
   cursor:pointer;
-  transition:background .15s,border-color .15s,color .15s,transform .1s;
+  transition: all 0.18s ease;
 }
 .quick-delta-btn:hover {
-  border-color:color-mix(in srgb, var(--subject-accent,#4f97bb) 48%, rgba(148,163,184,.16));
-  background:color-mix(in srgb, var(--subject-accent,#4f97bb) 20%, rgba(15,23,42,.72));
+  border-color:color-mix(in srgb, var(--subject-accent,#4f97bb) 68%, rgba(255,255,255,0.4));
+  background:color-mix(in srgb, var(--subject-accent,#4f97bb) 25%, rgba(15,23,42,.82));
   color:#f8fafc;
+  transform: translateY(-1px);
 }
-.quick-delta-btn:active { transform:scale(.95); }
+.quick-delta-btn:active { transform: translateY(0.5px) scale(.94); }
 .quick-delta-btn--pos {
   color:#d9f99d;
 }
@@ -4989,7 +5594,7 @@ h4 {
 .ch-pill--reset { background:rgba(239,68,68,.12); color:#f87171; border:1px solid rgba(239,68,68,.2); }
 .ch-pill--reset:hover { background:rgba(239,68,68,.22); }
 .subj-prog-ring { position:relative; display:flex; align-items:center; justify-content:center; }
-.ring-pct { position:absolute; font-size:.58rem; font-weight:700; color:#94a3b8; }
+.ring-pct { position:absolute; font-size:.58rem; font-weight:700; color:#cbd5e1; }
 .paper-meter__track {
   height: 4px;
   overflow: hidden;
@@ -5023,7 +5628,7 @@ h4 {
   align-items: center;
   justify-content: space-between;
   gap: 8px;
-  color: #94a3b8;
+  color: #cbd5e1;
   font-size: .58rem;
   font-weight: 800;
   letter-spacing: 0;
@@ -5037,51 +5642,60 @@ h4 {
 /* Track checkboxes */
 .track-checks {
   display:flex; flex-wrap:wrap; gap:7px; padding:9px;
-  border-radius:13px; background:rgba(255,255,255,.032); border:1px solid rgba(255,255,255,.055);
+  border-radius:13px; background:rgba(255,255,255,.032); border:1px solid rgba(255, 255, 255, 0.12); /* enhanced border */
 }
 .track-chk {
-  display:flex; align-items:center; gap:6px; font-size:.76rem; color:#94a3b8; cursor:pointer; user-select:none;
-  padding:6px 8px; border-radius:10px; background:rgba(255,255,255,.035); border:1px solid rgba(255,255,255,.045);
-  transition:background .15s,color .15s,border-color .15s;
+  display:flex; align-items:center; gap:6px; font-size:.76rem; color:#cbd5e1; cursor:pointer; user-select:none;
+  padding:6px 10px; border-radius:10px; background:rgba(255,255,255,.035); border:1px solid rgba(255, 255, 255, 0.12); /* enhanced border */
+  transition: all 0.15s ease;
 }
-.track-chk:hover { color:#e2e8f0; background:rgba(255,255,255,.07); border-color:rgba(255,255,255,.09); }
+.track-chk:hover { color:#e2e8f0; background:rgba(255,255,255,.08); border-color:rgba(255,255,255,.2); transform: translateY(-0.5px); }
+.track-chk:active { transform: scale(0.97); }
 .track-chk input { accent-color:var(--subject-accent,#38bdf8); cursor:pointer; }
 
 /* Class slider rows */
 .cls-row {
   display:flex; align-items:center; justify-content:space-between; gap:10px;
   padding:10px 11px; border-radius:13px;
-  background:rgba(255,255,255,.032); border:1px solid rgba(255,255,255,.055);
+  background:rgba(255,255,255,.032); border:1px solid rgba(255, 255, 255, 0.12); /* enhanced border */
 }
-.cls-label { font-size:.75rem; color:#94a3b8; }
-.cls-total-val { color:#475569; font-size:.7rem; }
+.cls-label { font-size:.75rem; color:#cbd5e1; }
+.cls-total-val { color:#cbd5e1; font-size:.7rem; }
 .cls-controls { display:flex; align-items:center; gap:4px; }
 .cls-val { font-size:.9rem; font-weight:700; color:#f1f5f9; min-width:28px; text-align:center; font-variant-numeric:tabular-nums; }
 .ch-btn--sm { width:23px!important; height:23px!important; font-size:.76rem!important; border-radius:7px!important; }
-.cls-total-inc,.cls-total-dec { font-size:.6rem!important; color:#475569!important; }
-.cls-total-inc:hover,.cls-total-dec:hover { color:#94a3b8!important; }
+.cls-total-inc,.cls-total-dec { font-size:.6rem!important; color:#a1a1aa!important; }
+.cls-total-inc:hover,.cls-total-dec:hover { color:#f1f5f9!important; }
 
 /* Board Qs row */
 .bq-row {
   display:flex; align-items:center; justify-content:space-between; gap:10px;
   padding:10px 11px; border-radius:13px;
-  background:rgba(255,255,255,.032); border:1px solid rgba(255,255,255,.055);
+  background:rgba(255,255,255,.032); border:1px solid rgba(255, 255, 255, 0.12); /* enhanced border */
 }
 
 /* Subject Settings Panel */
 .subj-settings-btn {
-  padding: 6px 10px; border-radius: 10px; border: 1px solid rgba(255,255,255,.095);
-  background: rgba(255,255,255,.045); color: #94a3b8; font-size: .72rem; cursor: pointer;
-  transition: background .15s, color .15s; white-space: nowrap;
+  padding: 7px 12px; border-radius: 10px; border: 1.5px solid rgba(255, 255, 255, 0.18); /* enhanced border */
+  background: rgba(255,255,255,.05); color: #cbd5e1; font-size: .72rem; cursor: pointer;
+  transition: all 0.18s ease; white-space: nowrap;
 }
-.subj-settings-btn:hover, .subj-settings-btn.active { background: rgba(255,255,255,.13); color: #e2e8f0; }
+.subj-settings-btn:hover, .subj-settings-btn.active {
+  background: rgba(255,255,255,.16);
+  border-color: rgba(255, 255, 255, 0.4);
+  color: #e2e8f0;
+  transform: translateY(-1px);
+}
+.subj-settings-btn:active {
+  transform: translateY(0.5px) scale(0.96);
+}
 .subj-settings {
-  background: rgba(15,23,42,.8); border: 1px solid rgba(255,255,255,.1);
+  background: rgba(15,23,42,.8); border: 1px solid rgba(255, 255, 255, 0.18); /* enhanced border */
   border-radius: 10px; margin: 8px 0; padding: 14px;
   animation: plateIn .18s ease;
 }
 .subj-settings__inner { display: flex; flex-direction: column; gap: 10px; }
-.ss-label { font-size: .7rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: #64748b; }
+.ss-label { font-size: .7rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: #a1a1aa; }
 .ss-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
 .ss-input {
   flex: 1; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12);
@@ -5098,20 +5712,29 @@ h4 {
 }
 .ss-track-chk {
   display: flex; align-items: center; gap: 5px; font-size: .78rem;
-  color: #94a3b8; cursor: pointer; padding: 4px 8px;
+  color: #cbd5e1; cursor: pointer; padding: 5px 10px;
   background: rgba(255,255,255,.04); border-radius: 6px;
-  border: 1px solid rgba(255,255,255,.08); transition: background .15s;
+  border: 1px solid rgba(255, 255, 255, 0.12); transition: all 0.15s ease;
 }
-.ss-track-chk:hover { background: rgba(255,255,255,.09); }
+.ss-track-chk:hover { background: rgba(255,255,255,.09); border-color: rgba(255, 255, 255, 0.22); transform: translateY(-0.5px); }
+.ss-track-chk:active { transform: scale(0.97); }
 .ss-track-chk input { accent-color: var(--subject-accent, #38bdf8); cursor: pointer; }
 .ss-paper-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
 .ss-paper-tools { display:flex; flex-wrap:wrap; justify-content:flex-end; gap:6px; }
 .ss-apply-btn {
-  padding: 5px 12px; border-radius: 7px; border: 1px solid rgba(255,255,255,.12);
-  background: rgba(255,255,255,.06); color: #94a3b8; font-size: .72rem;
-  cursor: pointer; transition: background .15s, color .15s;
+  padding: 6px 14px; border-radius: 7px; border: 1.5px solid rgba(255, 255, 255, 0.2); /* enhanced border */
+  background: rgba(255,255,255,.07); color: #cbd5e1; font-size: .72rem;
+  cursor: pointer; transition: all 0.18s ease;
 }
-.ss-apply-btn:hover { background: rgba(99,102,241,.2); color: #a5b4fc; border-color: rgba(99,102,241,.3); }
+.ss-apply-btn:hover {
+  background: rgba(99,102,241,.28);
+  color: #c7d2fe;
+  border-color: rgba(99,102,241,.55);
+  transform: translateY(-1.5px);
+}
+.ss-apply-btn:active {
+  transform: translateY(0.5px) scale(0.96);
+}
 .ss-apply-btn--danger:hover { background:rgba(239,68,68,.18); color:#fca5a5; border-color:rgba(239,68,68,.28); }
 .ch-pill--remove { background:rgba(239,68,68,.1); color:#fca5a5; border:1px solid rgba(239,68,68,.22); }
 .ch-pill--remove:hover { background:rgba(239,68,68,.2); }
@@ -5135,16 +5758,159 @@ h4 {
 }
 .syllabus-builder-note {
   margin:2px 0 0;
-  color:#64748b;
+  color:#a1a1aa;
   font-size:.72rem;
 }
 @media (max-width: 720px) {
   .syllabus-builder { grid-template-columns:1fr; }
   .ss-paper-row { align-items:stretch; flex-direction:column; }
   .ss-paper-tools { justify-content:flex-start; }
+
+  /* Dashboard Modern Mobile Overrides */
+  .dash-body {
+    grid-template-columns: 1fr 110px 1fr !important;
+    gap: 6px !important;
+    padding: 8px 6px 12px !important;
+  }
+
+  .dash-head {
+    padding: 10px 12px 8px !important;
+    text-align: left !important;
+    display: block !important;
+  }
+  
+  .dash-greet {
+    font-size: 15px !important;
+    padding-right: 80px; /* Leave space for absolute eta-pill */
+  }
+  
+  .dash-mission {
+    font-size: 9px !important;
+    justify-content: flex-start !important;
+    margin-top: 3px !important;
+  }
+
+  .eta-pill {
+    position: absolute !important;
+    top: 10px !important;
+    right: 10px !important;
+    padding: 3px 8px !important;
+    font-size: 9px !important;
+    margin: 0 !important;
+  }
+
+  .eta-sub {
+    position: absolute !important;
+    top: 32px !important;
+    right: 12px !important;
+    font-size: 8px !important;
+  }
+
+  .stats-col {
+    padding: 0 !important;
+    gap: 6px !important;
+  }
+
+  .stat-card, .count-card {
+    padding: 6px 8px !important;
+    border-radius: 8px !important;
+  }
+
+  .stat-label, .count-label {
+    font-size: 8px !important;
+    margin-bottom: 4px !important;
+    gap: 4px !important;
+  }
+  
+  .stat-label .sc-dot, .count-label .sc-dot {
+    width: 4px !important;
+    height: 4px !important;
+  }
+
+  .stat-val, .count-big {
+    font-size: 14px !important;
+  }
+  
+  .count-big {
+    line-height: 1 !important;
+  }
+
+  .stat-detail, .count-sub {
+    font-size: 8px !important;
+    margin-top: 2px !important;
+  }
+
+  .stat-bar, .count-bar {
+    height: 3px !important;
+    margin-top: 4px !important;
+  }
+
+  .gauge-col {
+    padding: 4px 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+  
+  .gauge-wrap {
+    width: 110px !important;
+    height: 110px !important;
+    margin-bottom: 0 !important;
+  }
+  
+  .gauge-wrap svg {
+    width: 110px !important;
+    height: 110px !important;
+  }
+  
+  .gauge-center {
+    width: 62px !important;
+    height: 62px !important;
+    border-width: 1px !important;
+  }
+  
+  .gauge-clabel {
+    font-size: 8px !important;
+  }
+  
+  .gauge-cval {
+    font-size: 13px !important;
+    font-weight: 800 !important;
+  }
+  
+  .gauge-legend {
+    display: none !important;
+  }
+  
+  .dash-foot {
+    padding: 8px 10px !important;
+    gap: 8px !important;
+  }
+  
+  .foot-item {
+    gap: 4px !important;
+  }
+  
+  .foot-label, .foot-pct {
+    font-size: 9px !important;
+  }
+  
+  .foot-track {
+    height: 3px !important;
+  }
+
+  .quick-action-rail {
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .quick-action-rail::-webkit-scrollbar {
+    display: none;
+  }
 }
+.view-toggle-btn {
   width:100%; padding:6px; border-radius:7px; border:1px solid rgba(255,255,255,.1);
-  background:rgba(255,255,255,.04); color:#94a3b8; font-size:.73rem; cursor:pointer;
+  background:rgba(255,255,255,.04); color:#cbd5e1; font-size:.73rem; cursor:pointer;
   transition:background .15s;
 }
 .view-toggle-btn:hover { background:rgba(255,255,255,.1); color:#e2e8f0; }
@@ -5152,18 +5918,19 @@ h4 {
     
 .paper-panel {
   padding: 12px;
-  border: 1px solid rgba(255,255,255,0.055);
+  border: 1.5px solid rgba(255, 255, 255, 0.12); /* enhanced, seeable border */
   border-radius: 14px;
-  background: rgba(255,255,255,0.03);
-  transition: border-color .18s ease, background .18s ease, transform .18s ease;
+  background: rgba(255, 255, 255, 0.03);
+  transition: border-color 0.18s ease, background 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
 }
 .paper-panel:hover {
-  border-color: color-mix(in srgb, var(--subject-accent) 28%, rgba(255,255,255,0.08));
-  background: rgba(255,255,255,0.045);
-  transform: translateY(-1px);
+  border-color: color-mix(in srgb, var(--subject-accent) 35%, rgba(255, 255, 255, 0.22));
+  background: rgba(255, 255, 255, 0.055);
+  transform: translateY(-1.5px);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
 }
-.paper-panel + .paper-panel { padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.055); }
-.chapter-bars { display:flex; width:100%; gap:5px; margin-bottom:11px; }
+.paper-panel + .paper-panel { padding-top: 12px; border-top: 1.5px solid rgba(255, 255, 255, 0.12); }
+.chapter-bars { display:flex; width:100%; gap:4px; margin-bottom:11px; }
 .paper-section .chapter-bars { margin: 6px 0 10px; }
 .paper-section:not(.is-open) .chapter-bars { margin-bottom: 0; }
 .chapter-bar-container {
@@ -5177,15 +5944,15 @@ h4 {
   cursor:pointer;
   outline:none;
 }
-.chapter-bar-container:hover .chapter-bar { transform:scaleY(1.35); transform-origin:center; }
+.chapter-bar-container:hover .chapter-bar { transform:scaleY(1.6); transform-origin:center; }
 .chapter-bar-container:hover small,
 .chapter-bar-container:focus-visible small,
 .chapter-bar-container.is-tip-open small { color:#f1f5f9; }
-.chapter-bar { width:100%; height:5px; border-radius:999px; transition:background .3s,box-shadow .3s,transform .18s ease; }
-.chapter-bar--pending { background:rgba(239,68,68,.72); }
-.chapter-bar--run     { background:#f59e0b; box-shadow:none; }
-.chapter-bar--done    { background:#10b981; box-shadow:none; }
-.chapter-bar-container small { color:#64748b; font-size:.58rem; font-weight:800; line-height:1; }
+.chapter-bar { width:100%; height:6px; border-radius:3px; transition:background .3s,box-shadow .3s,transform .18s ease; }
+.chapter-bar--pending { background:rgba(239,68,68,0.78); }
+.chapter-bar--run     { background:var(--color-running); box-shadow:0 0 8px rgba(245, 158, 11, 0.32); }
+.chapter-bar--done    { background:var(--color-done); box-shadow:0 0 8px rgba(16, 185, 129, 0.32); }
+.chapter-bar-container small { color:#a1a1aa; font-size:.58rem; font-weight:800; line-height:1; }
 .chapter-bar-tip {
   position:absolute;
   left:50%;
@@ -5265,7 +6032,7 @@ h4 {
 .chapter-bar-tip__title {
   display:block;
   margin-bottom:7px;
-  color:#94a3b8;
+  color:#cbd5e1;
   font-size:.68rem;
   font-weight:800;
 }
@@ -5296,6 +6063,13 @@ h4 {
   .cls-row,
   .bq-row { align-items: stretch; flex-direction: column; }
   .cls-controls { justify-content: space-between; }
+
+  /* Dashboard Footer Mobile Overrides */
+  .dash-foot {
+    grid-template-columns: 1fr !important;
+    gap: 8px;
+    padding: 12px 16px;
+  }
 }
 
     </style>
@@ -5352,7 +6126,7 @@ h4 {
             muted
             playsinline
             preload="auto"
-            poster="https://raw.githubusercontent.com/tanmysarker733-svg/tonustudyv2/main/Assets/Image/live%20study.png"
+            poster="https://raw.githubusercontent.com/tanmysarker733-svg/tonustudyv2/main/Assets/Images/live%20study.png"
           >
             <source src="https://raw.githubusercontent.com/tanmysarker733-svg/tonustudyv2/main/Assets/Videos/live_study.mp4" type="video/mp4" />
           </video>
@@ -5446,6 +6220,7 @@ const defaultUserSettings = {
   globalStyle: "percentage",
   profileImg: "",
   fbLink: "",
+  themeMode: "dark",
   barColors: { done: "#10b981", running: "#f59e0b", pending: "#ef4444" },
   graphColors: { class: "#8d47c7", total: "#4f97bb" },
   uiConfigs: {
@@ -5487,6 +6262,8 @@ const loadUserSettings = () => {
 
 const saveUserSettings = () => {
   try { localStorage.setItem(USER_SETTINGS_KEY, JSON.stringify(scaffoldState.userSettings)); } catch(_) {}
+  updateLocalWriteTimestamp();
+  triggerCloudSaveDebounced();
 };
 
 const applyUserThemeSettings = () => {
@@ -5495,6 +6272,17 @@ const applyUserThemeSettings = () => {
   root.style.setProperty("--color-done", colors.done || "#10b981");
   root.style.setProperty("--color-running", colors.running || "#f59e0b");
   root.style.setProperty("--color-pending", colors.pending || "#ef4444");
+
+  const theme = scaffoldState.userSettings?.themeMode || "dark";
+  const modern = document.getElementById("dashboardModern");
+  const card = document.getElementById("dashboardCard");
+  if (modern && card) {
+    const isDark = theme === "dark";
+    modern.classList.toggle("dark", isDark);
+    modern.classList.toggle("light", !isDark);
+    card.classList.toggle("dark", isDark);
+    card.classList.toggle("light", !isDark);
+  }
 };
 
 const currentStudyMode = () => (scaffoldState?.userSettings?.studyMode === "ssc" ? "ssc" : "hsc");
@@ -5506,8 +6294,8 @@ const CHAT_FIREBASE_CONFIG = {
   projectId: "tonustudy",
   storageBucket: "tonustudy.firebasestorage.app",
   messagingSenderId: "663585592404",
-  appId: "1:663585592404:web:483eb7d56547d0f83dc9c1",
-  measurementId: "G-E0PEG9BP5G",
+  appId: "1:663585592404:web:79c2c396d48692513dc9c1",
+  measurementId: "G-SNSLJRJXGR"
 };
 
 const CHAT_COLLECTION = "hsc_group_chat_forever_v1";
@@ -5628,6 +6416,13 @@ const renderAccountMessageFeed = () => {
   `).join("");
 };
 
+const scrollChatToBottom = (behavior = "auto") => {
+  const feed = document.getElementById("chatFeed");
+  if (feed) {
+    feed.scrollTo({ top: feed.scrollHeight, behavior });
+  }
+};
+
 const renderChatMessages = () => {
   const feed = document.getElementById("chatFeed");
   const count = document.getElementById("chatMessageCount");
@@ -5651,16 +6446,30 @@ const renderChatMessages = () => {
   feed.innerHTML = visible.map((message, index) => {
     const isSelf = message.authorId === chatState.profile.id;
     const visibilityClass = message.visibility === "private" ? "chat-visibility-pill chat-visibility-pill--private" : "chat-visibility-pill";
+    const actionsHtml = isSelf ? `
+      <div class="chat-item__actions" style="display: flex; gap: 8px; margin-left: auto; align-items: center;">
+        <button type="button" data-action="chat-edit-msg" data-id="${message.id}" style="background: none; border: none; color: var(--text-sub); cursor: pointer; padding: 2px; display: inline-flex; align-items: center; justify-content: center; transition: color 0.15s ease;" title="Edit Message">
+          ${icon("pencil", "Edit")}
+        </button>
+        <button type="button" data-action="chat-delete-msg" data-id="${message.id}" style="background: none; border: none; color: rgba(239, 68, 68, 0.6); cursor: pointer; padding: 2px; display: inline-flex; align-items: center; justify-content: center; transition: color 0.15s ease;" title="Delete Message">
+          ${icon("trash-2", "Delete")}
+        </button>
+      </div>
+    ` : "";
+    
     return `
       <article class="chat-item ${isSelf ? "chat-item--self" : ""}">
         <div class="chat-item__serial">${index + 1}</div>
         <div class="chat-item__card">
-          <div class="chat-item__head">
-            <strong>${escapeHtml(message.authorName || "Student")}</strong>
-            <div class="chat-item__meta">
-              <span>${escapeHtml(formatChatTime(message))}</span>
-              <span class="${visibilityClass}">${escapeHtml(message.visibility || "public")}</span>
+          <div class="chat-item__head" style="display: flex; align-items: center; width: 100%; justify-content: space-between;">
+            <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+              <strong>${escapeHtml(message.authorName || "Student")}</strong>
+              <div class="chat-item__meta" style="display: inline-flex; align-items: center; gap: 6px; margin: 0;">
+                <span>${escapeHtml(formatChatTime(message))}</span>
+                <span class="${visibilityClass}">${escapeHtml(message.visibility || "public")}</span>
+              </div>
             </div>
+            ${actionsHtml}
           </div>
           <div class="chat-item__body">${escapeChatBody(message.text)}</div>
         </div>
@@ -5668,6 +6477,7 @@ const renderChatMessages = () => {
     `;
   }).join("");
   renderAccountMessageFeed();
+  scrollChatToBottom("auto");
 };
 
 const syncChatUi = () => {
@@ -5728,6 +6538,8 @@ const initGroupChat = () => {
     chatState.status = "Connected to Firestore";
     setChatFeedback("Firestore chat is live. Messages stay stored in the cloud.", "success");
     startChatListener();
+    syncChDataOnLogin();
+    renderSyncStatusUI();
   } catch (error) {
     chatState.status = `Firestore error: ${error.message}`;
     setChatFeedback("Could not initialize Firestore chat.", "error");
@@ -5784,6 +6596,1567 @@ const sendChatMessage = async () => {
     setChatFeedback(`Send failed: ${error.message}`, "error");
   }
 };
+
+/* Smart Update Composer Wizard Logic */
+const composerState = {
+  active: false,
+  step: 1,
+  furthestStep: 1,
+  date: new Date().toISOString().split('T')[0],
+  studyQuality: 70,
+  selfStudyTime: 0,
+  classDuration: 0,
+  totalStudyDuration: 0,
+  addedLines: [],
+  addedItems: [],
+  currentItem: null,
+  cumulativeText: ""
+};
+
+function resetComposerCurrentItem() {
+  composerState.currentItem = {
+    subjectIndex: null,
+    paperIndex: null,
+    chapterIndex: null,
+    classType: null,
+    selectedLectures: [],
+    totalLectures: 10,
+    percent: null,
+    isCustomLine: false,
+    customText: ""
+  };
+}
+
+function formatComposerDate(dateStr) {
+  if (!dateStr) return "";
+  const parts = dateStr.split('-');
+  if (parts.length !== 3) return dateStr;
+  const year = parts[0];
+  const monthIndex = parseInt(parts[1], 10) - 1;
+  const day = parseInt(parts[2], 10);
+  const monthNames = [
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
+  ];
+  return `${day} ${monthNames[monthIndex]} ${year}`;
+}
+
+function formatDurationShort(minutes) {
+  if (!minutes || minutes <= 0) return "";
+  const h = Math.floor(minutes / 60);
+  const m = minutes % 60;
+  if (h === 0) return `${m}min`;
+  if (m === 0) return `${h}hrs`;
+  if (m === 30) return `${h}:30hrs`;
+  if (m === 15 || m === 45) return `${h}hrs ${m}min`;
+  return `${h}:${m < 10 ? '0' + m : m}hrs`;
+}
+
+function formatSelectedLectures(selectedArr) {
+  if (!selectedArr || selectedArr.length === 0) return { text: "", isRange: false };
+  const sorted = [...selectedArr].sort((a, b) => a - b);
+  let isConsecutive = true;
+  for (let i = 1; i < sorted.length; i++) {
+    if (sorted[i] !== sorted[i-1] + 1) {
+      isConsecutive = false;
+      break;
+    }
+  }
+  if (isConsecutive && sorted.length >= 4) {
+    return {
+      text: `Lecture ${sorted[0]}-${sorted[sorted.length-1]}`,
+      isRange: true
+    };
+  } else {
+    return {
+      text: `Lecture ${sorted.join('+')}`,
+      isRange: false
+    };
+  }
+}
+
+function generateLineText(item) {
+  if (item.isCustomLine) {
+    return item.customText;
+  }
+  const subj = item.subjectIndex !== null && item.subjectIndex !== undefined ? scaffoldState.syllabus[item.subjectIndex] : null;
+  if (!subj) return "";
+  const subjName = subj.title;
+  const paperName = subj.hasPapers ? (item.paperIndex === 0 ? "P1" : "P2") : "";
+  const chName = `C${item.chapterIndex + 1}`;
+  const typeText = item.classType === "Detailed" ? "" : (item.classType === "One Shot" ? "OS" : item.classType);
+  const lectInfo = formatSelectedLectures(item.selectedLectures);
+  const lecText = lectInfo.text;
+  const isRange = lectInfo.isRange;
+  const totalText = (item.totalLectures && lecText) ? `/${item.totalLectures}` : "";
+  
+  if (isRange) {
+    const parts = [subjName, paperName + chName, typeText, lecText + totalText].filter(Boolean).join(' ');
+    return `📝 ${parts} Revision`;
+  } else {
+    const parts = [subjName, paperName + chName, typeText, lecText + totalText].filter(Boolean).join(' ');
+    if (item.percent === 100 || item.percent === null) {
+      return `▶️ ${parts} ✅`;
+    } else {
+      return `▶️ ${parts} 🔄 ${item.percent}%`;
+    }
+  }
+}
+
+function getDefaultLineText(item) {
+  if (item.customText) return item.customText;
+  if (item.isCustomLine) {
+    return item.customText || "";
+  }
+  if (item.subjectIndex === null || item.subjectIndex === undefined) {
+    return "";
+  }
+  const subj = scaffoldState.syllabus[item.subjectIndex];
+  if (!subj) return "";
+  
+  const isLanguage = ["Bangla", "English"].includes(subj.title);
+  const isICT = subj.title === "ICT";
+
+  if (isLanguage) {
+    const paperStr = item.paperIndex === 0 ? "1st Paper" : "2nd Paper";
+    return `▶️ ${subj.title} ${paperStr} - `;
+  }
+  if (isICT) {
+    const chStr = item.chapterIndex !== null ? `C${item.chapterIndex + 1}` : "";
+    return `▶️ ICT ${chStr} - `;
+  }
+  return generateLineText(item);
+}
+
+function syncComposerProgressToSyllabus() {
+  composerState.addedItems.forEach(item => {
+    if (item.isCustomLine) return;
+    if (item.subjectIndex === null || item.subjectIndex === undefined) return;
+    
+    const subj = scaffoldState.syllabus[item.subjectIndex];
+    if (!subj) return;
+    
+    const pi = subj.hasPapers ? item.paperIndex : 0;
+    const ci = item.chapterIndex;
+    if (ci === null || ci === undefined) return;
+    
+    const paperObj = subj.hasPapers ? subj.papers[pi] : null;
+    const ch = paperObj ? paperObj.chapters[ci] : subj.chapters[ci];
+    if (!ch) return;
+    
+    if (ch.isPerc) {
+      if (item.percent !== null && item.percent !== undefined) {
+        mutateCh(item.subjectIndex, pi, ci, c => {
+          c.donePerc = Math.max(c.donePerc || 0, item.percent);
+        });
+      }
+    } else {
+      const type = item.classType;
+      if (!type) return;
+      
+      const keyMap = { "Detailed": "doneDL", "Advanced": "doneAdv", "Admission": "doneAdm", "FRB": "doneFRB", "One Shot": "doneOS" };
+      const doneKey = keyMap[type] || "doneDL";
+      
+      mutateCh(item.subjectIndex, pi, ci, c => {
+        if (item.totalLectures) {
+          const keyMapTotal = { "Detailed": "totalDL", "Advanced": "totalAdv", "Admission": "totalAdm", "FRB": "totalFRB", "One Shot": "totalOS" };
+          const dbTotalKey = keyMapTotal[type] || "totalDL";
+          c[dbTotalKey] = item.totalLectures;
+        }
+        
+        if (item.selectedLectures && item.selectedLectures.length > 0) {
+          const highestLec = Math.max(...item.selectedLectures);
+          const completionPct = item.percent !== null ? item.percent : 100;
+          const targetVal = (highestLec - 1) + (completionPct / 100);
+          c[doneKey] = Math.max(c[doneKey] || 0, targetVal);
+        }
+      });
+    }
+  });
+}
+
+function getNextStep(currentStep, subjectTitle) {
+  const isICT = subjectTitle === "ICT";
+  const isLanguage = ["Bangla", "English"].includes(subjectTitle);
+
+  if (currentStep === 1) return 2;
+  if (currentStep === 2) {
+    if (isLanguage) return 8;
+    if (isICT) return 4;
+    return 4;
+  }
+  if (currentStep === 4) {
+    if (isICT) return 8;
+    return 5;
+  }
+  if (currentStep === 5) return 6;
+  if (currentStep === 6) return 7;
+  if (currentStep === 7) return 8;
+  if (currentStep === 8) return 9;
+  if (currentStep === 9) return 10;
+  return 10;
+}
+
+function getPrevStep(currentStep, subjectTitle) {
+  const isICT = subjectTitle === "ICT";
+  const isLanguage = ["Bangla", "English"].includes(subjectTitle);
+
+  if (currentStep === 10) return 9;
+  if (currentStep === 9) return 8;
+  if (currentStep === 8) {
+    if (isLanguage) return 2;
+    if (isICT) return 4;
+    return 7;
+  }
+  if (currentStep === 7) return 6;
+  if (currentStep === 6) return 5;
+  if (currentStep === 5) return 4;
+  if (currentStep === 4) return 2;
+  if (currentStep === 2) return 1;
+  return 1;
+}
+
+function getStepTitle(step) {
+  switch(step) {
+    case 1: return "Update Basic Info";
+    case 2: return "Choose Subject";
+    case 4: return "Choose Chapter";
+    case 5: return "Choose Class Type";
+    case 6: return "Choose Lecture Badges";
+    case 7: return "Choose Completion %";
+    case 8: return "Confirm Line";
+    case 9: return "Review Added Lines";
+    case 10: return "Final Preview";
+    default: return "Smart Update Wizard";
+  }
+}
+
+function getStepProgressInfo() {
+  const item = composerState.currentItem;
+  const subjIndex = item?.subjectIndex;
+  const subj = subjIndex !== null && subjIndex !== undefined ? scaffoldState.syllabus[subjIndex] : null;
+  const subjTitle = subj ? subj.title : "";
+  const isLanguage = ["Bangla", "English"].includes(subjTitle);
+  const isICT = subjTitle === "ICT";
+
+  let steps = [1, 2];
+  if (subj) {
+    if (isLanguage) {
+      steps.push(8, 9, 10);
+    } else if (isICT) {
+      steps.push(4, 8, 9, 10);
+    } else {
+      steps.push(4, 5, 6, 7, 8, 9, 10);
+    }
+  } else {
+    steps.push(4, 5, 6, 7, 8, 9, 10);
+  }
+
+  const currentIdx = steps.indexOf(composerState.step);
+  const displayStep = currentIdx >= 0 ? currentIdx + 1 : composerState.step;
+  const totalSteps = steps.length;
+  return { displayStep, totalSteps };
+}
+
+function getStepsForAccordion() {
+  const item = composerState.currentItem;
+  const subjIndex = item?.subjectIndex;
+  const subj = subjIndex !== null && subjIndex !== undefined ? scaffoldState.syllabus[subjIndex] : null;
+  const subjTitle = subj ? subj.title : "";
+  const isLanguage = ["Bangla", "English"].includes(subjTitle);
+  const isICT = subjTitle === "ICT";
+
+  let steps = [1, 2];
+  if (subjIndex !== null && subjIndex !== undefined) {
+    if (isLanguage) {
+      steps.push(8);
+    } else if (isICT) {
+      steps.push(4, 8);
+    } else {
+      steps.push(4, 5, 6, 7, 8);
+    }
+  } else {
+    steps.push(4, 5, 6, 7, 8);
+  }
+  return steps;
+}
+
+function getAccordionStepValue(step) {
+  const item = composerState.currentItem;
+  if (!item) return "";
+  
+  switch(step) {
+    case 1:
+      return formatComposerDate(composerState.date);
+    case 2: {
+      if (item.subjectIndex === null) return "";
+      const subj = scaffoldState.syllabus[item.subjectIndex];
+      if (!subj) return "";
+      if (subj.hasPapers && item.paperIndex !== null) {
+        return `${subj.title} ${item.paperIndex === 0 ? "1st Paper" : "2nd Paper"}`;
+      }
+      return subj.title;
+    }
+    case 4:
+      return item.chapterIndex !== null ? `C${item.chapterIndex + 1}` : "";
+    case 5:
+      return item.classType || "";
+    case 6:
+      if (item.selectedLectures && item.selectedLectures.length > 0) {
+        const sorted = [...item.selectedLectures].sort((a, b) => a - b);
+        return `Lecture ${sorted.join('+')}`;
+      }
+      return "";
+    case 7:
+      return item.percent ? `${item.percent}%` : "";
+    default:
+      return "";
+  }
+}
+
+function getLivePreviewText(includeCurrentDraft = true, currentDraftText = null) {
+  const lines = [];
+  lines.push(`🚀 Update (${formatComposerDate(composerState.date)})`);
+  
+  const items = [...composerState.addedItems];
+  const texts = [...composerState.addedLines];
+  
+  if (includeCurrentDraft && composerState.currentItem) {
+    const item = composerState.currentItem;
+    const draftText = currentDraftText !== null ? currentDraftText : (item.customText || getDefaultLineText(item));
+    if (draftText && draftText.trim() !== "" && draftText.trim() !== "▶️" && draftText.trim() !== "▶️ ") {
+      items.push(item);
+      texts.push(draftText);
+    }
+  }
+  
+  for (let i = 0; i < items.length; i++) {
+    const item = items[i];
+    const line = texts[i];
+    if (i > 0 && item.subjectIndex !== null && item.subjectIndex !== undefined &&
+        items[i-1].subjectIndex === item.subjectIndex && !item.isCustomLine && !items[i-1].isCustomLine) {
+      
+      const subj = scaffoldState.syllabus[item.subjectIndex];
+      const subjName = subj ? subj.title : "";
+      const prefix1 = "▶️ " + subjName + " ";
+      const prefix2 = "📝 " + subjName + " ";
+      let displayLine = line;
+      if (subjName) {
+        if (displayLine.startsWith(prefix1)) {
+          displayLine = "          " + displayLine.substring(prefix1.length);
+        } else if (displayLine.startsWith(prefix2)) {
+          displayLine = "          " + displayLine.substring(prefix2.length);
+        }
+      }
+      lines.push(displayLine);
+    } else {
+      lines.push(line);
+    }
+  }
+  
+  if (items.length > 0) {
+    lines.push("");
+  }
+  
+  if (composerState.studyQuality !== null && composerState.studyQuality !== undefined) {
+    lines.push(`📊 Study Rating( Quality) - ${composerState.studyQuality}%`);
+  }
+  if (composerState.selfStudyTime > 0) {
+    lines.push(`🧠 Self Study - ${formatDurationShort(composerState.selfStudyTime)}`);
+  }
+  if (composerState.classDuration > 0) {
+    lines.push(`⌛ Class Duration - ${formatDurationShort(composerState.classDuration)}`);
+  }
+  if (composerState.totalStudyDuration > 0) {
+    lines.push(`🕒 Study Duration - ${formatDurationShort(composerState.totalStudyDuration)}`);
+  }
+  
+  const currentBlock = lines.join('\n');
+  if (composerState.cumulativeText) {
+    return composerState.cumulativeText + "\n\n.....\n.....\n\n" + currentBlock;
+  }
+  return currentBlock;
+}
+
+function getFinalPreviewText() {
+  return getLivePreviewText(false);
+}
+
+function makeAdjusterRow(label, stateKey) {
+  const minutes = composerState[stateKey];
+  const displayVal = formatDurationShort(minutes) || "0min";
+  return `
+    <div class="composer-time-adjuster">
+      <div class="adjuster-label">${label}</div>
+      <div class="adjuster-row">
+        <div class="adjuster-value" id="${stateKey}Val">${displayVal}</div>
+        <div class="adjuster-actions">
+          <button type="button" data-action="adjust-time" data-key="${stateKey}" data-delta="-60">-1h</button>
+          <button type="button" data-action="adjust-time" data-key="${stateKey}" data-delta="-5">-5m</button>
+          <button type="button" data-action="adjust-time" data-key="${stateKey}" data-delta="5">+5m</button>
+          <button type="button" data-action="adjust-time" data-key="${stateKey}" data-delta="60">+1h</button>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function saveComposerDraft() {
+  try {
+    const draft = {
+      step: composerState.step,
+      furthestStep: composerState.furthestStep || 1,
+      currentItem: composerState.currentItem,
+      cumulativeText: composerState.cumulativeText,
+      addedLines: composerState.addedLines,
+      addedItems: composerState.addedItems,
+      date: composerState.date,
+      studyQuality: composerState.studyQuality,
+      selfStudyTime: composerState.selfStudyTime,
+      classDuration: composerState.classDuration,
+      totalStudyDuration: composerState.totalStudyDuration
+    };
+    localStorage.setItem('composer_wizard_draft', JSON.stringify(draft));
+
+    // Check if the draft is not empty before starting the timer
+    const isDraftEmpty = composerState.step === 1 && 
+                         composerState.addedLines.length === 0 && 
+                         composerState.cumulativeText === "" &&
+                         composerState.selfStudyTime === 0 &&
+                         composerState.classDuration === 0 &&
+                         composerState.totalStudyDuration === 0;
+                         
+    if (!isDraftEmpty && !localStorage.getItem('composer_wizard_draft_timestamp')) {
+      localStorage.setItem('composer_wizard_draft_timestamp', Date.now().toString());
+    }
+  } catch (_) {}
+}
+
+function loadComposerDraft() {
+  try {
+    const data = localStorage.getItem('composer_wizard_draft');
+    if (!data) return;
+    const draft = JSON.parse(data);
+    if (draft) {
+      composerState.step = draft.step || 1;
+      composerState.furthestStep = draft.furthestStep || 1;
+      if (draft.currentItem) {
+        composerState.currentItem = draft.currentItem;
+      }
+      composerState.cumulativeText = draft.cumulativeText || "";
+      composerState.addedLines = draft.addedLines || [];
+      composerState.addedItems = draft.addedItems || [];
+      composerState.date = draft.date || new Date().toISOString().split('T')[0];
+      composerState.studyQuality = draft.studyQuality !== undefined ? draft.studyQuality : 70;
+      composerState.selfStudyTime = draft.selfStudyTime || 0;
+      composerState.classDuration = draft.classDuration || 0;
+      composerState.totalStudyDuration = draft.totalStudyDuration || 0;
+    }
+  } catch (_) {}
+}
+
+function clearComposerDraft() {
+  try {
+    localStorage.removeItem('composer_wizard_draft');
+    localStorage.removeItem('composer_wizard_draft_timestamp');
+  } catch (_) {}
+}
+
+function checkComposerDraftTimeout() {
+  try {
+    const timestampStr = localStorage.getItem('composer_wizard_draft_timestamp');
+    if (timestampStr) {
+      const timestamp = parseInt(timestampStr, 10);
+      if (!isNaN(timestamp)) {
+        const elapsed = Date.now() - timestamp;
+        const limit = 45 * 60 * 1000; // 45 minutes
+        if (elapsed >= limit) {
+          clearComposerDraft();
+          
+          composerState.step = 1;
+          composerState.furthestStep = 1;
+          composerState.cumulativeText = "";
+          composerState.addedLines = [];
+          composerState.addedItems = [];
+          composerState.date = new Date().toISOString().split('T')[0];
+          composerState.studyQuality = 70;
+          composerState.selfStudyTime = 0;
+          composerState.classDuration = 0;
+          composerState.totalStudyDuration = 0;
+          resetComposerCurrentItem();
+          
+          if (composerState.active) {
+            renderComposerWizard();
+          }
+        }
+      }
+    }
+  } catch (_) {}
+}
+
+function renderComposerFooter() {
+  const step = composerState.step;
+  const item = composerState.currentItem;
+  let leftHtml = "";
+  let rightHtml = "";
+  
+  if (step > 1 && step <= 9) {
+    leftHtml += `
+      <button class="btn-small" type="button" data-action="composer-step-prev">
+        ${icon("arrow-left", "Back")}
+        <span>Back</span>
+      </button>
+    `;
+  }
+  
+  if (step === 1) {
+    leftHtml += `
+      <button class="btn-small" type="button" data-action="composer-reset-wizard" style="color:#ef4444; border-color:rgba(239,68,68,0.2);">
+        Reset Fresh
+      </button>
+    `;
+  }
+  
+  if (step > 1 && step < 8 && (!item || !item.isCustomLine)) {
+    leftHtml += `
+      <button class="btn-small" type="button" data-action="composer-custom-line">
+        ${icon("plus", "Custom")}
+        <span>Custom List Line</span>
+      </button>
+    `;
+  }
+  
+  if (step === 1) {
+    rightHtml += `
+      <button class="btn-small" type="button" data-action="close-composer-wizard">Cancel</button>
+      <button class="btn-small btn-small--primary" type="button" data-action="composer-step-next">Continue</button>
+    `;
+  } else if (step === 2 || step === 4 || step === 5) {
+    // Auto-advances on item click, no Continue button in footer.
+    rightHtml += `
+      <span style="font-size: 0.75rem; color: var(--text-sub); align-self: center; margin-right: 8px;">Select an option to continue</span>
+    `;
+  } else if (step === 6 || step === 7) {
+    rightHtml += `
+      <button class="btn-small btn-small--primary" type="button" data-action="composer-step-next">Continue</button>
+    `;
+  } else if (step === 8) {
+    rightHtml += `
+      <button class="btn-small btn-small--accent" type="button" data-action="composer-confirm-and-add-another" style="margin-right: 8px;">
+        ${icon("plus", "Add More")}
+        <span>Add & Add Another</span>
+      </button>
+      <button class="btn-small btn-small--primary" type="button" data-action="composer-confirm-and-review">
+        ${icon("check", "Done")}
+        <span>Add & Review</span>
+      </button>
+    `;
+  } else if (step === 9) {
+    const hasItems = composerState.addedItems.length > 0;
+    rightHtml += `
+      <button class="btn-small btn-small--accent" type="button" data-action="composer-add-more">
+        ${icon("plus", "Add More")}
+        <span>Add More</span>
+      </button>
+      <button class="btn-small btn-small--primary" type="button" data-action="composer-step-next" ${hasItems ? '' : 'disabled'}>Done</button>
+    `;
+  } else if (step === 10) {
+    rightHtml += `
+      <button class="btn-small" type="button" data-action="composer-new-update">
+        ${icon("list-plus", "New")}
+        <span>New Update</span>
+      </button>
+      <button class="btn-small btn-small--accent" type="button" data-action="composer-copy">
+        ${icon("copy", "Copy")}
+        <span>Copy</span>
+      </button>
+      <button class="btn-small btn-small--primary" type="button" data-action="composer-save-sync">
+        ${icon("refresh-cw", "Sync")}
+        <span>Save & Sync</span>
+      </button>
+      <button class="btn-small btn-small--primary" type="button" data-action="composer-send-message" style="background: var(--accent-blue); color: white; border-color: var(--accent-blue);">
+        ${icon("send", "Send")}
+        <span>Send Message</span>
+      </button>
+      <button class="btn-small" type="button" data-action="close-composer-wizard">Close</button>
+    `;
+  }
+  
+  return `
+    <div class="wizard-footer-left">${leftHtml}</div>
+    <div class="wizard-footer-right">${rightHtml}</div>
+  `;
+}
+
+function getSubjectIconPath(subjectTitle, paperIndex) {
+  const mode = (scaffoldState.userSettings && scaffoldState.userSettings.studyMode) || "hsc";
+  
+  if (mode === "hsc") {
+    if (subjectTitle === "Bangla") {
+      return paperIndex === 0 ? "Assets/SVGs and Icons/Subject PNGs/Bn1.png" : "Assets/SVGs and Icons/Subject PNGs/Bn2.png";
+    }
+    if (subjectTitle === "English") {
+      return paperIndex === 0 ? "Assets/SVGs and Icons/Subject PNGs/En1.jpg" : "Assets/SVGs and Icons/Subject PNGs/En2.png";
+    }
+    if (subjectTitle === "Physics") {
+      return paperIndex === 0 ? "Assets/SVGs and Icons/Subject PNGs/Phy1.png" : "Assets/SVGs and Icons/Subject PNGs/Phy2.png";
+    }
+    if (subjectTitle === "Chemistry") {
+      return paperIndex === 0 ? "Assets/SVGs and Icons/Subject PNGs/Chem1.png" : "Assets/SVGs and Icons/Subject PNGs/Chem2.png";
+    }
+    if (subjectTitle === "Higher Math") {
+      return paperIndex === 0 ? "Assets/SVGs and Icons/Subject PNGs/HM1.png" : "Assets/SVGs and Icons/Subject PNGs/HM2.png";
+    }
+    if (subjectTitle === "Biology") {
+      return paperIndex === 0 ? "Assets/SVGs and Icons/Subject PNGs/Bio1.png" : "Assets/SVGs and Icons/Subject PNGs/Bio2.png";
+    }
+    if (subjectTitle === "ICT") {
+      return "Assets/SVGs and Icons/Subject PNGs/ICT.png";
+    }
+  } else {
+    if (subjectTitle === "Physics") return "Assets/SVGs and Icons/Subject PNGs/Phy.png";
+    if (subjectTitle === "Chemistry") return "Assets/SVGs and Icons/Subject PNGs/Chem.png";
+    if (subjectTitle === "Biology") return "Assets/SVGs and Icons/Subject PNGs/Bio.png";
+    if (subjectTitle === "Higher Math") return "Assets/SVGs and Icons/Subject PNGs/HM.png";
+    if (subjectTitle === "General Math") return "Assets/SVGs and Icons/Subject PNGs/GM.png";
+    if (subjectTitle === "ICT") return "Assets/SVGs and Icons/Subject PNGs/ICT.png";
+  }
+  return null;
+}
+
+function getStepFormHtml(stepNum) {
+  const item = composerState.currentItem;
+  switch(stepNum) {
+    case 1: {
+      let qualityVal = composerState.studyQuality;
+      let qualityText = "Medium";
+      if (qualityVal >= 85) qualityText = "Excel";
+      else if (qualityVal >= 70) qualityText = "Good";
+      else if (qualityVal >= 50) qualityText = "Medium";
+      else qualityText = "Low";
+      
+      return `
+        <div style="margin-bottom: 14px;">
+          <label class="adjuster-label" style="display:block; margin-bottom: 6px;">Select Update Date</label>
+          <input type="date" id="composerDate" class="composer-input-field" value="${composerState.date}">
+        </div>
+
+        <div class="composer-quality-row" style="margin-bottom: 14px;">
+          <div class="composer-quality-info">
+            <span>Study Quality Rating</span>
+            <strong><span id="composerQualityVal">${composerState.studyQuality}</span>% (${qualityText})</strong>
+          </div>
+          <input type="range" id="composerQuality" min="0" max="100" step="5" value="${composerState.studyQuality}" style="width: 100%; accent-color: var(--accent-blue);">
+        </div>
+
+        ${makeAdjusterRow("🧠 Self Study Time", "selfStudyTime")}
+        ${makeAdjusterRow("⌛ Class Duration", "classDuration")}
+        ${makeAdjusterRow("🕒 Study Duration", "totalStudyDuration")}
+      `;
+    }
+    case 2: {
+      const subjectOptions = [];
+      scaffoldState.syllabus.forEach((subj, sIdx) => {
+        if (subj.hasPapers) {
+          subj.papers.forEach((paper, pIdx) => {
+            subjectOptions.push({
+              label: `${subj.title} ${pIdx === 0 ? "1st" : "2nd"}`,
+              subjectIndex: sIdx,
+              paperIndex: pIdx
+            });
+          });
+        } else {
+          subjectOptions.push({
+            label: subj.title,
+            subjectIndex: sIdx,
+            paperIndex: null
+          });
+        }
+      });
+
+      return `
+        <div class="composer-grid">
+          ${subjectOptions.map(opt => {
+            const isSel = (item?.subjectIndex === opt.subjectIndex) && (item?.paperIndex === opt.paperIndex);
+            const iconPath = getSubjectIconPath(scaffoldState.syllabus[opt.subjectIndex].title, opt.paperIndex);
+            
+            let btnContent = "";
+            let inlineStyle = "";
+            if (iconPath) {
+              btnContent = `<img src="${iconPath}" alt="${escapeHtml(opt.label)}" style="width: 100%; height: 100%; object-fit: cover; display: block;" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                            <span style="display: none; font-size: 0.78rem; font-weight: 600;">${escapeHtml(opt.label)}</span>`;
+              inlineStyle = `padding: 0; min-height: unset; aspect-ratio: 1/1; overflow: hidden; display: flex; align-items: stretch; border-width: 2px; border-radius: 12px;`;
+            } else {
+              btnContent = `<span>${escapeHtml(opt.label)}</span>`;
+            }
+            
+            return `
+              <button class="composer-btn ${isSel ? 'is-selected' : ''}" type="button" data-action="composer-select-subject" data-subject-index="${opt.subjectIndex}" data-paper-index="${opt.paperIndex !== null ? opt.paperIndex : ''}" style="${inlineStyle}">
+                ${btnContent}
+              </button>
+            `;
+          }).join('')}
+        </div>
+        
+        <div class="composer-preview-pane" style="margin-top: 14px;">
+          <div class="preview-pane-label">Or Add Custom Line directly:</div>
+          <div style="display: flex; gap: 8px; align-items: center;">
+            <span style="font-family: monospace; font-size: 0.82rem; white-space: nowrap;">▶️ </span>
+            <input type="text" id="composerStep2CustomText" class="composer-input-field" style="margin-bottom: 0; min-height: 32px; padding: 4px 8px;" placeholder="e.g. Chemistry P1C2 Formula Revision">
+            <button class="btn-small btn-small--primary" type="button" data-action="composer-add-suffix-step2" style="min-height: 32px; padding: 0 12px;">Add</button>
+          </div>
+        </div>
+      `;
+    }
+    case 4: {
+      const subj = item.subjectIndex !== null && item.subjectIndex !== undefined ? scaffoldState.syllabus[item.subjectIndex] : null;
+      if (!subj) {
+        return `<div style="padding: 14px; color: var(--text-sub); text-align: center; font-size: 0.82rem;">Please select a subject in Step 2 first.</div>`;
+      }
+      const paper = subj.hasPapers ? subj.papers[item.paperIndex] : null;
+      const chapters = paper ? (paper.chapters || []) : (subj.chapters || []);
+      
+      const paperSel = subj.hasPapers ? (item.paperIndex === 0 ? "P1" : "P2") : "";
+      const chSel = item.chapterIndex !== null ? `C${item.chapterIndex + 1}` : "";
+      const prefixText = `▶️ ${subj.title} ${paperSel}${chSel} - `;
+      
+      return `
+        <div class="composer-grid">
+          ${chapters.map((ch, index) => {
+            const isSel = item.chapterIndex === index;
+            return `
+              <button class="composer-btn ${isSel ? 'is-selected' : ''}" type="button" data-action="composer-select-chapter" data-index="${index}">
+                <div style="display:flex; flex-direction:column; align-items:center; gap:2px; width:100%;">
+                  <span>C${index + 1}</span>
+                  <span style="font-size:0.68rem; font-weight:normal; opacity:0.8; text-align:center; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:110px;">${ch.name}</span>
+                </div>
+              </button>
+            `;
+          }).join('')}
+        </div>
+        
+        <div class="composer-preview-pane" style="margin-top: 14px;">
+          <div class="preview-pane-label">Or Add Custom Suffix directly:</div>
+          <div style="display: flex; gap: 8px; align-items: center;">
+            <span style="font-family: monospace; font-size: 0.82rem; white-space: nowrap;" id="composerStep4Prefix">${prefixText}</span>
+            <input type="text" id="composerStep4CustomText" class="composer-input-field" style="margin-bottom: 0; min-height: 32px; padding: 4px 8px;" placeholder="e.g. Formula Practice">
+            <button class="btn-small btn-small--primary" type="button" data-action="composer-add-suffix-step4" style="min-height: 32px; padding: 0 12px;">Add</button>
+          </div>
+        </div>
+      `;
+    }
+    case 5: {
+      const classTypes = ["Detailed", "Advanced", "Admission", "FRB", "One Shot"];
+      return `
+        <div class="composer-grid">
+          ${classTypes.map(type => {
+            const isSel = item.classType === type;
+            return `
+              <button class="composer-btn ${isSel ? 'is-selected' : ''}" type="button" data-action="composer-select-class-type" data-type="${type}">
+                <span>${type}</span>
+              </button>
+            `;
+          }).join('')}
+        </div>
+      `;
+    }
+    case 6: {
+      const totalLecs = item.totalLectures;
+      let badgesHtml = "";
+      for (let i = 1; i <= totalLecs; i++) {
+        const isSel = item.selectedLectures.includes(i);
+        badgesHtml += `
+          <button class="composer-btn ${isSel ? 'is-selected' : ''}" type="button" data-action="composer-toggle-lecture" data-lecture="${i}" style="width: 38px; height: 38px; border-radius: 50%; min-height: unset; padding: 0;">
+            ${i}
+          </button>
+        `;
+      }
+      
+      return `
+        <div style="margin-bottom: 14px; display: flex; align-items: center; gap: 8px;">
+          <span class="adjuster-label">Total Classes in Syllabus:</span>
+          <div style="display: inline-flex; align-items: center; gap: 4px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 8px; padding: 2px;">
+            <button type="button" data-action="composer-adjust-total-classes" data-delta="-1" style="width: 28px; height: 28px; border-radius: 6px; border: none; background: rgba(255,255,255,0.05); color: #fff; display: flex; align-items: center; justify-content: center; cursor: pointer; font-weight: bold;">-</button>
+            <input type="number" id="composerTotalClasses" class="composer-input-field" style="width: 50px; margin-bottom: 0; min-height: 28px; padding: 2px; text-align: center; border: none; background: transparent; font-weight: bold; color: #fff;" value="${totalLecs}">
+            <button type="button" data-action="composer-adjust-total-classes" data-delta="1" style="width: 28px; height: 28px; border-radius: 6px; border: none; background: rgba(255,255,255,0.05); color: #fff; display: flex; align-items: center; justify-content: center; cursor: pointer; font-weight: bold;">+</button>
+          </div>
+        </div>
+        <div class="composer-grid composer-grid--small" style="gap: 8px;">
+          ${badgesHtml}
+        </div>
+        <div style="font-size:0.75rem; color:var(--text-sub); margin-top:8px;">
+          Click to toggle lectures. Multiple consecutive lectures (4+) format as a revision range.
+        </div>
+      `;
+    }
+    case 7: {
+      const percents = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
+      return `
+        <div class="composer-grid composer-grid--cols3">
+          ${percents.map(pct => {
+            const isSel = item.percent === pct;
+            return `
+              <button class="composer-btn ${isSel ? 'is-selected' : ''}" type="button" data-action="composer-select-percent" data-percent="${pct}">
+                <span>${pct}%</span>
+              </button>
+            `;
+          }).join('')}
+        </div>
+      `;
+    }
+    case 8: {
+      const currentLineText = item.customText || getDefaultLineText(item);
+      const liveText = getLivePreviewText(true, currentLineText);
+      return `
+        <div style="margin-bottom: 12px;">
+          <label class="adjuster-label" style="display:block; margin-bottom: 6px;">Line Text Editor</label>
+          <input type="text" id="composerLineText" class="composer-input-field" value="${escapeHtml(currentLineText)}">
+        </div>
+        
+        <div class="composer-preview-pane">
+          <div class="preview-pane-label">Live Entire Message Preview</div>
+          <pre class="preview-pane-text" id="composerLinePreview" style="font-family: monospace; white-space: pre-wrap; font-size: 0.85rem; line-height: 1.4; background: rgba(0,0,0,0.25); padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05); margin: 0; color: #fff;">${escapeHtml(liveText)}</pre>
+        </div>
+      `;
+    }
+    default:
+      return "";
+  }
+}
+
+function getStepIcon(stepNum) {
+  switch(stepNum) {
+    case 1: return "calendar";
+    case 2: return "book-open";
+    case 4: return "bookmark";
+    case 5: return "layers";
+    case 6: return "award";
+    case 7: return "percent";
+    case 8: return "check-square";
+    default: return "help-circle";
+  }
+}
+
+function getStepInstruction(stepNum) {
+  switch(stepNum) {
+    case 1: return "Choose update date, study quality score, and adjust self study/class/total study durations.";
+    case 2: return "Click on the subject card you studied (e.g. Physics 1st). Or enter a custom line below.";
+    case 4: return "Click on the specific chapter studied. Or enter a custom suffix below (e.g. Formula Practice).";
+    case 5: return "Select the class type category (Detailed, Advanced, etc.) to set default lecture counts.";
+    case 6: return "Toggle the specific lecture numbers you completed. Use +/- to adjust total classes.";
+    case 7: return "Choose the completion percentage for this syllabus item (normally 100%).";
+    case 8: return "Edit the final line text if needed, preview the update log formatting, and click Done.";
+    default: return "";
+  }
+}
+
+function renderComposerWizard() {
+  const wizardNode = document.getElementById("chatUpdateComposer");
+  if (!wizardNode) return;
+  
+  // Auto-save draft on any render (state update)
+  saveComposerDraft();
+  
+  const prevStep = wizardNode.dataset.currentStep ? parseInt(wizardNode.dataset.currentStep, 10) : null;
+  
+  const progress = getStepProgressInfo();
+  const stepTitle = getStepTitle(composerState.step);
+  const step = composerState.step;
+  
+  let bodyHtml = "";
+  if (step <= 8) {
+    bodyHtml = `<div class="composer-accordion">`;
+    const activeSteps = getStepsForAccordion();
+    const furthest = composerState.furthestStep || 1;
+    const visibleSteps = activeSteps.filter(stepNum => (stepNum <= furthest) || (stepNum === step));
+    visibleSteps.forEach(stepNum => {
+      const isActive = (step === stepNum);
+      const valueSummary = getAccordionStepValue(stepNum);
+      const isCompleted = (stepNum < step) || (stepNum <= furthest && stepNum !== step);
+      const isClickable = (stepNum <= furthest) && (stepNum !== step);
+      const title = getStepTitle(stepNum);
+      const stepIcon = getStepIcon(stepNum);
+      const stepInstruction = getStepInstruction(stepNum);
+      
+      bodyHtml += `
+        <div class="accordion-item ${isActive ? 'is-active' : ''} ${isCompleted ? 'is-completed' : ''}">
+          <div class="accordion-header" ${isClickable ? `data-action="composer-go-to-step" data-step="${stepNum}"` : 'style="cursor: not-allowed; opacity: 0.5;"'}>
+            <span class="accordion-number">${stepNum}</span>
+            <span class="accordion-icon" style="margin-right: 8px; display: inline-flex; align-items: center; opacity: 0.7;">
+              ${icon(stepIcon)}
+            </span>
+            <span class="accordion-title">${title}</span>
+            ${(isCompleted && !isActive && valueSummary) ? `<span class="accordion-value">${escapeHtml(valueSummary)}</span>` : ''}
+          </div>
+      `;
+      
+      const isExpanded = (stepNum <= furthest) || isActive;
+      if (isExpanded) {
+        bodyHtml += `
+          <div class="accordion-content">
+            ${stepInstruction ? `<div style="font-size: 0.76rem; color: var(--text-sub); margin-bottom: 12px; display: flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.02); padding: 6px 10px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.04);">
+              <span>💡</span>
+              <span><strong>Instruction:</strong> ${stepInstruction}</span>
+            </div>` : ''}
+            ${getStepFormHtml(stepNum)}
+          </div>
+        `;
+      }
+      bodyHtml += `</div>`;
+    });
+    bodyHtml += `</div>`;
+  } else if (step === 9) {
+    bodyHtml = `
+      <div class="composer-step-title">Step 9: Review Added Lines (${composerState.addedItems.length})</div>
+      <div class="review-lines-list">
+        ${composerState.addedLines.length === 0 ? `
+          <div style="text-align:center; padding: 20px; color: var(--text-sub); font-size:0.85rem;">
+            No lines added yet. Click "Add More" to start.
+          </div>
+        ` : composerState.addedLines.map((line, idx) => `
+          <div class="review-line-item">
+            <span class="review-line-content">${escapeHtml(line)}</span>
+            <div class="review-line-actions">
+              <button type="button" data-action="composer-edit-line" data-index="${idx}" title="Edit Line">
+                ${icon("pencil", "Edit")}
+              </button>
+              <button type="button" data-action="composer-delete-line" class="btn-delete" data-index="${idx}" title="Delete Line">
+                ${icon("trash-2", "Delete")}
+              </button>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    `;
+  } else if (step === 10) {
+    const finalText = getFinalPreviewText();
+    bodyHtml = `
+      <div class="composer-step-title">Step 10: Final Copy & Sync Preview</div>
+      
+      <div class="composer-preview-pane" style="margin-bottom: 16px;">
+        <div class="preview-pane-label">Final Update Message</div>
+        <pre class="preview-pane-text" id="composerFinalPreviewText" style="font-family: monospace; white-space: pre-wrap; font-size: 0.88rem; line-height: 1.4; background: rgba(0,0,0,0.25); padding: 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05); margin: 0; color: #fff;">${escapeHtml(finalText)}</pre>
+      </div>
+      
+      <textarea id="composerFinalTextArea" style="display: none;">${escapeHtml(finalText)}</textarea>
+      
+      <div style="display: flex; gap: 8px; margin-bottom: 12px;">
+        <button class="btn-small btn-small--primary" type="button" data-action="composer-copy" style="flex: 1; min-height: 38px; font-size: 0.85rem; border-color: rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: center; gap: 6px;">
+          ${icon("copy", "Copy")}
+          <span>Copy Message</span>
+        </button>
+        <button class="btn-small btn-small--primary" type="button" data-action="composer-send-message" style="flex: 1; min-height: 38px; font-size: 0.85rem; background: var(--accent-blue); color: white; border-color: var(--accent-blue); display: flex; align-items: center; justify-content: center; gap: 6px;">
+          ${icon("send", "Send")}
+          <span>Send Message</span>
+        </button>
+      </div>
+      
+      <div id="composerSyncFeedback" class="chat-feedback" style="margin-top: -6px; margin-bottom: 12px; display: none;"></div>
+    `;
+  }
+  
+  const footerHtml = renderComposerFooter();
+  
+  wizardNode.innerHTML = `
+    <div class="composer-wizard-header">
+      <div class="composer-wizard-title">
+        <h3>${icon("sparkles")} Smart Update Composer</h3>
+        <span>Step ${progress.displayStep} of ${progress.totalSteps} — ${stepTitle} (${composerState.addedLines.length} lines)</span>
+      </div>
+      <div class="composer-step-indicator">Step ${progress.displayStep}/${progress.totalSteps}</div>
+    </div>
+    <div class="composer-wizard-body">
+      ${bodyHtml}
+    </div>
+    <div class="composer-wizard-footer">
+      ${footerHtml}
+    </div>
+  `;
+  
+  wizardNode.dataset.currentStep = step;
+  
+  setTimeout(() => {
+    const wizardBody = wizardNode.querySelector(".composer-wizard-body");
+    if (prevStep !== null && prevStep !== step) {
+      if (step <= 8) {
+        const activeItem = wizardNode.querySelector(".accordion-item.is-active");
+        if (activeItem && wizardBody) {
+          // Scroll only within the wizard body — never the whole page
+          const itemTop = activeItem.offsetTop - wizardBody.offsetTop;
+          wizardBody.scrollTo({ top: Math.max(0, itemTop - 12), behavior: 'smooth' });
+        }
+      } else {
+        if (wizardBody) {
+          wizardBody.scrollTop = 0;
+        }
+      }
+    }
+
+    // Always scroll the wizard container itself into view on the page/container
+    if (step >= 9) {
+      wizardNode.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    } else {
+      wizardNode.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  }, 150);
+  
+  if (window.lucide) {
+    window.lucide.createIcons();
+  }
+}
+
+function openComposerWizard() {
+  composerState.active = true;
+  
+  // Check if draft has timed out before loading
+  checkComposerDraftTimeout();
+  
+  composerState.step = 1;
+  composerState.furthestStep = 1;
+  composerState.addedLines = [];
+  composerState.addedItems = [];
+  composerState.cumulativeText = "";
+  resetComposerCurrentItem();
+  
+  // Load local draft
+  loadComposerDraft();
+  
+  const composeNode = document.querySelector(".chat-compose");
+  if (composeNode) composeNode.setAttribute("hidden", "");
+  
+  const wizardNode = document.getElementById("chatUpdateComposer");
+  if (wizardNode) {
+    wizardNode.removeAttribute("hidden");
+    renderComposerWizard();
+  }
+}
+
+function closeComposerWizard() {
+  composerState.active = false;
+  
+  const wizardNode = document.getElementById("chatUpdateComposer");
+  if (wizardNode) wizardNode.setAttribute("hidden", "");
+  
+  const composeNode = document.querySelector(".chat-compose");
+  if (composeNode) composeNode.removeAttribute("hidden");
+}
+
+function expandChat() {
+  const dialog = document.getElementById("chatExpandDialog");
+  const inlineContainer = document.querySelector("#chat .chat-shell");
+  const dialogBody = document.getElementById("chatExpandBody");
+  
+  if (dialog && inlineContainer && dialogBody) {
+    while (inlineContainer.firstChild) {
+      dialogBody.appendChild(inlineContainer.firstChild);
+    }
+    dialog.removeAttribute("hidden");
+    
+    const feed = dialogBody.querySelector("#chatFeed");
+    if (feed) {
+      feed.style.maxHeight = "calc(92vh - 320px)";
+    }
+  }
+}
+
+function closeExpandChat() {
+  const dialog = document.getElementById("chatExpandDialog");
+  const inlineContainer = document.querySelector("#chat .chat-shell");
+  const dialogBody = document.getElementById("chatExpandBody");
+  
+  if (dialog && inlineContainer && dialogBody) {
+    while (dialogBody.firstChild) {
+      inlineContainer.appendChild(dialogBody.firstChild);
+    }
+    dialog.setAttribute("hidden", "");
+    
+    const feed = inlineContainer.querySelector("#chatFeed");
+    if (feed) {
+      feed.style.maxHeight = "";
+    }
+  }
+}
+
+document.addEventListener("click", (e) => {
+  const btn = e.target.closest("[data-action]");
+  if (!btn) return;
+  const action = btn.dataset.action;
+  
+  if (action === "open-update-composer") {
+    openComposerWizard();
+    return;
+  }
+  if (action === "close-composer-wizard") {
+    closeComposerWizard();
+    return;
+  }
+  
+  // Chat message edit & delete handlers (can run even when composer is closed)
+  if (action === "chat-edit-msg") {
+    const id = btn.dataset.id;
+    const msg = chatState.messages.find(m => m.id === id);
+    if (msg) {
+      const newText = prompt("Edit your message:", msg.text);
+      if (newText !== null && newText.trim() !== "") {
+        try {
+          chatState.db.collection(CHAT_COLLECTION).doc(id).update({
+            text: newText.trim()
+          });
+          setChatFeedback("Message updated successfully.", "success");
+        } catch (error) {
+          setChatFeedback(`Update failed: ${error.message}`, "error");
+        }
+      }
+    }
+    return;
+  }
+  
+  if (action === "chat-delete-msg") {
+    const id = btn.dataset.id;
+    if (confirm("Are you sure you want to delete this message?")) {
+      try {
+        chatState.db.collection(CHAT_COLLECTION).doc(id).delete();
+        setChatFeedback("Message deleted successfully.", "success");
+      } catch (error) {
+        setChatFeedback(`Delete failed: ${error.message}`, "error");
+      }
+    }
+    return;
+  }
+  
+  if (!composerState.active) return;
+  
+  if (action === "composer-go-to-step") {
+    const targetStep = parseInt(btn.dataset.step, 10);
+    composerState.step = targetStep;
+    renderComposerWizard();
+    return;
+  }
+  
+  if (action === "composer-reset-wizard") {
+    composerState.cumulativeText = "";
+    composerState.addedLines = [];
+    composerState.addedItems = [];
+    composerState.date = new Date().toISOString().split('T')[0];
+    composerState.studyQuality = 70;
+    composerState.selfStudyTime = 0;
+    composerState.classDuration = 0;
+    composerState.totalStudyDuration = 0;
+    resetComposerCurrentItem();
+    clearComposerDraft();
+    composerState.step = 1;
+    composerState.furthestStep = 1;
+    renderComposerWizard();
+    return;
+  }
+  
+  if (action === "composer-adjust-total-classes") {
+    const delta = parseInt(btn.dataset.delta, 10);
+    const val = (composerState.currentItem.totalLectures || 10) + delta;
+    composerState.currentItem.totalLectures = Math.max(1, val);
+    composerState.currentItem.selectedLectures = composerState.currentItem.selectedLectures.filter(l => l <= composerState.currentItem.totalLectures);
+    renderComposerWizard();
+    return;
+  }
+  
+  if (action === "adjust-time") {
+    const key = btn.dataset.key;
+    const delta = parseInt(btn.dataset.delta, 10);
+    composerState[key] = Math.max(0, composerState[key] + delta);
+    renderComposerWizard();
+    return;
+  }
+  
+  if (action === "composer-select-subject") {
+    const sIdx = parseInt(btn.dataset.subjectIndex, 10);
+    const pIdxRaw = btn.dataset.paperIndex;
+    const pIdx = (pIdxRaw !== "" && pIdxRaw !== undefined && pIdxRaw !== null) ? parseInt(pIdxRaw, 10) : null;
+    
+    const subj = scaffoldState.syllabus[sIdx];
+    const nextStep = getNextStep(2, subj.title);
+    
+    composerState.currentItem.subjectIndex = sIdx;
+    composerState.currentItem.paperIndex = pIdx;
+    composerState.currentItem.chapterIndex = null;
+    composerState.currentItem.selectedLectures = [];
+    composerState.currentItem.classType = null;
+    composerState.currentItem.percent = null;
+    composerState.currentItem.isCustomLine = false;
+    composerState.currentItem.customText = "";
+    
+    const isScience = ["Physics", "Chemistry", "Higher Math", "Biology", "Math", "General Math"].includes(subj.title);
+    if (isScience) {
+      const firstChapter = subj.hasPapers ? subj.papers[pIdx]?.chapters?.[0] : subj.chapters?.[0];
+      composerState.currentItem.totalLectures = firstChapter ? (firstChapter.totalDL || 10) : 10;
+    }
+    
+    composerState.furthestStep = nextStep;
+    composerState.step = nextStep;
+    renderComposerWizard();
+    return;
+  }
+  
+  if (action === "composer-select-chapter") {
+    const idx = parseInt(btn.dataset.index, 10);
+    const subj = scaffoldState.syllabus[composerState.currentItem.subjectIndex];
+    if (!subj) return;
+    const nextStep = getNextStep(4, subj.title);
+    
+    composerState.currentItem.chapterIndex = idx;
+    composerState.currentItem.selectedLectures = [];
+    composerState.currentItem.classType = null;
+    composerState.currentItem.percent = null;
+    composerState.currentItem.isCustomLine = false;
+    composerState.currentItem.customText = "";
+    
+    const isScience = ["Physics", "Chemistry", "Higher Math", "Biology", "Math", "General Math"].includes(subj.title);
+    if (isScience) {
+      const paper = subj.hasPapers ? subj.papers[composerState.currentItem.paperIndex] : null;
+      const ch = paper ? paper.chapters[idx] : subj.chapters[idx];
+      composerState.currentItem.totalLectures = ch ? (ch.totalDL || 10) : 10;
+    }
+    
+    composerState.furthestStep = nextStep;
+    composerState.step = nextStep;
+    renderComposerWizard();
+    return;
+  }
+  
+  if (action === "composer-select-class-type") {
+    const type = btn.dataset.type;
+    const subj = scaffoldState.syllabus[composerState.currentItem.subjectIndex];
+    if (!subj) return;
+    const nextStep = getNextStep(5, subj.title);
+    
+    composerState.currentItem.classType = type;
+    composerState.currentItem.selectedLectures = [];
+    composerState.currentItem.percent = null;
+    
+    const paper = subj.hasPapers ? subj.papers[composerState.currentItem.paperIndex] : null;
+    const ch = paper ? paper.chapters[composerState.currentItem.chapterIndex] : subj.chapters[composerState.currentItem.chapterIndex];
+    const keyMap = { "Detailed": "totalDL", "Advanced": "totalAdv", "Admission": "totalAdm", "FRB": "totalFRB", "One Shot": "totalOS" };
+    const totalKey = keyMap[type] || "totalDL";
+    composerState.currentItem.totalLectures = ch ? (ch[totalKey] || 10) : 10;
+    
+    composerState.furthestStep = nextStep;
+    composerState.step = nextStep;
+    renderComposerWizard();
+    return;
+  }
+  
+  if (action === "composer-toggle-lecture") {
+    const lec = parseInt(btn.dataset.lecture, 10);
+    const arr = composerState.currentItem.selectedLectures;
+    const pos = arr.indexOf(lec);
+    if (pos >= 0) {
+      arr.splice(pos, 1);
+    } else {
+      arr.push(lec);
+    }
+    renderComposerWizard();
+    return;
+  }
+  
+  if (action === "composer-select-percent") {
+    const pct = parseInt(btn.dataset.percent, 10);
+    
+    if (composerState.currentItem.percent !== pct) {
+      composerState.currentItem.percent = pct;
+      composerState.furthestStep = 7;
+    }
+    
+    renderComposerWizard();
+    return;
+  }
+  
+  if (action === "composer-custom-line") {
+    composerState.currentItem.isCustomLine = true;
+    composerState.currentItem.customText = "";
+    composerState.step = 8;
+    composerState.furthestStep = 8;
+    renderComposerWizard();
+    return;
+  }
+  
+  if (action === "composer-add-suffix-step2") {
+    const inp = document.getElementById("composerStep2CustomText");
+    const suffix = inp ? inp.value.trim() : "";
+    if (!suffix) return;
+    const line = `▶️ ${suffix}`;
+    composerState.currentItem.isCustomLine = true;
+    composerState.currentItem.customText = line;
+    composerState.addedLines.push(line);
+    composerState.addedItems.push({ ...composerState.currentItem });
+    composerState.step = 9;
+    composerState.furthestStep = 9;
+    renderComposerWizard();
+    return;
+  }
+  
+  
+  if (action === "composer-add-suffix-step4") {
+    const subj = scaffoldState.syllabus[composerState.currentItem.subjectIndex];
+    if (!subj) return;
+    const paperSel = subj.hasPapers ? (composerState.currentItem.paperIndex === 0 ? "P1" : "P2") : "";
+    const chSel = composerState.currentItem.chapterIndex !== null ? `C${composerState.currentItem.chapterIndex + 1}` : "";
+    const prefix = `▶️ ${subj.title} ${paperSel}${chSel} - `;
+    const inp = document.getElementById("composerStep4CustomText");
+    const suffix = inp ? inp.value.trim() : "";
+    if (!suffix) return;
+    const line = prefix + suffix;
+    composerState.currentItem.isCustomLine = true;
+    composerState.currentItem.customText = line;
+    composerState.addedLines.push(line);
+    composerState.addedItems.push({ ...composerState.currentItem });
+    composerState.step = 9;
+    composerState.furthestStep = 9;
+    renderComposerWizard();
+    return;
+  }
+  
+  if (action === "composer-confirm-and-add-another") {
+    const textInput = document.getElementById("composerLineText");
+    const text = textInput ? textInput.value.trim() : "";
+    if (!text || text === "▶️" || text === "▶️ ") return;
+    composerState.currentItem.customText = text;
+    composerState.addedLines.push(text);
+    composerState.addedItems.push({ ...composerState.currentItem });
+    
+    resetComposerCurrentItem();
+    composerState.step = 2; // loops to Step 2
+    composerState.furthestStep = 2;
+    renderComposerWizard();
+    return;
+  }
+  
+  if (action === "composer-confirm-and-review") {
+    const textInput = document.getElementById("composerLineText");
+    const text = textInput ? textInput.value.trim() : "";
+    if (!text || text === "▶️" || text === "▶️ ") return;
+    composerState.currentItem.customText = text;
+    composerState.addedLines.push(text);
+    composerState.addedItems.push({ ...composerState.currentItem });
+    
+    composerState.step = 9; // goes to Step 9
+    composerState.furthestStep = 9;
+    renderComposerWizard();
+    return;
+  }
+  
+  if (action === "composer-edit-line") {
+    const idx = parseInt(btn.dataset.index, 10);
+    const item = composerState.addedItems[idx];
+    composerState.currentItem = { ...item };
+    composerState.addedLines.splice(idx, 1);
+    composerState.addedItems.splice(idx, 1);
+    
+    composerState.step = 8;
+    composerState.furthestStep = 8;
+    renderComposerWizard();
+    return;
+  }
+  
+  if (action === "composer-delete-line") {
+    const idx = parseInt(btn.dataset.index, 10);
+    composerState.addedLines.splice(idx, 1);
+    composerState.addedItems.splice(idx, 1);
+    renderComposerWizard();
+    return;
+  }
+  
+  if (action === "composer-add-more") {
+    resetComposerCurrentItem();
+    composerState.step = 2;
+    composerState.furthestStep = 2;
+    renderComposerWizard();
+    return;
+  }
+  
+  if (action === "composer-step-next") {
+    const item = composerState.currentItem;
+    const subjIndex = item?.subjectIndex;
+    const subj = subjIndex !== null && subjIndex !== undefined ? scaffoldState.syllabus[subjIndex] : null;
+    const subjTitle = subj ? subj.title : "";
+    
+    const nextStep = getNextStep(composerState.step, subjTitle);
+    composerState.step = nextStep;
+    composerState.furthestStep = Math.max(composerState.furthestStep || 1, nextStep);
+    renderComposerWizard();
+    return;
+  }
+  
+  if (action === "composer-step-prev") {
+    const item = composerState.currentItem;
+    const subjIndex = item?.subjectIndex;
+    const subj = subjIndex !== null && subjIndex !== undefined ? scaffoldState.syllabus[subjIndex] : null;
+    const subjTitle = subj ? subj.title : "";
+    
+    composerState.step = getPrevStep(composerState.step, subjTitle);
+    renderComposerWizard();
+    return;
+  }
+  
+  if (action === "composer-copy") {
+    const textarea = document.getElementById("composerFinalTextArea");
+    const copyText = textarea ? textarea.value : getFinalPreviewText();
+    navigator.clipboard.writeText(copyText).then(() => {
+      const span = btn.querySelector('span') || btn;
+      const origText = span.textContent;
+      span.textContent = "Copied!";
+      btn.style.borderColor = "#22c55e";
+      btn.style.color = "#22c55e";
+      setTimeout(() => {
+        span.textContent = origText;
+        btn.style.borderColor = "";
+        btn.style.color = "";
+      }, 2000);
+    });
+    return;
+  }
+  
+  if (action === "composer-send-message") {
+    const textarea = document.getElementById("composerFinalTextArea");
+    if (!textarea) return;
+    const text = textarea.value.trim();
+    if (!text) {
+      setChatFeedback("Write a message before sending.", "error");
+      return;
+    }
+    if (!chatState.db) {
+      setChatFeedback("Firestore is not ready yet. Wait a moment and try again.", "error");
+      return;
+    }
+    const visibility = chatState.prefs.defaultVisibility === "private" ? "private" : "public";
+    const authorName = getChatAuthorName();
+    setChatFeedback("Sending composer message...", "");
+    try {
+      syncComposerProgressToSyllabus();
+      saveSyllabus(scaffoldState.syllabus);
+      refreshSyllabusGrid();
+      
+      chatState.db.collection(CHAT_COLLECTION).add({
+        text,
+        visibility,
+        authorId: chatState.profile.id,
+        authorName,
+        account: {
+          collegeName: scaffoldState.userSettings.collegeName || "",
+          sscBatch: scaffoldState.userSettings.sscBatch || "",
+          hscBatch: scaffoldState.userSettings.hscBatch || "",
+          sscRoll: scaffoldState.userSettings.sscRoll || "",
+          sscReg: scaffoldState.userSettings.sscReg || "",
+          hscRoll: scaffoldState.userSettings.hscRoll || "",
+          hscReg: scaffoldState.userSettings.hscReg || "",
+        },
+        createdAt: window.firebase.firestore.FieldValue.serverTimestamp(),
+        createdAtMs: Date.now(),
+      });
+      setChatFeedback("Composer update stored in Firestore.", "success");
+      closeComposerWizard();
+      clearComposerDraft();
+      
+      // reset internal composer state
+      composerState.addedLines = [];
+      composerState.addedItems = [];
+      composerState.cumulativeText = "";
+      composerState.furthestStep = 1;
+      resetComposerCurrentItem();
+      
+      syncChatUi();
+    } catch (error) {
+      setChatFeedback(`Composer send failed: ${error.message}`, "error");
+    }
+    return;
+  }
+  
+  if (action === "composer-save-sync") {
+    try {
+      syncComposerProgressToSyllabus();
+      
+      const fb = document.getElementById("composerSyncFeedback");
+      if (fb) {
+        fb.textContent = "Syllabus progress successfully synced & saved!";
+        fb.className = "chat-feedback is-success";
+        fb.style.display = "block";
+        setTimeout(() => { fb.style.display = "none"; }, 4000);
+      }
+      
+      saveSyllabus(scaffoldState.syllabus);
+      refreshSyllabusGrid();
+    } catch(err) {
+      const fb = document.getElementById("composerSyncFeedback");
+      if (fb) {
+        fb.textContent = `Sync error: ${err.message}`;
+        fb.className = "chat-feedback is-error";
+        fb.style.display = "block";
+      }
+    }
+    return;
+  }
+  
+  if (action === "composer-new-update") {
+    const textarea = document.getElementById("composerFinalTextArea");
+    const currentBlockText = textarea ? textarea.value : getFinalPreviewText();
+    composerState.cumulativeText = currentBlockText;
+    
+    composerState.addedLines = [];
+    composerState.addedItems = [];
+    resetComposerCurrentItem();
+    composerState.step = 1;
+    
+    renderComposerWizard();
+    return;
+  }
+});
+
+document.addEventListener("input", (e) => {
+  if (!composerState.active) return;
+  
+  let needsSave = false;
+  if (e.target.id === "composerQuality") {
+    composerState.studyQuality = parseInt(e.target.value, 10);
+    const valSpan = document.getElementById("composerQualityVal");
+    if (valSpan) {
+      let qualityText = "Medium";
+      if (composerState.studyQuality >= 85) qualityText = "Excel";
+      else if (composerState.studyQuality >= 70) qualityText = "Good";
+      else if (composerState.studyQuality >= 50) qualityText = "Medium";
+      else qualityText = "Low";
+      valSpan.textContent = `${composerState.studyQuality}% (${qualityText})`;
+    }
+    const linePreview = document.getElementById("composerLinePreview");
+    if (linePreview) {
+      const currentLineText = composerState.currentItem.customText || getDefaultLineText(composerState.currentItem);
+      linePreview.textContent = getLivePreviewText(true, currentLineText);
+    }
+    needsSave = true;
+  } else if (e.target.id === "composerDate") {
+    composerState.date = e.target.value;
+    const linePreview = document.getElementById("composerLinePreview");
+    if (linePreview) {
+      const currentLineText = composerState.currentItem.customText || getDefaultLineText(composerState.currentItem);
+      linePreview.textContent = getLivePreviewText(true, currentLineText);
+    }
+    needsSave = true;
+  } else if (e.target.id === "composerTotalClasses") {
+    const val = parseInt(e.target.value, 10) || 1;
+    composerState.currentItem.totalLectures = Math.max(1, val);
+    composerState.currentItem.selectedLectures = composerState.currentItem.selectedLectures.filter(l => l <= val);
+    renderComposerWizard();
+    return;
+  } else if (e.target.id === "composerLineText") {
+    composerState.currentItem.customText = e.target.value;
+    const linePreview = document.getElementById("composerLinePreview");
+    if (linePreview) {
+      linePreview.textContent = getLivePreviewText(true, e.target.value);
+    }
+    needsSave = true;
+  }
+  
+  if (needsSave) {
+    saveComposerDraft();
+  }
+});
 
 // ── data/syllabus.seed.js ─────────────────────────────────────────────────────
 const createTrackedChapter = (name, dl = 10, frb = 5) => ({
@@ -6159,13 +8532,13 @@ const renderAuthUnit = () =>
 
 // ── features/syllabus/syllabus.view.js ────────────────────────────────────────
 const subjectVisuals = [
-  { accent: "#4f97bb", soft: "rgba(79, 151, 187, 0.14)", width: 28, tone: "vibe-blue" },
-  { accent: "#155e75", soft: "rgba(21, 94, 117, 0.14)", width: 34, tone: "vibe-blue" },
-  { accent: "#256d9a", soft: "rgba(37, 109, 154, 0.14)", width: 46, tone: "vibe-blue" },
-  { accent: "#70b0cf", soft: "rgba(112, 176, 207, 0.13)", width: 58, tone: "vibe-blue" },
-  { accent: "#0f6f78", soft: "rgba(15, 111, 120, 0.14)", width: 40, tone: "vibe-blue" },
-  { accent: "#5d7faa", soft: "rgba(93, 127, 170, 0.14)", width: 24, tone: "vibe-blue" },
-  { accent: "#8ebbd6", soft: "rgba(142, 187, 214, 0.12)", width: 52, tone: "vibe-blue" },
+  { accent: "#38bdf8", soft: "rgba(56, 189, 248, 0.14)", width: 28, tone: "vibe-blue" },
+  { accent: "#f97316", soft: "rgba(249, 115, 22, 0.14)", width: 34, tone: "vibe-warning" },
+  { accent: "#8b5cf6", soft: "rgba(139, 92, 246, 0.15)", width: 46, tone: "vibe-blue" },
+  { accent: "#10b981", soft: "rgba(16, 185, 129, 0.14)", width: 58, tone: "vibe-green" },
+  { accent: "#f59e0b", soft: "rgba(245, 158, 11, 0.14)", width: 40, tone: "vibe-warning" },
+  { accent: "#ec4899", soft: "rgba(236, 72, 153, 0.14)", width: 24, tone: "vibe-rose" },
+  { accent: "#22c55e", soft: "rgba(34, 197, 94, 0.14)", width: 52, tone: "vibe-green" },
 ];
 
 const countChapters = (subject) => {
@@ -6463,8 +8836,9 @@ const subjectCard = (subject, index) => {
   const allChs = papers.flatMap(p => p.chapters);
   const done = allChs.filter(c => chapterStatus(c) === "done").length;
   const pct = total > 0 ? Math.round((done / total) * 100) : 0;
+  
   return `
-  <article class="subject-card ${subject.hasPapers ? "" : "subject-card--compact"}" data-si="${index}" style="--subject-accent:${visual.accent};--subject-soft:${visual.soft};">
+  <article class="subject-card interactive-card ${subject.hasPapers ? "" : "subject-card--compact"}" data-si="${index}" style="--subject-accent:${visual.accent};--subject-soft:${visual.soft};">
     <div class="subject-card__head">
       <div class="subject-card__identity">
         <span class="subject-icon">${escapeHtml(subject.icon ?? subject.iconLabel)}</span>
@@ -6568,7 +8942,7 @@ const renderChartUnit = (state) =>
         <div class="chronos-scroll" id="chronosScroll">
           <div class="chronos-canvas-wrap" id="chronosCanvasWrap">
             <div class="chronos-preview" id="chronosPreview" data-action="chronos-show-live" role="button" tabindex="0" aria-label="Show Chronos graph">
-              <img src="Demo%20Graph.png" alt="">
+              <img src="Assets/Images/Demo Graph.png" alt="">
               <div class="chronos-preview__veil"><span>${icon("mouse-pointer-click", "Click")} Click Show</span></div>
             </div>
             <canvas id="chronosChart"></canvas>
@@ -6815,6 +9189,10 @@ const renderSettingsPanelBody = (state) => {
                 <h3>HSC Study OS</h3>
                 <p>Premium Edition preview shell</p>
                 <p>Built by Tanmoy Sarker for HSC students who want to track smarter.</p>
+                <button class="btn-small btn-small--primary btn-small--wide" type="button" onclick="window.open('portfolio.html', '_blank')" style="margin-top: 14px; margin-bottom: 6px; border-radius: 999px; display: inline-flex; align-items: center; justify-content: center; gap: 8px;">
+                  ${icon("user-round", "Developer")}
+                  <span>About the developer</span>
+                </button>
                 ${renderLoginStatusCard(true)}
               </div>
             `)}
@@ -6922,6 +9300,10 @@ const renderChatUnit = () =>
             </div>
           </div>
           <div class="chat-toolbar__actions">
+            <button class="btn-small" type="button" data-action="chat-expand" title="Expand Chat" aria-label="Expand Chat">
+              ${icon("maximize-2", "Expand")}
+              <span>Expand Chat</span>
+            </button>
             <button class="btn-small btn-small--primary" type="button" data-action="chat-toggle-list" data-chat-list-toggle>${chatState.prefs.isListVisible ? "Hide messages" : "Show messages"}</button>
             <button class="btn-small" type="button" data-action="chat-toggle-settings">Message settings</button>
           </div>
@@ -6955,6 +9337,31 @@ const renderChatUnit = () =>
           </div>
         </div>
 
+        <div class="chat-compose">
+          <div class="chat-compose__row">
+            <div class="chat-compose__identity">
+              <strong id="chatComposerIdentity">Student</strong>
+              <span id="chatComposerMode">Post visibility from settings: public</span>
+            </div>
+          </div>
+
+          <textarea id="chatMessageInput" placeholder="Write the message here. This box is larger on purpose for longer group-chat updates."></textarea>
+
+          <div class="chat-compose__footer">
+            <p class="chat-feedback" id="chatFeedback">Firestore chat is live. Messages stay stored in the cloud.</p>
+            <div style="display: flex; gap: 8px;">
+              <button class="btn-small btn-small--accent" type="button" data-action="open-update-composer">
+                ${icon("sparkles", "Smart Update")}
+                <span>Smart Update</span>
+              </button>
+              <button class="btn-small btn-small--primary" type="button" data-action="chat-send">
+                ${icon("send-horizontal", "Send chat")}
+                <span>Send message</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
         <div class="chat-feed-shell" id="chatFeedShell" ${chatState.prefs.isListVisible ? "" : "hidden"}>
           <div class="chat-feed-head">
             <div>
@@ -6968,27 +9375,30 @@ const renderChatUnit = () =>
           </div>
         </div>
 
-        <div class="chat-compose">
-          <div class="chat-compose__row">
-            <div class="chat-compose__identity">
-              <strong id="chatComposerIdentity">Student</strong>
-              <span id="chatComposerMode">Post visibility from settings: public</span>
-            </div>
-          </div>
-
-          <textarea id="chatMessageInput" placeholder="Write the message here. This box is larger on purpose for longer group-chat updates."></textarea>
-
-          <div class="chat-compose__footer">
-            <p class="chat-feedback" id="chatFeedback">Firestore chat is live. Messages stay stored in the cloud.</p>
-            <button class="btn-small btn-small--primary" type="button" data-action="chat-send">
-              ${icon("send-horizontal", "Send chat")}
-              <span>Send message</span>
-            </button>
-          </div>
-        </div>
+        <div class="chat-update-composer" id="chatUpdateComposer" hidden></div>
       </div>
     `,
   });
+
+const renderChatExpandDialog = (state) => `
+  <div class="account-dialog" id="chatExpandDialog" hidden>
+    <div class="account-dialog__backdrop" data-action="close-chat-expand" aria-hidden="true"></div>
+    <section class="account-dialog__card" style="max-width: 1200px; width: 95%; max-height: 92vh; display: flex; flex-direction: column;" role="dialog" aria-modal="true" aria-labelledby="chatExpandDialogTitle">
+      <div class="account-dialog__head">
+        <div>
+          <p class="eyebrow">Community Chat</p>
+          <h3 id="chatExpandDialogTitle">${icon("messages-square", "Chat")} <span>Community Chat (Expanded)</span></h3>
+        </div>
+        <button class="btn-small btn-small--icon" type="button" data-action="close-chat-expand" aria-label="Close chat">
+          ${icon("x", "Close")}
+        </button>
+      </div>
+      <div id="chatExpandBody" style="padding: 24px; overflow-y: auto; flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 14px;">
+        <!-- Chat components will be dynamically moved in here when expanded -->
+      </div>
+    </section>
+  </div>
+`;
 
 // ── features/backup/backup.view.js ────────────────────────────────────────────
 const ACCOUNT_FIELD_META = {
@@ -7174,6 +9584,7 @@ const createBackupPayload = (reason = "manual") => ({
   chatPrefs: chatState.prefs,
   chatProfile: chatState.profile,
   localLogin: readRenderableLoginSession(),
+  pomodoroTrackLog: readTrackLog(),
   modes: {
     hsc: loadModeSnapshot(""),
     ssc: loadModeSnapshot("ssc-v1"),
@@ -7239,6 +9650,9 @@ const applyBackupPayload = (payload) => {
     localStorage.setItem(LOCAL_LOGIN_KEY, JSON.stringify(payload.localLogin));
     sessionStorage.removeItem(LOCAL_LOGIN_KEY);
   }
+  if (payload.pomodoroTrackLog) {
+    writeTrackLog(payload.pomodoroTrackLog);
+  }
   const writeMode = (suffix, modePayload) => {
     const modeSuffix = suffix ? `-${suffix}` : "";
     if (modePayload?.syllabus) localStorage.setItem(`${SYL_KEY}${modeSuffix}`, JSON.stringify(modePayload.syllabus));
@@ -7262,7 +9676,7 @@ const backupVaultMarkup = () => {
   const items = readVaultBackups();
   if (!items.length) return `<div class="backup-vault-empty">No local vault snapshots yet. Create one from this dialog or let auto-backup generate them.</div>`;
   return items.map((item) => `
-    <article class="backup-vault-item">
+    <article class="backup-vault-item" data-action="backup-restore-entry" data-backup-id="${item.id}">
       <div class="backup-vault-item__head">
         <div>
           <strong>${escapeHtml(item.source === "auto" ? "Auto vault snapshot" : item.source === "import" ? "Imported backup" : "Manual backup")}</strong>
@@ -7270,17 +9684,204 @@ const backupVaultMarkup = () => {
         </div>
         <span class="chat-visibility-pill">${escapeHtml(String(item.studyMode || "hsc").toUpperCase())}</span>
       </div>
-      <div class="backup-vault-item__foot">
-        <small>Full JSON backup including profile, syllabus, graph config, and study logs.</small>
-        <div class="backup-inline-actions">
-          <button class="btn-small btn-small--primary" type="button" data-action="backup-restore-entry" data-backup-id="${escapeHtml(item.id)}">Restore</button>
-          <button class="btn-small" type="button" data-action="backup-download-entry" data-backup-id="${escapeHtml(item.id)}">Download</button>
-          <button class="btn-small btn-small--danger" type="button" data-action="backup-delete-entry" data-backup-id="${escapeHtml(item.id)}">Delete</button>
-        </div>
-      </div>
     </article>
   `).join("");
 };
+
+// ── Firebase Firestore Study Data Sync ────────────────────────────────────────
+function updateLocalWriteTimestamp() {
+  try {
+    localStorage.setItem("hsc-last-local-write-time", new Date().toISOString());
+  } catch(_) {}
+}
+
+function getSyncDocId() {
+  const session = readLocalLoginSession();
+  if (session && session.mode === "email" && session.email) {
+    return `email-${session.email.toLowerCase().replace(/[^a-z0-9@.-]/g, "_")}`;
+  }
+  if (session && session.mode === "google") {
+    return `google-${chatState.profile?.id || "unknown"}`;
+  }
+  return `guest-${chatState.profile?.id || "unknown"}`;
+}
+
+const cloudSyncState = {
+  status: "idle", // 'idle', 'syncing', 'success', 'error'
+  lastSynced: null, // Date object
+  lastError: null,
+};
+
+async function saveToCloud(silent = false) {
+  if (!chatState.db) {
+    if (!silent) alert("Firestore is not connected. Please check your internet connection.");
+    return;
+  }
+  cloudSyncState.status = "syncing";
+  if (!silent) renderSyncStatusUI();
+  try {
+    const docId = getSyncDocId();
+    const payload = createBackupPayload("cloud-sync");
+    await chatState.db.collection("hsc_study_data_forever").doc(docId).set({
+      payload: JSON.stringify(payload),
+      updatedAt: new Date().toISOString(),
+      email: payload.localLogin?.email || "guest",
+      profileId: chatState.profile?.id || "unknown"
+    });
+    cloudSyncState.status = "success";
+    cloudSyncState.lastSynced = new Date();
+    cloudSyncState.lastError = null;
+    if (!silent) {
+      showBackupBanner("Synced to Cloud", "Your progress is saved forever.");
+    }
+  } catch (err) {
+    cloudSyncState.status = "error";
+    cloudSyncState.lastError = err.message;
+    console.error("Cloud save failed:", err);
+    if (!silent) alert(`Cloud sync failed: ${err.message}`);
+  }
+  renderSyncStatusUI();
+}
+
+async function loadFromCloud(silent = false) {
+  if (!chatState.db) {
+    if (!silent) alert("Firestore is not connected.");
+    return;
+  }
+  cloudSyncState.status = "syncing";
+  if (!silent) renderSyncStatusUI();
+  try {
+    const docId = getSyncDocId();
+    const doc = await chatState.db.collection("hsc_study_data_forever").doc(docId).get();
+    if (!doc.exists) {
+      cloudSyncState.status = "idle";
+      if (!silent) alert("No study data found in the cloud for this account.");
+      renderSyncStatusUI();
+      return;
+    }
+    const data = doc.data();
+    if (!data.payload) {
+      throw new Error("Cloud document has invalid format.");
+    }
+    const payload = JSON.parse(data.payload);
+    
+    if (!silent) {
+      const confirmRestore = confirm(`Found cloud backup from ${new Date(data.updatedAt).toLocaleString()}.\nDo you want to restore it? This will overwrite your local progress.`);
+      if (!confirmRestore) {
+        cloudSyncState.status = "idle";
+        renderSyncStatusUI();
+        return;
+      }
+    }
+    
+    applyBackupPayload(payload);
+    cloudSyncState.status = "success";
+    cloudSyncState.lastSynced = new Date(data.updatedAt || Date.now());
+    cloudSyncState.lastError = null;
+    if (!silent) {
+      showBackupBanner("Cloud Restore Done", "Progress restored from cloud.");
+    }
+  } catch (err) {
+    cloudSyncState.status = "error";
+    cloudSyncState.lastError = err.message;
+    console.error("Cloud restore failed:", err);
+    if (!silent) alert(`Cloud restore failed: ${err.message}`);
+  }
+  renderSyncStatusUI();
+}
+
+let cloudSaveTimeout = null;
+function triggerCloudSaveDebounced() {
+  if (!chatState.db) return;
+  const session = readLocalLoginSession();
+  if (!session) return; // Only sync if logged in
+  clearTimeout(cloudSaveTimeout);
+  cloudSaveTimeout = setTimeout(() => {
+    saveToCloud(true);
+  }, 10000); // 10s debounce
+}
+
+async function syncChDataOnLogin() {
+  if (!chatState.db) return;
+  try {
+    const docId = getSyncDocId();
+    const doc = await chatState.db.collection("hsc_study_data_forever").doc(docId).get();
+    if (doc.exists) {
+      const data = doc.data();
+      if (data.payload) {
+        const payload = JSON.parse(data.payload);
+        
+        const isLocalDefault = !scaffoldState.userSettings.customName && 
+                               scaffoldState.syllabus.every(s => {
+                                 const papers = s.hasPapers ? s.papers : [{ chapters: s.chapters }];
+                                 return papers.every(p => p.chapters.every(ch => !ch.doneDL && !ch.donePerc));
+                               });
+                               
+        const localTime = localStorage.getItem("hsc-last-local-write-time");
+        const cloudTime = data.updatedAt;
+        
+        if (isLocalDefault || !localTime || new Date(cloudTime) > new Date(localTime)) {
+          applyBackupPayload(payload);
+          cloudSyncState.lastSynced = new Date(cloudTime);
+          showBackupBanner("Cloud Sync Active", "Restored your progress from cloud.");
+          renderSyncStatusUI();
+        }
+      }
+    }
+  } catch (err) {
+    console.error("Auto cloud load failed:", err);
+  }
+}
+
+function renderSyncStatusUI() {
+  const indicator = document.getElementById("cloudSyncIndicator");
+  const account = document.getElementById("cloudSyncAccount");
+  const time = document.getElementById("cloudSyncTime");
+  const autoSpan = document.getElementById("cloudSyncAuto");
+  
+  if (!indicator) return;
+  
+  if (!chatState.db) {
+    indicator.textContent = "Disconnected";
+    indicator.style.background = "rgba(239, 68, 68, 0.1)";
+    indicator.style.color = "#ef4444";
+  } else if (cloudSyncState.status === "syncing") {
+    indicator.textContent = "Syncing...";
+    indicator.style.background = "rgba(245, 158, 11, 0.1)";
+    indicator.style.color = "#f59e0b";
+  } else if (cloudSyncState.status === "error") {
+    indicator.textContent = "Error";
+    indicator.style.background = "rgba(239, 68, 68, 0.1)";
+    indicator.style.color = "#ef4444";
+  } else {
+    indicator.textContent = "Connected";
+    indicator.style.background = "rgba(16, 185, 129, 0.1)";
+    indicator.style.color = "#10b981";
+  }
+  
+  const session = readLocalLoginSession();
+  if (session && session.mode === "email" && session.email) {
+    account.textContent = session.email;
+  } else if (session && session.mode === "google") {
+    account.textContent = "Google Account";
+  } else {
+    account.textContent = `Guest (${(chatState.profile?.id || "N/A").slice(0, 8)}...)`;
+  }
+  
+  if (cloudSyncState.lastSynced) {
+    time.textContent = cloudSyncState.lastSynced.toLocaleTimeString();
+  } else {
+    time.textContent = "Never";
+  }
+  
+  if (session) {
+    autoSpan.textContent = "Enabled (10s debounce)";
+    autoSpan.style.color = "#10b981";
+  } else {
+    autoSpan.textContent = "Disabled (Log in to enable)";
+    autoSpan.style.color = "#ef4444";
+  }
+}
 
 const renderBackupDialog = (state) => {
   const vaultItems = readVaultBackups();
@@ -7322,6 +9923,36 @@ const renderBackupDialog = (state) => {
             <button class="btn-small" type="button" data-action="backup-export-png">${icon("image", "PNG")} <span>PNG</span></button>
           </div>
         </div>
+
+        <!-- Cloud Database Sync (Firebase Firestore) -->
+        <div class="backup-card">
+          <div class="backup-card__head">
+            <div>
+              <h5>${icon("cloud", "Cloud")} Cloud Database Sync (Firebase)</h5>
+              <span class="backup-card__meta">Connect to Firebase Firestore to save your study progress, settings, and Chronos logs in the cloud forever.</span>
+            </div>
+            <span id="cloudSyncIndicator" style="font-size: 0.8rem; padding: 4px 10px; border-radius: 99px; background: rgba(245, 158, 11, 0.1); color: #f59e0b; font-weight: 700;">Initializing...</span>
+          </div>
+          <div class="cloud-sync-info" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; margin-bottom: 14px; background: rgba(255,255,255,0.02); padding: 12px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.04);">
+            <div>
+              <small style="color: #a1a1aa; display: block; text-transform: uppercase; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.05em;">Target Account</small>
+              <span style="font-weight: 600; color: #f1f5f9;" id="cloudSyncAccount">Reading...</span>
+            </div>
+            <div>
+              <small style="color: #a1a1aa; display: block; text-transform: uppercase; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.05em;">Last Sync</small>
+              <span style="font-weight: 600; color: #f1f5f9;" id="cloudSyncTime">Never</span>
+            </div>
+            <div>
+              <small style="color: #a1a1aa; display: block; text-transform: uppercase; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.05em;">Auto Cloud Sync</small>
+              <span style="font-weight: 600; color: #10b981;" id="cloudSyncAuto">Enabled (10s debounce)</span>
+            </div>
+          </div>
+          <div class="backup-actions" style="margin-top: 0;">
+            <button class="btn-small btn-small--primary" type="button" data-action="cloud-sync-upload">${icon("cloud-upload", "Upload")} <span>Upload to Cloud</span></button>
+            <button class="btn-small btn-small--primary" type="button" data-action="cloud-sync-download">${icon("cloud-download", "Download")} <span>Download from Cloud</span></button>
+          </div>
+        </div>
+
         <div class="backup-shell__grid">
           <div class="backup-card">
             <div class="backup-card__head">
@@ -7442,7 +10073,7 @@ const renderAppShell = (state, units) => {
           ${icon("rotate-ccw", "Restore")}
           <span class="quick-action__label">Restore</span>
         </button>
-        <button class="quick-action" type="button" style="--quick-width:92px" aria-label="PDF">
+        <button class="quick-action" type="button" style="--quick-width:92px" onclick="window.open('https://drive.google.com/drive/u/1/folders/1vhgPASK_rzLp1vyliITG2dq10VpgCjhC', '_blank')" aria-label="PDF">
           ${icon("file-text", "PDF")}
           <span class="quick-action__label">PDF</span>
         </button>
@@ -7520,11 +10151,18 @@ const renderAppShell = (state, units) => {
     <main class="content-grid">
       ${units.join("")}
     </main>
+    <footer class="app-footer" style="display: flex; justify-content: center; align-items: center; padding: 32px 16px 40px; margin-top: 24px;">
+      <button class="btn-small btn-small--primary btn-small--wide" type="button" onclick="window.open('portfolio.html', '_blank')" style="border-radius: 999px; padding: 10px 24px; min-height: 40px; display: inline-flex; align-items: center; gap: 8px; font-weight: 600; box-shadow: 0 4px 12px rgba(99,102,241,0.2);">
+        ${icon("user-round", "Developer")}
+        <span>About the developer</span>
+      </button>
+    </footer>
     <input id="${BACKUP_IMPORT_INPUT_ID}" type="file" accept="application/json,.json" hidden>
     <div class="backup-banner" id="backupBanner" hidden></div>
     ${renderAccountDialog(state)}
     ${renderSettingsDialog(state)}
     ${renderBackupDialog(state)}
+    ${renderChatExpandDialog(state)}
     <!-- Timer Dialog -->
     <div class="account-dialog timer-dialog" id="timerDialog" hidden>
       <div class="account-dialog__backdrop" data-action="close-timer-dialog"></div>
@@ -7726,6 +10364,11 @@ const attachSmoothAnchorOffset = () => {
       if (!target) return;
       event.preventDefault();
       target.scrollIntoView({ behavior: prefersReducedMotion() ? "auto" : "smooth", block: "start" });
+      if (id === "chat") {
+        setTimeout(() => {
+          scrollChatToBottom("smooth");
+        }, 320);
+      }
     });
   });
 };
@@ -7889,15 +10532,37 @@ document.addEventListener("DOMContentLoaded", () => {
   attachVisualEffects();
   initGroupChat();
 
+  // Periodically check for composer draft timeout
+  checkComposerDraftTimeout();
+  setInterval(checkComposerDraftTimeout, 15000);
+
+  // Chat compose scroll redirect
+  document.addEventListener("focusin", (e) => {
+    if (e.target && (e.target.id === "chatMessageInput" || e.target.closest(".chat-compose"))) {
+      scrollChatToBottom("smooth");
+    }
+  });
+  document.addEventListener("click", (e) => {
+    if (e.target && (e.target.id === "chatMessageInput" || e.target.closest(".chat-compose"))) {
+      scrollChatToBottom("smooth");
+    }
+  });
+
   // Dashboard dark/light toggle
   const toggleTrack = document.getElementById("dashToggle");
   if (toggleTrack) {
     toggleTrack.addEventListener("click", () => {
       const modern = document.getElementById("dashboardModern");
       const card = document.getElementById("dashboardCard");
+      if (!modern || !card) return;
       const isDark = modern.classList.toggle("dark");
+      modern.classList.toggle("light", !isDark);
       card.classList.toggle("dark", isDark);
       card.classList.toggle("light", !isDark);
+
+      if (!scaffoldState.userSettings) scaffoldState.userSettings = {};
+      scaffoldState.userSettings.themeMode = isDark ? "dark" : "light";
+      saveUserSettings();
     });
   }
 });
@@ -7907,6 +10572,8 @@ const SYL_KEY = "hsc-syllabus-v1";
 
 const saveSyllabus = (syllabus) => {
   try { localStorage.setItem(modeScopedKey(SYL_KEY), JSON.stringify(syllabus)); } catch(_) {}
+  updateLocalWriteTimestamp();
+  triggerCloudSaveDebounced();
 };
 
 const loadSyllabus = () => {
@@ -8782,6 +11449,8 @@ const loadStudyLogs = () => {
 
 const saveStudyLogs = () => {
   try { localStorage.setItem(modeScopedKey(CHRONOS_LOG_KEY), JSON.stringify(studyLogs)); } catch(_) {}
+  updateLocalWriteTimestamp();
+  triggerCloudSaveDebounced();
 };
 
 const setLogMinutes = (key, datasetKey, mins) => {
@@ -8927,14 +11596,14 @@ const renderChronosChart = () => {
       scales: {
         x: {
           grid: { display: true, color: "rgba(148,163,184,.14)", drawTicks: false },
-          ticks: { color: "#64748b", maxRotation: 0, autoSkip: false },
+          ticks: { color: "#a1a1aa", maxRotation: 0, autoSkip: false },
         },
         y: {
           beginAtZero: true,
           suggestedMax: maxLimit,
           max: maxLimit,
           grid: { display: true, color: "rgba(148,163,184,.18)" },
-          ticks: { color: "#64748b", stepSize: Math.max(1, Math.round(maxLimit / 6)) },
+          ticks: { color: "#a1a1aa", stepSize: Math.max(1, Math.round(maxLimit / 6)) },
         },
       },
       plugins: {
@@ -9105,7 +11774,10 @@ const openAccountDialog = () => openDialog("accountDialog");
 const closeAccountDialog = () => closeDialog("accountDialog");
 const openSettingsDialog = () => openDialog("settingsDialog");
 const closeSettingsDialog = () => closeDialog("settingsDialog");
-const openBackupDialog = () => openDialog("backupDialog");
+const openBackupDialog = () => {
+  openDialog("backupDialog");
+  renderSyncStatusUI();
+};
 const closeBackupDialog = () => closeDialog("backupDialog");
 
 const syncBackupSettingControls = () => {
@@ -9169,11 +11841,57 @@ const maybeRunAutoBackup = () => {
 const restoreBackupEntry = (id) => {
   const entry = readVaultBackups().find((item) => item.id === id);
   if (!entry) return;
-  applyBackupPayload(entry.payload);
-  showBackupBanner("Backup restored", `${backupDateLabel(entry.createdAt)} • ${String(entry.studyMode || "hsc").toUpperCase()} mode`);
+
+  const dateStr = backupDateLabel(entry.createdAt);
+
+  // Step 1 warning
+  const c1 = confirm(
+    `[Restore Confirmation - Step 1 of 3]\n\nDo you want to restore the backup from: ${dateStr}?\n\nTo prevent data loss, a JSON backup of your CURRENT study data will be automatically downloaded.`
+  );
+  if (!c1) return;
+
+  // Step 2 warning
+  const c2 = confirm(
+    `[Overwriting Database - Step 2 of 3]\n\n⚠️ WARNING: This will overwrite your current syllabus tracker progress, Chronos study logs, settings, and timers with the data from ${dateStr}.\n\nAre you sure you want to proceed?`
+  );
+  if (!c2) return;
+
+  // Step 3 warning
+  const c3 = confirm(
+    `[Final Confirm - Step 3 of 3]\n\n🚨 FINAL WARNING: This action replaces all local browser databases immediately. Unsaved changes in the current session will be permanently replaced by the snapshot.\n\nClick OK to download the current backup and restore the snapshot.`
+  );
+  if (!c3) return;
+
+  // 1. Download current backup payload first
+  try {
+    const currentPayload = createBackupPayload("pre-restore-auto-save");
+    downloadJsonFile(currentPayload, "study-os-backup-pre-restore");
+  } catch (err) {
+    console.error("Auto-backup download failed:", err);
+  }
+
+  // 2. Apply the chosen backup payload
+  try {
+    applyBackupPayload(entry.payload);
+    showBackupBanner("Backup restored", `${dateStr} • ${String(entry.studyMode || "hsc").toUpperCase()} mode`);
+    alert(`Success: Database restored to state from ${dateStr}.`);
+  } catch (err) {
+    alert("Restore failed: " + err.message);
+  }
 };
 
 document.addEventListener("click", (e) => {
+  // Toggle is-active class on subject cards
+  const clickedCard = e.target.closest(".subject-card");
+  if (clickedCard) {
+    document.querySelectorAll(".subject-card").forEach(c => {
+      if (c !== clickedCard) c.classList.remove("is-active");
+    });
+    clickedCard.classList.add("is-active");
+  } else if (!e.target.closest(".account-dialog") && !e.target.closest(".quick-action-rail")) {
+    document.querySelectorAll(".subject-card").forEach(c => c.classList.remove("is-active"));
+  }
+
   const action = e.target.closest("[data-action]")?.dataset?.action;
   const target = e.target.closest("[data-action]");
   if (!action) return;
@@ -9199,6 +11917,14 @@ document.addEventListener("click", (e) => {
   }
   if (action === "close-backup-dialog") {
     closeBackupDialog();
+    return;
+  }
+  if (action === "chat-expand") {
+    expandChat();
+    return;
+  }
+  if (action === "close-chat-expand") {
+    closeExpandChat();
     return;
   }
   if (action === "save-account-settings") {
@@ -9253,6 +11979,14 @@ document.addEventListener("click", (e) => {
   }
   if (action === "chat-send") {
     sendChatMessage();
+    return;
+  }
+  if (action === "cloud-sync-upload") {
+    saveToCloud(false);
+    return;
+  }
+  if (action === "cloud-sync-download") {
+    loadFromCloud(false);
     return;
   }
   if (action === "backup-download-json") {
