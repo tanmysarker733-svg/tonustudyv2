@@ -12979,7 +12979,7 @@ document.addEventListener("change", (e) => {
     applyChatPreference("sortOrder", target.value === "asc" ? "asc" : "desc");
     setChatFeedback(`Messages sorted ${target.value === "asc" ? "oldest first" : "newest first"}.`, "success");
     return;
-  }
+  } 
   if (target.id === "chatDefaultVisibility") {
     const visibility = target.value === "private" ? "private" : "public";
     applyChatPreference("defaultVisibility", visibility);
