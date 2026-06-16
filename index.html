@@ -12,10 +12,16 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.min.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-dragdata@2.3.1/dist/chartjs-plugin-dragdata.min.js" defer></script>
     <script src="https://www.gstatic.com/firebasejs/12.12.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/12.12.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/12.12.0/firebase-firestore-compat.js"></script>
     <style>
 :root {
   color-scheme: dark;
+  --bg-gradient: linear-gradient(180deg, #07131b 0%, #0b1d2b 100%);
+  --radial-glow-1: rgba(11, 110, 114, 0.22);
+  --radial-glow-2: rgba(79, 151, 187, 0.16);
+  --linear-glow-1: rgba(21, 83, 135, 0.18);
+  --linear-glow-2: rgba(37, 109, 154, 0.13);
   --bg: #07131b;
   --card-bg: rgba(10, 26, 40, 0.82);
   --nav-bg: rgba(6, 18, 28, 0.9);
@@ -38,6 +44,29 @@
   --radius-sm: 8px;
 }
 
+html[data-theme="light"] {
+  color-scheme: light;
+  --bg-gradient: linear-gradient(180deg, #f3f7fa 0%, #e2ebf2 100%);
+  --radial-glow-1: rgba(13, 148, 136, 0.08);
+  --radial-glow-2: rgba(37, 99, 235, 0.06);
+  --linear-glow-1: rgba(37, 99, 235, 0.05);
+  --linear-glow-2: rgba(37, 99, 235, 0.03);
+  --bg: #f3f7fa;
+  --card-bg: rgba(255, 255, 255, 0.85);
+  --nav-bg: rgba(243, 247, 250, 0.9);
+  --panel-bg: rgba(255, 255, 255, 0.75);
+  --panel-soft: rgba(79, 151, 187, 0.05);
+  --text-main: #0f172a;
+  --text-sub: #475569;
+  --border: rgba(0, 0, 0, 0.08);
+  --accent-blue: #2563eb;
+  --accent-cyan: #0d9488;
+  --accent-violet: #7c3aed;
+  --accent-gradient: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
+  --shadow: rgba(15, 23, 42, 0.06);
+  --shadow-hover: rgba(15, 23, 42, 0.12);
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -56,15 +85,16 @@ body {
   min-height: 100vh;
   overflow-x: hidden;
   background:
-    radial-gradient(circle at 12% 18%, rgba(11, 110, 114, 0.22), transparent 24%),
-    radial-gradient(circle at 88% 14%, rgba(79, 151, 187, 0.16), transparent 24%),
-    linear-gradient(120deg, rgba(21, 83, 135, 0.18) 0%, rgba(21, 83, 135, 0) 34%),
-    linear-gradient(225deg, rgba(37, 109, 154, 0.13) 0%, rgba(37, 109, 154, 0) 42%),
-    linear-gradient(180deg, #07131b 0%, #0b1d2b 100%);
+    radial-gradient(circle at 12% 18%, var(--radial-glow-1), transparent 24%),
+    radial-gradient(circle at 88% 14%, var(--radial-glow-2), transparent 24%),
+    linear-gradient(120deg, var(--linear-glow-1) 0%, rgba(21, 83, 135, 0) 34%),
+    linear-gradient(225deg, var(--linear-glow-2) 0%, rgba(37, 109, 154, 0) 42%),
+    var(--bg-gradient);
   color: var(--text-main);
   font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   font-size: 15px;
   line-height: 1.5;
+  transition: background 0.3s, color 0.3s;
 }
 
 body.login-locked {
@@ -1485,14 +1515,14 @@ h4 {
   flex-direction: column;
   overflow: hidden;
   padding: 24px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-left: 1.5px solid color-mix(in srgb, var(--subject-accent) 30%, rgba(255, 255, 255, 0.08));
-  border-right: 1.5px solid color-mix(in srgb, var(--subject-accent) 30%, rgba(255, 255, 255, 0.08));
+  border: 1px solid var(--border);
+  border-left: 1.5px solid color-mix(in srgb, var(--subject-accent) 30%, var(--border));
+  border-right: 1.5px solid color-mix(in srgb, var(--subject-accent) 30%, var(--border));
   border-radius: var(--radius-lg);
   background:
-    linear-gradient(140deg, var(--subject-soft), rgba(255, 255, 255, 0.018) 38%),
-    rgba(18, 24, 36, 0.88);
-  box-shadow: 0 12px 34px rgba(0, 0, 0, 0.2);
+    linear-gradient(140deg, var(--subject-soft), transparent 38%),
+    var(--card-bg);
+  box-shadow: 0 12px 34px var(--shadow);
   --tilt-x: 0deg;
   --tilt-y: 0deg;
   --glow-x: 50%;
@@ -1502,7 +1532,8 @@ h4 {
   transition:
     transform 0.22s cubic-bezier(0.2, 0, 0, 1),
     box-shadow 0.22s cubic-bezier(0.2, 0, 0, 1),
-    border-color 0.22s ease;
+    border-color 0.22s ease,
+    background 0.3s;
   will-change: transform, box-shadow;
 }
 
@@ -1531,9 +1562,9 @@ h4 {
 
 .subject-card.is-hovering,
 .subject-card.is-active {
-  border-color: color-mix(in srgb, var(--subject-accent) 38%, rgba(255, 255, 255, 0.08));
-  border-left-color: color-mix(in srgb, var(--subject-accent) 60%, rgba(255, 255, 255, 0.08));
-  border-right-color: color-mix(in srgb, var(--subject-accent) 60%, rgba(255, 255, 255, 0.08));
+  border-color: color-mix(in srgb, var(--subject-accent) 38%, var(--border));
+  border-left-color: color-mix(in srgb, var(--subject-accent) 60%, var(--border));
+  border-right-color: color-mix(in srgb, var(--subject-accent) 60%, var(--border));
   box-shadow: 0 22px 52px var(--shadow-hover);
 }
 
@@ -5015,13 +5046,26 @@ h4 {
   padding-right: 4px;
 }
 .toggle-label {
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 700;
   letter-spacing: .06em;
-  color: #64748b;
-  transition: color .3s;
+  color: #94a3b8;
+  transition: color 0.3s, text-shadow 0.3s;
 }
-.dashboard-modern.dark .toggle-label { color: #a1a1aa; }
+.dashboard-modern.dark .toggle-label--dark {
+  color: #38bdf8;
+  text-shadow: 0 0 8px rgba(56, 189, 248, 0.4);
+}
+.dashboard-modern.dark .toggle-label--light {
+  color: #475569;
+}
+.dashboard-modern.light .toggle-label--light {
+  color: #0f172a;
+  font-weight: 800;
+}
+.dashboard-modern.light .toggle-label--dark {
+  color: #94a3b8;
+}
 .toggle-track {
   width: 44px;
   height: 24px;
@@ -5029,22 +5073,31 @@ h4 {
   position: relative;
   cursor: pointer;
   background: #cbd5e1;
-  transition: background .3s;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  transition: background 0.3s, box-shadow 0.3s, border-color 0.3s;
   flex-shrink: 0;
 }
-.dashboard-modern.dark .toggle-track { background: #3b82f6; }
+.dashboard-modern.dark .toggle-track {
+  background: rgba(30, 41, 59, 0.8);
+  border: 1px solid rgba(56, 189, 248, 0.2);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.6);
+}
 .toggle-thumb {
   position: absolute;
-  top: 3px;
-  left: 3px;
+  top: 2px;
+  left: 2px;
   width: 18px;
   height: 18px;
   border-radius: 50%;
   background: #fff;
-  transition: transform .3s;
-  box-shadow: 0 1px 4px rgba(0,0,0,.2);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), background 0.3s, box-shadow 0.3s;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.15);
 }
-.dashboard-modern.dark .toggle-thumb { transform: translateX(20px); }
+.dashboard-modern.dark .toggle-thumb {
+  transform: translateX(20px);
+  background: #38bdf8;
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.6), 0 1px 3px rgba(0,0,0,0.4);
+}
 
 .dash-card {
   border-radius: 20px;
@@ -6072,6 +6125,335 @@ h4 {
   }
 }
 
+  /* ── Developer Portfolio Modal Styles ── */
+  .developer-dialog {
+    position: fixed !important;
+    inset: 0 !important;
+    padding: 0 !important;
+    z-index: 1250 !important;
+    background: var(--bg) !important;
+    overflow-y: auto !important;
+    display: block !important;
+  }
+  .developer-dialog[hidden] {
+    display: none !important;
+  }
+  .developer-dialog .account-dialog__backdrop {
+    display: none !important;
+  }
+  .developer-dialog__card {
+    width: 100% !important;
+    min-height: 100vh !important;
+    max-height: none !important;
+    background: radial-gradient(circle at 15% 15%, rgba(59, 130, 246, 0.08), transparent 45%),
+                radial-gradient(circle at 85% 85%, rgba(139, 92, 246, 0.08), transparent 45%),
+                var(--bg) !important;
+    border: none !important;
+    border-radius: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: visible !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    box-shadow: none !important;
+    position: relative !important;
+    animation: devPageFadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  @keyframes devPageFadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .developer-dialog__close {
+    position: fixed !important;
+    top: 24px !important;
+    right: 24px !important;
+    width: 44px !important;
+    height: 44px !important;
+    border-radius: 50% !important;
+    background: rgba(255, 255, 255, 0.04) !important;
+    border: 1px solid var(--border) !important;
+    color: var(--text-main) !important;
+    display: grid !important;
+    place-items: center !important;
+    cursor: pointer !important;
+    z-index: 1260 !important;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
+    backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
+  }
+  .developer-dialog__close:hover {
+    background: rgba(255, 255, 255, 0.12) !important;
+    border-color: var(--accent-blue) !important;
+    color: var(--accent-blue) !important;
+    transform: rotate(90deg) scale(1.05) !important;
+  }
+  .developer-dialog__body {
+    width: 100% !important;
+    max-width: 1000px !important;
+    margin: 0 auto !important;
+    padding: clamp(60px, 8vw, 100px) clamp(20px, 4vw, 40px) !important;
+    color: var(--text-main) !important;
+    box-sizing: border-box !important;
+  }
+  
+  /* Portfolio Content Elements */
+  .dev-portfolio {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3.5rem;
+    width: 100%;
+  }
+  .dev-hero {
+    text-align: center;
+    position: relative;
+    width: 100%;
+    max-width: 650px;
+    margin: 20px 0;
+  }
+  .dev-hero h1 {
+    font-size: clamp(2.2rem, 5vw, 3.2rem);
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.04em;
+    background: linear-gradient(135deg, var(--text-main), var(--accent-blue));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .dev-subtitle {
+    font-size: 1.05rem;
+    font-weight: 500;
+    color: var(--text-sub);
+    margin-bottom: 1.5rem;
+  }
+  
+  /* Floating Badges */
+  .floating-badge {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1.2rem;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    box-shadow: 0 10px 30px var(--shadow);
+    font-weight: 600;
+    font-size: 0.82rem;
+    color: var(--text-main);
+    z-index: 1;
+    opacity: 0.85;
+    transition: transform 0.3s ease, opacity 0.3s ease, border-color 0.3s;
+  }
+  .floating-badge:hover {
+    transform: scale(1.05) translateY(-5px);
+    opacity: 1;
+    border-color: var(--accent-blue);
+  }
+  .floating-badge svg {
+    width: 16px;
+    height: 16px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+  }
+  .fb-1 { top: -10%; left: -5%; animation: devFloatA 7s ease-in-out infinite; }
+  .fb-2 { top: 15%; right: -8%; animation: devFloatB 8s ease-in-out infinite reverse; }
+  .fb-3 { bottom: 10%; left: -6%; animation: devFloatC 6s ease-in-out infinite; }
+  .fb-4 { bottom: -10%; right: 0%; animation: devFloatD 9s ease-in-out infinite reverse; }
+  
+  @keyframes devFloatA { 0%, 100% { transform: translateY(0) rotate(-5deg); } 50% { transform: translateY(-15px) rotate(2deg); } }
+  @keyframes devFloatB { 0%, 100% { transform: translateY(0) rotate(5deg); } 50% { transform: translateY(-20px) rotate(-2deg); } }
+  @keyframes devFloatC { 0%, 100% { transform: translateY(0) rotate(-2deg); } 50% { transform: translateY(12px) rotate(4deg); } }
+  @keyframes devFloatD { 0%, 100% { transform: translateY(0) rotate(3deg); } 50% { transform: translateY(-15px) rotate(-3deg); } }
+  
+  @media (max-width: 768px) {
+    .floating-badge { display: none !important; }
+  }
+
+  /* Capabilities Grid (Glass Cards) */
+  .capabilities-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    width: 100%;
+    max-width: 850px;
+  }
+  .dev-card {
+    padding: 2.2rem 1.8rem;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 10px 24px var(--shadow);
+    transition: transform 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1), border-color 0.3s, background 0.3s;
+    cursor: default;
+  }
+  .dev-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    border-color: var(--accent-blue);
+    background: var(--panel-bg);
+  }
+  .dev-card-icon {
+    width: 52px;
+    height: 52px;
+    margin: 0 auto 1.2rem auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--panel-soft);
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    transition: transform 0.3s ease;
+  }
+  .dev-card:hover .dev-card-icon {
+    transform: scale(1.1);
+  }
+  .dev-card-icon svg {
+    width: 24px;
+    height: 24px;
+    stroke: var(--accent-blue);
+    stroke-width: 2;
+    fill: none;
+  }
+  .dev-card h3 {
+    font-size: 1.35rem;
+    font-weight: 700;
+    margin-bottom: 0.8rem;
+    color: var(--text-main);
+  }
+  .dev-card p {
+    font-size: 0.88rem;
+    color: var(--text-sub);
+    line-height: 1.5;
+  }
+
+  /* Product Highlight Card */
+  .product-highlight {
+    display: block;
+    width: 100%;
+    max-width: 850px;
+    padding: 3rem 2rem;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    box-shadow: 0 15px 35px var(--shadow);
+    text-decoration: none;
+    transition: transform 0.3s ease, border-color 0.3s, box-shadow 0.3s;
+  }
+  .product-highlight:hover {
+    border-color: var(--accent-blue);
+    transform: translateY(-5px);
+    box-shadow: 0 20px 45px var(--shadow-hover);
+  }
+  .product-highlight .badge {
+    display: inline-block;
+    padding: 0.4rem 1.2rem;
+    border-radius: 100px;
+    background: var(--accent-blue);
+    color: #fff;
+    font-weight: 700;
+    font-size: 0.76rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 1.2rem;
+  }
+  .product-title {
+    font-size: 2.2rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    letter-spacing: -0.02em;
+    color: var(--text-main);
+  }
+  .product-desc {
+    font-size: 0.95rem;
+    color: var(--text-sub);
+    max-width: 680px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  /* Scope / Personal Note */
+  .dev-scope {
+    width: 100%;
+    max-width: 850px;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+  .dev-section-title {
+    font-size: 1.6rem;
+    font-weight: 800;
+    text-align: center;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.5rem;
+  }
+  .personal-note {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 2.5rem;
+    text-align: center;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 10px 24px var(--shadow);
+  }
+  .personal-note p {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: var(--text-main);
+    font-style: italic;
+  }
+  .personal-note .signature {
+    margin-top: 1.2rem;
+    color: var(--text-sub);
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+
+  /* Contact Grid */
+  .contact-grid {
+    display: flex;
+    gap: 1.2rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 100%;
+    max-width: 850px;
+  }
+  .contact-pill {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.8rem 1.6rem;
+    border-radius: 14px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    color: var(--text-main);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.92rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px var(--shadow);
+  }
+  .contact-pill:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px var(--shadow-hover);
+  }
+  .contact-pill svg {
+    width: 18px;
+    height: 18px;
+    fill: currentColor;
+  }
+  .pill-fb:hover { border-color: #1877f2; color: #1877f2; }
+  .pill-wa:hover { border-color: #25d366; color: #25d366; }
+  .pill-ig:hover { border-color: #e1306c; color: #e1306c; }
+}
     </style>
   </head>
   <body class="login-locked">
@@ -6082,7 +6464,7 @@ h4 {
         <div class="login-panel">
           <div class="login-brand"><span></span> HSC Study OS</div>
           <h1 class="login-title">Welcome back</h1>
-          <p class="login-subtitle">Enter with email for now, or keep studying in a guest account. Firestore auth will be wired later.</p>
+          <p class="login-subtitle">Enter with email, or keep studying in a guest account.</p>
 
           <form class="login-form" id="localLoginForm">
             <label class="login-field">
@@ -6115,7 +6497,7 @@ h4 {
               </button>
             </div>
             <p class="login-feedback" id="loginFeedback" role="status"></p>
-            <p class="login-register">No account system yet. <strong>Email mode is local only.</strong></p>
+            <p class="login-register" id="loginToggleRow">Don't have an account? <a href="#" class="login-link" id="toggleLoginMode" data-action="toggle-register" style="font-weight: 600; text-decoration: underline; color: var(--accent-blue, #60a5fa);">Create one</a></p>
           </form>
         </div>
         <div class="login-art" aria-hidden="true">
@@ -6274,6 +6656,8 @@ const applyUserThemeSettings = () => {
   root.style.setProperty("--color-pending", colors.pending || "#ef4444");
 
   const theme = scaffoldState.userSettings?.themeMode || "dark";
+  root.setAttribute("data-theme", theme);
+
   const modern = document.getElementById("dashboardModern");
   const card = document.getElementById("dashboardCard");
   if (modern && card) {
@@ -7278,21 +7662,9 @@ function getStepFormHtml(stepNum) {
         <div class="composer-grid">
           ${subjectOptions.map(opt => {
             const isSel = (item?.subjectIndex === opt.subjectIndex) && (item?.paperIndex === opt.paperIndex);
-            const iconPath = getSubjectIconPath(scaffoldState.syllabus[opt.subjectIndex].title, opt.paperIndex);
-            
-            let btnContent = "";
-            let inlineStyle = "";
-            if (iconPath) {
-              btnContent = `<img src="${iconPath}" alt="${escapeHtml(opt.label)}" style="width: 100%; height: 100%; object-fit: cover; display: block;" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                            <span style="display: none; font-size: 0.78rem; font-weight: 600;">${escapeHtml(opt.label)}</span>`;
-              inlineStyle = `padding: 0; min-height: unset; aspect-ratio: 1/1; overflow: hidden; display: flex; align-items: stretch; border-width: 2px; border-radius: 12px;`;
-            } else {
-              btnContent = `<span>${escapeHtml(opt.label)}</span>`;
-            }
-            
             return `
-              <button class="composer-btn ${isSel ? 'is-selected' : ''}" type="button" data-action="composer-select-subject" data-subject-index="${opt.subjectIndex}" data-paper-index="${opt.paperIndex !== null ? opt.paperIndex : ''}" style="${inlineStyle}">
-                ${btnContent}
+              <button class="composer-btn ${isSel ? 'is-selected' : ''}" type="button" data-action="composer-select-subject" data-subject-index="${opt.subjectIndex}" data-paper-index="${opt.paperIndex !== null ? opt.paperIndex : ''}">
+                <span>${escapeHtml(opt.label)}</span>
               </button>
             `;
           }).join('')}
@@ -8255,6 +8627,7 @@ const calculateTimePercentage = (missionStart, missionEnd) => {
   const end = new Date(missionEnd);
   const now = new Date();
   const total = end - start;
+  if (isNaN(total) || total <= 0) return 100;
   const elapsed = now - start;
   return Math.min(100, Math.max(0, Math.round((elapsed / total) * 100)));
 };
@@ -8338,7 +8711,10 @@ const renderDashboardUnit = (state) => {
   const greeting = getGreeting();
   const name = state.userSettings.customName || "Student";
   
-  const daysRemain = Math.round((new Date(state.userSettings.missionEnd) - new Date()) / (1000 * 60 * 60 * 24));
+  const missionEndParsed = new Date(state.userSettings.missionEnd);
+  const daysRemain = isNaN(missionEndParsed.getTime()) 
+    ? 0 
+    : Math.max(0, Math.round((missionEndParsed - new Date()) / (1000 * 60 * 60 * 24)));
   
   const gaugeOuterDash = Math.round((syllabusPerc / 100) * 402);
   const gaugeInnerDash = Math.round((timePerc / 100) * 314);
@@ -8360,9 +8736,9 @@ const renderDashboardUnit = (state) => {
       
       <div class="dashboard-modern dark" id="dashboardModern">
         <div class="dash-mode-toggle">
-          <span class="toggle-label">DARK</span>
+          <span class="toggle-label toggle-label--dark">DARK</span>
           <div class="toggle-track" id="dashToggle"><div class="toggle-thumb"></div></div>
-          <span class="toggle-label">LIGHT</span>
+          <span class="toggle-label toggle-label--light">LIGHT</span>
         </div>
         <div class="dash-card dark" id="dashboardCard">
           <div class="dash-head">
@@ -8431,7 +8807,7 @@ const renderDashboardUnit = (state) => {
                   <div class="count-big" style="color:#16a34a">${chapters.left}</div>
                   <div class="count-sub">of ${chapters.total} total</div>
                 </div>
-                <div class="count-bar"><div class="count-fill" style="width:${Math.round((chapters.done / chapters.total) * 100)}%;background:#16a34a"></div></div>
+                <div class="count-bar"><div class="count-fill" style="width:${chapters.total > 0 ? Math.round((chapters.done / chapters.total) * 100) : 0}%;background:#16a34a"></div></div>
               </div>
               <div class="count-card">
                 <div class="count-label"><span class="sc-dot" style="background:#dc2626"></span>Classes Left</div>
@@ -8850,7 +9226,7 @@ const subjectCard = (subject, index) => {
       <div style="display:flex;align-items:center;gap:8px;">
         <div class="subj-prog-ring">
           <svg viewBox="0 0 36 36" width="40" height="40">
-            <circle cx="18" cy="18" r="15" fill="none" stroke="rgba(255,255,255,.1)" stroke-width="3"/>
+            <circle cx="18" cy="18" r="15" fill="none" stroke="var(--border)" stroke-width="3"/>
             <circle cx="18" cy="18" r="15" fill="none" stroke="${visual.accent}" stroke-width="3"
               stroke-dasharray="94.2" stroke-dashoffset="${Math.round(94.2 - (pct / 100) * 94.2)}"
               stroke-linecap="round" transform="rotate(-90 18 18)" id="subj-ring-${index}"/>
@@ -9189,7 +9565,7 @@ const renderSettingsPanelBody = (state) => {
                 <h3>HSC Study OS</h3>
                 <p>Premium Edition preview shell</p>
                 <p>Built by Tanmoy Sarker for HSC students who want to track smarter.</p>
-                <button class="btn-small btn-small--primary btn-small--wide" type="button" onclick="window.open('portfolio.html', '_blank')" style="margin-top: 14px; margin-bottom: 6px; border-radius: 999px; display: inline-flex; align-items: center; justify-content: center; gap: 8px;">
+                <button class="btn-small btn-small--primary btn-small--wide" type="button" data-action="open-developer-dialog" style="margin-top: 14px; margin-bottom: 6px; border-radius: 999px; display: inline-flex; align-items: center; justify-content: center; gap: 8px;">
                   ${icon("user-round", "Developer")}
                   <span>About the developer</span>
                 </button>
@@ -9201,6 +9577,105 @@ const renderSettingsPanelBody = (state) => {
       </div>
     `;
 };
+
+const renderDeveloperDialog = (state) => `
+  <div class="account-dialog developer-dialog" id="developerDialog" hidden>
+    <div class="account-dialog__backdrop" data-action="close-developer-dialog" aria-hidden="true"></div>
+    <section class="account-dialog__card developer-dialog__card" role="dialog" aria-modal="true" aria-labelledby="developerDialogTitle">
+      <button class="developer-dialog__close" type="button" data-action="close-developer-dialog" title="Close" aria-label="Close">
+        ${icon("x", "Close")}
+      </button>
+      <div class="developer-dialog__body">
+        <div class="dev-portfolio">
+          <!-- HERO -->
+          <header class="dev-hero">
+            <div class="floating-badge fb-1">${icon("pen-tool")} Graphics</div>
+            <div class="floating-badge fb-2">${icon("graduation-cap")} Science '25</div>
+            <div class="floating-badge fb-3">${icon("code-2")} Coder</div>
+            <div class="floating-badge fb-4">${icon("sparkles")} Designer</div>
+            
+            <p class="eyebrow" style="color: var(--accent-blue); letter-spacing: 0.1em; font-weight: 700; margin-bottom: 6px;">CREATOR PORTFOLIO</p>
+            <h1 id="developerDialogTitle">Tanmoy Sarker</h1>
+            <p class="dev-subtitle">Full-Stack Architect & Digital Creator</p>
+            <p style="font-size: 0.95rem; color: var(--text-sub); line-height: 1.6; margin: 0 auto; max-width: 520px;">
+              Crafting premium modular scaffolds, fluid micro-interactions, and visual tools. Dominate your goals with clean systems.
+            </p>
+          </header>
+
+          <!-- CAPABILITIES -->
+          <div class="capabilities-grid">
+            <div class="dev-card interactive-card">
+              <div class="dev-card-icon">
+                <svg viewBox="0 0 24 24"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/><circle cx="12" cy="12" r="4"/></svg>
+              </div>
+              <h3>AI Automation</h3>
+              <p>Leveraging artificial intelligence to streamline workflows and build intelligent digital systems.</p>
+            </div>
+            <div class="dev-card interactive-card">
+              <div class="dev-card-icon">
+                <svg viewBox="0 0 24 24"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg>
+              </div>
+              <h3>Graphics Design</h3>
+              <p>Crafting visually striking branding, pixel-perfect layouts, and modern aesthetic art.</p>
+            </div>
+            <div class="dev-card interactive-card">
+              <div class="dev-card-icon">
+                <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="2" y1="7" x2="7" y2="7"/><line x1="2" y1="17" x2="7" y2="17"/><line x1="17" y1="17" x2="22" y2="17"/><line x1="17" y1="7" x2="22" y2="7"/></svg>
+              </div>
+              <h3>Video Editing</h3>
+              <p>Producing highly engaging cuts, cinematic storytelling, and smooth visual transitions.</p>
+            </div>
+            <div class="dev-card interactive-card">
+              <div class="dev-card-icon">
+                <svg viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+              </div>
+              <h3>Motion Design</h3>
+              <p>Bringing static interfaces to life through fluid animations and dynamic physical physics.</p>
+            </div>
+          </div>
+
+          <!-- PRODUCT HIGHLIGHT -->
+          <a href="https://tonustudy.vercel.app/" target="_blank" class="product-highlight interactive-card">
+            <span class="badge">Exclusive Product</span>
+            <h2 class="product-title">STUDY TRACKER</h2>
+            <p class="product-desc">The ultimate analytics ecosystem for ambitious HSC students. Engineered specifically for those attending online classes who wish to dominate their exams, secure an A+, and guarantee top-tier university admission. Stop guessing. Start tracking.</p>
+          </a>
+
+          <!-- SCOPE -->
+          <div class="dev-scope">
+            <h2 class="dev-section-title">⚡ Scope of Creation</h2>
+            <div class="personal-note">
+              <p>"There's nothing more special than creating something you always wished existed but never did. This is my very first project — born from a genuine need I felt throughout my own HSC journey. It holds deep personal value, and I truly believe it will make a difference for you too."</p>
+              <div class="signature">— Tanmoy Sarker</div>
+            </div>
+
+            <h3 style="font-size: 1.35rem; font-weight: 700; text-align: center; margin-top: 10px; margin-bottom: -15px;">📋 Powerful Features at a Glance</h3>
+            <div class="capabilities-grid" style="grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1.2rem;">
+              <div class="dev-card" style="padding: 1.5rem 1rem;"><div style="font-size: 1.6rem; margin-bottom: 0.5rem;">📊</div><h3 style="font-size: 1rem; margin-bottom: 0.4rem;">Live Tracking</h3><p style="font-size: 0.78rem;">Visual completion status, percentage rings and progress bars.</p></div>
+              <div class="dev-card" style="padding: 1.5rem 1rem;"><div style="font-size: 1.6rem; margin-bottom: 0.5rem;">⏱️</div><h3 style="font-size: 1rem; margin-bottom: 0.4rem;">Study Analytics</h3><p style="font-size: 0.78rem;">Log class/self hours. Drag-editable graphs track consistency.</p></div>
+              <div class="dev-card" style="padding: 1.5rem 1rem;"><div style="font-size: 1.6rem; margin-bottom: 0.5rem;">🎯</div><h3 style="font-size: 1rem; margin-bottom: 0.4rem;">Mission ETA</h3><p style="font-size: 0.78rem;">Target date countdown with live elapsed time gauges.</p></div>
+              <div class="dev-card" style="padding: 1.5rem 1rem;"><div style="font-size: 1.6rem; margin-bottom: 0.5rem;">☁️</div><h3 style="font-size: 1rem; margin-bottom: 0.4rem;">Cloud Sync</h3><p style="font-size: 0.78rem;">Secure database sync. Local backups and vault version control.</p></div>
+              <div class="dev-card" style="padding: 1.5rem 1rem;"><div style="font-size: 1.6rem; margin-bottom: 0.5rem;">🍅</div><h3 style="font-size: 1rem; margin-bottom: 0.4rem;">Pomodoro Focus</h3><p style="font-size: 0.78rem;">Built-in custom interval work timers and lap stopwatches.</p></div>
+              <div class="dev-card" style="padding: 1.5rem 1rem;"><div style="font-size: 1.6rem; margin-bottom: 0.5rem;">💬</div><h3 style="font-size: 1rem; margin-bottom: 0.4rem;">Community Chat</h3><p style="font-size: 0.78rem;">Stay motivated. Share daily updates and notes with candidates.</p></div>
+              <div class="dev-card" style="padding: 1.5rem 1rem;"><div style="font-size: 1.6rem; margin-bottom: 0.5rem;">🌙</div><h3 style="font-size: 1rem; margin-bottom: 0.4rem;">Dual Themes</h3><p style="font-size: 0.78rem;">Modern UI with premium glassmorphism theme configurations.</p></div>
+              <div class="dev-card" style="padding: 1.5rem 1rem;"><div style="font-size: 1.6rem; margin-bottom: 0.5rem;">📱</div><h3 style="font-size: 1rem; margin-bottom: 0.4rem;">Responsive</h3><p style="font-size: 0.78rem;">Optimized layout on desktop, tablet, and mobile displays.</p></div>
+            </div>
+          </div>
+
+          <!-- COLLAB -->
+          <div class="dev-scope" style="align-items: center; gap: 1.5rem;">
+            <h2 class="dev-section-title">Connect & Collab</h2>
+            <div class="contact-grid">
+              <a href="https://facebook.com/tushantu07" target="_blank" class="contact-pill pill-fb"><svg viewBox="0 0 24 24"><path d="M22.675 0h-21.35C.597 0 0 .597 0 1.325v21.351C0 23.403.597 24 1.325 24H12.82v-9.294H9.692v-3.622h3.128V8.413c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12V24h6.116c.73 0 1.323-.597 1.323-1.325V1.325C24 .597 23.403 0 22.675 0z"/></svg>Facebook</a>
+              <a href="https://wa.me/01703943445" target="_blank" class="contact-pill pill-wa"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>WhatsApp</a>
+              <a href="https://instagram.com/tanshbtt" target="_blank" class="contact-pill pill-ig"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>Instagram</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+`;
 
 const renderSettingsDialog = (state) => `
   <div class="account-dialog settings-dialog" id="settingsDialog" hidden>
@@ -9548,6 +10023,14 @@ const backupDateLabel = (value) => {
   }
 };
 
+const safeJSONParse = (str, fallback = null) => {
+  try {
+    return str ? JSON.parse(str) : fallback;
+  } catch (_) {
+    return fallback;
+  }
+};
+
 const readVaultBackups = () => {
   try {
     const raw = localStorage.getItem(BACKUP_VAULT_KEY);
@@ -9568,9 +10051,9 @@ const loadModeSnapshot = (suffix = "") => {
   const cfg = localStorage.getItem(`${CHRONOS_CFG_KEY}${modeSuffix}`);
   const logs = localStorage.getItem(`${CHRONOS_LOG_KEY}${modeSuffix}`);
   return {
-    syllabus: syl ? JSON.parse(syl) : null,
-    chronosConfig: cfg ? JSON.parse(cfg) : null,
-    studyLogs: logs ? JSON.parse(logs) : null,
+    syllabus: safeJSONParse(syl),
+    chronosConfig: safeJSONParse(cfg),
+    studyLogs: safeJSONParse(logs),
   };
 };
 
@@ -10152,7 +10635,7 @@ const renderAppShell = (state, units) => {
       ${units.join("")}
     </main>
     <footer class="app-footer" style="display: flex; justify-content: center; align-items: center; padding: 32px 16px 40px; margin-top: 24px;">
-      <button class="btn-small btn-small--primary btn-small--wide" type="button" onclick="window.open('portfolio.html', '_blank')" style="border-radius: 999px; padding: 10px 24px; min-height: 40px; display: inline-flex; align-items: center; gap: 8px; font-weight: 600; box-shadow: 0 4px 12px rgba(99,102,241,0.2);">
+      <button class="btn-small btn-small--primary btn-small--wide" type="button" data-action="open-developer-dialog" style="border-radius: 999px; padding: 10px 24px; min-height: 40px; display: inline-flex; align-items: center; gap: 8px; font-weight: 600; box-shadow: 0 4px 12px rgba(99,102,241,0.2);">
         ${icon("user-round", "Developer")}
         <span>About the developer</span>
       </button>
@@ -10163,6 +10646,7 @@ const renderAppShell = (state, units) => {
     ${renderSettingsDialog(state)}
     ${renderBackupDialog(state)}
     ${renderChatExpandDialog(state)}
+    ${renderDeveloperDialog(state)}
     <!-- Timer Dialog -->
     <div class="account-dialog timer-dialog" id="timerDialog" hidden>
       <div class="account-dialog__backdrop" data-action="close-timer-dialog"></div>
@@ -10436,6 +10920,60 @@ const clearLocalLoginSession = () => {
   } catch(_) {}
 };
 
+const ensureFirebaseInitialized = () => {
+  if (!window.firebase) {
+    throw new Error("Firebase library failed to load. Check your internet connection.");
+  }
+  return window.firebase.apps?.length
+    ? window.firebase.app()
+    : window.firebase.initializeApp(CHAT_FIREBASE_CONFIG);
+};
+
+const loginWithGoogle = () => {
+  try {
+    const app = ensureFirebaseInitialized();
+    const provider = new window.firebase.auth.GoogleAuthProvider();
+    showLoginFeedback("Connecting to Google...");
+    window.firebase.auth().signInWithPopup(provider)
+      .then((result) => {
+        const user = result.user;
+        completeLocalLogin({
+          mode: "google",
+          email: user.email,
+          uid: user.uid,
+          createdAt: Date.now()
+        }, true);
+        showLoginFeedback("");
+      })
+      .catch((error) => {
+        showLoginFeedback(`Google login failed: ${error.message}`);
+      });
+  } catch (error) {
+    showLoginFeedback(error.message);
+  }
+};
+
+const loginAsGuest = (remember = true) => {
+  try {
+    ensureFirebaseInitialized();
+    showLoginFeedback("Creating guest session...");
+    window.firebase.auth().signInAnonymously()
+      .then((result) => {
+        completeLocalLogin({
+          mode: "guest",
+          uid: result.user.uid,
+          createdAt: Date.now()
+        }, remember);
+        showLoginFeedback("");
+      })
+      .catch((error) => {
+        showLoginFeedback(`Guest login failed: ${error.message}`);
+      });
+  } catch (error) {
+    showLoginFeedback(error.message);
+  }
+};
+
 const getLoginDisplayName = (session) => {
   if (!session) return "";
   if (session.mode === "guest") return "Guest";
@@ -10474,7 +11012,14 @@ const returnToLoginScreen = () => {
   document.body.classList.add("login-locked");
   document.body.classList.remove("login-ready");
   showLoginFeedback("");
+  try {
+    if (window.firebase?.apps?.length) {
+      window.firebase.auth().signOut().catch(() => {});
+    }
+  } catch (_) {}
 };
+
+let currentLoginMode = "login";
 
 const attachLocalLogin = () => {
   const saved = readLocalLoginSession();
@@ -10483,21 +11028,88 @@ const attachLocalLogin = () => {
     mountApp();
   }
 
+  const toggleBtn = document.getElementById("toggleLoginMode");
+  toggleBtn?.addEventListener("click", (event) => {
+    event.preventDefault();
+    const titleEl = document.querySelector(".login-title");
+    const submitTextEl = document.querySelector(".login-submit span");
+    const toggleLinkEl = document.getElementById("toggleLoginMode");
+    const labelRow = document.getElementById("loginToggleRow");
+    
+    if (currentLoginMode === "login") {
+      currentLoginMode = "register";
+      if (titleEl) titleEl.textContent = "Create Account";
+      if (submitTextEl) submitTextEl.textContent = "Sign Up with Email";
+      if (labelRow) {
+        labelRow.childNodes[0].textContent = "Already have an account? ";
+      }
+      if (toggleLinkEl) toggleLinkEl.textContent = "Log in";
+    } else {
+      currentLoginMode = "login";
+      if (titleEl) titleEl.textContent = "Welcome back";
+      if (submitTextEl) submitTextEl.textContent = "Login with email";
+      if (labelRow) {
+        labelRow.childNodes[0].textContent = "Don't have an account? ";
+      }
+      if (toggleLinkEl) toggleLinkEl.textContent = "Create one";
+    }
+    showLoginFeedback("");
+  });
+
   const form = document.getElementById("localLoginForm");
   form?.addEventListener("submit", (event) => {
     event.preventDefault();
     const email = document.getElementById("loginEmail")?.value.trim();
     const password = document.getElementById("loginPassword")?.value || "";
     const remember = document.getElementById("loginRemember")?.checked !== false;
+    
     if (!email || !email.includes("@")) {
       showLoginFeedback("Enter a valid email to continue.");
       return;
     }
-    if (password.length < 4) {
-      showLoginFeedback("Use at least 4 characters for now.");
+    if (password.length < 6) {
+      showLoginFeedback("Password must be at least 6 characters.");
       return;
     }
-    completeLocalLogin({ mode: "email", email, createdAt: Date.now() }, remember);
+
+    try {
+      const app = ensureFirebaseInitialized();
+      showLoginFeedback(currentLoginMode === "login" ? "Logging in..." : "Creating account...");
+      
+      if (currentLoginMode === "login") {
+        window.firebase.auth().signInWithEmailAndPassword(email, password)
+          .then((result) => {
+            const user = result.user;
+            completeLocalLogin({
+              mode: "email",
+              email: user.email,
+              uid: user.uid,
+              createdAt: Date.now()
+            }, remember);
+            showLoginFeedback("");
+          })
+          .catch((error) => {
+            showLoginFeedback(error.message);
+          });
+      } else {
+        window.firebase.auth().createUserWithEmailAndPassword(email, password)
+          .then((result) => {
+            const user = result.user;
+            completeLocalLogin({
+              mode: "email",
+              email: user.email,
+              uid: user.uid,
+              createdAt: Date.now()
+            }, remember);
+            showLoginFeedback("");
+          })
+          .catch((error) => {
+            showLoginFeedback(error.message);
+          });
+      }
+    } catch (error) {
+      showLoginFeedback(error.message);
+    }
   });
 };
 
@@ -10560,8 +11172,11 @@ document.addEventListener("DOMContentLoaded", () => {
       card.classList.toggle("dark", isDark);
       card.classList.toggle("light", !isDark);
 
+      const theme = isDark ? "dark" : "light";
+      document.documentElement.setAttribute("data-theme", theme);
+
       if (!scaffoldState.userSettings) scaffoldState.userSettings = {};
-      scaffoldState.userSettings.themeMode = isDark ? "dark" : "light";
+      scaffoldState.userSettings.themeMode = theme;
       saveUserSettings();
     });
   }
@@ -11774,6 +12389,8 @@ const openAccountDialog = () => openDialog("accountDialog");
 const closeAccountDialog = () => closeDialog("accountDialog");
 const openSettingsDialog = () => openDialog("settingsDialog");
 const closeSettingsDialog = () => closeDialog("settingsDialog");
+const openDeveloperDialog = () => openDialog("developerDialog");
+const closeDeveloperDialog = () => closeDialog("developerDialog");
 const openBackupDialog = () => {
   openDialog("backupDialog");
   renderSyncStatusUI();
@@ -11927,6 +12544,14 @@ document.addEventListener("click", (e) => {
     closeExpandChat();
     return;
   }
+  if (action === "open-developer-dialog") {
+    openDeveloperDialog();
+    return;
+  }
+  if (action === "close-developer-dialog") {
+    closeDeveloperDialog();
+    return;
+  }
   if (action === "save-account-settings") {
     ["customName", "collegeName", "sscBatch", "sscRoll", "sscReg", "hscBatch", "hscRoll", "hscReg"].forEach((key) => {
       const input = document.getElementById(`account-${key}`);
@@ -11943,7 +12568,7 @@ document.addEventListener("click", (e) => {
     return;
   }
   if (action === "account-login-guest") {
-    completeLocalLogin({ mode: "guest", createdAt: Date.now() }, true);
+    loginAsGuest(true);
     closeAccountDialog();
     closeSettingsDialog();
     return;
@@ -11957,16 +12582,33 @@ document.addEventListener("click", (e) => {
     return;
   }
   if (action === "login-guest") {
-    completeLocalLogin({ mode: "guest", createdAt: Date.now() }, true);
+    loginAsGuest(true);
     return;
   }
   if (action === "login-google") {
-    completeLocalLogin({ mode: "google", createdAt: Date.now() }, true);
+    loginWithGoogle();
     return;
   }
   if (action === "login-forgot") {
     e.preventDefault();
-    showLoginFeedback("Password reset will be available after Firebase Auth setup.");
+    const email = document.getElementById("loginEmail")?.value.trim();
+    if (!email || !email.includes("@")) {
+      showLoginFeedback("Please enter your email above to reset password.");
+      return;
+    }
+    try {
+      ensureFirebaseInitialized();
+      showLoginFeedback("Sending reset link...");
+      window.firebase.auth().sendPasswordResetEmail(email)
+        .then(() => {
+          showLoginFeedback("Password reset email sent successfully.");
+        })
+        .catch((err) => {
+          showLoginFeedback(err.message);
+        });
+    } catch (err) {
+      showLoginFeedback(err.message);
+    }
     return;
   }
   if (action === "chat-toggle-list") {
@@ -12160,6 +12802,7 @@ document.addEventListener("keydown", (event) => {
   closeAccountDialog();
   closeBackupDialog();
   closeTrackDialog();
+  closeDeveloperDialog();
   const td = document.getElementById("timerDialog"); if (td) td.setAttribute("hidden","");
 });
 
@@ -12185,7 +12828,7 @@ const updatePomoUI = () => {
         lbl=document.getElementById("pomoLabel"), btn=document.getElementById("pomoPlayBtn");
   if (!disp) return;
   disp.textContent = fmtPomo(pomoState.remSecs);
-  if (bar) bar.style.width = `${Math.round((pomoState.remSecs/pomoState.totalSecs)*100)}%`;
+  if (bar) bar.style.width = `${pomoState.totalSecs > 0 ? Math.round((pomoState.remSecs / pomoState.totalSecs) * 100) : 0}%`;
   if (lbl) lbl.textContent = POMO_MODES[pomoState.mode].label;
   const pauseSVG = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>`;
   const playSVG  = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>`;
