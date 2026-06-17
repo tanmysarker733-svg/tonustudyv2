@@ -23,9 +23,9 @@
   --linear-glow-1: rgba(21, 83, 135, 0.18);
   --linear-glow-2: rgba(37, 109, 154, 0.13);
   --bg: #07131b;
-  --card-bg: rgba(10, 26, 40, 0.82);
-  --nav-bg: rgba(6, 18, 28, 0.9);
-  --panel-bg: rgba(11, 29, 43, 0.68);
+  --card-bg: rgba(30, 41, 59, 0.82); /* Gray opacity effect */
+  --nav-bg: rgba(15, 23, 42, 0.9);
+  --panel-bg: rgba(30, 41, 59, 0.68); /* Gray opacity panel */
   --panel-soft: rgba(173, 216, 255, 0.038);
   --text-main: #dceaf6;
   --text-sub: #c2d6e5;
@@ -52,9 +52,9 @@ html[data-theme="light"] {
   --linear-glow-1: rgba(37, 99, 235, 0.05);
   --linear-glow-2: rgba(37, 99, 235, 0.03);
   --bg: #f3f7fa;
-  --card-bg: rgba(255, 255, 255, 0.85);
-  --nav-bg: rgba(243, 247, 250, 0.9);
-  --panel-bg: rgba(255, 255, 255, 0.75);
+  --card-bg: rgba(226, 232, 240, 0.85); /* Gray opacity card */
+  --nav-bg: rgba(241, 245, 249, 0.9);
+  --panel-bg: rgba(241, 245, 249, 0.75); /* Gray opacity panel */
   --panel-soft: rgba(79, 151, 187, 0.05);
   --text-main: #0f172a;
   --text-sub: #475569;
@@ -98,7 +98,8 @@ body {
 }
 
 body.login-locked {
-  overflow: hidden;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 body.login-locked #app {
@@ -1175,18 +1176,19 @@ h4 {
 .reveal-ready {
   opacity: 0;
   transform: translateY(22px);
-  filter: blur(7px);
+  filter: grayscale(100%) opacity(0.5); /* Gray opacity transition */
   transition:
     opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
     transform 0.7s cubic-bezier(0.16, 1, 0.3, 1),
     filter 0.7s cubic-bezier(0.16, 1, 0.3, 1);
   transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, transform, filter;
 }
 
 .reveal-ready.is-visible {
   opacity: 1;
   transform: translateY(0);
-  filter: blur(0);
+  filter: grayscale(0%) opacity(1);
 }
 
 .unit-section__header {
@@ -1239,9 +1241,11 @@ h4 {
 .settings-group,
 .backup-timeline > div {
   border: 1px solid rgba(255, 255, 255, 0.04);
-  background: rgba(10, 26, 40, 0.45); /* More translucent for better ambient glow readability */
+  background: rgba(30, 41, 59, 0.7); /* Gray opacity panel background */
   box-shadow: 0 14px 42px rgba(0, 0, 0, 0.35);
-  backdrop-filter: blur(8px);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
 }
 
 @media (max-width: 720px) {
@@ -1271,6 +1275,7 @@ h4 {
 .chat-shell:hover,
 .backup-timeline > div:hover {
   border-color: rgba(147, 197, 253, 0.14);
+  background: rgba(30, 41, 59, 0.85); /* Smooth ease to high-opacity gray */
   box-shadow: 0 18px 48px rgba(0, 0, 0, 0.26);
   transform: translateY(-1px);
 }
@@ -2029,8 +2034,14 @@ h4 {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: blur(1.1px) saturate(.95) brightness(.78);
+  filter: grayscale(100%) brightness(.65); /* Gray opacity effect */
+  opacity: 0.72;
   transform: scale(1.018);
+  transition: filter 0.3s ease, opacity 0.3s ease;
+}
+.chronos-preview:hover img {
+  filter: grayscale(0%) brightness(0.85);
+  opacity: 1;
 }
 .chronos-preview__veil {
   position: absolute;
@@ -5646,6 +5657,8 @@ h4 {
 .ch-pill--done:hover { background:rgba(16,185,129,.28); }
 .ch-pill--reset { background:rgba(239,68,68,.12); color:#f87171; border:1px solid rgba(239,68,68,.2); }
 .ch-pill--reset:hover { background:rgba(239,68,68,.22); }
+.ch-pill--close { background:rgba(255,255,255,.05); color:#cbd5e1; border:1px solid rgba(255,255,255,.1); }
+.ch-pill--close:hover { background:rgba(255,255,255,.12); color:#ffffff; }
 .subj-prog-ring { position:relative; display:flex; align-items:center; justify-content:center; }
 .ring-pct { position:absolute; font-size:.58rem; font-weight:700; color:#cbd5e1; }
 .paper-meter__track {
@@ -6179,8 +6192,9 @@ h4 {
     z-index: 1260 !important;
     transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
-    backdrop-filter: blur(8px) !important;
-    -webkit-backdrop-filter: blur(8px) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background: rgba(30, 41, 59, 0.8) !important; /* Gray opacity close btn background */
   }
   .developer-dialog__close:hover {
     background: rgba(255, 255, 255, 0.12) !important;
@@ -6401,7 +6415,8 @@ h4 {
     border-radius: 24px;
     padding: 2.5rem;
     text-align: center;
-    backdrop-filter: blur(10px);
+    backdrop-filter: none;
+    background: rgba(30, 41, 59, 0.85); /* Gray opacity note background */
     box-shadow: 0 10px 24px var(--shadow);
   }
   .personal-note p {
@@ -8972,13 +8987,7 @@ const sliderStyle = (done, total, color = "var(--subject-accent,#38bdf8)") => {
   return `style="--slider-pct:${pct}%;--slider-color:${color}"`;
 };
 
-const quickDeltaButtons = (action, si, pi, ci) => `
-  <div class="quick-delta-row" aria-label="Quick counter controls">
-    <button class="quick-delta-btn" ${d(action+'-bump',si,pi,ci)} data-delta="-5">-5</button>
-    <button class="quick-delta-btn" ${d(action+'-bump',si,pi,ci)} data-delta="-1">-1</button>
-    <button class="quick-delta-btn quick-delta-btn--pos" ${d(action+'-bump',si,pi,ci)} data-delta="1">+1</button>
-    <button class="quick-delta-btn quick-delta-btn--pos" ${d(action+'-bump',si,pi,ci)} data-delta="5">+5</button>
-  </div>`;
+// Quick delta buttons removed
 
 const classSlider = (label, action, done, total, si, pi, ci) => `
   <div class="cls-row">
@@ -8990,7 +8999,6 @@ const classSlider = (label, action, done, total, si, pi, ci) => `
       <button class="ch-btn ch-btn--sm cls-total-inc" title="Total +" ${d(action+'-total-inc',si,pi,ci)}>T+</button>
       <button class="ch-btn ch-btn--sm cls-total-dec" title="Total -" ${d(action+'-total-dec',si,pi,ci)}>T-</button>
     </div>
-    ${quickDeltaButtons(action, si, pi, ci)}
   </div>
   <input class="ch-slider" type="range" min="0" max="${total}" value="${done}" ${d(action+'-slide',si,pi,ci)} ${sliderStyle(done, total)}>`;
 
@@ -9015,7 +9023,6 @@ const renderChapterPlate = (ch, si, pi, ci) => {
         <span class="cls-val" style="color:${col}" data-val="perc-${si}-${pi}-${ci}">${pct}%</span>
         <button class="ch-btn" ${d('perc-inc',si,pi,ci)}>+</button>
       </div>
-      ${quickDeltaButtons('perc', si, pi, ci)}
       <input class="ch-slider" type="range" min="0" max="100" value="${pct}" ${d('perc-slide',si,pi,ci)} ${sliderStyle(pct, 100, col)}>
     ` : `
       <div class="track-checks">
@@ -9040,12 +9047,12 @@ const renderChapterPlate = (ch, si, pi, ci) => {
         <button class="ch-btn ch-btn--sm cls-total-inc" ${d('qs-total-inc',si,pi,ci)}>T+</button>
         <button class="ch-btn ch-btn--sm cls-total-dec" ${d('qs-total-dec',si,pi,ci)}>T-</button>
       </div>
-      ${quickDeltaButtons('qs', si, pi, ci)}
     </div>
     <div class="ch-plate__actions">
       <button class="ch-pill ch-pill--done" ${d('ch-complete',si,pi,ci)}>Mark Complete</button>
       <button class="ch-pill ch-pill--reset" ${d('ch-reset',si,pi,ci)}>Reset</button>
       <button class="ch-pill ch-pill--remove" ${d('ch-remove',si,pi,ci)} data-confirm-step="0">Remove Chapter</button>
+      <button class="ch-pill ch-pill--close" ${d('ch-collapse',si,pi,ci)}>Done</button>
     </div>
   </div>`;
 };
@@ -10180,12 +10187,11 @@ function updateLocalWriteTimestamp() {
 
 function getSyncDocId() {
   const session = readLocalLoginSession();
+  if (session && session.uid) {
+    return session.uid;
+  }
   if (session && session.mode === "email" && session.email) {
     return `email-${session.email.toLowerCase().replace(/[^a-z0-9@.-]/g, "_")}`;
-  }
-  if (session && session.mode === "google") {
-    const identifier = session.uid || (session.email ? session.email.toLowerCase().replace(/[^a-z0-9@.-]/g, "_") : null);
-    return `google-${identifier || chatState.profile?.id || "unknown"}`;
   }
   return `guest-${chatState.profile?.id || "unknown"}`;
 }
@@ -11929,6 +11935,18 @@ document.addEventListener("click", (e) => {
       btn.dataset.confirm="0"; btn.textContent="↺ Reset"; btn.style.background="";
     }
   }
+  if (action === "ch-collapse") {
+    const plate = document.getElementById(`ch-${si}-${pi}-${ci}-plate`);
+    const row = document.querySelector(`.ch-row[data-si="${si}"][data-pi="${pi}"][data-ci="${ci}"]`);
+    if (plate) {
+      plate.hidden = true;
+    }
+    if (row) {
+      row.classList.remove("is-open");
+      row.setAttribute("aria-expanded", "false");
+    }
+    return;
+  }
 });
 
 document.addEventListener("change", (e) => {
@@ -12072,6 +12090,8 @@ const loadChronosConfig = () => {
 
 const saveChronosConfig = () => {
   try { localStorage.setItem(modeScopedKey(CHRONOS_CFG_KEY), JSON.stringify(scaffoldState.graphConfig)); } catch(_) {}
+  updateLocalWriteTimestamp();
+  triggerCloudSaveDebounced();
 };
 
 const loadStudyLogs = () => {
