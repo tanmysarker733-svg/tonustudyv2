@@ -3109,7 +3109,7 @@ h4 {
   align-items: center;
   justify-content: space-between;
   gap: 14px;
-  padding: 14px 16px;
+  padding: 16px 20px;
   border-radius: 22px;
   border: 1px solid var(--border);
   background:
@@ -3386,6 +3386,9 @@ h4 {
   display: grid;
   gap: 14px;
   padding: 16px;
+  background:
+    linear-gradient(135deg, rgba(37, 99, 235, 0.15) 0%, rgba(29, 78, 216, 0.04) 100%),
+    rgba(10, 15, 26, 0.88);
 }
 
 .chat-compose__row,
@@ -6704,11 +6707,34 @@ const BACKUP_VAULT_KEY = "hsc-vault-backups-v1";
 const AUTO_BACKUP_STAMP_KEY = "hsc-auto-backup-stamp-v1";
 const BACKUP_IMPORT_INPUT_ID = "backupImportInput";
 
+const CHAT_PALETTE = [
+  { name: "Auto", value: "auto", color: "linear-gradient(135deg, #2563eb, #10b981)" },
+  { name: "Deep Violet", value: "#1e1b4b", color: "#1e1b4b" },
+  { name: "Forest Green", value: "#022c22", color: "#022c22" },
+  { name: "Deep Teal", value: "#042f2e", color: "#042f2e" },
+  { name: "Midnight Blue", value: "#082f49", color: "#082f49" },
+  { name: "Dark Plum", value: "#2d0b30", color: "#2d0b30" },
+  { name: "Dark Charcoal", value: "#18181b", color: "#18181b" },
+  { name: "Deep Maroon", value: "#4c0519", color: "#4c0519" }
+];
+
+const getAutoColorForUser = (uid) => {
+  if (!uid) return "rgba(30, 41, 59, 0.5)";
+  let hash = 0;
+  for (let i = 0; i < uid.length; i++) {
+    hash = uid.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  const hue = Math.abs(hash) % 360;
+  return `hsl(${hue}, 32%, 11%)`;
+};
+
 const normalizeChatPrefs = (raw = {}) => ({
   sortOrder: raw.sortOrder === "asc" ? "asc" : "desc",
   defaultVisibility: raw.defaultVisibility === "private" ? "private" : "public",
   isListVisible: !!raw.isListVisible,
   isSettingsOpen: !!raw.isSettingsOpen,
+  hiddenMessageIds: Array.isArray(raw.hiddenMessageIds) ? raw.hiddenMessageIds : [],
+  chatCardColor: raw.chatCardColor || "auto",
 });
 
 const loadChatPrefs = () => {
@@ -6780,7 +6806,8 @@ const getChatStatusTone = () => {
 
 const getVisibleChatMessages = () =>
   chatState.messages.filter((message) =>
-    message.visibility !== "private" || message.authorId === getAuthUid()
+    (message.visibility !== "private" || message.authorId === getAuthUid()) &&
+    !(chatState.prefs.hiddenMessageIds || []).includes(message.id)
   );
 
 const formatChatTime = (message) => {
@@ -6850,21 +6877,41 @@ const renderChatMessages = () => {
   feed.innerHTML = visible.map((message, index) => {
     const isSelf = message.authorId === getAuthUid();
     const visibilityClass = message.visibility === "private" ? "chat-visibility-pill chat-visibility-pill--private" : "chat-visibility-pill";
-    const actionsHtml = isSelf ? `
+    
+    let cardBg = "rgba(59, 130, 246, 0.12)";
+    let cardBorder = "rgba(96, 165, 250, 0.12)";
+    const colorPref = message.chatCardColor || "auto";
+    if (colorPref === "auto") {
+      cardBg = getAutoColorForUser(message.authorId);
+      cardBorder = "rgba(255, 255, 255, 0.06)";
+    } else {
+      cardBg = colorPref;
+      cardBorder = "rgba(255, 255, 255, 0.08)";
+    }
+    const leftAccent = isSelf ? "border-left: 3px solid #10b981;" : "";
+
+    const actionsHtml = `
       <div class="chat-item__actions" style="display: flex; gap: 8px; margin-left: auto; align-items: center;">
-        <button type="button" data-action="chat-edit-msg" data-id="${message.id}" style="background: none; border: none; color: var(--text-sub); cursor: pointer; padding: 2px; display: inline-flex; align-items: center; justify-content: center; transition: color 0.15s ease;" title="Edit Message">
-          ${icon("pencil", "Edit")}
+        ${isSelf ? `
+          <button type="button" data-action="chat-edit-msg" data-id="${message.id}" style="background: none; border: none; color: var(--text-sub); cursor: pointer; padding: 2px; display: inline-flex; align-items: center; justify-content: center; transition: color 0.15s ease;" title="Edit Message">
+            ${icon("pencil", "Edit")}
+          </button>
+        ` : ""}
+        <button type="button" data-action="chat-hide-msg" data-id="${message.id}" style="background: none; border: none; color: var(--text-sub); cursor: pointer; padding: 2px; display: inline-flex; align-items: center; justify-content: center; transition: color 0.15s ease;" title="Hide/Archive Message">
+          ${icon("eye-off", "Hide/Archive")}
         </button>
-        <button type="button" data-action="chat-delete-msg" data-id="${message.id}" style="background: none; border: none; color: rgba(239, 68, 68, 0.6); cursor: pointer; padding: 2px; display: inline-flex; align-items: center; justify-content: center; transition: color 0.15s ease;" title="Delete Message">
-          ${icon("trash-2", "Delete")}
-        </button>
+        ${isSelf ? `
+          <button type="button" data-action="chat-delete-msg" data-id="${message.id}" style="background: none; border: none; color: rgba(239, 68, 68, 0.6); cursor: pointer; padding: 2px; display: inline-flex; align-items: center; justify-content: center; transition: color 0.15s ease;" title="Delete Message">
+            ${icon("trash-2", "Delete")}
+          </button>
+        ` : ""}
       </div>
-    ` : "";
+    `;
     
     return `
       <article class="chat-item ${isSelf ? "chat-item--self" : ""}">
         <div class="chat-item__serial">${index + 1}</div>
-        <div class="chat-item__card">
+        <div class="chat-item__card" style="background: ${cardBg}; border-color: ${cardBorder}; ${leftAccent}">
           <div class="chat-item__head" style="display: flex; align-items: center; width: 100%; justify-content: space-between;">
             <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
               <strong>${escapeHtml(message.authorName || "Student")}</strong>
@@ -6882,6 +6929,51 @@ const renderChatMessages = () => {
   }).join("");
   renderAccountMessageFeed();
   scrollChatToBottom("auto");
+  if (window.lucide) {
+    window.lucide.createIcons({ attrs: { "stroke-width": 1.8 } });
+  }
+};
+
+const renderChatPalette = () => {
+  const container = document.getElementById("chatPaletteContainer");
+  if (!container) return;
+
+  const currentVal = chatState.prefs.chatCardColor || "auto";
+
+  let html = `
+    <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 12px; border-top: 1px solid var(--border); padding-top: 12px;">
+      <label style="font-size: 13px; font-weight: 600; color: var(--text-main); display: block;">Your Chat Card Color Palette</label>
+      <div style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-top: 4px;">
+  `;
+
+  CHAT_PALETTE.forEach(item => {
+    const isSelected = currentVal === item.value;
+    const borderGlow = isSelected ? "box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px #3b82f6;" : "box-shadow: none;";
+    html += `
+      <button type="button" data-action="chat-set-color" data-color="${item.value}" 
+              style="width: 24px; height: 24px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.15); background: ${item.color}; cursor: pointer; transition: transform 0.1s ease, box-shadow 0.1s ease; ${borderGlow}"
+              title="${item.name}">
+      </button>
+    `;
+  });
+
+  const hasHidden = (chatState.prefs.hiddenMessageIds || []).length > 0;
+  if (hasHidden) {
+    html += `
+      <button type="button" data-action="chat-unhide-all" 
+              style="background: rgba(255, 255, 255, 0.05); border: 1px solid var(--border); border-radius: 14px; padding: 4px 10px; font-size: 11px; color: var(--text-sub); cursor: pointer; display: inline-flex; align-items: center; gap: 4px; margin-left: auto;" 
+              title="Show all hidden messages">
+        ${icon("eye", "Show")} Restore Hidden (${chatState.prefs.hiddenMessageIds.length})
+      </button>
+    `;
+  }
+
+  html += `
+      </div>
+    </div>
+  `;
+
+  container.innerHTML = html;
 };
 
 const syncChatUi = () => {
@@ -6903,6 +6995,7 @@ const syncChatUi = () => {
   });
   setChatFeedback(chatState.feedbackMessage, chatState.feedbackTone);
   renderChatMessages();
+  renderChatPalette();
 };
 
 const startChatListener = () => {
@@ -6979,6 +7072,7 @@ const sendChatMessage = async () => {
       visibility,
       authorId: getAuthUid(),
       authorName,
+      chatCardColor: chatState.prefs.chatCardColor || "auto",
       account: {
         collegeName: scaffoldState.userSettings.collegeName || "",
         sscBatch: scaffoldState.userSettings.sscBatch || "",
@@ -8115,7 +8209,41 @@ document.addEventListener("click", (e) => {
     }
     return;
   }
+  if (action === "chat-hide-msg") {
+    const id = btn.dataset.id;
+    if (id) {
+      if (!chatState.prefs.hiddenMessageIds) {
+        chatState.prefs.hiddenMessageIds = [];
+      }
+      chatState.prefs.hiddenMessageIds.push(id);
+      saveChatPrefs();
+      renderChatMessages();
+      renderChatPalette();
+      setChatFeedback("Message hidden locally.", "success");
+    }
+    return;
+  }
   
+  if (action === "chat-unhide-all") {
+    chatState.prefs.hiddenMessageIds = [];
+    saveChatPrefs();
+    renderChatMessages();
+    renderChatPalette();
+    setChatFeedback("All hidden messages restored.", "success");
+    return;
+  }
+  
+  if (action === "chat-set-color") {
+    const color = btn.dataset.color;
+    if (color) {
+      chatState.prefs.chatCardColor = color;
+      saveChatPrefs();
+      renderChatMessages();
+      renderChatPalette();
+    }
+    return;
+  }
+
   if (!composerState.active) return;
   
   if (action === "composer-go-to-step") {
@@ -8431,6 +8559,7 @@ document.addEventListener("click", (e) => {
         visibility,
         authorId: getAuthUid(),
         authorName,
+        chatCardColor: chatState.prefs.chatCardColor || "auto",
         account: {
           collegeName: scaffoldState.userSettings.collegeName || "",
           sscBatch: scaffoldState.userSettings.sscBatch || "",
