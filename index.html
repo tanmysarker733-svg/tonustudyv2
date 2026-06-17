@@ -6768,6 +6768,11 @@ const setChatFeedback = (message, tone = "") => {
   node.classList.toggle("is-success", tone === "success");
 };
 
+const getAuthUid = () => {
+  const session = readLocalLoginSession();
+  return session?.uid || chatState.profile?.id || "anonymous";
+};
+
 const getChatStatusTone = () => {
   if (!chatState.db) return chatState.status.includes("error") ? "error" : "";
   return "live";
@@ -6775,7 +6780,7 @@ const getChatStatusTone = () => {
 
 const getVisibleChatMessages = () =>
   chatState.messages.filter((message) =>
-    message.visibility !== "private" || message.authorId === chatState.profile.id
+    message.visibility !== "private" || message.authorId === getAuthUid()
   );
 
 const formatChatTime = (message) => {
@@ -6792,7 +6797,7 @@ const formatChatTime = (message) => {
 const escapeChatBody = (text) => escapeHtml(String(text || "")).replace(/\n/g, "<br>");
 
 const getAccountMessages = () =>
-  chatState.messages.filter((message) => message.authorId === chatState.profile.id);
+  chatState.messages.filter((message) => message.authorId === getAuthUid());
 
 const renderAccountMessageFeed = () => {
   const feed = document.getElementById("accountMessageFeed");
@@ -6843,7 +6848,7 @@ const renderChatMessages = () => {
     return;
   }
   feed.innerHTML = visible.map((message, index) => {
-    const isSelf = message.authorId === chatState.profile.id;
+    const isSelf = message.authorId === getAuthUid();
     const visibilityClass = message.visibility === "private" ? "chat-visibility-pill chat-visibility-pill--private" : "chat-visibility-pill";
     const actionsHtml = isSelf ? `
       <div class="chat-item__actions" style="display: flex; gap: 8px; margin-left: auto; align-items: center;">
@@ -6972,7 +6977,7 @@ const sendChatMessage = async () => {
     await chatState.db.collection(CHAT_COLLECTION).add({
       text,
       visibility,
-      authorId: chatState.profile.id,
+      authorId: getAuthUid(),
       authorName,
       account: {
         collegeName: scaffoldState.userSettings.collegeName || "",
@@ -8424,7 +8429,7 @@ document.addEventListener("click", (e) => {
       chatState.db.collection(CHAT_COLLECTION).add({
         text,
         visibility,
-        authorId: chatState.profile.id,
+        authorId: getAuthUid(),
         authorName,
         account: {
           collegeName: scaffoldState.userSettings.collegeName || "",
