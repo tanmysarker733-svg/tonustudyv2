@@ -9925,7 +9925,7 @@ const renderLoginStatusCard = (compact = false) => {
   const session = readRenderableLoginSession();
   const mode = session?.mode || "none";
   const title = session ? (mode === "guest" ? "Guest account" : mode === "google" ? "Google account" : "Email account") : "No active account";
-  const detail = session?.email || (session ? "Local session active on this browser." : "Login is local-only for now. Firestore auth can be wired later.");
+  const detail = session?.email || (session ? "Session active and synced to database." : "Login to sync your progress to the database.");
   return `
     <div class="account-login-card ${compact ? "account-login-card--compact" : ""}">
       <div>
@@ -9952,7 +9952,7 @@ const renderAccountPanelBody = (state) => {
           <div class="account-card__head">
             <div>
               <strong>Profile information</strong>
-              <span>Your account details are saved locally on this device</span>
+              <span>Your account details are synced with the database</span>
             </div>
           </div>
           <div class="account-form">
@@ -9969,7 +9969,7 @@ const renderAccountPanelBody = (state) => {
               <p class="account-feedback" id="accountFeedback"></p>
               <button class="btn-small btn-small--primary" type="button" data-action="save-account-settings">Save Account</button>
             </div>
-            <p class="account-privacy-note">${icon("lock-keyhole", "Privacy")} All data is stored locally on your device and never shared.</p>
+            <p class="account-privacy-note">${icon("cloud", "Sync")} All data is securely stored and synced to your database.</p>
           </div>
         </div>
 
@@ -10184,7 +10184,8 @@ function getSyncDocId() {
     return `email-${session.email.toLowerCase().replace(/[^a-z0-9@.-]/g, "_")}`;
   }
   if (session && session.mode === "google") {
-    return `google-${chatState.profile?.id || "unknown"}`;
+    const identifier = session.uid || (session.email ? session.email.toLowerCase().replace(/[^a-z0-9@.-]/g, "_") : null);
+    return `google-${identifier || chatState.profile?.id || "unknown"}`;
   }
   return `guest-${chatState.profile?.id || "unknown"}`;
 }
@@ -10946,7 +10947,12 @@ const loginWithGoogle = () => {
         showLoginFeedback("");
       })
       .catch((error) => {
-        showLoginFeedback(`Google login failed: ${error.message}`);
+        if (error.code === "auth/popup-blocked" || error.code === "auth/cancelled-popup-request") {
+          showLoginFeedback("Popup blocked or failed. Redirecting to Google...");
+          window.firebase.auth().signInWithRedirect(provider);
+        } else {
+          showLoginFeedback(`Google login failed: ${error.message}`);
+        }
       });
   } catch (error) {
     showLoginFeedback(error.message);
@@ -11026,7 +11032,29 @@ const attachLocalLogin = () => {
   if (saved) {
     applyLocalLoginSession(saved);
     mountApp();
+    return;
   }
+
+  // Handle redirect login result if user returns from Google Sign-In redirect
+  try {
+    if (window.firebase) {
+      ensureFirebaseInitialized();
+      window.firebase.auth().getRedirectResult()
+        .then((result) => {
+          if (result && result.user) {
+            completeLocalLogin({
+              mode: "google",
+              email: result.user.email,
+              uid: result.user.uid,
+              createdAt: Date.now()
+            }, true);
+          }
+        })
+        .catch((error) => {
+          showLoginFeedback(`Google login failed: ${error.message}`);
+        });
+    }
+  } catch (_) {}
 
   const toggleBtn = document.getElementById("toggleLoginMode");
   toggleBtn?.addEventListener("click", (event) => {
@@ -12558,13 +12586,24 @@ document.addEventListener("click", (e) => {
       if (input) scaffoldState.userSettings[key] = input.value.trim();
     });
     saveUserSettings();
+    
+    // Save to database immediately if connected
+    if (chatState.db) {
+      saveToCloud(true);
+    }
+    
     syncChatUi();
     renderAccountMessageFeed();
     const name = scaffoldState.userSettings.customName || "Student";
     const dashGreet = document.querySelector(".dash-greet");
     if (dashGreet) dashGreet.textContent = `${getGreeting()}, ${name}`;
+    
     const feedback = document.getElementById("accountFeedback");
-    if (feedback) feedback.textContent = "Account saved in this browser.";
+    if (feedback) {
+      feedback.textContent = chatState.db 
+        ? "Account saved and synced to database." 
+        : "Account saved locally (will sync once connected).";
+    }
     return;
   }
   if (action === "account-login-guest") {
@@ -12979,7 +13018,7 @@ document.addEventListener("change", (e) => {
     applyChatPreference("sortOrder", target.value === "asc" ? "asc" : "desc");
     setChatFeedback(`Messages sorted ${target.value === "asc" ? "oldest first" : "newest first"}.`, "success");
     return;
-  } 
+  }
   if (target.id === "chatDefaultVisibility") {
     const visibility = target.value === "private" ? "private" : "public";
     applyChatPreference("defaultVisibility", visibility);
