@@ -11039,6 +11039,31 @@ const returnToLoginScreen = () => {
 let currentLoginMode = "login";
 
 const attachLocalLogin = () => {
+  // Sync Firebase Auth state dynamically
+  try {
+    if (window.firebase) {
+      ensureFirebaseInitialized();
+      window.firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+          const session = readLocalLoginSession();
+          if (!session || session.uid !== user.uid) {
+            completeLocalLogin({
+              mode: user.isAnonymous ? "guest" : (user.providerData[0]?.providerId === "google.com" ? "google" : "email"),
+              email: user.email,
+              uid: user.uid,
+              createdAt: Date.now()
+            }, true);
+          }
+        } else {
+          const session = readLocalLoginSession();
+          if (session && session.mode !== "guest") {
+            returnToLoginScreen();
+          }
+        }
+      });
+    }
+  } catch (_) {}
+
   const saved = readLocalLoginSession();
   if (saved) {
     applyLocalLoginSession(saved);
