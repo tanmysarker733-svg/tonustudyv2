@@ -3374,6 +3374,45 @@ h4 {
   word-break: break-word;
 }
 
+.chat-action-btn {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--text-sub);
+  cursor: pointer;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  padding: 0;
+}
+
+.chat-action-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-main);
+  transform: translateY(-1px);
+}
+
+.chat-action-btn--edit:hover {
+  border-color: #3b82f6;
+  color: #60a5fa;
+  box-shadow: 0 0 8px rgba(59, 130, 246, 0.2);
+}
+
+.chat-action-btn--hide:hover {
+  border-color: #f59e0b;
+  color: #fbbf24;
+  box-shadow: 0 0 8px rgba(245, 158, 11, 0.2);
+}
+
+.chat-action-btn--delete:hover {
+  border-color: #ef4444;
+  color: #f87171;
+  box-shadow: 0 0 8px rgba(239, 68, 68, 0.2);
+}
+
 .chat-empty-note {
   padding: 18px;
   text-align: center;
@@ -6890,27 +6929,34 @@ const renderChatMessages = () => {
     }
     const leftAccent = isSelf ? "border-left: 3px solid #10b981;" : "";
 
-    const actionsHtml = `
-      <div class="chat-item__actions" style="display: flex; gap: 8px; margin-left: auto; align-items: center;">
-        ${isSelf ? `
-          <button type="button" data-action="chat-edit-msg" data-id="${message.id}" style="background: none; border: none; color: var(--text-sub); cursor: pointer; padding: 2px; display: inline-flex; align-items: center; justify-content: center; transition: color 0.15s ease;" title="Edit Message">
-            ${icon("pencil", "Edit")}
-          </button>
-        ` : ""}
-        <button type="button" data-action="chat-hide-msg" data-id="${message.id}" style="background: none; border: none; color: var(--text-sub); cursor: pointer; padding: 2px; display: inline-flex; align-items: center; justify-content: center; transition: color 0.15s ease;" title="Hide/Archive Message">
-          ${icon("eye-off", "Hide/Archive")}
-        </button>
-        ${isSelf ? `
-          <button type="button" data-action="chat-delete-msg" data-id="${message.id}" style="background: none; border: none; color: rgba(239, 68, 68, 0.6); cursor: pointer; padding: 2px; display: inline-flex; align-items: center; justify-content: center; transition: color 0.15s ease;" title="Delete Message">
-            ${icon("trash-2", "Delete")}
-          </button>
-        ` : ""}
-      </div>
+    const editBtn = isSelf ? `
+      <button type="button" data-action="chat-edit-msg" data-id="${message.id}" class="chat-action-btn chat-action-btn--edit" title="Edit Message">
+        ${icon("pencil", "Edit")}
+      </button>
+    ` : "";
+
+    const hideBtn = `
+      <button type="button" data-action="chat-hide-msg" data-id="${message.id}" class="chat-action-btn chat-action-btn--hide" title="Hide Message">
+        ${icon("eye", "Hide")}
+      </button>
     `;
+
+    const deleteBtn = isSelf ? `
+      <button type="button" data-action="chat-delete-msg" data-id="${message.id}" class="chat-action-btn chat-action-btn--delete" title="Delete Message">
+        ${icon("trash-2", "Delete")}
+      </button>
+    ` : "";
     
     return `
       <article class="chat-item ${isSelf ? "chat-item--self" : ""}">
-        <div class="chat-item__serial">${index + 1}</div>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+          <div class="chat-item__serial">${index + 1}</div>
+          <div class="chat-item__left-actions" style="display: flex; flex-direction: column; gap: 6px; align-items: center;">
+            ${editBtn}
+            ${hideBtn}
+            ${deleteBtn}
+          </div>
+        </div>
         <div class="chat-item__card" style="background: ${cardBg}; border-color: ${cardBorder}; ${leftAccent}">
           <div class="chat-item__head" style="display: flex; align-items: center; width: 100%; justify-content: space-between;">
             <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
@@ -6920,7 +6966,6 @@ const renderChatMessages = () => {
                 <span class="${visibilityClass}">${escapeHtml(message.visibility || "public")}</span>
               </div>
             </div>
-            ${actionsHtml}
           </div>
           <div class="chat-item__body">${escapeChatBody(message.text)}</div>
         </div>
