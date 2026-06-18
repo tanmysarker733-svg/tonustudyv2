@@ -114,24 +114,33 @@ body:not(.login-locked) .login-gate {
   min-height: 100vh;
   display: grid;
   place-items: center;
-  padding: 34px;
+  padding: clamp(18px, 4vw, 42px);
   position: relative;
   overflow: hidden;
   isolation: isolate;
   background:
-    radial-gradient(circle at 18% 18%, rgba(11, 110, 114, 0.2), transparent 24%),
-    radial-gradient(circle at 78% 18%, rgba(79, 151, 187, 0.22), transparent 26%),
-    radial-gradient(circle at 52% 42%, rgba(112, 176, 207, 0.12), transparent 38%),
-    linear-gradient(180deg, #d7e8f4 0%, #b8d2e3 100%);
+    linear-gradient(180deg, rgba(198, 191, 255, 0.28), rgba(120, 90, 220, 0.22)),
+    url("https://raw.githubusercontent.com/tanmysarker733-svg/tonustudyv2/main/Assets/Images/login-bg.png") center / cover no-repeat,
+    linear-gradient(180deg, #c8d3f3 0%, #6e5ad7 100%);
 }
 
-.login-gate::before,
-.login-gate::after {
-  content: none;
+.login-gate::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background: rgba(74, 52, 156, 0.12);
 }
 
 .login-gate::after {
-  content: none;
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.08), transparent 32%),
+    linear-gradient(180deg, rgba(13, 10, 35, 0.06), rgba(20, 10, 58, 0.24));
+  pointer-events: none;
 }
 
 .login-cloud {
@@ -173,16 +182,16 @@ body:not(.login-locked) .login-gate {
 }
 
 .login-shell {
-  width: min(900px, calc(100vw - 34px));
-  min-height: min(560px, calc(100vh - 54px));
-  display: grid;
-  grid-template-columns: minmax(310px, 0.98fr) minmax(310px, 0.92fr);
-  gap: 0;
-  border-radius: 40px;
+  width: min(390px, calc(100vw - 32px));
+  min-height: 0;
+  display: block;
+  border-radius: 30px;
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(10, 12, 20, 0.88);
-  box-shadow: 0 28px 70px rgba(95, 48, 171, 0.24);
+  border: 1px solid rgba(255, 255, 255, 0.58);
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 28px 80px rgba(35, 20, 94, 0.3), inset 0 1px 0 rgba(255,255,255,0.18);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
   animation: loginDrop 680ms cubic-bezier(.2, .82, .2, 1) both;
 }
 
@@ -190,10 +199,28 @@ body:not(.login-locked) .login-gate {
   display: grid;
   align-content: center;
   justify-items: center;
-  padding: clamp(28px, 4vw, 54px);
+  padding: clamp(24px, 3.3vw, 34px);
+  background: transparent;
+}
+
+.login-media {
+  position: relative;
+  display: block;
+  height: clamp(210px, 42vh, 320px);
+  padding: 8px;
+  overflow: hidden;
+  border-top: 1px solid rgba(255, 255, 255, 0.24);
   background:
-    radial-gradient(circle at 18% 16%, rgba(255, 255, 255, 0.07), transparent 25%),
-    rgba(13, 15, 22, 0.98);
+    linear-gradient(145deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.02)),
+    rgba(46, 28, 130, 0.12);
+}
+
+.login-media__video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 22px;
 }
 
 .login-brand {
@@ -217,13 +244,14 @@ body:not(.login-locked) .login-gate {
 }
 
 .login-title {
-  width: min(320px, 100%);
-  margin: 0 0 34px;
+  width: min(300px, 100%);
+  margin: 0 0 22px;
   color: #f8fafc;
-  font-size: clamp(1.9rem, 3vw, 2.2rem);
+  font-size: clamp(1.7rem, 3vw, 2rem);
   line-height: 1;
   letter-spacing: 0;
   white-space: nowrap;
+  text-align: center;
 }
 
 .login-subtitle {
@@ -235,15 +263,15 @@ body:not(.login-locked) .login-gate {
 }
 
 .login-form {
-  width: min(320px, 100%);
+  width: min(300px, 100%);
   display: grid;
-  gap: 12px;
+  gap: 10px;
 }
 
 .login-field {
   display: block;
   position: relative;
-  min-height: 50px;
+  min-height: 44px;
 }
 
 .login-field i,
@@ -261,11 +289,11 @@ body:not(.login-locked) .login-gate {
 
 .login-field input {
   width: 100%;
-  min-height: 50px;
-  padding: 0 18px 0 52px;
-  border: 1px solid rgba(226, 232, 240, 0.22);
+  min-height: 44px;
+  padding: 0 16px 0 48px;
+  border: 1px solid rgba(255, 255, 255, 0.52);
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.035);
+  background: rgba(255, 255, 255, 0.08);
   color: #f8fafc;
   font: inherit;
   font-weight: 700;
@@ -277,9 +305,9 @@ body:not(.login-locked) .login-gate {
 }
 
 .login-field input:focus {
-  border-color: rgba(125, 211, 252, 0.74);
-  background: rgba(255, 255, 255, 0.055);
-  box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.12);
+  border-color: rgba(255, 255, 255, 0.86);
+  background: rgba(255, 255, 255, 0.13);
+  box-shadow: 0 0 24px rgba(255, 255, 255, 0.28);
 }
 
 .login-form-row {
@@ -288,7 +316,7 @@ body:not(.login-locked) .login-gate {
   justify-content: space-between;
   gap: 14px;
   color: rgba(226, 232, 240, 0.7);
-  font-size: 0.78rem;
+  font-size: 0.72rem;
   padding: 0 4px;
 }
 
@@ -315,8 +343,38 @@ body:not(.login-locked) .login-gate {
   margin-top: 6px;
 }
 
+.login-provider-divider {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 14px;
+  margin: 4px 8px 0;
+  color: rgba(226, 232, 240, 0.72);
+  font-weight: 900;
+}
+
+.login-provider-divider::before,
+.login-provider-divider::after {
+  content: "";
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(226, 232, 240, 0.28));
+}
+
+.login-provider-divider::after {
+  background: linear-gradient(90deg, rgba(226, 232, 240, 0.28), transparent);
+}
+
+.login-social-row {
+  display: flex;
+  justify-content: center;
+  gap: clamp(12px, 3vw, 22px);
+  padding: 6px 0 0;
+}
+
 .login-submit,
 .login-google,
+.login-facebook,
+.login-phone,
 .login-guest {
   min-height: 50px;
   display: inline-flex;
@@ -343,6 +401,59 @@ body:not(.login-locked) .login-gate {
   box-shadow: 0 14px 30px rgba(15, 23, 42, 0.16);
 }
 
+.login-facebook {
+  color: #fff;
+  background: #1877f2;
+  box-shadow: 0 14px 30px rgba(24, 119, 242, 0.22);
+}
+
+.login-phone {
+  color: #ecfeff;
+  background: linear-gradient(135deg, #0f766e, #0891b2);
+  box-shadow: 0 14px 30px rgba(8, 145, 178, 0.2);
+}
+
+.login-social-row .login-google,
+.login-social-row .login-facebook,
+.login-social-row .login-phone,
+.login-social-row .login-guest {
+  width: 54px;
+  height: 54px;
+  min-height: 54px;
+  padding: 0;
+  border-radius: 50%;
+  border: 1px solid rgba(226, 232, 240, 0.13);
+  background: rgba(255, 255, 255, 0.055);
+  box-shadow: 0 16px 36px rgba(2, 6, 23, 0.24), inset 0 1px 0 rgba(255,255,255,0.08);
+}
+
+.login-social-row .login-google:hover,
+.login-social-row .login-facebook:hover,
+.login-social-row .login-phone:hover,
+.login-social-row .login-guest:hover {
+  background: rgba(255, 255, 255, 0.085);
+  box-shadow: 0 20px 42px rgba(14, 165, 233, 0.18), inset 0 1px 0 rgba(255,255,255,0.1);
+}
+
+.login-social-row .login-phone i,
+.login-social-row .login-guest i {
+  width: 24px;
+  height: 24px;
+  color: #f8fafc;
+}
+
+.login-social-row .login-google > span:not(.login-google-mark),
+.login-social-row .login-facebook > span:not(.login-provider-mark),
+.login-social-row .login-phone > span,
+.login-social-row .login-guest > span {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+
 .login-google-mark {
   width: 22px;
   height: 22px;
@@ -355,6 +466,25 @@ body:not(.login-locked) .login-gate {
   background: conic-gradient(from -40deg, #4285f4 0 25%, #34a853 0 50%, #fbbc05 0 75%, #ea4335 0);
 }
 
+.login-provider-mark {
+  width: 22px;
+  height: 22px;
+  display: inline-grid;
+  place-items: center;
+  border-radius: 50%;
+  color: #1877f2;
+  font-size: 0.86rem;
+  font-weight: 1000;
+  background: #fff;
+}
+
+.login-social-row .login-google-mark,
+.login-social-row .login-provider-mark {
+  width: 30px;
+  height: 30px;
+  font-size: 1rem;
+}
+
 .login-guest {
   color: #dbeafe;
   background: rgba(255, 255, 255, 0.06);
@@ -363,14 +493,53 @@ body:not(.login-locked) .login-gate {
 
 .login-submit:hover,
 .login-google:hover,
+.login-facebook:hover,
+.login-phone:hover,
 .login-guest:hover {
   transform: translateY(-2px);
 }
 
 .login-submit i,
+.login-facebook i,
+.login-phone i,
 .login-guest i {
   width: 18px;
   height: 18px;
+}
+
+.login-phone-panel {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 8px;
+  padding: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.36);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.login-phone-panel .login-field,
+.login-phone-panel .login-field input,
+.login-phone-panel .login-phone,
+.login-phone-panel .login-submit {
+  min-height: 40px;
+}
+
+.login-phone-panel .login-phone,
+.login-phone-panel .login-submit {
+  border-radius: 14px;
+  box-shadow: none;
+  font-size: 0.82rem;
+}
+
+.login-phone-panel[hidden] {
+  display: none;
+}
+
+#authRecaptchaContainer {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
 }
 
 .login-feedback {
@@ -466,13 +635,7 @@ body:not(.login-locked) .login-gate {
 }
 
 .login-art {
-  position: relative;
-  overflow: hidden;
-  margin: 18px 18px 18px 0;
-  border-radius: 30px;
-  background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0)),
-    #f3f6ff;
+  display: none;
 }
 
 .login-art__image {
@@ -539,6 +702,43 @@ body:not(.login-locked) .login-gate {
   .login-form-row {
     align-items: flex-start;
     flex-direction: column;
+  }
+}
+
+@media (min-width: 920px) {
+  .login-shell {
+    width: min(930px, calc(100vw - 56px));
+    display: grid;
+    grid-template-columns: minmax(340px, 390px) minmax(360px, 1fr);
+    gap: 0;
+    align-items: stretch;
+    border: 1px solid rgba(255, 255, 255, 0.58);
+    border-radius: 30px;
+    background:
+      linear-gradient(145deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.04)),
+      rgba(46, 28, 130, 0.14);
+    box-shadow: 0 28px 80px rgba(35, 20, 94, 0.28), inset 0 1px 0 rgba(255,255,255,0.18);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    max-height: calc(100vh - 56px);
+  }
+
+  .login-panel {
+    overflow: auto;
+    border-right: 1px solid rgba(255, 255, 255, 0.18);
+  }
+
+  .login-media {
+    display: block;
+    height: min(560px, calc(100vh - 56px));
+    min-height: 480px;
+    padding: 10px;
+    border-top: 0;
+    background: transparent;
+  }
+
+  .login-media__video {
+    border-radius: 22px;
   }
 }
 
@@ -4056,6 +4256,150 @@ h4 {
   line-height: 1.5;
 }
 
+.account-dialog__tools {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.security-dialog__card {
+  width: min(940px, 100%);
+}
+
+.security-shell {
+  display: grid;
+  gap: 14px;
+}
+
+.security-status {
+  display: grid;
+  gap: 4px;
+  padding: 12px 14px;
+  border: 1px solid rgba(96, 165, 250, 0.22);
+  border-radius: 14px;
+  background: rgba(15, 23, 42, 0.72);
+  color: #cbd5e1;
+}
+
+.security-status strong {
+  color: #f8fafc;
+}
+
+.security-provider-chiprow {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.security-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(280px, 0.95fr);
+  gap: 14px;
+}
+
+.security-card {
+  display: grid;
+  gap: 12px;
+  padding: 14px;
+  border: 1px solid rgba(51, 65, 85, 0.88);
+  border-radius: 18px;
+  background: rgba(15, 23, 42, 0.62);
+}
+
+.security-card h4 {
+  margin: 0;
+  color: #bfdbfe;
+}
+
+.security-provider-list,
+.security-form {
+  display: grid;
+  gap: 10px;
+}
+
+.security-provider-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border: 1px solid rgba(148, 163, 184, 0.16);
+  border-radius: 14px;
+  background: rgba(30, 41, 59, 0.62);
+}
+
+.security-provider-main {
+  min-width: 0;
+  display: grid;
+  gap: 3px;
+}
+
+.security-provider-main strong {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #f8fafc;
+}
+
+.security-provider-main span {
+  color: #94a3b8;
+  font-size: 0.8rem;
+}
+
+.security-provider-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #94a3b8;
+  font-size: 0.78rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.security-provider-status.is-linked {
+  color: #22c55e;
+}
+
+.security-provider-status.is-open {
+  color: #f59e0b;
+}
+
+.security-form .login-field {
+  margin: 0;
+}
+
+.security-note,
+.security-feedback {
+  margin: 0;
+  color: #cbd5e1;
+  font-size: 0.84rem;
+  line-height: 1.45;
+}
+
+.security-feedback {
+  min-height: 18px;
+  color: #93c5fd;
+  font-weight: 800;
+}
+
+.security-feedback.is-error {
+  color: #fca5a5;
+}
+
+.security-feedback.is-success {
+  color: #86efac;
+}
+
+@media (max-width: 820px) {
+  .security-grid,
+  .account-dialog .account-shell {
+    grid-template-columns: 1fr;
+  }
+}
+
 .spectate-dialog__card {
   width: min(1120px, 100%);
   min-height: min(620px, calc(100vh - 44px));
@@ -7026,34 +7370,64 @@ body.is-spectating .spectate-disabled {
                 <span>Login with email</span>
                 <i data-lucide="send-horizontal" aria-hidden="true"></i>
               </button>
-              <button class="login-google" type="button" data-action="login-google">
-                <span class="login-google-mark" aria-hidden="true">G</span>
-                <span>Login with Google</span>
-              </button>
-              <button class="login-guest" type="button" data-action="login-guest">
-                <i data-lucide="user-round" aria-hidden="true"></i>
-                <span>Stay in guest account</span>
-              </button>
+              <div class="login-provider-divider"><span>Login with -</span></div>
+              <div class="login-social-row" aria-label="Social login options">
+                <button class="login-google" type="button" data-action="login-google" aria-label="Login with Google">
+                  <span class="login-google-mark" aria-hidden="true">G</span>
+                  <span>Login with Google</span>
+                </button>
+                <button class="login-facebook" type="button" data-action="login-facebook" aria-label="Login with Facebook">
+                  <span class="login-provider-mark" aria-hidden="true">f</span>
+                  <span>Login with Facebook</span>
+                </button>
+                <button class="login-phone" type="button" data-action="login-phone-toggle" aria-label="Login with phone" aria-expanded="false">
+                  <i data-lucide="phone" aria-hidden="true"></i>
+                  <span>Login with phone</span>
+                </button>
+                <button class="login-guest" type="button" data-action="login-guest" aria-label="Continue as guest">
+                  <i data-lucide="user-round" aria-hidden="true"></i>
+                  <span>Continue as guest</span>
+                </button>
+              </div>
+              <div class="login-phone-panel" id="loginPhonePanel" hidden>
+                <label class="login-field">
+                  <i data-lucide="phone" aria-hidden="true"></i>
+                  <input id="loginPhoneNumber" type="tel" autocomplete="tel" placeholder="+8801XXXXXXXXX" />
+                </label>
+                <button class="login-phone" type="button" data-action="login-phone-send">
+                  <i data-lucide="message-circle-code" aria-hidden="true"></i>
+                  <span>Send SMS code</span>
+                </button>
+                <label class="login-field">
+                  <i data-lucide="key-round" aria-hidden="true"></i>
+                  <input id="loginPhoneCode" type="text" inputmode="numeric" autocomplete="one-time-code" placeholder="SMS code" />
+                </label>
+                <button class="login-submit" type="button" data-action="login-phone-confirm">
+                  <span>Confirm phone login</span>
+                  <i data-lucide="log-in" aria-hidden="true"></i>
+                </button>
+              </div>
             </div>
             <div class="login-feedback" id="loginFeedback" role="status"></div>
             <p class="login-register" id="loginToggleRow">Don't have an account? <a href="#" class="login-link" id="toggleLoginMode" data-action="toggle-register" style="font-weight: 600; text-decoration: underline; color: var(--accent-blue, #60a5fa);">Create one</a></p>
           </form>
         </div>
-        <div class="login-art" aria-hidden="true">
+        <div class="login-media" aria-hidden="true">
           <video
-            class="login-art__video"
+            class="login-media__video"
             autoplay
             loop
             muted
             playsinline
-            preload="auto"
-            poster="https://raw.githubusercontent.com/tanmysarker733-svg/tonustudyv2/main/Assets/Images/live%20study.png"
+            preload="none"
+            poster="Assets/Images/live study.png"
           >
-            <source src="https://raw.githubusercontent.com/tanmysarker733-svg/tonustudyv2/main/Assets/Videos/live_study.mp4" type="video/mp4" />
+            <source data-src="Assets/Videos/live_study.mp4" type="video/mp4" />
           </video>
         </div>
       </div>
     </section>
+    <div id="authRecaptchaContainer" aria-hidden="true"></div>
     <div id="app" class="app-root"></div>
     <script>
 // ── shared/dom.js ────────────────────────────────────────────────────────────
@@ -11045,8 +11419,22 @@ const readRenderableLoginSession = () => {
 const renderLoginStatusCard = (compact = false) => {
   const session = readRenderableLoginSession();
   const mode = session?.mode || "none";
-  const title = session ? (mode === "guest" ? "Guest account" : mode === "google" ? "Google account" : "Email account") : "No active account";
-  const detail = session?.email || (session ? "Session active and synced to database." : "Login to sync your progress to the database.");
+  const title = session
+    ? (mode === "guest"
+      ? "Guest account"
+      : mode === "admin"
+        ? "Local admin"
+      : mode === "google"
+        ? "Google account"
+        : mode === "facebook"
+          ? "Facebook account"
+          : mode === "phone"
+            ? "Phone account"
+            : "Email account")
+    : "No active account";
+  const detail = mode === "admin"
+    ? "Local test bypass. Use Firebase login for cloud sync and provider linking."
+    : session?.email || session?.phoneNumber || (session ? "Session active and synced to database." : "Login to sync your progress to the database.");
   return `
     <div class="account-login-card ${compact ? "account-login-card--compact" : ""}">
       <div>
@@ -11061,6 +11449,170 @@ const renderLoginStatusCard = (compact = false) => {
           <button class="btn-small" type="button" data-action="account-open-login">${icon("log-in", "Login")} <span>Email login</span></button>
         `}
       </div>
+    </div>
+  `;
+};
+
+const getCurrentAuthUser = () => {
+  try {
+    return window.firebase?.apps?.length ? window.firebase.auth().currentUser : null;
+  } catch (_) {
+    return null;
+  }
+};
+
+const getSessionModeFromFirebaseUser = (user, fallback = "email") => {
+  if (!user) return fallback;
+  if (user.isAnonymous) return "guest";
+  const providers = (user.providerData || []).map((item) => item?.providerId).filter(Boolean);
+  if (providers.includes("phone")) return "phone";
+  if (providers.includes("facebook.com")) return "facebook";
+  if (providers.includes("google.com")) return "google";
+  if (providers.includes("password")) return "email";
+  return fallback;
+};
+
+const AUTH_PROVIDER_LABELS = {
+  "password": "Email",
+  "google.com": "Google",
+  "facebook.com": "Facebook",
+  "phone": "Phone",
+  "anonymous": "Guest",
+};
+
+const getAuthIdentitySnapshot = (user = getCurrentAuthUser()) => {
+  const providerData = Array.isArray(user?.providerData) ? user.providerData : [];
+  const providerIds = providerData.map((item) => item?.providerId).filter(Boolean);
+  if (user?.isAnonymous && !providerIds.includes("anonymous")) providerIds.push("anonymous");
+  const uniqueProviders = [...new Set(providerIds)];
+  return {
+    uid: user?.uid || "",
+    email: user?.email || "",
+    phoneNumber: user?.phoneNumber || "",
+    displayName: user?.displayName || "",
+    isAnonymous: !!user?.isAnonymous,
+    providers: uniqueProviders,
+    providerLabels: uniqueProviders.map((id) => AUTH_PROVIDER_LABELS[id] || id),
+    providerDetails: providerData.map((item) => ({
+      providerId: item?.providerId || "",
+      uid: item?.uid || "",
+      email: item?.email || "",
+      phoneNumber: item?.phoneNumber || "",
+      displayName: item?.displayName || "",
+    })),
+    creationTime: user?.metadata?.creationTime || "",
+    lastSignInTime: user?.metadata?.lastSignInTime || "",
+  };
+};
+
+const renderProviderChips = (labels = []) => {
+  const clean = labels.filter(Boolean);
+  if (!clean.length) return `<span class="security-provider-status">No linked provider</span>`;
+  return clean.map((label) => `<span class="chat-visibility-pill">${escapeHtml(label)}</span>`).join("");
+};
+
+const renderSecurityProviderRows = () => {
+  const user = getCurrentAuthUser();
+  const authMeta = getAuthIdentitySnapshot(user);
+  const providers = new Set((user?.providerData || []).map((item) => item?.providerId).filter(Boolean));
+  if (user?.isAnonymous) providers.add("anonymous");
+  const providerDetailMap = new Map((authMeta.providerDetails || []).map((item) => [item.providerId, item]));
+  const rows = [
+    { id: "password", label: "Email + Password", iconName: "mail", detail: providerDetailMap.get("password")?.email || user?.email || "Link an email password for normal login.", action: "security-link-email", actionText: "Link" },
+    { id: "google.com", label: "Google", iconName: "badge-check", detail: providerDetailMap.get("google.com")?.email || "Use Google login for this same Study OS UID.", action: "security-link-google", actionText: "Link" },
+    { id: "facebook.com", label: "Facebook", iconName: "users", detail: providerDetailMap.get("facebook.com")?.email || "Use Facebook login after Firebase provider setup.", action: "security-link-facebook", actionText: "Link" },
+    { id: "phone", label: "Phone", iconName: "phone", detail: providerDetailMap.get("phone")?.phoneNumber || user?.phoneNumber || "Recover and login with SMS verification.", action: "security-phone-send", actionText: "Send SMS" },
+  ];
+  if (!user) {
+    return `<div class="spectate-empty">No Firebase Auth user is active. Login with Google, email, guest, Facebook, or phone first.</div>`;
+  }
+  return rows.map((row) => {
+    const linked = providers.has(row.id);
+    return `
+      <div class="security-provider-row">
+        <div class="security-provider-main">
+          <strong>${icon(row.iconName, row.label)} <span>${escapeHtml(row.label)}</span></strong>
+          <span>${escapeHtml(row.detail)}</span>
+        </div>
+        <div class="account-dialog__tools">
+          <span class="security-provider-status ${linked ? "is-linked" : "is-open"}">${linked ? "Linked" : "Open"}</span>
+          ${linked ? `
+            <button class="btn-small" type="button" data-action="security-unlink-provider" data-provider="${escapeHtml(row.id)}">${icon("unlink", "Unlink")} <span>Unlink</span></button>
+          ` : `
+            <button class="btn-small btn-small--primary" type="button" data-action="${escapeHtml(row.action)}">${icon("link", "Link")} <span>${escapeHtml(row.actionText)}</span></button>
+          `}
+        </div>
+      </div>
+    `;
+  }).join("");
+};
+
+const renderAccountSecurityDialog = () => {
+  const user = getCurrentAuthUser();
+  const session = readRenderableLoginSession();
+  const authMeta = getAuthIdentitySnapshot(user);
+  const identity = user
+    ? `${user.uid}${user.email ? " - " + user.email : user.phoneNumber ? " - " + user.phoneNumber : ""}`
+    : session?.mode === "admin"
+      ? "Local admin bypass is active. Firebase provider linking is unavailable for admin/admin."
+      : "No Firebase user detected.";
+  return `
+    <div class="account-dialog" id="accountSecurityDialog" hidden>
+      <div class="account-dialog__backdrop" data-action="close-account-security-dialog" aria-hidden="true"></div>
+      <section class="account-dialog__card security-dialog__card" role="dialog" aria-modal="true" aria-labelledby="accountSecurityTitle">
+        <div class="account-dialog__head">
+          <div>
+            <p class="eyebrow">Account security</p>
+            <h3 id="accountSecurityTitle">${icon("shield-check", "Security")} <span>Security & Recovery</span></h3>
+            <span>Connect login methods to the same Firebase UID so the same Study OS account can be recovered.</span>
+          </div>
+          <button class="btn-small btn-small--icon" type="button" data-action="close-account-security-dialog" aria-label="Close security settings">
+            ${icon("x", "Close")}
+          </button>
+        </div>
+        <div class="security-shell">
+          <div class="security-status">
+            <strong>Active identity</strong>
+            <span>${escapeHtml(identity)}</span>
+            <div class="security-provider-chiprow">${renderProviderChips(authMeta.providerLabels)}</div>
+          </div>
+          <div class="security-grid">
+            <div class="security-card">
+              <h4>Linked login methods</h4>
+              <div class="security-provider-list" id="securityProviderList">
+                ${renderSecurityProviderRows()}
+              </div>
+            </div>
+            <div class="security-card">
+              <h4>Link credentials</h4>
+              <div class="security-form">
+                <label class="login-field">
+                  <i data-lucide="mail" aria-hidden="true"></i>
+                  <input id="securityEmail" type="email" autocomplete="email" placeholder="Email for password login" value="${escapeHtml(user?.email || session?.email || "")}" />
+                </label>
+                <label class="login-field">
+                  <i data-lucide="lock-keyhole" aria-hidden="true"></i>
+                  <input id="securityPassword" type="password" autocomplete="new-password" placeholder="New password (6+ chars)" />
+                </label>
+                <button class="btn-small btn-small--primary btn-small--wide" type="button" data-action="security-link-email">${icon("link", "Link")} <span>Link email/password</span></button>
+                <label class="login-field">
+                  <i data-lucide="phone" aria-hidden="true"></i>
+                  <input id="securityPhoneNumber" type="tel" autocomplete="tel" placeholder="+8801XXXXXXXXX" value="${escapeHtml(user?.phoneNumber || "")}" />
+                </label>
+                <button class="btn-small btn-small--wide" type="button" data-action="security-phone-send">${icon("message-circle-code", "SMS")} <span>Send phone code</span></button>
+                <label class="login-field">
+                  <i data-lucide="key-round" aria-hidden="true"></i>
+                  <input id="securityPhoneCode" type="text" inputmode="numeric" autocomplete="one-time-code" placeholder="SMS code" />
+                </label>
+                <button class="btn-small btn-small--primary btn-small--wide" type="button" data-action="security-phone-confirm">${icon("shield-check", "Confirm")} <span>Confirm phone link</span></button>
+                <button class="btn-small btn-small--wide" type="button" data-action="security-send-reset">${icon("mail-check", "Reset")} <span>Send password reset</span></button>
+                <p class="security-note">Tip: guest accounts become recoverable after linking Google, Facebook, phone, or email/password to this same UID.</p>
+                <p class="security-feedback" id="securityFeedback" role="status"></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   `;
 };
@@ -11120,9 +11672,14 @@ const renderAccountDialog = (state) => `
           <h3 id="accountDialogTitle">${icon("user-round-cog", "Account")} <span>Account Settings</span></h3>
           <span>Floating profile and message feed. No page expansion.</span>
         </div>
-        <button class="btn-small btn-small--icon" type="button" data-action="close-account-dialog" aria-label="Close account settings">
-          ${icon("x", "Close")}
-        </button>
+        <div class="account-dialog__tools">
+          <button class="btn-small btn-small--primary" type="button" data-action="open-account-security-dialog">
+            ${icon("shield-check", "Security")} <span>Security</span>
+          </button>
+          <button class="btn-small btn-small--icon" type="button" data-action="close-account-dialog" aria-label="Close account settings">
+            ${icon("x", "Close")}
+          </button>
+        </div>
       </div>
       ${renderAccountPanelBody(state)}
     </section>
@@ -11322,6 +11879,12 @@ function getSyncDocId() {
   return `guest-${chatState.profile?.id || "unknown"}`;
 }
 
+const isCloudSyncEligibleSession = (session = readLocalLoginSession()) => {
+  if (!session || session.mode === "admin" || session.offline) return false;
+  const authUser = getCurrentAuthUser();
+  return !!authUser && authUser.uid === session.uid;
+};
+
 const cloudSyncState = {
   status: "idle", // 'idle', 'syncing', 'success', 'error'
   lastSynced: null, // Date object
@@ -11343,7 +11906,17 @@ const isReadOnlyBlockedAction = (action = "") => {
     "account-logout",
     "login-guest",
     "login-google",
+    "login-facebook",
+    "login-phone-send",
+    "login-phone-confirm",
     "login-forgot",
+    "security-link-google",
+    "security-link-facebook",
+    "security-link-email",
+    "security-phone-send",
+    "security-phone-confirm",
+    "security-send-reset",
+    "security-unlink-provider",
     "chat-send",
     "chat-edit-msg",
     "chat-delete-msg",
@@ -11412,16 +11985,35 @@ async function saveToCloud(silent = false) {
     if (!silent) alert("Firestore is not connected. Please check your internet connection.");
     return;
   }
+  if (!isCloudSyncEligibleSession()) {
+    if (!silent) alert("Cloud sync needs a real Firebase login. Local admin/offline guest cannot write cloud data.");
+    return;
+  }
   cloudSyncState.status = "syncing";
   if (!silent) renderSyncStatusUI();
   try {
     const docId = getSyncDocId();
     const payload = createBackupPayload("cloud-sync");
+    const session = readLocalLoginSession() || {};
+    const authMeta = getAuthIdentitySnapshot();
     await chatState.db.collection("hsc_study_data_forever").doc(docId).set({
       payload: JSON.stringify(payload),
       updatedAt: new Date().toISOString(),
-      email: readLocalLoginSession()?.email || "guest",
-      profileId: chatState.profile?.id || "unknown"
+      email: authMeta.email || session.email || "guest",
+      phoneNumber: authMeta.phoneNumber || session.phoneNumber || "",
+      name: scaffoldState.userSettings.customName || authMeta.displayName || "",
+      profileId: chatState.profile?.id || "unknown",
+      loginMode: session.mode || "",
+      authUid: authMeta.uid || session.uid || "",
+      authEmail: authMeta.email || "",
+      authPhoneNumber: authMeta.phoneNumber || "",
+      authDisplayName: authMeta.displayName || "",
+      authIsAnonymous: authMeta.isAnonymous,
+      authProviders: authMeta.providers,
+      authProviderLabels: authMeta.providerLabels,
+      authProviderDetails: authMeta.providerDetails,
+      authCreationTime: authMeta.creationTime,
+      authLastSignInTime: authMeta.lastSignInTime
     });
     cloudSyncState.status = "success";
     cloudSyncState.lastSynced = new Date();
@@ -11445,6 +12037,10 @@ async function loadFromCloud(silent = false) {
   }
   if (!chatState.db) {
     if (!silent) alert("Firestore is not connected.");
+    return;
+  }
+  if (!isCloudSyncEligibleSession()) {
+    if (!silent) alert("Cloud restore needs a real Firebase login. Local admin/offline guest cannot read cloud data.");
     return;
   }
   cloudSyncState.status = "syncing";
@@ -11495,6 +12091,7 @@ function triggerCloudSaveDebounced() {
   if (!chatState.db) return;
   const session = readLocalLoginSession();
   if (!session) return; // Only sync if logged in
+  if (!isCloudSyncEligibleSession(session)) return;
   clearTimeout(cloudSaveTimeout);
   cloudSaveTimeout = setTimeout(() => {
     saveToCloud(true);
@@ -11506,6 +12103,7 @@ async function syncChDataOnLogin() {
   if (!chatState.db) return;
   const session = readLocalLoginSession();
   if (!session) return;
+  if (!isCloudSyncEligibleSession(session)) return;
   try {
     const docId = getSyncDocId();
     const doc = await chatState.db.collection("hsc_study_data_forever").doc(docId).get();
@@ -11636,6 +12234,18 @@ const getSpectateUserName = (payload, data) => {
   return email ? email.split("@")[0] : "Unnamed Student";
 };
 
+const isSpectateGuestUser = (user) => {
+  const uid = String(user?.uid || "").trim().toLowerCase();
+  const name = String(user?.name || "").trim().toLowerCase();
+  const email = String(user?.email || "").trim().toLowerCase();
+  const providers = Array.isArray(user?.authProviders) ? user.authProviders : [];
+  const hasRealProvider = providers.some((id) => ["password", "google.com", "facebook.com", "phone"].includes(id));
+  if (hasRealProvider || user?.phoneNumber) return false;
+  if (!email || email === "guest" || email === "no email saved" || !email.includes("@")) return true;
+  if (name === "guest" || uid.startsWith("guest-")) return true;
+  return false;
+};
+
 const refreshSpectateDialogBody = () => {
   const list = document.getElementById("spectateUserList");
   if (list) list.innerHTML = renderSpectateUserRows();
@@ -11671,13 +12281,16 @@ const loadSpectateUsers = async () => {
       return {
         uid: doc.id,
         name: getSpectateUserName(payload, data),
-        email: data.email || payload?.localLogin?.email || "No email saved",
+        email: data.authEmail || data.email || payload?.localLogin?.email || data.authPhoneNumber || data.phoneNumber || "No email saved",
+        phoneNumber: data.authPhoneNumber || data.phoneNumber || "",
+        authProviders: Array.isArray(data.authProviders) ? data.authProviders : [],
+        authProviderLabels: Array.isArray(data.authProviderLabels) ? data.authProviderLabels : [],
         updatedAt: data.updatedAt || payload?.exportedAt || "",
         payload,
       };
-    }).filter((user) => user.payload?.userSettings && user.payload?.modes);
+    }).filter((user) => user.payload?.userSettings && user.payload?.modes && !isSpectateGuestUser(user));
     if (!spectateState.users.length) {
-      spectateState.error = "No valid cloud backup payloads found in hsc_study_data_forever.";
+      spectateState.error = "No real signed-in user snapshots found yet. Guest snapshots are hidden.";
     }
   } catch (error) {
     spectateState.error = `Could not load users: ${error.message}`;
@@ -12109,6 +12722,7 @@ const renderAppShell = (state, units) => {
     <input id="${BACKUP_IMPORT_INPUT_ID}" type="file" accept="application/json,.json" hidden>
     <div class="backup-banner" id="backupBanner" hidden></div>
     ${renderAccountDialog(state)}
+    ${renderAccountSecurityDialog()}
     ${renderSpectateDialog(state)}
     ${renderSettingsDialog(state)}
     ${renderBackupDialog(state)}
@@ -12354,6 +12968,26 @@ const attachVisualEffects = () => {
   attachCardTilt();
 };
 
+const syncLoginMediaVideo = () => {
+  const video = document.querySelector(".login-media__video");
+  const source = video?.querySelector("source");
+  if (!video || !source) return;
+  const shouldLoad = document.body.classList.contains("login-locked")
+    && window.matchMedia("(min-width: 920px)").matches;
+  const src = source.dataset.src || "";
+  if (shouldLoad && src && !source.getAttribute("src")) {
+    source.setAttribute("src", src);
+    video.load();
+    video.play?.().catch(() => {});
+    return;
+  }
+  if (!shouldLoad && source.getAttribute("src")) {
+    video.pause?.();
+    source.removeAttribute("src");
+    video.load();
+  }
+};
+
 // ── main.js ───────────────────────────────────────────────────────────────────
 const initialUserSettings = loadUserSettings();
 
@@ -12405,20 +13039,57 @@ const ensureFirebaseInitialized = () => {
     : window.firebase.initializeApp(CHAT_FIREBASE_CONFIG);
 };
 
+let phoneLoginConfirmation = null;
+let phoneLinkConfirmation = null;
+let authRecaptchaVerifier = null;
+
+const getFirebaseAuth = () => {
+  ensureFirebaseInitialized();
+  return window.firebase.auth();
+};
+
+const ensureAuthRecaptcha = () => {
+  ensureFirebaseInitialized();
+  const container = document.getElementById("authRecaptchaContainer");
+  if (!container) throw new Error("Phone login reCAPTCHA container is missing.");
+  if (authRecaptchaVerifier) return authRecaptchaVerifier;
+  authRecaptchaVerifier = new window.firebase.auth.RecaptchaVerifier("authRecaptchaContainer", {
+    size: "invisible",
+  });
+  return authRecaptchaVerifier;
+};
+
+const resetAuthRecaptcha = () => {
+  try {
+    authRecaptchaVerifier?.clear?.();
+  } catch (_) {}
+  authRecaptchaVerifier = null;
+};
+
+const completeFirebaseUserLogin = (user, remember = true, fallbackMode = "email") => {
+  if (!user) throw new Error("Firebase did not return an authenticated user.");
+  const authMeta = getAuthIdentitySnapshot(user);
+  completeLocalLogin({
+    mode: getSessionModeFromFirebaseUser(user, fallbackMode),
+    email: authMeta.email || "",
+    phoneNumber: authMeta.phoneNumber || "",
+    uid: user.uid,
+    authProviders: authMeta.providers,
+    authProviderLabels: authMeta.providerLabels,
+    authIsAnonymous: authMeta.isAnonymous,
+    displayName: authMeta.displayName,
+    createdAt: Date.now()
+  }, remember);
+};
+
 const loginWithGoogle = () => {
   try {
-    const app = ensureFirebaseInitialized();
+    ensureFirebaseInitialized();
     const provider = new window.firebase.auth.GoogleAuthProvider();
     showLoginFeedback("Connecting to Google...");
     window.firebase.auth().signInWithPopup(provider)
       .then((result) => {
-        const user = result.user;
-        completeLocalLogin({
-          mode: "google",
-          email: user.email,
-          uid: user.uid,
-          createdAt: Date.now()
-        }, true);
+        completeFirebaseUserLogin(result.user, true, "google");
         showLoginFeedback("");
       })
       .catch((error) => {
@@ -12428,6 +13099,78 @@ const loginWithGoogle = () => {
         } else {
           showLoginFeedback(`Google login failed: ${error.message}`);
         }
+      });
+  } catch (error) {
+    showLoginFeedback(error.message);
+  }
+};
+
+const loginWithFacebook = () => {
+  try {
+    ensureFirebaseInitialized();
+    const provider = new window.firebase.auth.FacebookAuthProvider();
+    provider.addScope("email");
+    showLoginFeedback("Connecting to Facebook...");
+    window.firebase.auth().signInWithPopup(provider)
+      .then((result) => {
+        completeFirebaseUserLogin(result.user, true, "facebook");
+        showLoginFeedback("");
+      })
+      .catch((error) => {
+        if (error.code === "auth/popup-blocked" || error.code === "auth/cancelled-popup-request") {
+          showLoginFeedback("Popup blocked or failed. Redirecting to Facebook...");
+          window.firebase.auth().signInWithRedirect(provider);
+        } else {
+          showLoginFeedback(`Facebook login failed: ${error.message}`);
+        }
+      });
+  } catch (error) {
+    showLoginFeedback(error.message);
+  }
+};
+
+const sendPhoneLoginCode = () => {
+  try {
+    const phone = document.getElementById("loginPhoneNumber")?.value.trim();
+    if (!phone || !phone.startsWith("+")) {
+      showLoginFeedback("Enter phone number with country code, e.g. +8801XXXXXXXXX.");
+      return;
+    }
+    showLoginFeedback("Sending SMS code...");
+    getFirebaseAuth().signInWithPhoneNumber(phone, ensureAuthRecaptcha())
+      .then((confirmation) => {
+        phoneLoginConfirmation = confirmation;
+        showLoginFeedback("SMS code sent. Enter it below and confirm.");
+      })
+      .catch((error) => {
+        resetAuthRecaptcha();
+        showLoginFeedback(error.message);
+      });
+  } catch (error) {
+    showLoginFeedback(error.message);
+  }
+};
+
+const confirmPhoneLoginCode = () => {
+  try {
+    const code = document.getElementById("loginPhoneCode")?.value.trim();
+    if (!phoneLoginConfirmation) {
+      showLoginFeedback("Send the SMS code first.");
+      return;
+    }
+    if (!code) {
+      showLoginFeedback("Enter the SMS verification code.");
+      return;
+    }
+    showLoginFeedback("Confirming phone login...");
+    phoneLoginConfirmation.confirm(code)
+      .then((result) => {
+        completeFirebaseUserLogin(result.user, document.getElementById("loginRemember")?.checked !== false, "phone");
+        phoneLoginConfirmation = null;
+        showLoginFeedback("");
+      })
+      .catch((error) => {
+        showLoginFeedback(error.message);
       });
   } catch (error) {
     showLoginFeedback(error.message);
@@ -12473,7 +13216,9 @@ const getLoginDisplayName = (session) => {
   if (!session) return "";
   if (session.mode === "guest") return "Guest";
   if (session.mode === "google") return "Google User";
-  const prefix = String(session.email || "").split("@")[0] || "Student";
+  if (session.mode === "facebook") return "Facebook User";
+  if (session.mode === "phone") return "Phone User";
+  const prefix = String(session.email || session.phoneNumber || "").split("@")[0] || "Student";
   return prefix.replace(/[._-]+/g, " ").replace(/\b\w/g, (char) => char.toUpperCase());
 };
 
@@ -12486,6 +13231,7 @@ const applyLocalLoginSession = (session) => {
   }
   document.body.classList.remove("login-locked");
   document.body.classList.add("login-ready");
+  syncLoginMediaVideo();
 };
 
 const parseFirebaseError = (message) => {
@@ -12512,8 +13258,36 @@ const parseFirebaseError = (message) => {
   }
   if (msgLower.includes("popup-blocked") || msgLower.includes("popup blocked")) {
     return {
-      brief: "Google sign-in popup was blocked by your browser.",
+      brief: "Sign-in popup was blocked by your browser.",
       tips: "Please check your browser's address bar to allow popups for this site, or try logging in again.",
+      exact: message
+    };
+  }
+  if (msgLower.includes("credential-already-in-use")) {
+    return {
+      brief: "This login method is already connected to another account.",
+      tips: "Login with that provider first, then link the remaining providers from Account Security.",
+      exact: message
+    };
+  }
+  if (msgLower.includes("provider-already-linked")) {
+    return {
+      brief: "This provider is already linked.",
+      tips: "Open Account Security to review linked login methods.",
+      exact: message
+    };
+  }
+  if (msgLower.includes("requires-recent-login")) {
+    return {
+      brief: "Please login again before changing security settings.",
+      tips: "Logout, login with a linked provider, then retry the Security action.",
+      exact: message
+    };
+  }
+  if (msgLower.includes("captcha") || msgLower.includes("quota") || msgLower.includes("too-many-requests")) {
+    return {
+      brief: "Phone verification could not start.",
+      tips: "Check Firebase Phone provider setup, authorized domain, SMS quota, and browser popup/script blocking.",
       exact: message
     };
   }
@@ -12584,6 +13358,171 @@ const showLoginFeedback = (message) => {
   `;
 };
 
+const setSecurityFeedback = (message = "", tone = "info") => {
+  const feedback = document.getElementById("securityFeedback");
+  if (!feedback) return;
+  feedback.textContent = message;
+  feedback.classList.toggle("is-error", tone === "error");
+  feedback.classList.toggle("is-success", tone === "success");
+};
+
+const refreshAccountSecurityDialog = () => {
+  const list = document.getElementById("securityProviderList");
+  if (list) {
+    list.innerHTML = renderSecurityProviderRows();
+    if (window.lucide) window.lucide.createIcons({ attrs: { "stroke-width": 1.8 } });
+  }
+};
+
+const requireSecurityAuthUser = () => {
+  const user = getCurrentAuthUser();
+  if (!user) {
+    throw new Error("No Firebase Auth user found. Login with a real Firebase method first; local admin/admin cannot link providers.");
+  }
+  return user;
+};
+
+const updateStoredSessionFromAuthUser = (user) => {
+  if (!user) return;
+  const current = readLocalLoginSession();
+  const authMeta = getAuthIdentitySnapshot(user);
+  writeLocalLoginSession({
+    ...(current || {}),
+    mode: getSessionModeFromFirebaseUser(user, current?.mode || "email"),
+    email: authMeta.email || current?.email || "",
+    phoneNumber: authMeta.phoneNumber || current?.phoneNumber || "",
+    uid: user.uid,
+    authProviders: authMeta.providers,
+    authProviderLabels: authMeta.providerLabels,
+    authIsAnonymous: authMeta.isAnonymous,
+    displayName: authMeta.displayName || current?.displayName || "",
+    createdAt: current?.createdAt || Date.now(),
+    updatedAt: Date.now()
+  }, true);
+  applyLocalLoginSession(readLocalLoginSession());
+};
+
+const afterProviderLinked = async (message) => {
+  const user = requireSecurityAuthUser();
+  try {
+    await user.reload();
+  } catch (_) {}
+  const freshUser = getCurrentAuthUser() || user;
+  updateStoredSessionFromAuthUser(freshUser);
+  refreshAccountSecurityDialog();
+  if (chatState.db) saveToCloud(true);
+  setSecurityFeedback(message, "success");
+};
+
+const linkPopupProviderToCurrentUser = (providerName) => {
+  try {
+    const user = requireSecurityAuthUser();
+    const provider = providerName === "facebook"
+      ? new window.firebase.auth.FacebookAuthProvider()
+      : new window.firebase.auth.GoogleAuthProvider();
+    if (providerName === "facebook") provider.addScope("email");
+    setSecurityFeedback(`Connecting ${providerName === "facebook" ? "Facebook" : "Google"}...`);
+    user.linkWithPopup(provider)
+      .then(() => afterProviderLinked(`${providerName === "facebook" ? "Facebook" : "Google"} linked to this account.`))
+      .catch((error) => {
+        if (error.code === "auth/popup-blocked" || error.code === "auth/cancelled-popup-request") {
+          setSecurityFeedback("Popup blocked. Redirecting to finish provider linking...");
+          user.linkWithRedirect(provider).catch((redirectError) => setSecurityFeedback(redirectError.message, "error"));
+          return;
+        }
+        setSecurityFeedback(error.message, "error");
+      });
+  } catch (error) {
+    setSecurityFeedback(error.message, "error");
+  }
+};
+
+const linkEmailPasswordToCurrentUser = () => {
+  try {
+    const user = requireSecurityAuthUser();
+    const email = document.getElementById("securityEmail")?.value.trim();
+    const password = document.getElementById("securityPassword")?.value || "";
+    if (!email || !email.includes("@")) throw new Error("Enter a valid email address.");
+    if (password.length < 6) throw new Error("Password must be at least 6 characters.");
+    const credential = window.firebase.auth.EmailAuthProvider.credential(email, password);
+    setSecurityFeedback("Linking email/password...");
+    user.linkWithCredential(credential)
+      .then(() => afterProviderLinked("Email/password linked to this account."))
+      .catch((error) => setSecurityFeedback(error.message, "error"));
+  } catch (error) {
+    setSecurityFeedback(error.message, "error");
+  }
+};
+
+const sendPhoneLinkCode = () => {
+  try {
+    const user = requireSecurityAuthUser();
+    const phone = document.getElementById("securityPhoneNumber")?.value.trim();
+    if (!phone || !phone.startsWith("+")) throw new Error("Enter phone number with country code, e.g. +8801XXXXXXXXX.");
+    setSecurityFeedback("Sending phone verification SMS...");
+    user.linkWithPhoneNumber(phone, ensureAuthRecaptcha())
+      .then((confirmation) => {
+        phoneLinkConfirmation = confirmation;
+        setSecurityFeedback("SMS sent. Enter the code and press Confirm phone link.", "success");
+      })
+      .catch((error) => {
+        resetAuthRecaptcha();
+        setSecurityFeedback(error.message, "error");
+      });
+  } catch (error) {
+    setSecurityFeedback(error.message, "error");
+  }
+};
+
+const confirmPhoneLinkCode = () => {
+  try {
+    const code = document.getElementById("securityPhoneCode")?.value.trim();
+    if (!phoneLinkConfirmation) throw new Error("Send phone verification SMS first.");
+    if (!code) throw new Error("Enter the SMS verification code.");
+    setSecurityFeedback("Confirming phone link...");
+    phoneLinkConfirmation.confirm(code)
+      .then(() => {
+        phoneLinkConfirmation = null;
+        afterProviderLinked("Phone number linked to this account.");
+      })
+      .catch((error) => setSecurityFeedback(error.message, "error"));
+  } catch (error) {
+    setSecurityFeedback(error.message, "error");
+  }
+};
+
+const sendSecurityPasswordReset = () => {
+  try {
+    ensureFirebaseInitialized();
+    const user = getCurrentAuthUser();
+    const email = document.getElementById("securityEmail")?.value.trim() || user?.email || "";
+    if (!email || !email.includes("@")) throw new Error("Enter the account email first.");
+    setSecurityFeedback("Sending password reset email...");
+    window.firebase.auth().sendPasswordResetEmail(email)
+      .then(() => setSecurityFeedback("Password reset email sent.", "success"))
+      .catch((error) => setSecurityFeedback(error.message, "error"));
+  } catch (error) {
+    setSecurityFeedback(error.message, "error");
+  }
+};
+
+const unlinkSecurityProvider = (providerId) => {
+  try {
+    const user = requireSecurityAuthUser();
+    const linked = (user.providerData || []).map((item) => item?.providerId).filter(Boolean);
+    if (linked.length <= 1 && !user.isAnonymous) {
+      throw new Error("Keep at least one login method linked before unlinking.");
+    }
+    if (!confirm(`Unlink ${providerId} from this account?`)) return;
+    setSecurityFeedback(`Unlinking ${providerId}...`);
+    user.unlink(providerId)
+      .then(() => afterProviderLinked(`${providerId} unlinked.`))
+      .catch((error) => setSecurityFeedback(error.message, "error"));
+  } catch (error) {
+    setSecurityFeedback(error.message, "error");
+  }
+};
+
 window.toggleLoginErrorDetails = (btn) => {
   const container = btn.closest(".login-error-container");
   if (!container) return;
@@ -12606,9 +13545,11 @@ const returnToLoginScreen = () => {
   clearLocalLoginSession();
   closeSettingsDialog?.();
   closeAccountDialog?.();
+  closeAccountSecurityDialog?.();
   closeBackupDialog?.();
   document.body.classList.add("login-locked");
   document.body.classList.remove("login-ready");
+  syncLoginMediaVideo();
   showLoginFeedback("");
   try {
     if (window.firebase?.apps?.length) {
@@ -12618,6 +13559,65 @@ const returnToLoginScreen = () => {
 };
 
 let currentLoginMode = "login";
+
+const handleEmailLoginSubmit = () => {
+  const email = document.getElementById("loginEmail")?.value.trim();
+  const password = document.getElementById("loginPassword")?.value || "";
+  const remember = document.getElementById("loginRemember")?.checked !== false;
+  
+  const isLocalAdmin = (email === "admin" && password === "admin") || 
+                        (email === "admin@test.com" && password === "admin123");
+  
+  if (isLocalAdmin) {
+    showLoginFeedback("Logging in as Local Test Admin...");
+    setTimeout(() => {
+      completeLocalLogin({
+        mode: "admin",
+        email: email.includes("@") ? email : "admin@test.com",
+        uid: "test-admin-uid",
+        createdAt: Date.now()
+      }, remember);
+      showLoginFeedback("");
+    }, 250);
+    return;
+  }
+  
+  if (!email || !email.includes("@")) {
+    showLoginFeedback("Enter a valid email to continue.");
+    return;
+  }
+  if (password.length < 6) {
+    showLoginFeedback("Password must be at least 6 characters.");
+    return;
+  }
+
+  try {
+    ensureFirebaseInitialized();
+    showLoginFeedback(currentLoginMode === "login" ? "Logging in..." : "Creating account...");
+    
+    if (currentLoginMode === "login") {
+      window.firebase.auth().signInWithEmailAndPassword(email, password)
+        .then((result) => {
+          completeFirebaseUserLogin(result.user, remember, "email");
+          showLoginFeedback("");
+        })
+        .catch((error) => {
+          showLoginFeedback(error.message);
+        });
+    } else {
+      window.firebase.auth().createUserWithEmailAndPassword(email, password)
+        .then((result) => {
+          completeFirebaseUserLogin(result.user, remember, "email");
+          showLoginFeedback("");
+        })
+        .catch((error) => {
+          showLoginFeedback(error.message);
+        });
+    }
+  } catch (error) {
+    showLoginFeedback(error.message);
+  }
+};
 
 const attachLocalLogin = () => {
   // Sync Firebase Auth state dynamically
@@ -12633,8 +13633,9 @@ const attachLocalLogin = () => {
         if (user) {
           if (!session || session.uid !== user.uid) {
             completeLocalLogin({
-              mode: user.isAnonymous ? "guest" : (user.providerData[0]?.providerId === "google.com" ? "google" : "email"),
-              email: user.email,
+              mode: getSessionModeFromFirebaseUser(user, "email"),
+              email: user.email || "",
+              phoneNumber: user.phoneNumber || "",
               uid: user.uid,
               createdAt: Date.now()
             }, true);
@@ -12648,23 +13649,18 @@ const attachLocalLogin = () => {
     }
   } catch (_) {}
 
-  // Handle redirect login result if user returns from Google Sign-In redirect
+  // Handle redirect login result if user returns from provider Sign-In redirect
   try {
     if (window.firebase) {
       ensureFirebaseInitialized();
       window.firebase.auth().getRedirectResult()
         .then((result) => {
           if (result && result.user) {
-            completeLocalLogin({
-              mode: "google",
-              email: result.user.email,
-              uid: result.user.uid,
-              createdAt: Date.now()
-            }, true);
+            completeFirebaseUserLogin(result.user, true, "google");
           }
         })
         .catch((error) => {
-          showLoginFeedback(`Google login failed: ${error.message}`);
+          showLoginFeedback(`Provider login failed: ${error.message}`);
         });
     }
   } catch (_) {}
@@ -12700,74 +13696,11 @@ const attachLocalLogin = () => {
   const form = document.getElementById("localLoginForm");
   form?.addEventListener("submit", (event) => {
     event.preventDefault();
-    const email = document.getElementById("loginEmail")?.value.trim();
-    const password = document.getElementById("loginPassword")?.value || "";
-    const remember = document.getElementById("loginRemember")?.checked !== false;
-    
-    const isLocalAdmin = (email === "admin" && password === "admin") || 
-                          (email === "admin@test.com" && password === "admin123");
-    
-    if (isLocalAdmin) {
-      showLoginFeedback("Logging in as Local Test Admin...");
-      setTimeout(() => {
-        completeLocalLogin({
-          mode: "admin",
-          email: email.includes("@") ? email : "admin@test.com",
-          uid: "test-admin-uid",
-          createdAt: Date.now()
-        }, remember);
-        showLoginFeedback("");
-      }, 500);
-      return;
-    }
-    
-    if (!email || !email.includes("@")) {
-      showLoginFeedback("Enter a valid email to continue.");
-      return;
-    }
-    if (password.length < 6) {
-      showLoginFeedback("Password must be at least 6 characters.");
-      return;
-    }
-
-    try {
-      const app = ensureFirebaseInitialized();
-      showLoginFeedback(currentLoginMode === "login" ? "Logging in..." : "Creating account...");
-      
-      if (currentLoginMode === "login") {
-        window.firebase.auth().signInWithEmailAndPassword(email, password)
-          .then((result) => {
-            const user = result.user;
-            completeLocalLogin({
-              mode: "email",
-              email: user.email,
-              uid: user.uid,
-              createdAt: Date.now()
-            }, remember);
-            showLoginFeedback("");
-          })
-          .catch((error) => {
-            showLoginFeedback(error.message);
-          });
-      } else {
-        window.firebase.auth().createUserWithEmailAndPassword(email, password)
-          .then((result) => {
-            const user = result.user;
-            completeLocalLogin({
-              mode: "email",
-              email: user.email,
-              uid: user.uid,
-              createdAt: Date.now()
-            }, remember);
-            showLoginFeedback("");
-          })
-          .catch((error) => {
-            showLoginFeedback(error.message);
-          });
-      }
-    } catch (error) {
-      showLoginFeedback(error.message);
-    }
+    handleEmailLoginSubmit();
+  });
+  form?.querySelector(".login-submit[type='submit']")?.addEventListener("click", (event) => {
+    event.preventDefault();
+    handleEmailLoginSubmit();
   });
 
   const saved = readLocalLoginSession();
@@ -12807,6 +13740,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   attachLocalLogin();
   attachVisualEffects();
+  syncLoginMediaVideo();
+  window.addEventListener("resize", syncLoginMediaVideo, { passive: true });
   initGroupChat();
 
   // Periodically check for composer draft timeout
@@ -14187,6 +15122,12 @@ const closeDialog = (id) => {
 
 const openAccountDialog = () => openDialog("accountDialog");
 const closeAccountDialog = () => closeDialog("accountDialog");
+const openAccountSecurityDialog = () => {
+  openDialog("accountSecurityDialog");
+  refreshAccountSecurityDialog();
+  setSecurityFeedback("");
+};
+const closeAccountSecurityDialog = () => closeDialog("accountSecurityDialog");
 const openSpectateDialog = () => {
   openDialog("spectateDialog");
   refreshSpectateDialogBody();
@@ -14344,6 +15285,14 @@ document.addEventListener("click", (e) => {
     closeAccountDialog();
     return;
   }
+  if (action === "open-account-security-dialog") {
+    openAccountSecurityDialog();
+    return;
+  }
+  if (action === "close-account-security-dialog") {
+    closeAccountSecurityDialog();
+    return;
+  }
   if (action === "open-spectate-dialog") {
     openSpectateDialog();
     return;
@@ -14469,6 +15418,58 @@ document.addEventListener("click", (e) => {
   }
   if (action === "login-google") {
     loginWithGoogle();
+    return;
+  }
+  if (action === "login-facebook") {
+    loginWithFacebook();
+    return;
+  }
+  if (action === "login-phone-toggle") {
+    e.preventDefault();
+    const panel = document.getElementById("loginPhonePanel");
+    if (panel) {
+      panel.hidden = !panel.hidden;
+      target?.setAttribute("aria-expanded", String(!panel.hidden));
+      if (!panel.hidden) document.getElementById("loginPhoneNumber")?.focus();
+    }
+    return;
+  }
+  if (action === "login-phone-send") {
+    e.preventDefault();
+    sendPhoneLoginCode();
+    return;
+  }
+  if (action === "login-phone-confirm") {
+    e.preventDefault();
+    confirmPhoneLoginCode();
+    return;
+  }
+  if (action === "security-link-google") {
+    linkPopupProviderToCurrentUser("google");
+    return;
+  }
+  if (action === "security-link-facebook") {
+    linkPopupProviderToCurrentUser("facebook");
+    return;
+  }
+  if (action === "security-link-email") {
+    linkEmailPasswordToCurrentUser();
+    return;
+  }
+  if (action === "security-phone-send") {
+    sendPhoneLinkCode();
+    return;
+  }
+  if (action === "security-phone-confirm") {
+    confirmPhoneLinkCode();
+    return;
+  }
+  if (action === "security-send-reset") {
+    sendSecurityPasswordReset();
+    return;
+  }
+  if (action === "security-unlink-provider") {
+    unlinkSecurityProvider(target?.dataset?.provider || "");
     return;
   }
   if (action === "login-forgot") {
@@ -14682,6 +15683,7 @@ document.addEventListener("keydown", (event) => {
   if (event.key !== "Escape") return;
   closeSettingsDialog();
   closeAccountDialog();
+  closeAccountSecurityDialog();
   closeSpectateDialog();
   closeBackupDialog();
   closeTrackDialog();
