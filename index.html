@@ -378,6 +378,80 @@ body:not(.login-locked) .login-gate {
   color: #fca5a5;
   font-size: 0.78rem;
   font-weight: 800;
+  margin-bottom: 6px;
+}
+
+.login-error-container {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  background: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  border-radius: 8px;
+  padding: 8px 12px;
+  margin-bottom: 8px;
+  animation: fadeIn 0.2s ease-out;
+  text-align: left;
+}
+.login-error-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.login-error-text {
+  flex: 1;
+  color: #fca5a5;
+  font-size: 0.78rem;
+  font-weight: 800;
+  line-height: 1.3;
+}
+.login-error-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #fca5a5;
+  opacity: 0.75;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  border-radius: 4px;
+  transition: all 0.15s ease;
+}
+.login-error-btn:hover {
+  opacity: 1;
+  background: rgba(255, 255, 255, 0.08);
+}
+.login-error-btn svg {
+  width: 14px;
+  height: 14px;
+}
+.login-error-details {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 6px;
+  margin-top: 2px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.login-error-tips {
+  color: #cbd5e1;
+  font-size: 0.74rem;
+  font-weight: 500;
+  line-height: 1.4;
+}
+.login-error-exact {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 5px;
+  padding: 6px 8px;
+  color: #94a3b8;
+  font-size: 0.68rem;
+  word-break: break-all;
+  white-space: pre-wrap;
+  line-height: 1.35;
 }
 
 .login-register {
@@ -456,7 +530,8 @@ body:not(.login-locked) .login-gate {
   }
 
   .login-art {
-    min-height: 260px;
+    height: 180px;
+    min-height: auto;
     margin: 0 18px 18px;
     border-radius: 26px;
   }
@@ -464,6 +539,16 @@ body:not(.login-locked) .login-gate {
   .login-form-row {
     align-items: flex-start;
     flex-direction: column;
+  }
+}
+
+@media (max-height: 720px) {
+  .login-gate {
+    padding: 12px;
+    align-items: center;
+  }
+  .login-shell {
+    min-height: auto;
   }
 }
 
@@ -1544,6 +1629,11 @@ h4 {
 
 .subject-card--compact {
   min-height: 228px;
+}
+
+.subject-card.is-settings-open {
+  min-height: auto !important;
+  overflow: visible !important;
 }
 
 .subject-card::before {
@@ -3375,18 +3465,22 @@ h4 {
 }
 
 .chat-action-btn {
-  background: rgba(255, 255, 255, 0.03);
+  background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.08);
   color: var(--text-sub);
   cursor: pointer;
-  width: 28px;
-  height: 28px;
-  border-radius: 8px;
+  width: 26px;
+  height: 26px;
+  border-radius: 6px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
   padding: 0;
+}
+.chat-action-btn svg {
+  width: 13px;
+  height: 13px;
 }
 
 .chat-action-btn:hover {
@@ -3411,6 +3505,17 @@ h4 {
   border-color: #ef4444;
   color: #f87171;
   box-shadow: 0 0 8px rgba(239, 68, 68, 0.2);
+}
+
+.chat-item--grayed {
+  opacity: 0.35;
+  filter: grayscale(1);
+  transition: opacity 0.25s ease, filter 0.25s ease;
+}
+
+.chat-item--grayed:hover {
+  opacity: 0.7;
+  filter: grayscale(0.3);
 }
 
 .chat-empty-note {
@@ -3451,6 +3556,23 @@ h4 {
   outline: none;
 }
 
+.chat-compose__char-count {
+  font-size: 0.72rem;
+  color: var(--text-sub);
+  opacity: 0.6;
+  text-align: right;
+  margin-top: -6px;
+  transition: color 0.2s ease, opacity 0.2s ease;
+}
+.chat-compose__char-count.is-long {
+  color: #fbbf24;
+  opacity: 0.9;
+}
+.chat-compose__char-count.is-over {
+  color: #f87171;
+  opacity: 1;
+}
+
 .chat-compose textarea:focus,
 .chat-settings-panel select:focus,
 .chat-compose select:focus {
@@ -3465,6 +3587,35 @@ h4 {
 
 .chat-feedback.is-success {
   color: #86efac;
+}
+
+@keyframes feedbackFadeOut {
+  0% { opacity: 1; }
+  70% { opacity: 1; }
+  100% { opacity: 0; }
+}
+.chat-feedback.is-fading {
+  animation: feedbackFadeOut 3.5s ease forwards;
+}
+
+.chat-live-glow-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #10b981;
+  box-shadow: 0 0 10px #10b981, 0 0 20px rgba(16, 185, 129, 0.6);
+  cursor: pointer;
+  display: inline-block;
+  vertical-align: middle;
+  transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.chat-live-glow-dot:hover {
+  transform: scale(1.3);
+}
+
+#chatComposerMode, #chatLiveStatus {
+  color: #94a3b8 !important;
+  opacity: 0.75;
 }
 
 /* Smart Update Composer Wizard */
@@ -5523,7 +5674,8 @@ h4 {
   border: 1px solid rgba(255, 255, 255, 0.1); /* enhanced low-opacity border */
 }
 .paper-section__title {
-  width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  width: 100%; max-width: 100%; box-sizing: border-box;
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
   font-family: inherit; font-size: .69rem; font-weight: 800; letter-spacing: .04em;
   text-transform: uppercase; color: #e2e8f0;
   padding: 1px 0 8px; border: 0; margin-bottom: 0;
@@ -5721,6 +5873,8 @@ h4 {
   align-items: center;
   gap: 9px;
   flex: 0 0 auto;
+  box-sizing: border-box;
+  max-width: 100%;
 }
 .paper-meter {
   width: 108px;
@@ -5782,11 +5936,166 @@ h4 {
   background:rgba(255,255,255,.032); border:1px solid rgba(255, 255, 255, 0.12); /* enhanced border */
 }
 
+/* Priority Box & Reorder Styles */
+.ch-priority-box {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  margin-top: 4px;
+}
+.ch-priority-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.ch-priority-toggle-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #f1f5f9;
+  cursor: pointer;
+  user-select: none;
+}
+.ch-priority-toggle-label input {
+  accent-color: #38bdf8;
+  width: 14px;
+  height: 14px;
+}
+.ch-priority-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 4px 0;
+}
+.ch-priority-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  background: rgba(15, 23, 42, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+.ch-priority-item:hover {
+  background: rgba(30, 41, 59, 0.65);
+  border-color: rgba(255, 255, 255, 0.12);
+  transform: translateX(2px);
+}
+.ch-priority-item.is-dragging {
+  opacity: 0.4;
+  border-style: dashed;
+  border-color: rgba(255, 255, 255, 0.3) !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+  transform: scale(0.98);
+}
+.ch-priority-item.is-active {
+  border-left: 3.5px solid var(--track-color, #38bdf8);
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.02) 0%, rgba(255, 255, 255, 0) 100%), rgba(30, 41, 59, 0.45);
+  box-shadow: inset 2px 0 10px -2px rgba(255, 255, 255, 0.03);
+}
+.ch-priority-item__left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.priority-drag-btn {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.3);
+  font-size: 0.95rem;
+  font-weight: bold;
+  cursor: grab;
+  padding: 0 4px;
+  user-select: none;
+  transition: color 0.15s ease;
+}
+.priority-drag-btn:hover {
+  color: rgba(255, 255, 255, 0.75);
+}
+.priority-chk-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.76rem;
+  color: #cbd5e1;
+  cursor: pointer;
+  user-select: none;
+}
+.ch-priority-item.is-active .priority-chk-label {
+  color: #f8fafc;
+  font-weight: 550;
+}
+.priority-chk-label input {
+  accent-color: var(--track-color, #38bdf8);
+  cursor: pointer;
+}
+.ch-priority-item__actions {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+.priority-move-btn {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.4);
+  width: 20px;
+  height: 20px;
+  font-size: 0.58rem;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+}
+.priority-move-btn:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.2);
+}
+.priority-move-btn:disabled {
+  opacity: 0.2;
+  cursor: not-allowed;
+}
+
 /* Subject Settings Panel */
 .subj-settings-btn {
-  padding: 7px 12px; border-radius: 10px; border: 1.5px solid rgba(255, 255, 255, 0.18); /* enhanced border */
-  background: rgba(255,255,255,.05); color: #cbd5e1; font-size: .72rem; cursor: pointer;
-  transition: all 0.18s ease; white-space: nowrap;
+  border: 1px solid rgba(148, 163, 184, 0.28);
+  background: rgba(148, 163, 184, 0.12);
+  color: var(--text-main);
+  min-height: 36px;
+  padding: 0 12px;
+  border-radius: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  cursor: pointer;
+  line-height: 1;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+.subj-settings-btn svg,
+.subj-settings-btn i[data-lucide] {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 18px;
+  display: block;
+  stroke-width: 2;
+}
+.subj-settings-btn span {
+  display: inline-flex;
+  align-items: center;
+  line-height: 1;
 }
 .subj-settings-btn:hover, .subj-settings-btn.active {
   background: rgba(255,255,255,.16);
@@ -5876,67 +6185,71 @@ h4 {
 
   /* Dashboard Modern Mobile Overrides */
   .dash-body {
-    grid-template-columns: 1fr 110px 1fr !important;
-    gap: 6px !important;
-    padding: 8px 6px 12px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 16px !important;
+    padding: 16px 12px !important;
   }
 
   .dash-head {
-    padding: 10px 12px 8px !important;
+    padding: 14px 14px 12px !important;
     text-align: left !important;
     display: block !important;
   }
   
   .dash-greet {
-    font-size: 15px !important;
+    font-size: 18px !important;
     padding-right: 80px; /* Leave space for absolute eta-pill */
   }
   
   .dash-mission {
-    font-size: 9px !important;
+    font-size: 10px !important;
     justify-content: flex-start !important;
-    margin-top: 3px !important;
+    margin-top: 5px !important;
   }
 
   .eta-pill {
     position: absolute !important;
-    top: 10px !important;
-    right: 10px !important;
-    padding: 3px 8px !important;
-    font-size: 9px !important;
+    top: 12px !important;
+    right: 12px !important;
+    padding: 4px 10px !important;
+    font-size: 10px !important;
     margin: 0 !important;
   }
 
   .eta-sub {
     position: absolute !important;
-    top: 32px !important;
-    right: 12px !important;
-    font-size: 8px !important;
+    top: 38px !important;
+    right: 14px !important;
+    font-size: 9px !important;
   }
 
   .stats-col {
+    width: 100% !important;
     padding: 0 !important;
-    gap: 6px !important;
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 10px !important;
   }
 
   .stat-card, .count-card {
-    padding: 6px 8px !important;
-    border-radius: 8px !important;
+    padding: 12px 14px !important;
+    border-radius: 10px !important;
   }
 
   .stat-label, .count-label {
-    font-size: 8px !important;
-    margin-bottom: 4px !important;
-    gap: 4px !important;
+    font-size: 10px !important;
+    margin-bottom: 6px !important;
+    gap: 6px !important;
   }
   
   .stat-label .sc-dot, .count-label .sc-dot {
-    width: 4px !important;
-    height: 4px !important;
+    width: 6px !important;
+    height: 6px !important;
   }
 
   .stat-val, .count-big {
-    font-size: 14px !important;
+    font-size: 22px !important;
   }
   
   .count-big {
@@ -5944,17 +6257,18 @@ h4 {
   }
 
   .stat-detail, .count-sub {
-    font-size: 8px !important;
-    margin-top: 2px !important;
+    font-size: 9px !important;
+    margin-top: 4px !important;
   }
 
   .stat-bar, .count-bar {
     height: 3px !important;
-    margin-top: 4px !important;
+    margin-top: 6px !important;
   }
 
   .gauge-col {
-    padding: 4px 0 !important;
+    width: 100% !important;
+    padding: 8px 0 !important;
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
@@ -5962,46 +6276,51 @@ h4 {
   }
   
   .gauge-wrap {
-    width: 110px !important;
-    height: 110px !important;
-    margin-bottom: 0 !important;
+    width: 150px !important;
+    height: 150px !important;
+    margin-bottom: 8px !important;
   }
   
   .gauge-wrap svg {
-    width: 110px !important;
-    height: 110px !important;
+    width: 150px !important;
+    height: 150px !important;
   }
   
   .gauge-center {
-    width: 62px !important;
-    height: 62px !important;
+    width: 90px !important;
+    height: 90px !important;
     border-width: 1px !important;
   }
   
   .gauge-clabel {
-    font-size: 8px !important;
+    font-size: 10px !important;
   }
   
   .gauge-cval {
-    font-size: 13px !important;
+    font-size: 20px !important;
     font-weight: 800 !important;
   }
   
   .gauge-legend {
-    display: none !important;
+    display: flex !important;
+    gap: 12px !important;
+    margin-top: 6px !important;
   }
   
   .dash-foot {
-    padding: 8px 10px !important;
-    gap: 8px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    padding: 12px 14px !important;
+    gap: 10px !important;
   }
   
   .foot-item {
-    gap: 4px !important;
+    width: 100% !important;
+    gap: 6px !important;
   }
   
   .foot-label, .foot-pct {
-    font-size: 9px !important;
+    font-size: 11px !important;
   }
   
   .foot-track {
@@ -6162,8 +6481,23 @@ h4 {
 @media (max-width: 560px) {
   .subject-card { padding: 14px; border-radius: 16px; }
   .paper-section { padding: 9px; }
-  .paper-section__title { align-items: flex-start; flex-direction: column; }
-  .paper-section__right { width: 100%; justify-content: space-between; }
+  .paper-section__title {
+    align-items: flex-start;
+    flex-direction: column;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+  .paper-section__right {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-right: 6px;
+    padding-left: 2px;
+  }
   .paper-meter { width: min(180px, calc(100% - 28px)); }
   .ch-meta-row { grid-template-columns: 1fr; }
   .ch-style-switch { width: 100%; }
@@ -6171,6 +6505,29 @@ h4 {
   .cls-row,
   .bq-row { align-items: stretch; flex-direction: column; }
   .cls-controls { justify-content: space-between; }
+  
+  .ch-plate__actions {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    width: 100%;
+  }
+  .ch-pill {
+    text-align: center;
+    padding: 8px 6px;
+    font-size: 0.72rem;
+  }
+  .ss-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .ss-actions {
+    flex-direction: column;
+  }
+  .ss-apply-btn {
+    width: 100%;
+    text-align: center;
+  }
 
   /* Dashboard Footer Mobile Overrides */
   .dash-foot {
@@ -6553,7 +6910,7 @@ h4 {
                 <span>Stay in guest account</span>
               </button>
             </div>
-            <p class="login-feedback" id="loginFeedback" role="status"></p>
+            <div class="login-feedback" id="loginFeedback" role="status"></div>
             <p class="login-register" id="loginToggleRow">Don't have an account? <a href="#" class="login-link" id="toggleLoginMode" data-action="toggle-register" style="font-weight: 600; text-decoration: underline; color: var(--accent-blue, #60a5fa);">Create one</a></p>
           </form>
         </div>
@@ -6774,6 +7131,7 @@ const normalizeChatPrefs = (raw = {}) => ({
   isSettingsOpen: !!raw.isSettingsOpen,
   hiddenMessageIds: Array.isArray(raw.hiddenMessageIds) ? raw.hiddenMessageIds : [],
   chatCardColor: raw.chatCardColor || "auto",
+  messagesPerPage: parseInt(raw.messagesPerPage, 10) || 50,
 });
 
 const loadChatPrefs = () => {
@@ -6816,6 +7174,7 @@ const chatState = {
   feedbackTone: "",
   feedbackMessage: "Firestore chat is live. Messages stay stored in the cloud.",
   status: "Connecting to Firestore...",
+  showAllPage: 0,
 };
 
 const getChatAuthorName = () => {
@@ -6823,14 +7182,41 @@ const getChatAuthorName = () => {
   return customName || "Student";
 };
 
+window.showLiveStatusInfo = () => {
+  alert("Firestore chat is live. Messages stay stored in the cloud.");
+};
+
 const setChatFeedback = (message, tone = "") => {
   chatState.feedbackMessage = message;
   chatState.feedbackTone = tone;
   const node = document.getElementById("chatFeedback");
   if (!node) return;
-  node.textContent = message;
-  node.classList.toggle("is-error", tone === "error");
-  node.classList.toggle("is-success", tone === "success");
+  
+  // Clear any previous fade timer
+  if (chatState._feedbackTimer) {
+    clearTimeout(chatState._feedbackTimer);
+    chatState._feedbackTimer = null;
+  }
+  node.classList.remove("is-fading");
+  
+  if (message === "Firestore chat is live. Messages stay stored in the cloud.") {
+    node.innerHTML = `<span class="chat-live-glow-dot" title="Firestore status details (Click me)" onclick="showLiveStatusInfo()"></span>`;
+    node.classList.remove("is-error", "is-success");
+  } else {
+    node.textContent = message;
+    node.classList.toggle("is-error", tone === "error");
+    node.classList.toggle("is-success", tone === "success");
+    
+    // Auto-fade success messages after 3.5s
+    if (tone === "success") {
+      chatState._feedbackTimer = setTimeout(() => {
+        node.classList.add("is-fading");
+        chatState._feedbackTimer = setTimeout(() => {
+          setChatFeedback("Firestore chat is live. Messages stay stored in the cloud.", "");
+        }, 3500);
+      }, 100);
+    }
+  }
 };
 
 const getAuthUid = () => {
@@ -6844,10 +7230,15 @@ const getChatStatusTone = () => {
 };
 
 const getVisibleChatMessages = () =>
-  chatState.messages.filter((message) =>
-    (message.visibility !== "private" || message.authorId === getAuthUid()) &&
-    !(chatState.prefs.hiddenMessageIds || []).includes(message.id)
-  );
+  chatState.messages.filter((message) => {
+    if (message.visibility === "private" && message.authorId !== getAuthUid()) {
+      return false;
+    }
+    if (message.archived === true && message.authorId !== getAuthUid()) {
+      return false;
+    }
+    return true;
+  });
 
 const formatChatTime = (message) => {
   const stamp = message.createdAt?.toDate?.() || (message.createdAtMs ? new Date(message.createdAtMs) : null);
@@ -6915,6 +7306,9 @@ const renderChatMessages = () => {
   }
   feed.innerHTML = visible.map((message, index) => {
     const isSelf = message.authorId === getAuthUid();
+    const isArchived = message.archived === true;
+    const isLocallyHidden = (chatState.prefs.hiddenMessageIds || []).includes(message.id);
+    const isGrayed = isArchived || isLocallyHidden;
     const visibilityClass = message.visibility === "private" ? "chat-visibility-pill chat-visibility-pill--private" : "chat-visibility-pill";
     
     let cardBg = "rgba(59, 130, 246, 0.12)";
@@ -6936,8 +7330,8 @@ const renderChatMessages = () => {
     ` : "";
 
     const hideBtn = `
-      <button type="button" data-action="chat-hide-msg" data-id="${message.id}" class="chat-action-btn chat-action-btn--hide" title="Hide Message">
-        ${icon("eye", "Hide")}
+      <button type="button" data-action="chat-hide-msg" data-id="${message.id}" class="chat-action-btn chat-action-btn--hide" title="${isGrayed ? "Unhide Message" : "Hide Message"}">
+        ${isGrayed ? icon("eye-off", "Unhide") : icon("eye", "Hide")}
       </button>
     `;
 
@@ -6948,23 +7342,23 @@ const renderChatMessages = () => {
     ` : "";
     
     return `
-      <article class="chat-item ${isSelf ? "chat-item--self" : ""}">
-        <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+      <article class="chat-item ${isSelf ? "chat-item--self" : ""} ${isGrayed ? "chat-item--grayed" : ""}">
+        <div style="display: flex; flex-direction: column; align-items: center; padding-top: 4px;">
           <div class="chat-item__serial">${index + 1}</div>
-          <div class="chat-item__left-actions" style="display: flex; flex-direction: column; gap: 6px; align-items: center;">
-            ${editBtn}
-            ${hideBtn}
-            ${deleteBtn}
-          </div>
         </div>
         <div class="chat-item__card" style="background: ${cardBg}; border-color: ${cardBorder}; ${leftAccent}">
-          <div class="chat-item__head" style="display: flex; align-items: center; width: 100%; justify-content: space-between;">
+          <div class="chat-item__head" style="display: flex; align-items: center; width: 100%; justify-content: space-between; gap: 8px;">
             <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
               <strong>${escapeHtml(message.authorName || "Student")}</strong>
               <div class="chat-item__meta" style="display: inline-flex; align-items: center; gap: 6px; margin: 0;">
                 <span>${escapeHtml(formatChatTime(message))}</span>
                 <span class="${visibilityClass}">${escapeHtml(message.visibility || "public")}</span>
               </div>
+            </div>
+            <div class="chat-item__actions" style="display: flex; align-items: center; gap: 4px;">
+              ${editBtn}
+              ${hideBtn}
+              ${deleteBtn}
             </div>
           </div>
           <div class="chat-item__body">${escapeChatBody(message.text)}</div>
@@ -6977,6 +7371,7 @@ const renderChatMessages = () => {
   if (window.lucide) {
     window.lucide.createIcons({ attrs: { "stroke-width": 1.8 } });
   }
+  renderChatShowAllList();
 };
 
 const renderChatPalette = () => {
@@ -7021,11 +7416,132 @@ const renderChatPalette = () => {
   container.innerHTML = html;
 };
 
+const renderChatShowAllList = () => {
+  const list = document.getElementById("chatShowAllList");
+  const pagination = document.getElementById("chatShowAllPagination");
+  if (!list || !pagination) return;
+
+  const visible = getVisibleChatMessages();
+  const limit = chatState.prefs.messagesPerPage;
+  const totalPages = Math.ceil(visible.length / limit);
+
+  if (totalPages === 0) {
+    chatState.showAllPage = 0;
+  } else if (chatState.showAllPage >= totalPages) {
+    chatState.showAllPage = totalPages - 1;
+  } else if (chatState.showAllPage < 0) {
+    chatState.showAllPage = 0;
+  }
+
+  if (visible.length === 0) {
+    list.innerHTML = `<div class="chat-empty-note">No messages to show.</div>`;
+    pagination.innerHTML = "";
+    return;
+  }
+
+  const startIdx = chatState.showAllPage * limit;
+  const endIdx = Math.min(startIdx + limit, visible.length);
+  const pageMessages = visible.slice(startIdx, endIdx);
+
+  list.innerHTML = pageMessages.map((message) => {
+    const absoluteIndex = visible.indexOf(message) + 1;
+    const isSelf = message.authorId === getAuthUid();
+    const isArchived = message.archived === true;
+    const isLocallyHidden = (chatState.prefs.hiddenMessageIds || []).includes(message.id);
+    const isGrayed = isArchived || isLocallyHidden;
+    const visibilityClass = message.visibility === "private" ? "chat-visibility-pill chat-visibility-pill--private" : "chat-visibility-pill";
+    
+    let cardBg = "rgba(59, 130, 246, 0.12)";
+    let cardBorder = "rgba(96, 165, 250, 0.12)";
+    const colorPref = message.chatCardColor || "auto";
+    if (colorPref === "auto") {
+      cardBg = getAutoColorForUser(message.authorId);
+      cardBorder = "rgba(255, 255, 255, 0.06)";
+    } else {
+      cardBg = colorPref;
+      cardBorder = "rgba(255, 255, 255, 0.08)";
+    }
+    const leftAccent = isSelf ? "border-left: 3px solid #10b981;" : "";
+
+    const editBtn = isSelf ? `
+      <button type="button" data-action="chat-edit-msg" data-id="${message.id}" class="chat-action-btn chat-action-btn--edit" title="Edit Message">
+        ${icon("pencil", "Edit")}
+      </button>
+    ` : "";
+
+    const hideBtn = `
+      <button type="button" data-action="chat-hide-msg" data-id="${message.id}" class="chat-action-btn chat-action-btn--hide" title="${isGrayed ? "Unhide Message" : "Hide Message"}">
+        ${isGrayed ? icon("eye-off", "Unhide") : icon("eye", "Hide")}
+      </button>
+    `;
+
+    const deleteBtn = isSelf ? `
+      <button type="button" data-action="chat-delete-msg" data-id="${message.id}" class="chat-action-btn chat-action-btn--delete" title="Delete Message">
+        ${icon("trash-2", "Delete")}
+      </button>
+    ` : "";
+
+    return `
+      <article class="chat-item ${isSelf ? "chat-item--self" : ""} ${isGrayed ? "chat-item--grayed" : ""}">
+        <div style="display: flex; flex-direction: column; align-items: center; padding-top: 4px;">
+          <div class="chat-item__serial">${absoluteIndex}</div>
+        </div>
+        <div class="chat-item__card" style="background: ${cardBg}; border-color: ${cardBorder}; ${leftAccent}">
+          <div class="chat-item__head" style="display: flex; align-items: center; width: 100%; justify-content: space-between; gap: 8px;">
+            <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+              <strong>${escapeHtml(message.authorName || "Student")}</strong>
+              <div class="chat-item__meta" style="display: inline-flex; align-items: center; gap: 6px; margin: 0;">
+                <span>${escapeHtml(formatChatTime(message))}</span>
+                <span class="${visibilityClass}">${escapeHtml(message.visibility || "public")}</span>
+              </div>
+            </div>
+            <div class="chat-item__actions" style="display: flex; align-items: center; gap: 4px;">
+              ${editBtn}
+              ${hideBtn}
+              ${deleteBtn}
+            </div>
+          </div>
+          <div class="chat-item__body">${escapeChatBody(message.text)}</div>
+        </div>
+      </article>
+    `;
+  }).join("");
+
+  const prevDisabled = chatState.showAllPage === 0 ? "disabled" : "";
+  const nextDisabled = chatState.showAllPage === totalPages - 1 ? "disabled" : "";
+  pagination.innerHTML = `
+    <button class="btn-small" type="button" data-action="chat-show-all-prev" ${prevDisabled}>
+      ${icon("chevron-left", "Previous")}
+    </button>
+    <span style="font-size: 11px; font-weight: 600; color: var(--text-sub); min-width: 90px; text-align: center;">
+      ${startIdx + 1}–${endIdx} of ${visible.length}
+    </span>
+    <button class="btn-small" type="button" data-action="chat-show-all-next" ${nextDisabled}>
+      ${icon("chevron-right", "Next")}
+    </button>
+  `;
+
+  // Update dialog title with count
+  const titleEl = document.getElementById("chatShowAllTitle");
+  if (titleEl) {
+    const titleSpan = titleEl.querySelector("span");
+    if (titleSpan) titleSpan.textContent = `All Messages (${visible.length})`;
+  }
+
+  // Scroll list to top when rendering new page
+  list.scrollTo({ top: 0, behavior: "smooth" });
+
+  if (window.lucide) {
+    window.lucide.createIcons({ attrs: { "stroke-width": 1.8 } });
+  }
+};
+
 const syncChatUi = () => {
   const settingsPanel = document.getElementById("chatSettingsPanel");
   const feedShell = document.getElementById("chatFeedShell");
   const sortSelect = document.getElementById("chatSortOrder");
   const defaultVisibility = document.getElementById("chatDefaultVisibility");
+  const messagesPerPageSelect = document.getElementById("chatMessagesPerPage");
   const composerIdentity = document.getElementById("chatComposerIdentity");
   const composerMode = document.getElementById("chatComposerMode");
   const toggleButtons = document.querySelectorAll("[data-chat-list-toggle]");
@@ -7033,6 +7549,7 @@ const syncChatUi = () => {
   if (feedShell) feedShell.hidden = !chatState.prefs.isListVisible;
   if (sortSelect) sortSelect.value = chatState.prefs.sortOrder;
   if (defaultVisibility) defaultVisibility.value = chatState.prefs.defaultVisibility;
+  if (messagesPerPageSelect) messagesPerPageSelect.value = chatState.prefs.messagesPerPage;
   if (composerIdentity) composerIdentity.textContent = getChatAuthorName();
   if (composerMode) composerMode.textContent = `Post visibility from settings: ${chatState.prefs.defaultVisibility}`;
   toggleButtons.forEach((button) => {
@@ -7064,14 +7581,21 @@ const startChatListener = () => {
 const initGroupChat = () => {
   saveChatProfile();
   syncChatUi();
-  if (chatState.db || !window.firebase?.firestore) {
-    if (!window.firebase?.firestore && !chatState.db) {
-      chatState.status = "Firestore scripts unavailable";
-      setChatFeedback("Firebase failed to load. The chat cannot sync right now.", "error");
-      renderChatMessages();
-    }
+
+  if (chatState.db) {
+    startChatListener();
+    syncChDataOnLogin();
+    renderSyncStatusUI();
     return;
   }
+
+  if (!window.firebase?.firestore) {
+    chatState.status = "Firestore scripts unavailable";
+    setChatFeedback("Firebase failed to load. The chat cannot sync right now.", "error");
+    renderChatMessages();
+    return;
+  }
+
   try {
     const app = window.firebase.apps?.length
       ? window.firebase.app()
@@ -7083,7 +7607,7 @@ const initGroupChat = () => {
     syncChDataOnLogin();
     renderSyncStatusUI();
   } catch (error) {
-    chatState.status = `Firestore error: ${error.message}`;
+    chatState.status = "Firestore error: " + error.message;
     setChatFeedback("Could not initialize Firestore chat.", "error");
     renderChatMessages();
   }
@@ -7502,10 +8026,10 @@ function getLivePreviewText(includeCurrentDraft = true, currentDraftText = null)
   }
   
   if (composerState.studyQuality !== null && composerState.studyQuality !== undefined) {
-    lines.push(`📊 Study Rating( Quality) - ${composerState.studyQuality}%`);
+    lines.push(`📊 Study Quality - ${composerState.studyQuality}%`);
   }
   if (composerState.selfStudyTime > 0) {
-    lines.push(`🧠 Self Study - ${formatDurationShort(composerState.selfStudyTime)}`);
+    lines.push(`?? Self Study - ${formatDurationShort(composerState.selfStudyTime)}`);
   }
   if (composerState.classDuration > 0) {
     lines.push(`⌛ Class Duration - ${formatDurationShort(composerState.classDuration)}`);
@@ -7792,7 +8316,7 @@ function getStepFormHtml(stepNum) {
           <input type="range" id="composerQuality" min="0" max="100" step="5" value="${composerState.studyQuality}" style="width: 100%; accent-color: var(--accent-blue);">
         </div>
 
-        ${makeAdjusterRow("🧠 Self Study Time", "selfStudyTime")}
+        ${makeAdjusterRow("?? Self Study Time", "selfStudyTime")}
         ${makeAdjusterRow("⌛ Class Duration", "classDuration")}
         ${makeAdjusterRow("🕒 Study Duration", "totalStudyDuration")}
       `;
@@ -8065,11 +8589,9 @@ function renderComposerWizard() {
       <div class="composer-step-title">Step 10: Final Copy & Sync Preview</div>
       
       <div class="composer-preview-pane" style="margin-bottom: 16px;">
-        <div class="preview-pane-label">Final Update Message</div>
-        <pre class="preview-pane-text" id="composerFinalPreviewText" style="font-family: monospace; white-space: pre-wrap; font-size: 0.88rem; line-height: 1.4; background: rgba(0,0,0,0.25); padding: 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05); margin: 0; color: #fff;">${escapeHtml(finalText)}</pre>
+        <div class="preview-pane-label">Final Update Message (Editable)</div>
+        <textarea id="composerFinalTextArea" style="font-family: monospace; white-space: pre-wrap; font-size: 0.88rem; line-height: 1.4; background: rgba(0,0,0,0.25); padding: 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.15); margin: 0; color: #fff; width: 100%; min-height: 180px; resize: vertical; outline: none; box-sizing: border-box;">${escapeHtml(finalText)}</textarea>
       </div>
-      
-      <textarea id="composerFinalTextArea" style="display: none;">${escapeHtml(finalText)}</textarea>
       
       <div style="display: flex; gap: 8px; margin-bottom: 12px;">
         <button class="btn-small btn-small--primary" type="button" data-action="composer-copy" style="flex: 1; min-height: 38px; font-size: 0.85rem; border-color: rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: center; gap: 6px;">
@@ -8257,14 +8779,36 @@ document.addEventListener("click", (e) => {
   if (action === "chat-hide-msg") {
     const id = btn.dataset.id;
     if (id) {
-      if (!chatState.prefs.hiddenMessageIds) {
-        chatState.prefs.hiddenMessageIds = [];
+      const msg = chatState.messages.find(m => m.id === id);
+      if (msg) {
+        const isSelf = msg.authorId === getAuthUid();
+        if (isSelf) {
+          const newArchived = !msg.archived;
+          try {
+            chatState.db.collection(CHAT_COLLECTION).doc(id).update({
+              archived: newArchived
+            });
+            setChatFeedback(newArchived ? "Message archived (hidden from public)." : "Message restored.", "success");
+          } catch (error) {
+            setChatFeedback(`Archive failed: ${error.message}`, "error");
+          }
+        } else {
+          if (!chatState.prefs.hiddenMessageIds) {
+            chatState.prefs.hiddenMessageIds = [];
+          }
+          const idx = chatState.prefs.hiddenMessageIds.indexOf(id);
+          if (idx > -1) {
+            chatState.prefs.hiddenMessageIds.splice(idx, 1);
+            setChatFeedback("Message unhidden locally.", "success");
+          } else {
+            chatState.prefs.hiddenMessageIds.push(id);
+            setChatFeedback("Message hidden locally.", "success");
+          }
+          saveChatPrefs();
+          renderChatMessages();
+          renderChatPalette();
+        }
       }
-      chatState.prefs.hiddenMessageIds.push(id);
-      saveChatPrefs();
-      renderChatMessages();
-      renderChatPalette();
-      setChatFeedback("Message hidden locally.", "success");
     }
     return;
   }
@@ -8854,6 +9398,79 @@ const calculateClassesLeft = (syllabus) => {
   return { done, left: total - done, total };
 };
 
+const isPcmbiSubject = (subject) => {
+  const t = (subject.title || "").toLowerCase();
+  return t.includes("physics") || t.includes("chemistry") || t.includes("math") || t.includes("biology");
+};
+
+const calculatePcmbiClassStats = (syllabus) => {
+  let totalDoneClasses = 0;
+  let totalRemainingClasses = 0;
+  let totalPlannedClasses = 0;
+  
+  let totalCompletedHours = 0;
+  let totalRemainingHours = 0;
+  let totalPlannedHours = 0;
+
+  const TRACK_DURATIONS = {
+    dl: 1.6667,   // 1h 40m = 1.6667 hrs
+    adv: 1.6667,  // 1h 40m = 1.6667 hrs
+    adm: 3.0,     // 3h = 3.0 hrs
+    frb: 3.5,     // 3h 30m = 3.5 hrs
+    os: 4.0       // 4h = 4.0 hrs
+  };
+
+  const TRACK_FIELDS = {
+    dl: { done: "doneDL", total: "totalDL" },
+    adv: { done: "doneAdv", total: "totalAdv" },
+    adm: { done: "doneAdm", total: "totalAdm" },
+    frb: { done: "doneFRB", total: "totalFRB" },
+    os: { done: "doneOS", total: "totalOS" }
+  };
+
+  syllabus.forEach(subject => {
+    if (!isPcmbiSubject(subject)) return;
+    const chapters = subject.hasPapers 
+      ? subject.papers.flatMap(p => p.chapters)
+      : subject.chapters;
+    
+    chapters.forEach(ch => {
+      ch = ensureChapterShape(ch);
+      if (ch.isPerc) return;
+      
+      const custom = ch.prioritySettings?.customPriorityEnabled === true;
+      const activePriorities = custom ? (ch.prioritySettings?.activePriorities || {}) : ch.tracks;
+      
+      Object.keys(TRACK_FIELDS).forEach(t => {
+        if (activePriorities[t] === true) {
+          const fields = TRACK_FIELDS[t];
+          const totalVal = Math.max(0, Number(ch[fields.total]) || 0);
+          const doneVal = Math.max(0, Math.min(totalVal, Number(ch[fields.done]) || 0));
+          const remainingVal = Math.max(0, totalVal - doneVal);
+          
+          totalDoneClasses += doneVal;
+          totalRemainingClasses += remainingVal;
+          totalPlannedClasses += totalVal;
+          
+          const dur = TRACK_DURATIONS[t] || 0;
+          totalCompletedHours += doneVal * dur;
+          totalRemainingHours += remainingVal * dur;
+          totalPlannedHours += totalVal * dur;
+        }
+      });
+    });
+  });
+
+  return {
+    doneClasses: totalDoneClasses,
+    remainingClasses: totalRemainingClasses,
+    totalClasses: totalPlannedClasses,
+    completedHours: totalCompletedHours,
+    remainingHours: totalRemainingHours,
+    totalHours: totalPlannedHours
+  };
+};
+
 const calculateETA = (syllabusPerc, missionStart, missionEnd) => {
   if (syllabusPerc === 0) return "N/A";
   const start = new Date(missionStart);
@@ -8900,7 +9517,7 @@ const renderDashboardUnit = (state) => {
   const syllabusPerc = calculateSyllabusPercentage(state.syllabus);
   const timePerc = calculateTimePercentage(state.userSettings.missionStart, state.userSettings.missionEnd);
   const chapters = calculateChaptersLeft(state.syllabus);
-  const classes = calculateClassesLeft(state.syllabus);
+  const pcmbiStats = calculatePcmbiClassStats(state.syllabus);
   const eta = calculateETA(syllabusPerc, state.userSettings.missionStart, state.userSettings.missionEnd);
   const greeting = getGreeting();
   const name = state.userSettings.customName || "Student";
@@ -8954,16 +9571,16 @@ const renderDashboardUnit = (state) => {
           <div class="dash-body">
             <div class="stats-col">
               <div class="stat-card">
-                <div class="stat-label"><span class="sc-dot" style="background:#2563eb"></span>Syllabus Done</div>
-                <div class="stat-val">${syllabusPerc}%</div>
-                <div class="stat-bar"><div class="stat-fill" style="width:${syllabusPerc}%;background:#2563eb"></div></div>
-                <div class="stat-detail">Avg across ${state.syllabus.length} subjects</div>
+                <div class="stat-label"><span class="sc-dot" style="background:#2563eb"></span>Class Completed</div>
+                <div class="stat-val">${pcmbiStats.completedHours.toFixed(1)} hrs</div>
+                <div class="stat-bar"><div class="stat-fill" style="width:${pcmbiStats.totalHours > 0 ? Math.round((pcmbiStats.completedHours / pcmbiStats.totalHours) * 100) : 0}%;background:#2563eb"></div></div>
+                <div class="stat-detail">of ${pcmbiStats.totalHours.toFixed(1)} hrs planned</div>
               </div>
               <div class="stat-card">
-                <div class="stat-label"><span class="sc-dot" style="background:#d97706"></span>Time Elapsed</div>
-                <div class="stat-val">${timePerc}%</div>
-                <div class="stat-bar"><div class="stat-fill" style="width:${timePerc}%;background:#d97706"></div></div>
-                <div class="stat-detail">${daysRemain} days remaining</div>
+                <div class="stat-label"><span class="sc-dot" style="background:#d97706"></span>Class Left</div>
+                <div class="stat-val">${pcmbiStats.remainingHours.toFixed(1)} hrs</div>
+                <div class="stat-bar"><div class="stat-fill" style="width:${pcmbiStats.totalHours > 0 ? Math.round((pcmbiStats.remainingHours / pcmbiStats.totalHours) * 100) : 0}%;background:#d97706"></div></div>
+                <div class="stat-detail">${pcmbiStats.remainingClasses} classes remaining</div>
               </div>
             </div>
             
@@ -9006,10 +9623,10 @@ const renderDashboardUnit = (state) => {
               <div class="count-card">
                 <div class="count-label"><span class="sc-dot" style="background:#dc2626"></span>Classes Left</div>
                 <div class="count-row">
-                  <div class="count-big" style="color:#dc2626">${classes.left}</div>
-                  <div class="count-sub">of ${classes.total} planned</div>
+                  <div class="count-big" style="color:#dc2626">${pcmbiStats.remainingClasses}</div>
+                  <div class="count-sub">of ${pcmbiStats.totalClasses} planned</div>
                 </div>
-                <div class="count-bar"><div class="count-fill" style="width:${classes.total > 0 ? Math.round((classes.done / classes.total) * 100) : 0}%;background:#dc2626"></div></div>
+                <div class="count-bar"><div class="count-fill" style="width:${pcmbiStats.totalClasses > 0 ? Math.round((pcmbiStats.doneClasses / pcmbiStats.totalClasses) * 100) : 0}%;background:#dc2626"></div></div>
               </div>
             </div>
           </div>
@@ -9136,13 +9753,61 @@ const ensureChapterShape = (ch) => {
   ch.doneFRB = ch.doneFRB ?? 0; ch.totalFRB = ch.totalFRB ?? 5;
   ch.doneOS = ch.doneOS ?? 0; ch.totalOS = ch.totalOS ?? 1;
   ch.solvedQS = ch.solvedQS ?? 0; ch.totalQS = ch.totalQS ?? 3;
+  
+  // Custom Priorities Initialization
+  if (!ch.prioritySettings) {
+    ch.prioritySettings = {
+      customPriorityEnabled: false,
+      tracksOrder: ["dl", "adv", "adm", "frb", "os"],
+      activePriorities: { dl: true, adv: false, adm: false, frb: false, os: false }
+    };
+  } else {
+    ch.prioritySettings.customPriorityEnabled = ch.prioritySettings.customPriorityEnabled ?? false;
+    ch.prioritySettings.tracksOrder = ch.prioritySettings.tracksOrder || ["dl", "adv", "adm", "frb", "os"];
+    ch.prioritySettings.activePriorities = {
+      dl: true, adv: false, adm: false, frb: false, os: false,
+      ...(ch.prioritySettings.activePriorities || {})
+    };
+  }
+  
   return ch;
 };
 
 const chapterPct = (ch) => {
   ch = ensureChapterShape(ch);
   if (ch.viewStyle === 'perc') return Math.round(ch.donePerc || 0);
-  // Use highest-priority active track for pct
+  
+  if (ch.prioritySettings?.customPriorityEnabled === true) {
+    const active = ch.prioritySettings.activePriorities || {};
+    const order = ch.prioritySettings.tracksOrder || ["dl", "adv", "adm", "frb", "os"];
+    
+    const trackFields = {
+      dl: { done: "doneDL", total: "totalDL" },
+      adv: { done: "doneAdv", total: "totalAdv" },
+      adm: { done: "doneAdm", total: "totalAdm" },
+      frb: { done: "doneFRB", total: "totalFRB" },
+      os: { done: "doneOS", total: "totalOS" }
+    };
+    
+    let totalDone = 0;
+    let totalAll = 0;
+    let hasActive = false;
+    
+    order.forEach(t => {
+      if (active[t] === true) {
+        hasActive = true;
+        const fields = trackFields[t];
+        totalDone += Math.max(0, Number(ch[fields.done]) || 0);
+        totalAll += Math.max(0, Number(ch[fields.total]) || 0);
+      }
+    });
+    
+    if (!hasActive) return 0;
+    if (totalAll === 0) return 0;
+    return Math.round((totalDone / totalAll) * 100);
+  }
+  
+  // Use highest-priority active track for pct (default)
   for (const t of TRACK_PRIORITY) {
     if (!ch.tracks[t.key]) continue;
     const total = ch[t.total] || 1;
@@ -9227,6 +9892,40 @@ const renderChapterPlate = (ch, si, pi, ci) => {
         <button class="ch-btn ch-btn--sm cls-total-dec" ${d('qs-total-dec',si,pi,ci)}>T-</button>
       </div>
     </div>
+    ${!isPercView ? `
+      <div class="ch-priority-box">
+        <div class="ch-priority-header">
+          <label class="ch-priority-toggle-label">
+            <input type="checkbox" ${d('ch-toggle-custom-priority', si, pi, ci)} ${ch.prioritySettings?.customPriorityEnabled ? 'checked' : ''}>
+            <span>Enable Custom Track Priorities</span>
+          </label>
+        </div>
+        ${ch.prioritySettings?.customPriorityEnabled ? `
+          <div class="ch-priority-list" id="priority-list-${si}-${pi}-${ci}">
+            ${ch.prioritySettings.tracksOrder.map((trackKey, index) => {
+              const isChecked = ch.prioritySettings.activePriorities[trackKey] === true;
+              const trackNames = { dl: "Detailed", adv: "Advanced", adm: "Admission", frb: "FRB", os: "1-Shot" };
+              const trackColors = { dl: "#3b82f6", adv: "#a78bfa", adm: "#14b8a6", frb: "#fbbf24", os: "#f43f5e" };
+              return `
+                <div class="ch-priority-item ${isChecked ? 'is-active' : ''}" draggable="true" data-si="${si}" data-pi="${pi}" data-ci="${ci}" data-track="${trackKey}" style="--track-color: ${trackColors[trackKey]}">
+                  <div class="ch-priority-item__left">
+                    <button class="priority-drag-btn" type="button" title="Priority order indicator" style="cursor: grab;">=</button>
+                    <label class="priority-chk-label">
+                      <input type="checkbox" ${d('ch-priority-toggle-track', si, pi, ci)} data-track="${trackKey}" ${isChecked ? 'checked' : ''}>
+                      <span>${trackNames[trackKey]}</span>
+                    </label>
+                  </div>
+                  <div class="ch-priority-item__actions">
+                    <button class="priority-move-btn" type="button" ${d('ch-priority-move-up', si, pi, ci)} data-track="${trackKey}" title="Move Up" ${index === 0 ? 'disabled' : ''}>▲</button>
+                    <button class="priority-move-btn" type="button" ${d('ch-priority-move-down', si, pi, ci)} data-track="${trackKey}" title="Move Down" ${index === ch.prioritySettings.tracksOrder.length - 1 ? 'disabled' : ''}>▼</button>
+                  </div>
+                </div>
+              `;
+            }).join("")}
+          </div>
+        ` : ''}
+      </div>
+    ` : ''}
     <div class="ch-plate__actions">
       <button class="ch-pill ch-pill--done" ${d('ch-complete',si,pi,ci)}>Mark Complete</button>
       <button class="ch-pill ch-pill--reset" ${d('ch-reset',si,pi,ci)}>Reset</button>
@@ -9321,10 +10020,10 @@ const renderPaperSection = (paper, si, pi) => `
   <div class="paper-section" data-si="${si}" data-pi="${pi}">
     <button class="paper-section__title" type="button" data-paper-toggle data-si="${si}" data-pi="${pi}" aria-expanded="false" aria-controls="paper-${si}-${pi}-chapters">
       <span>${escapeHtml(paper.title || "Chapters")}</span>
-      <span class="paper-section__right">
+      <div class="paper-section__right">
         ${renderPaperMeter(paper, si, pi)}
         <svg class="paper-section__chevron" viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4,6 8,10 12,6"/></svg>
-      </span>
+      </div>
     </button>
     ${renderChapterBars(paper.chapters)}
     <div class="chapter-list" id="paper-${si}-${pi}-chapters" hidden>
@@ -9420,7 +10119,7 @@ const subjectCard = (subject, index) => {
           <span class="ring-pct" id="subj-ring-pct-${index}">${pct}%</span>
         </div>
         <button class="subj-settings-btn" data-action="subj-settings-toggle" data-si="${index}" title="Settings">
-          ⚙ Settings
+          ${icon("settings", "Settings")} <span>Settings</span>
         </button>
       </div>
     </div>
@@ -9488,18 +10187,53 @@ const renderChartUnit = (state) =>
           <button class="chronos-chip is-active" type="button" data-action="chronos-toggle-dataset" data-dataset="total" style="--chip-color:#0ea5e9"><span class="chronos-dot"></span>Total</button>
         </div>
         <p class="chronos-hint" id="chronosHint">Turn editing on to drag dots in 5-minute steps, or click a dot for manual overrides.</p>
-        <div class="chronos-config" id="chronosConfigPanel" hidden>
-          <div class="chronos-presets" aria-label="Chronos view presets">
-            <span class="chronos-presets__label">View presets</span>
-            <button class="chronos-preset" type="button" data-action="chronos-apply-preset" data-days="20" data-pc="10" data-mob="10">20 / 10 / 10</button>
-            <button class="chronos-preset" type="button" data-action="chronos-apply-preset" data-days="30" data-pc="15" data-mob="15">30 / 15 / 15</button>
-            <button class="chronos-preset" type="button" data-action="chronos-apply-preset" data-days="60" data-pc="30" data-mob="30">60 / 30 / 30</button>
-          </div>
-          <label class="chronos-field">Max hours <input id="chronosMaxLimit" type="number" min="1" max="24" value="${escapeHtml(state.graphConfig.maxLimit)}"></label>
-          <label class="chronos-field">Days loaded <input id="chronosDaysToLoad" type="number" min="3" max="120" value="${escapeHtml(state.graphConfig.daysToLoad)}"></label>
-          <label class="chronos-field">Desktop view <input id="chronosPcView" type="number" min="3" max="60" value="${escapeHtml(state.graphConfig.pcDaysView)}"></label>
-          <label class="chronos-field">Mobile view <input id="chronosMobView" type="number" min="3" max="40" value="${escapeHtml(state.graphConfig.mobDaysView)}"></label>
-          <button class="btn-small btn-small--primary" type="button" data-action="chronos-apply-config">Apply</button>
+        <div class="account-dialog chronos-config-dialog" id="chronosConfigPanel" hidden>
+          <div class="account-dialog__backdrop" data-action="chronos-toggle-config" aria-hidden="true"></div>
+          <section class="account-dialog__card chronos-config-dialog__card" style="width: min(460px, 100%);">
+            <div class="account-dialog__head">
+              <div>
+                <p class="eyebrow">Unit 04 Chronos</p>
+                <h3>${icon("settings", "Settings")} <span>Chronos Analytics Config</span></h3>
+                <span>Adjust scale limits, days to load, and views.</span>
+              </div>
+              <button class="btn-small btn-small--icon" type="button" data-action="chronos-toggle-config" aria-label="Close configuration">
+                ${icon("x", "Close")}
+              </button>
+            </div>
+            
+            <div class="chronos-config-dialog__body" style="display: flex; flex-direction: column; gap: 14px; margin-top: 20px;">
+              <div class="chronos-presets" aria-label="Chronos view presets" style="display: flex; flex-direction: column; gap: 8px;">
+                <span class="chronos-presets__label" style="font-size: 11px; font-weight: 600; color: var(--text-sub);">View presets</span>
+                <div style="display: flex; gap: 8px;">
+                  <button class="chronos-preset" type="button" data-action="chronos-apply-preset" data-days="20" data-pc="10" data-mob="10" style="padding: 6px 12px; border-radius: 8px; font-size: 12px;">20 / 10 / 10</button>
+                  <button class="chronos-preset" type="button" data-action="chronos-apply-preset" data-days="30" data-pc="15" data-mob="15" style="padding: 6px 12px; border-radius: 8px; font-size: 12px;">30 / 15 / 15</button>
+                  <button class="chronos-preset" type="button" data-action="chronos-apply-preset" data-days="60" data-pc="30" data-mob="30" style="padding: 6px 12px; border-radius: 8px; font-size: 12px;">60 / 30 / 30</button>
+                </div>
+              </div>
+              
+              <label class="chronos-field" style="display: flex; align-items: center; justify-content: space-between; gap: 12px;">
+                <span style="font-size: 12px; font-weight: 600; color: var(--text-sub);">Max hours</span>
+                <input id="chronosMaxLimit" type="number" min="1" max="24" value="${escapeHtml(state.graphConfig.maxLimit)}" style="background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); border-radius: 6px; padding: 6px 10px; color: #f1f5f9; outline: none; width: 80px; text-align: center;">
+              </label>
+              
+              <label class="chronos-field" style="display: flex; align-items: center; justify-content: space-between; gap: 12px;">
+                <span style="font-size: 12px; font-weight: 600; color: var(--text-sub);">Days loaded</span>
+                <input id="chronosDaysToLoad" type="number" min="3" max="120" value="${escapeHtml(state.graphConfig.daysToLoad)}" style="background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); border-radius: 6px; padding: 6px 10px; color: #f1f5f9; outline: none; width: 80px; text-align: center;">
+              </label>
+              
+              <label class="chronos-field" style="display: flex; align-items: center; justify-content: space-between; gap: 12px;">
+                <span style="font-size: 12px; font-weight: 600; color: var(--text-sub);">Desktop view</span>
+                <input id="chronosPcView" type="number" min="3" max="60" value="${escapeHtml(state.graphConfig.pcDaysView)}" style="background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); border-radius: 6px; padding: 6px 10px; color: #f1f5f9; outline: none; width: 80px; text-align: center;">
+              </label>
+              
+              <label class="chronos-field" style="display: flex; align-items: center; justify-content: space-between; gap: 12px;">
+                <span style="font-size: 12px; font-weight: 600; color: var(--text-sub);">Mobile view</span>
+                <input id="chronosMobView" type="number" min="3" max="40" value="${escapeHtml(state.graphConfig.mobDaysView)}" style="background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); border-radius: 6px; padding: 6px 10px; color: #f1f5f9; outline: none; width: 80px; text-align: center;">
+              </label>
+              
+              <button class="btn-small btn-small--primary" type="button" data-action="chronos-apply-config" style="width: 100%; justify-content: center; padding: 8px;">Apply Changes</button>
+            </div>
+          </section>
         </div>
         <div class="chronos-scroll" id="chronosScroll">
           <div class="chronos-canvas-wrap" id="chronosCanvasWrap">
@@ -9970,32 +10704,55 @@ const renderChatUnit = () =>
           </div>
         </div>
 
-        <div class="chat-settings-panel" id="chatSettingsPanel" ${chatState.prefs.isSettingsOpen ? "" : "hidden"}>
-          <div class="chat-settings-card">
-            <div class="chat-settings-card__head">
+        <div class="account-dialog chat-settings-dialog" id="chatSettingsPanel" ${chatState.prefs.isSettingsOpen ? "" : "hidden"}>
+          <div class="account-dialog__backdrop" data-action="chat-toggle-settings" aria-hidden="true"></div>
+          <section class="account-dialog__card chat-settings-dialog__card" style="width: min(480px, 100%);">
+            <div class="account-dialog__head">
               <div>
-                <strong>Message settings</strong>
+                <p class="eyebrow">Unit 07 Group Chat</p>
+                <h3>${icon("settings", "Settings")} <span>Message Settings</span></h3>
                 <span>Sorting and default visibility stay inside this settings box.</span>
               </div>
+              <button class="btn-small btn-small--icon" type="button" data-action="chat-toggle-settings" aria-label="Close message settings">
+                ${icon("x", "Close")}
+              </button>
             </div>
-            <label>
-              <span>Sort by time</span>
-              <select id="chatSortOrder">
-                <option value="desc">Descending</option>
-                <option value="asc">Ascending</option>
-              </select>
-            </label>
-            <label>
-              <span>Default upload visibility</span>
-              <select id="chatDefaultVisibility">
-                <option value="public">Public</option>
-                <option value="private">Private</option>
-              </select>
-            </label>
-            <div class="chat-settings-panel__note">
-              Private posts are filtered to this device profile only until full account auth is added.
+            
+            <div class="chat-settings-card__body" style="display: flex; flex-direction: column; gap: 14px; margin-top: 20px;">
+              <label style="display: flex; flex-direction: column; gap: 6px;">
+                <span style="font-size: 12px; font-weight: 600; color: var(--text-sub);">Sort by time</span>
+                <select id="chatSortOrder" style="background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); border-radius: 8px; padding: 8px 12px; color: #f1f5f9; outline: none; width: 100%;">
+                  <option value="desc">Descending</option>
+                  <option value="asc">Ascending</option>
+                </select>
+              </label>
+              
+              <label style="display: flex; flex-direction: column; gap: 6px;">
+                <span style="font-size: 12px; font-weight: 600; color: var(--text-sub);">Default upload visibility</span>
+                <select id="chatDefaultVisibility" style="background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); border-radius: 8px; padding: 8px 12px; color: #f1f5f9; outline: none; width: 100%;">
+                  <option value="public">Public</option>
+                  <option value="private">Private</option>
+                </select>
+              </label>
+
+              <label style="display: flex; flex-direction: column; gap: 6px;">
+                <span style="font-size: 12px; font-weight: 600; color: var(--text-sub);">Messages per page (Show all history)</span>
+                <select id="chatMessagesPerPage" style="background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); border-radius: 8px; padding: 8px 12px; color: #f1f5f9; outline: none; width: 100%;">
+                  <option value="10">10 messages</option>
+                  <option value="25">25 messages</option>
+                  <option value="50">50 messages</option>
+                  <option value="100">100 messages</option>
+                  <option value="200">200 messages</option>
+                </select>
+              </label>
+              
+              <div id="chatPaletteContainer"></div>
+
+              <div class="chat-settings-panel__note" style="margin-top: 8px; font-size: 11px; color: var(--text-sub); background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); padding: 8px 12px; border-radius: 8px;">
+                Private posts are filtered to this device profile only until full account auth is added.
+              </div>
             </div>
-          </div>
+          </section>
         </div>
 
         <div class="chat-compose">
@@ -10006,7 +10763,8 @@ const renderChatUnit = () =>
             </div>
           </div>
 
-          <textarea id="chatMessageInput" placeholder="Write the message here. This box is larger on purpose for longer group-chat updates."></textarea>
+          <textarea id="chatMessageInput" placeholder="Write a message… (Ctrl+Enter to send)"></textarea>
+          <span class="chat-compose__char-count" id="chatCharCount"></span>
 
           <div class="chat-compose__footer">
             <p class="chat-feedback" id="chatFeedback">Firestore chat is live. Messages stay stored in the cloud.</p>
@@ -10029,7 +10787,12 @@ const renderChatUnit = () =>
               <strong>Message list</strong>
               <span id="chatMessageCount">0 messages</span>
             </div>
-            <button class="btn-small" type="button" data-action="chat-toggle-list" data-chat-list-toggle>${chatState.prefs.isListVisible ? "Hide messages" : "Show messages"}</button>
+            <div style="display: flex; gap: 8px; align-items: center;">
+              <button class="btn-small btn-small--accent" type="button" data-action="open-chat-show-all">
+                ${icon("history", "History")} <span>Show all</span>
+              </button>
+              <button class="btn-small" type="button" data-action="chat-toggle-list" data-chat-list-toggle>${chatState.prefs.isListVisible ? "Hide messages" : "Show messages"}</button>
+            </div>
           </div>
           <div class="chat-feed" id="chatFeed">
             <div class="chat-empty-note">Connecting to Firestore...</div>
@@ -10056,6 +10819,31 @@ const renderChatExpandDialog = (state) => `
       </div>
       <div id="chatExpandBody" style="padding: 24px; overflow-y: auto; flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 14px;">
         <!-- Chat components will be dynamically moved in here when expanded -->
+      </div>
+    </section>
+  </div>
+`;
+
+const renderChatShowAllDialog = (state) => `
+  <div class="account-dialog" id="chatShowAllDialog" hidden style="padding: clamp(10px, 2vw, 20px);">
+    <div class="account-dialog__backdrop" data-action="close-chat-show-all" aria-hidden="true"></div>
+    <section class="account-dialog__card" style="max-width: 800px; width: 98%; max-height: 96vh; display: flex; flex-direction: column; padding: 12px; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.15);" role="dialog" aria-modal="true" aria-labelledby="chatShowAllTitle">
+      <div class="account-dialog__head" style="padding: 6px 8px 10px; margin-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;">
+        <div>
+          <p class="eyebrow" style="margin: 0 0 2px;">Unit 07 Chat</p>
+          <h3 id="chatShowAllTitle" style="font-size: 1.15rem; margin: 0; display: flex; align-items: center; gap: 8px;">
+            ${icon("history", "History")} <span>All Messages History</span>
+          </h3>
+        </div>
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <div class="pagination-controls" id="chatShowAllPagination" style="display: flex; align-items: center; gap: 8px;"></div>
+          <button class="btn-small btn-small--icon" type="button" data-action="close-chat-show-all" aria-label="Close dialog">
+            ${icon("x", "Close")}
+          </button>
+        </div>
+      </div>
+      <div id="chatShowAllList" style="flex: 1; overflow-y: auto; padding: 6px; display: flex; flex-direction: column; gap: 12px; min-height: 0;">
+        <div class="chat-empty-note">Loading history...</div>
       </div>
     </section>
   </div>
@@ -10252,7 +11040,7 @@ const createBackupPayload = (reason = "manual") => ({
   userSettings: scaffoldState.userSettings,
   chatPrefs: chatState.prefs,
   chatProfile: chatState.profile,
-  localLogin: readRenderableLoginSession(),
+  localLogin: null,
   pomodoroTrackLog: readTrackLog(),
   modes: {
     hsc: loadModeSnapshot(""),
@@ -10315,10 +11103,7 @@ const applyBackupPayload = (payload) => {
   localStorage.setItem(USER_SETTINGS_KEY, JSON.stringify({ ...defaultUserSettings, ...payload.userSettings }));
   localStorage.setItem(CHAT_PREFS_KEY, JSON.stringify(normalizeChatPrefs(payload.chatPrefs || {})));
   localStorage.setItem(CHAT_PROFILE_KEY, JSON.stringify(payload.chatProfile?.id ? payload.chatProfile : createChatProfile()));
-  if (payload.localLogin) {
-    localStorage.setItem(LOCAL_LOGIN_KEY, JSON.stringify(payload.localLogin));
-    sessionStorage.removeItem(LOCAL_LOGIN_KEY);
-  }
+  // Backups restore study data only. The current browser login session is preserved.
   if (payload.pomodoroTrackLog) {
     writeTrackLog(payload.pomodoroTrackLog);
   }
@@ -10394,7 +11179,7 @@ async function saveToCloud(silent = false) {
     await chatState.db.collection("hsc_study_data_forever").doc(docId).set({
       payload: JSON.stringify(payload),
       updatedAt: new Date().toISOString(),
-      email: payload.localLogin?.email || "guest",
+      email: readLocalLoginSession()?.email || "guest",
       profileId: chatState.profile?.id || "unknown"
     });
     cloudSyncState.status = "success";
@@ -10472,6 +11257,8 @@ function triggerCloudSaveDebounced() {
 
 async function syncChDataOnLogin() {
   if (!chatState.db) return;
+  const session = readLocalLoginSession();
+  if (!session) return;
   try {
     const docId = getSyncDocId();
     const doc = await chatState.db.collection("hsc_study_data_forever").doc(docId).get();
@@ -10529,7 +11316,9 @@ function renderSyncStatusUI() {
   }
   
   const session = readLocalLoginSession();
-  if (session && session.mode === "email" && session.email) {
+  if (session && session.mode === "admin" && session.email) {
+    account.textContent = `${session.email} (Local Admin)`;
+  } else if (session && session.mode === "email" && session.email) {
     account.textContent = session.email;
   } else if (session && session.mode === "google") {
     account.textContent = "Google Account";
@@ -10832,6 +11621,7 @@ const renderAppShell = (state, units) => {
     ${renderSettingsDialog(state)}
     ${renderBackupDialog(state)}
     ${renderChatExpandDialog(state)}
+    ${renderChatShowAllDialog(state)}
     ${renderDeveloperDialog(state)}
     <!-- Timer Dialog -->
     <div class="account-dialog timer-dialog" id="timerDialog" hidden>
@@ -10993,7 +11783,13 @@ const attachScrollReveal = () => {
   revealNodes.forEach((node) => observer.observe(node));
 };
 
+let scrollNavCleanup = null;
+
 const attachScrollNav = () => {
+  if (scrollNavCleanup) {
+    scrollNavCleanup();
+    scrollNavCleanup = null;
+  }
   const nav = document.querySelector(".top-nav");
   const navLinks = [...document.querySelectorAll("[data-nav-target]")];
   const sections = navLinks.map((link) => document.getElementById(link.dataset.navTarget)).filter(Boolean);
@@ -11006,7 +11802,7 @@ const attachScrollNav = () => {
     const shouldHide = scrollingDown && currentY > 360 && currentY - lastY > 4;
     nav.classList.toggle("nav-scrolled", currentY > 16);
     nav.classList.toggle("nav-hidden", shouldHide);
-    document.documentElement.style.setProperty("--scroll-drift", `${Math.round(currentY * -0.035)}px`);
+    document.documentElement.style.setProperty("--scroll-drift", Math.round(currentY * -0.035) + "px");
     let activeId = sections[0]?.id;
     for (const section of sections) {
       const rect = section.getBoundingClientRect();
@@ -11018,11 +11814,13 @@ const attachScrollNav = () => {
     lastY = currentY;
     ticking = false;
   };
-  window.addEventListener("scroll", () => {
+  const onScroll = () => {
     if (ticking) return;
     ticking = true;
     requestAnimationFrame(updateNav);
-  }, { passive: true });
+  };
+  window.addEventListener("scroll", onScroll, { passive: true });
+  scrollNavCleanup = () => window.removeEventListener("scroll", onScroll);
   updateNav();
 };
 
@@ -11144,6 +11942,20 @@ const loginWithGoogle = () => {
   }
 };
 
+const completeOfflineGuestLogin = (remember = true, reason = "") => {
+  const profileId = chatState.profile?.id || createChatProfile().id || "local-" + Date.now();
+  completeLocalLogin({
+    mode: "guest",
+    uid: "guest-" + profileId,
+    offline: true,
+    createdAt: Date.now()
+  }, remember);
+  if (reason) {
+    setChatFeedback("Guest mode is local because Firebase is unavailable.", "error");
+  }
+  showLoginFeedback("");
+};
+
 const loginAsGuest = (remember = true) => {
   try {
     ensureFirebaseInitialized();
@@ -11158,10 +11970,10 @@ const loginAsGuest = (remember = true) => {
         showLoginFeedback("");
       })
       .catch((error) => {
-        showLoginFeedback(`Guest login failed: ${error.message}`);
+        completeOfflineGuestLogin(remember, error.message);
       });
   } catch (error) {
-    showLoginFeedback(error.message);
+    completeOfflineGuestLogin(remember, error.message);
   }
 };
 
@@ -11184,15 +11996,118 @@ const applyLocalLoginSession = (session) => {
   document.body.classList.add("login-ready");
 };
 
+const parseFirebaseError = (message) => {
+  if (!message) return null;
+  const msgLower = message.toLowerCase();
+  
+  const isErr = msgLower.includes("failed") || 
+                msgLower.includes("error") || 
+                msgLower.includes("insufficient permissions") || 
+                msgLower.includes("permission-denied") || 
+                msgLower.includes("invalid") || 
+                msgLower.includes("wrong") ||
+                msgLower.includes("must be at least") ||
+                msgLower.includes("enter a valid");
+                
+  if (!isErr) return null;
+
+  if (msgLower.includes("location.protocol") || msgLower.includes("auth/operation-not-supported-in-this-environment")) {
+    return {
+      brief: "Google sign-in is not supported on local file protocol.",
+      tips: "To log in via Google, this page must be served through a web server (http:// or https://). For local offline testing, please use a Guest account or the Local Admin bypass (admin/admin).",
+      exact: message
+    };
+  }
+  if (msgLower.includes("popup-blocked") || msgLower.includes("popup blocked")) {
+    return {
+      brief: "Google sign-in popup was blocked by your browser.",
+      tips: "Please check your browser's address bar to allow popups for this site, or try logging in again.",
+      exact: message
+    };
+  }
+  if (msgLower.includes("network-request-failed") || msgLower.includes("network error") || msgLower.includes("failed to load")) {
+    return {
+      brief: "Network connection error.",
+      tips: "Unable to connect to authentication servers. Check your internet connection and verify that Firebase is configured correctly.",
+      exact: message
+    };
+  }
+  if (msgLower.includes("invalid-credential") || msgLower.includes("wrong-password") || msgLower.includes("user-not-found") || msgLower.includes("invalid-email") || msgLower.includes("wrong password") || msgLower.includes("user not found")) {
+    return {
+      brief: "Incorrect email or password.",
+      tips: "Verify that your email and password are correct. If you haven't registered, switch to 'Create one' to sign up.",
+      exact: message
+    };
+  }
+  if (msgLower.includes("insufficient permissions") || msgLower.includes("permission-denied")) {
+    return {
+      brief: "Database permissions error.",
+      tips: "Your account does not have permission to sync with the database. Please contact the administrator or verify your login credentials.",
+      exact: message
+    };
+  }
+  
+  return {
+    brief: message.length > 60 ? "An authentication error occurred." : message,
+    tips: "Ensure your network is stable and verify database permissions. Check details below for the raw API response.",
+    exact: message
+  };
+};
+
 const showLoginFeedback = (message) => {
   const feedback = document.getElementById("loginFeedback");
-  if (feedback) feedback.textContent = message;
+  if (!feedback) return;
+  
+  if (!message) {
+    feedback.innerHTML = "";
+    feedback.style.display = "none";
+    return;
+  }
+  
+  feedback.style.display = "block";
+  const parsed = parseFirebaseError(message);
+  
+  if (!parsed) {
+    feedback.textContent = message;
+    return;
+  }
+  
+  feedback.innerHTML = `
+    <div class="login-error-container">
+      <div class="login-error-row">
+        <span class="login-error-text">${escapeHtml(parsed.brief)}</span>
+        <button class="login-error-btn" type="button" aria-label="Show error details" onclick="toggleLoginErrorDetails(this)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="16" x2="12" y2="12"></line>
+            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+          </svg>
+        </button>
+      </div>
+      <div class="login-error-details" style="display: none;">
+        <p class="login-error-tips">${escapeHtml(parsed.tips)}</p>
+        <div class="login-error-exact">${escapeHtml(parsed.exact)}</div>
+      </div>
+    </div>
+  `;
+};
+
+window.toggleLoginErrorDetails = (btn) => {
+  const container = btn.closest(".login-error-container");
+  if (!container) return;
+  const details = container.querySelector(".login-error-details");
+  if (!details) return;
+  const isHidden = details.style.display === "none";
+  details.style.display = isHidden ? "flex" : "none";
+  btn.style.color = isHidden ? "var(--accent-blue, #60a5fa)" : "#fca5a5";
 };
 
 const completeLocalLogin = (session, remember = true) => {
   writeLocalLoginSession(session, remember);
   applyLocalLoginSession(session);
   mountApp();
+  syncChDataOnLogin();
+  renderSyncStatusUI();
 };
 
 const returnToLoginScreen = () => {
@@ -11218,8 +12133,12 @@ const attachLocalLogin = () => {
     if (window.firebase) {
       ensureFirebaseInitialized();
       window.firebase.auth().onAuthStateChanged((user) => {
+        const session = readLocalLoginSession();
+        if (session && session.mode === "admin") {
+          // Keep admin local session active
+          return;
+        }
         if (user) {
-          const session = readLocalLoginSession();
           if (!session || session.uid !== user.uid) {
             completeLocalLogin({
               mode: user.isAnonymous ? "guest" : (user.providerData[0]?.providerId === "google.com" ? "google" : "email"),
@@ -11229,7 +12148,6 @@ const attachLocalLogin = () => {
             }, true);
           }
         } else {
-          const session = readLocalLoginSession();
           if (session && session.mode !== "guest") {
             returnToLoginScreen();
           }
@@ -11237,13 +12155,6 @@ const attachLocalLogin = () => {
       });
     }
   } catch (_) {}
-
-  const saved = readLocalLoginSession();
-  if (saved) {
-    applyLocalLoginSession(saved);
-    mountApp();
-    return;
-  }
 
   // Handle redirect login result if user returns from Google Sign-In redirect
   try {
@@ -11301,6 +12212,23 @@ const attachLocalLogin = () => {
     const password = document.getElementById("loginPassword")?.value || "";
     const remember = document.getElementById("loginRemember")?.checked !== false;
     
+    const isLocalAdmin = (email === "admin" && password === "admin") || 
+                          (email === "admin@test.com" && password === "admin123");
+    
+    if (isLocalAdmin) {
+      showLoginFeedback("Logging in as Local Test Admin...");
+      setTimeout(() => {
+        completeLocalLogin({
+          mode: "admin",
+          email: email.includes("@") ? email : "admin@test.com",
+          uid: "test-admin-uid",
+          createdAt: Date.now()
+        }, remember);
+        showLoginFeedback("");
+      }, 500);
+      return;
+    }
+    
     if (!email || !email.includes("@")) {
       showLoginFeedback("Enter a valid email to continue.");
       return;
@@ -11349,6 +12277,12 @@ const attachLocalLogin = () => {
       showLoginFeedback(error.message);
     }
   });
+
+  const saved = readLocalLoginSession();
+  if (saved) {
+    applyLocalLoginSession(saved);
+    mountApp();
+  }
 };
 
 const buildUnits = () => [
@@ -11356,6 +12290,7 @@ const buildUnits = () => [
   renderChartUnit(scaffoldState),
   renderChatUnit(scaffoldState),
   renderSyllabusUnit(scaffoldState),
+  renderBackupUnit(),
   renderAdminUnit(scaffoldState),
 ];
 
@@ -11398,26 +12333,45 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Dashboard dark/light toggle
-  const toggleTrack = document.getElementById("dashToggle");
-  if (toggleTrack) {
-    toggleTrack.addEventListener("click", () => {
-      const modern = document.getElementById("dashboardModern");
-      const card = document.getElementById("dashboardCard");
-      if (!modern || !card) return;
-      const isDark = modern.classList.toggle("dark");
-      modern.classList.toggle("light", !isDark);
-      card.classList.toggle("dark", isDark);
-      card.classList.toggle("light", !isDark);
+  // Ctrl+Enter send shortcut
+  document.addEventListener("keydown", (e) => {
+    if ((e.ctrlKey || e.metaKey) && e.key === "Enter" && e.target?.id === "chatMessageInput") {
+      e.preventDefault();
+      sendChatMessage();
+    }
+  });
 
-      const theme = isDark ? "dark" : "light";
-      document.documentElement.setAttribute("data-theme", theme);
+  // Live character counter
+  document.addEventListener("input", (e) => {
+    if (e.target?.id === "chatMessageInput") {
+      const counter = document.getElementById("chatCharCount");
+      if (!counter) return;
+      const len = e.target.value.length;
+      if (len === 0) { counter.textContent = ""; return; }
+      counter.textContent = `${len} char${len === 1 ? "" : "s"}`;
+      counter.classList.toggle("is-long", len > 800);
+      counter.classList.toggle("is-over", len > 2000);
+    }
+  });
 
-      if (!scaffoldState.userSettings) scaffoldState.userSettings = {};
-      scaffoldState.userSettings.themeMode = theme;
-      saveUserSettings();
-    });
-  }
+  // Dashboard dark/light toggle survives app remounts after login and restore.
+  document.addEventListener("click", (e) => {
+    if (!e.target?.closest?.("#dashToggle")) return;
+    const modern = document.getElementById("dashboardModern");
+    const card = document.getElementById("dashboardCard");
+    if (!modern || !card) return;
+    const isDark = modern.classList.toggle("dark");
+    modern.classList.toggle("light", !isDark);
+    card.classList.toggle("dark", isDark);
+    card.classList.toggle("light", !isDark);
+
+    const theme = isDark ? "dark" : "light";
+    document.documentElement.setAttribute("data-theme", theme);
+
+    if (!scaffoldState.userSettings) scaffoldState.userSettings = {};
+    scaffoldState.userSettings.themeMode = theme;
+    saveUserSettings();
+  });
 });
 
 // ── Syllabus Interaction Engine ───────────────────────────────────────────────
@@ -11695,6 +12649,13 @@ const restoreSavedSyllabus = () => {
         lch.doneOS  = sch.doneOS  ?? lch.doneOS;  lch.totalOS  = sch.totalOS  ?? lch.totalOS;
         lch.solvedQS = sch.solvedQS ?? lch.solvedQS; lch.totalQS = sch.totalQS ?? lch.totalQS;
         if (sch.tracks) lch.tracks = { ...lch.tracks, ...sch.tracks };
+        if (sch.prioritySettings) {
+          lch.prioritySettings = {
+            customPriorityEnabled: sch.prioritySettings.customPriorityEnabled ?? lch.prioritySettings.customPriorityEnabled,
+            tracksOrder: sch.prioritySettings.tracksOrder ? [...sch.prioritySettings.tracksOrder] : lch.prioritySettings.tracksOrder,
+            activePriorities: { ...lch.prioritySettings.activePriorities, ...(sch.prioritySettings.activePriorities || {}) }
+          };
+        }
       });
     });
   });
@@ -11885,7 +12846,14 @@ document.addEventListener("click", (e) => {
   if (action === "subj-settings-toggle") {
     const si = btn.dataset.si;
     const panel = document.getElementById(`subj-settings-${si}`);
-    if (panel) { panel.hidden = !panel.hidden; btn.classList.toggle("active", !panel.hidden); }
+    if (panel) {
+      panel.hidden = !panel.hidden;
+      btn.classList.toggle("active", !panel.hidden);
+      const card = panel.closest(".subject-card");
+      if (card) {
+        card.classList.toggle("is-settings-open", !panel.hidden);
+      }
+    }
     return;
   }
 
@@ -12050,6 +13018,33 @@ document.addEventListener("click", (e) => {
   const { si, pi, ci } = btn.dataset;
   const s = parseInt(si), p = parseInt(pi), c = parseInt(ci);
 
+  // Double tap/click shortcut: sets to Max/Min instantly
+  const now = Date.now();
+  const lastClick = btn.lastClickTime || 0;
+  btn.lastClickTime = now;
+  const isDouble = (now - lastClick < 300);
+
+  if (isDouble && (action.endsWith("-inc") || action.endsWith("-dec")) && !action.includes("-total-")) {
+    let handled = true;
+    if (action === "perc-inc") mutateFull(s, p, c, ch => { ch.donePerc = 100; });
+    else if (action === "perc-dec") mutateFull(s, p, c, ch => { ch.donePerc = 0; });
+    else if (action === "dl-inc") mutateFull(s, p, c, ch => { ch.doneDL = ch.totalDL; });
+    else if (action === "dl-dec") mutateFull(s, p, c, ch => { ch.doneDL = 0; });
+    else if (action === "adv-inc") mutateFull(s, p, c, ch => { ch.doneAdv = ch.totalAdv; });
+    else if (action === "adv-dec") mutateFull(s, p, c, ch => { ch.doneAdv = 0; });
+    else if (action === "adm-inc") mutateFull(s, p, c, ch => { ch.doneAdm = ch.totalAdm; });
+    else if (action === "adm-dec") mutateFull(s, p, c, ch => { ch.doneAdm = 0; });
+    else if (action === "frb-inc") mutateFull(s, p, c, ch => { ch.doneFRB = ch.totalFRB; });
+    else if (action === "frb-dec") mutateFull(s, p, c, ch => { ch.doneFRB = 0; });
+    else if (action === "os-inc") mutateFull(s, p, c, ch => { ch.doneOS = ch.totalOS; });
+    else if (action === "os-dec") mutateFull(s, p, c, ch => { ch.doneOS = 0; });
+    else if (action === "qs-inc") mutateFull(s, p, c, ch => { ch.solvedQS = ch.totalQS; });
+    else if (action === "qs-dec") mutateFull(s, p, c, ch => { ch.solvedQS = 0; });
+    else handled = false;
+
+    if (handled) return;
+  }
+
   if (action === "ch-remove") {
     const paper = getPaper(s, p);
     if (!paper?.chapters?.[c]) return;
@@ -12132,13 +13127,40 @@ document.addEventListener("click", (e) => {
   });
   if (action === "ch-reset") {
     if (btn.dataset.confirm !== "1") {
-      btn.dataset.confirm = "1"; btn.textContent = "⚠ Sure? Click again"; btn.style.background = "rgba(239,68,68,.3)";
+      btn.dataset.confirm = "1"; btn.textContent = "? Sure? Click again"; btn.style.background = "rgba(239,68,68,.3)";
       setTimeout(() => { if(btn.dataset.confirm==="1"){btn.dataset.confirm="0";btn.textContent="↺ Reset";btn.style.background="";} }, 2500);
     } else {
       mutateFull(s,p,c, ch => { ch.doneDL=0;ch.doneAdv=0;ch.doneAdm=0;ch.doneFRB=0;ch.doneOS=0;ch.donePerc=0;ch.solvedQS=0; });
       btn.dataset.confirm="0"; btn.textContent="↺ Reset"; btn.style.background="";
     }
   }
+  if (action === "ch-priority-move-up") {
+    const trackKey = btn.dataset.track;
+    mutateStruct(s, p, c, ch => {
+      const order = ch.prioritySettings.tracksOrder;
+      const idx = order.indexOf(trackKey);
+      if (idx > 0) {
+        const temp = order[idx];
+        order[idx] = order[idx - 1];
+        order[idx - 1] = temp;
+      }
+    });
+    return;
+  }
+  if (action === "ch-priority-move-down") {
+    const trackKey = btn.dataset.track;
+    mutateStruct(s, p, c, ch => {
+      const order = ch.prioritySettings.tracksOrder;
+      const idx = order.indexOf(trackKey);
+      if (idx >= 0 && idx < order.length - 1) {
+        const temp = order[idx];
+        order[idx] = order[idx + 1];
+        order[idx + 1] = temp;
+      }
+    });
+    return;
+  }
+
   if (action === "ch-collapse") {
     const plate = document.getElementById(`ch-${si}-${pi}-${ci}-plate`);
     const row = document.querySelector(`.ch-row[data-si="${si}"][data-pi="${pi}"][data-ci="${ci}"]`);
@@ -12158,6 +13180,21 @@ document.addEventListener("change", (e) => {
   if (chk) {
     const { action, si, pi, ci, track } = chk.dataset;
     const keyMap = { 'track-dl':'dl','track-adv':'adv','track-adm':'adm','track-frb':'frb','track-os':'os' };
+    
+    if (action === "ch-toggle-custom-priority") {
+      mutateStruct(parseInt(si), parseInt(pi), parseInt(ci), ch => {
+        ch.prioritySettings.customPriorityEnabled = chk.checked;
+      });
+      return;
+    }
+    if (action === "ch-priority-toggle-track") {
+      const trackKey = chk.dataset.track;
+      mutateFull(parseInt(si), parseInt(pi), parseInt(ci), ch => {
+        ch.prioritySettings.activePriorities[trackKey] = chk.checked;
+      });
+      return;
+    }
+
     if (keyMap[action]) {
       mutateStruct(parseInt(si), parseInt(pi), parseInt(ci), ch => { ch.tracks[keyMap[action]] = chk.checked; });
     } else if (action === "subj-def-track") {
@@ -12649,6 +13686,13 @@ const openBackupDialog = () => {
 };
 const closeBackupDialog = () => closeDialog("backupDialog");
 
+const openChatShowAllDialog = () => {
+  chatState.showAllPage = 0;
+  openDialog("chatShowAllDialog");
+  renderChatShowAllList();
+};
+const closeChatShowAllDialog = () => closeDialog("chatShowAllDialog");
+
 const syncBackupSettingControls = () => {
   const map = [
     ["autoBackupToggle", scaffoldState.userSettings.autoBackupEnabled],
@@ -12721,7 +13765,7 @@ const restoreBackupEntry = (id) => {
 
   // Step 2 warning
   const c2 = confirm(
-    `[Overwriting Database - Step 2 of 3]\n\n⚠️ WARNING: This will overwrite your current syllabus tracker progress, Chronos study logs, settings, and timers with the data from ${dateStr}.\n\nAre you sure you want to proceed?`
+    `[Overwriting Database - Step 2 of 3]\n\n?? WARNING: This will overwrite your current syllabus tracker progress, Chronos study logs, settings, and timers with the data from ${dateStr}.\n\nAre you sure you want to proceed?`
   );
   if (!c2) return;
 
@@ -12802,6 +13846,31 @@ document.addEventListener("click", (e) => {
   }
   if (action === "close-developer-dialog") {
     closeDeveloperDialog();
+    return;
+  }
+  if (action === "open-chat-show-all") {
+    openChatShowAllDialog();
+    return;
+  }
+  if (action === "close-chat-show-all") {
+    closeChatShowAllDialog();
+    return;
+  }
+  if (action === "chat-show-all-prev") {
+    if (chatState.showAllPage > 0) {
+      chatState.showAllPage--;
+      renderChatShowAllList();
+    }
+    return;
+  }
+  if (action === "chat-show-all-next") {
+    const visible = getVisibleChatMessages();
+    const limit = chatState.prefs.messagesPerPage;
+    const totalPages = Math.ceil(visible.length / limit);
+    if (chatState.showAllPage < totalPages - 1) {
+      chatState.showAllPage++;
+      renderChatShowAllList();
+    }
     return;
   }
   if (action === "save-account-settings") {
@@ -13066,6 +14135,7 @@ document.addEventListener("keydown", (event) => {
   closeBackupDialog();
   closeTrackDialog();
   closeDeveloperDialog();
+  closeChatShowAllDialog();
   const td = document.getElementById("timerDialog"); if (td) td.setAttribute("hidden","");
 });
 
@@ -13100,6 +14170,37 @@ const updatePomoUI = () => {
   if (el) el.innerHTML = Array.from({length:4},(_,i)=>`<div class="pomo-dot ${i<pomoState.sessionsDone?"done":i===pomoState.sessionsDone&&pomoState.running?"active":""}"></div>`).join("");
 };
 
+const playPomoChime = () => {
+  try {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.type = "sine";
+    osc.frequency.setValueAtTime(523.25, ctx.currentTime); // C5
+    gain.gain.setValueAtTime(0.15, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.3);
+    osc.start();
+    osc.stop(ctx.currentTime + 0.3);
+    
+    setTimeout(() => {
+      const osc2 = ctx.createOscillator();
+      const gain2 = ctx.createGain();
+      osc2.connect(gain2);
+      gain2.connect(ctx.destination);
+      osc2.type = "sine";
+      osc2.frequency.setValueAtTime(659.25, ctx.currentTime); // E5
+      gain2.gain.setValueAtTime(0.15, ctx.currentTime);
+      gain2.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.4);
+      osc2.start();
+      osc2.stop(ctx.currentTime + 0.4);
+    }, 150);
+  } catch (e) {
+    console.warn("Audio Context failed to play chime:", e);
+  }
+};
+
 const pomoTick = () => {
   if (!pomoState.running) return;
   if (pomoState.remSecs > 0) { pomoState.remSecs--; updatePomoUI(); }
@@ -13114,6 +14215,7 @@ const pomoTick = () => {
     }
     const next = wasWork ? (pomoState.sessionsDone >= 4 ? "long" : "break") : "work";
     if (pomoState.sessionsDone >= 4) pomoState.sessionsDone = 0;
+    playPomoChime();
     pomoSetMode(next);
     try { if (Notification.permission==="granted") new Notification(wasWork?"Break time! 🎉":"Back to work! 💪",{body:POMO_MODES[next].label}); } catch(_){}
   }
@@ -13191,6 +14293,8 @@ const swAdj = (deltaMs) => {
   const diff = newMs - swState.ms;
   swState.ms = newMs;
   swState._baseMs = Math.max(0, swState._baseMs + diff);
+  swState.lapMs = Math.max(0, swState.lapMs + diff);
+  swState._lapBaseMs = Math.max(0, swState._lapBaseMs + diff);
   // If running, the rAF loop will update display; if paused, update now
   if (!swState.running) {
     const el = document.getElementById("swDisplay");
@@ -13247,6 +14351,13 @@ document.addEventListener("change", (e) => {
     const visibility = target.value === "private" ? "private" : "public";
     applyChatPreference("defaultVisibility", visibility);
     setChatFeedback(`Default post visibility set to ${visibility}.`, "success");
+    return;
+  }
+  if (target.id === "chatMessagesPerPage") {
+    const val = parseInt(target.value, 10) || 50;
+    applyChatPreference("messagesPerPage", val);
+    chatState.showAllPage = 0; // Reset page
+    setChatFeedback(`Messages per page set to ${val}.`, "success");
     return;
   }
   if (target.id === "autoBackupToggle" || target.id === "backupDialogEnabled") {
