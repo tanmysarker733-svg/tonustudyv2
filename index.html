@@ -9488,17 +9488,17 @@ const stat = (label, value, detail) => `
 
 // Dashboard Calculations
 const calculateSyllabusPercentage = (syllabus) => {
-  let totalDone = 0, totalAll = 0;
+  let totalPct = 0, totalChapters = 0;
   syllabus.forEach(subject => {
     const chapters = subject.hasPapers 
       ? subject.papers.flatMap(p => p.chapters)
       : subject.chapters;
     chapters.forEach(ch => {
-      totalAll += ch.isPerc ? 100 : (ch.totalDL || 1);
-      totalDone += ch.isPerc ? ch.donePerc : ch.doneDL;
+      totalPct += chapterPct(ch);
+      totalChapters += 1;
     });
   });
-  return totalAll > 0 ? Math.round((totalDone / totalAll) * 100) : 0;
+  return totalChapters > 0 ? Math.round(totalPct / totalChapters) : 0;
 };
 
 const calculateTimePercentage = (missionStart, missionEnd) => {
@@ -10145,6 +10145,13 @@ const paperProgressStats = (chapters = []) => {
   return { total, done, pct };
 };
 
+const chapterAverageProgressStats = (chapters = []) => {
+  const total = chapters.length;
+  const done = chapters.filter(ch => chapterStatus(ch) === "done").length;
+  const pct = total ? Math.round(chapters.reduce((sum, ch) => sum + chapterPct(ch), 0) / total) : 0;
+  return { total, done, pct };
+};
+
 const renderPaperMeter = (paper, si, pi) => {
   const stats = paperProgressStats(paper.chapters);
   return `
@@ -10234,10 +10241,9 @@ const subjectCard = (subject, index) => {
     ? subject.papers
     : [{ title: "Chapters", chapters: subject.chapters }];
   const visual = subjectVisuals[index % subjectVisuals.length];
-  const total = countChapters(subject);
   const allChs = papers.flatMap(p => p.chapters);
-  const done = allChs.filter(c => chapterStatus(c) === "done").length;
-  const pct = total > 0 ? Math.round((done / total) * 100) : 0;
+  const stats = chapterAverageProgressStats(allChs);
+  const { total, done, pct } = stats;
   
   return `
   <article class="subject-card interactive-card ${subject.hasPapers ? "" : "subject-card--compact"}" data-si="${index}" style="--subject-accent:${visual.accent};--subject-soft:${visual.soft};">
@@ -10246,7 +10252,7 @@ const subjectCard = (subject, index) => {
         <span class="subject-icon">${escapeHtml(subject.icon ?? subject.iconLabel)}</span>
         <div>
           <h3 class="subj-title-display" id="subj-title-${index}">${escapeHtml(subject.title)}</h3>
-          <p class="subj-prog-text" id="subj-prog-${index}">${done}/${total} chapters · ${pct}%</p>
+          <p class="subj-prog-text" id="subj-prog-${index}">${done}/${total} full · ${pct}% avg</p>
         </div>
       </div>
       <div style="display:flex;align-items:center;gap:8px;">
@@ -13033,11 +13039,9 @@ const refreshSubjectRing = (si) => {
   const subj = scaffoldState.syllabus[si];
   const papers = subj.hasPapers ? subj.papers : [{ chapters: subj.chapters }];
   const allChs = papers.flatMap(p => p.chapters);
-  const total = allChs.length;
-  const done = allChs.filter(c => chapterStatus(c) === "done").length;
-  const pct = total > 0 ? Math.round((done / total) * 100) : 0;
+  const { total, done, pct } = chapterAverageProgressStats(allChs);
   const progText = document.getElementById(`subj-prog-${si}`);
-  if (progText) progText.textContent = `${done}/${total} chapters · ${pct}%`;
+  if (progText) progText.textContent = `${done}/${total} full · ${pct}% avg`;
   const ring = document.getElementById(`subj-ring-${si}`);
   if (ring) ring.setAttribute("stroke-dashoffset", Math.round(94.2 - (pct / 100) * 94.2));
   const ringPct = document.getElementById(`subj-ring-pct-${si}`);
