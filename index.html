@@ -4056,6 +4056,131 @@ h4 {
   line-height: 1.5;
 }
 
+.spectate-dialog__card {
+  width: min(1120px, 100%);
+  min-height: min(620px, calc(100vh - 44px));
+  display: flex;
+  flex-direction: column;
+}
+
+.spectate-shell {
+  display: grid;
+  gap: 16px;
+}
+
+.spectate-status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 14px;
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  border-radius: 14px;
+  background: rgba(15, 23, 42, 0.56);
+  color: #cbd5e1;
+  font-size: 0.86rem;
+}
+
+.spectate-user-list {
+  display: grid;
+  gap: 10px;
+  max-height: min(58vh, 520px);
+  overflow: auto;
+  padding-right: 4px;
+}
+
+.spectate-user-row {
+  display: grid;
+  grid-template-columns: minmax(190px, 0.88fr) minmax(220px, 1fr) minmax(220px, 1.1fr) auto;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 14px;
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  border-radius: 14px;
+  background: rgba(15, 23, 42, 0.68);
+}
+
+.spectate-user-row strong,
+.spectate-user-row span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.spectate-uid {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  color: #93c5fd;
+  font-size: 0.78rem;
+}
+
+.spectate-user-name {
+  color: #f8fafc;
+  font-weight: 800;
+}
+
+.spectate-user-email {
+  color: #cbd5e1;
+  font-size: 0.86rem;
+}
+
+.spectate-empty {
+  padding: 28px 18px;
+  border: 1px dashed rgba(148, 163, 184, 0.3);
+  border-radius: 16px;
+  color: #94a3b8;
+  text-align: center;
+  background: rgba(15, 23, 42, 0.42);
+}
+
+.spectate-banner {
+  position: sticky;
+  top: 72px;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 0 auto 14px;
+  width: min(1180px, calc(100% - 24px));
+  padding: 10px 12px;
+  border: 1px solid rgba(96, 165, 250, 0.34);
+  border-radius: 14px;
+  background: rgba(15, 23, 42, 0.94);
+  box-shadow: 0 18px 40px rgba(2, 6, 23, 0.28);
+  color: #dbeafe;
+}
+
+.spectate-banner strong {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #f8fafc;
+}
+
+.spectate-banner span {
+  color: #bfdbfe;
+  font-size: 0.84rem;
+}
+
+body.is-spectating [data-readonly-blocked],
+body.is-spectating .spectate-disabled {
+  opacity: 0.45;
+  pointer-events: none;
+  filter: grayscale(0.25);
+}
+
+@media (max-width: 820px) {
+  .spectate-user-row {
+    grid-template-columns: 1fr auto;
+  }
+  .spectate-uid,
+  .spectate-user-name,
+  .spectate-user-email {
+    grid-column: 1;
+  }
+}
+
 .account-dialog .eyebrow {
   margin-bottom: 6px;
   color: #2563eb;
@@ -7057,6 +7182,7 @@ const loadUserSettings = () => {
 };
 
 const saveUserSettings = () => {
+  if (typeof isSpectateReadOnly === "function" && isSpectateReadOnly()) return;
   try { localStorage.setItem(USER_SETTINGS_KEY, JSON.stringify(scaffoldState.userSettings)); } catch(_) {}
   updateLocalWriteTimestamp();
   triggerCloudSaveDebounced();
@@ -7144,6 +7270,7 @@ const loadChatPrefs = () => {
 };
 
 const saveChatPrefs = () => {
+  if (typeof isSpectateReadOnly === "function" && isSpectateReadOnly()) return;
   try { localStorage.setItem(CHAT_PREFS_KEY, JSON.stringify(chatState.prefs)); } catch(_) {}
 };
 
@@ -7162,6 +7289,7 @@ const loadChatProfile = () => {
 };
 
 const saveChatProfile = () => {
+  if (typeof isSpectateReadOnly === "function" && isSpectateReadOnly()) return;
   try { localStorage.setItem(CHAT_PROFILE_KEY, JSON.stringify(chatState.profile)); } catch(_) {}
 };
 
@@ -7220,6 +7348,9 @@ const setChatFeedback = (message, tone = "") => {
 };
 
 const getAuthUid = () => {
+  if (typeof isSpectateReadOnly === "function" && isSpectateReadOnly() && spectateState.targetUid) {
+    return spectateState.targetUid;
+  }
   const session = readLocalLoginSession();
   return session?.uid || chatState.profile?.id || "anonymous";
 };
@@ -8734,6 +8865,11 @@ document.addEventListener("click", (e) => {
   const btn = e.target.closest("[data-action]");
   if (!btn) return;
   const action = btn.dataset.action;
+  if (isSpectateReadOnly() && isReadOnlyBlockedAction(action)) {
+    e.preventDefault();
+    blockReadOnlyAction(action.replace(/-/g, " "));
+    return;
+  }
   
   if (action === "open-update-composer") {
     openComposerWizard();
@@ -9220,6 +9356,11 @@ document.addEventListener("click", (e) => {
 });
 
 document.addEventListener("input", (e) => {
+  if (isSpectateReadOnly() && e.target instanceof HTMLElement && !e.target.closest("#spectateDialog")) {
+    e.preventDefault();
+    blockReadOnlyAction("Editing fields");
+    return;
+  }
   if (!composerState.active) return;
   
   let needsSave = false;
@@ -9571,16 +9712,16 @@ const renderDashboardUnit = (state) => {
           <div class="dash-body">
             <div class="stats-col">
               <div class="stat-card">
-                <div class="stat-label"><span class="sc-dot" style="background:#2563eb"></span>Class Completed</div>
-                <div class="stat-val">${pcmbiStats.completedHours.toFixed(1)} hrs</div>
-                <div class="stat-bar"><div class="stat-fill" style="width:${pcmbiStats.totalHours > 0 ? Math.round((pcmbiStats.completedHours / pcmbiStats.totalHours) * 100) : 0}%;background:#2563eb"></div></div>
-                <div class="stat-detail">of ${pcmbiStats.totalHours.toFixed(1)} hrs planned</div>
+                <div class="stat-label"><span class="sc-dot" style="background:#2563eb"></span>Hours Completed</div>
+                <div class="stat-val" id="dashHoursCompleted">${pcmbiStats.completedHours.toFixed(1)} hrs</div>
+                <div class="stat-bar"><div class="stat-fill" id="dashHoursCompletedFill" style="width:${pcmbiStats.totalHours > 0 ? Math.round((pcmbiStats.completedHours / pcmbiStats.totalHours) * 100) : 0}%;background:#2563eb"></div></div>
+                <div class="stat-detail" id="dashHoursCompletedDetail">of ${pcmbiStats.totalHours.toFixed(1)} hrs planned</div>
               </div>
               <div class="stat-card">
-                <div class="stat-label"><span class="sc-dot" style="background:#d97706"></span>Class Left</div>
-                <div class="stat-val">${pcmbiStats.remainingHours.toFixed(1)} hrs</div>
-                <div class="stat-bar"><div class="stat-fill" style="width:${pcmbiStats.totalHours > 0 ? Math.round((pcmbiStats.remainingHours / pcmbiStats.totalHours) * 100) : 0}%;background:#d97706"></div></div>
-                <div class="stat-detail">${pcmbiStats.remainingClasses} classes remaining</div>
+                <div class="stat-label"><span class="sc-dot" style="background:#d97706"></span>Hours Left</div>
+                <div class="stat-val" id="dashHoursLeft">${pcmbiStats.remainingHours.toFixed(1)} hrs</div>
+                <div class="stat-bar"><div class="stat-fill" id="dashHoursLeftFill" style="width:${pcmbiStats.totalHours > 0 ? Math.round((pcmbiStats.remainingHours / pcmbiStats.totalHours) * 100) : 0}%;background:#d97706"></div></div>
+                <div class="stat-detail" id="dashHoursLeftDetail">${pcmbiStats.remainingClasses} classes remaining</div>
               </div>
             </div>
             
@@ -9613,20 +9754,20 @@ const renderDashboardUnit = (state) => {
             
             <div class="stats-col">
               <div class="count-card">
-                <div class="count-label"><span class="sc-dot" style="background:#16a34a"></span>Chapters Left</div>
+                <div class="count-label"><span class="sc-dot" style="background:#16a34a"></span>Classes Completed</div>
                 <div class="count-row">
-                  <div class="count-big" style="color:#16a34a">${chapters.left}</div>
-                  <div class="count-sub">of ${chapters.total} total</div>
+                  <div class="count-big" id="dashClassesCompleted" style="color:#16a34a">${pcmbiStats.doneClasses}</div>
+                  <div class="count-sub" id="dashClassesCompletedSub">of ${pcmbiStats.totalClasses} planned</div>
                 </div>
-                <div class="count-bar"><div class="count-fill" style="width:${chapters.total > 0 ? Math.round((chapters.done / chapters.total) * 100) : 0}%;background:#16a34a"></div></div>
+                <div class="count-bar"><div class="count-fill" id="dashClassesCompletedFill" style="width:${pcmbiStats.totalClasses > 0 ? Math.round((pcmbiStats.doneClasses / pcmbiStats.totalClasses) * 100) : 0}%;background:#16a34a"></div></div>
               </div>
               <div class="count-card">
                 <div class="count-label"><span class="sc-dot" style="background:#dc2626"></span>Classes Left</div>
                 <div class="count-row">
-                  <div class="count-big" style="color:#dc2626">${pcmbiStats.remainingClasses}</div>
-                  <div class="count-sub">of ${pcmbiStats.totalClasses} planned</div>
+                  <div class="count-big" id="dashClassesLeft" style="color:#dc2626">${pcmbiStats.remainingClasses}</div>
+                  <div class="count-sub" id="dashClassesLeftSub">of ${pcmbiStats.totalClasses} planned</div>
                 </div>
-                <div class="count-bar"><div class="count-fill" style="width:${pcmbiStats.totalClasses > 0 ? Math.round((pcmbiStats.doneClasses / pcmbiStats.totalClasses) * 100) : 0}%;background:#dc2626"></div></div>
+                <div class="count-bar"><div class="count-fill" id="dashClassesLeftFill" style="width:${pcmbiStats.totalClasses > 0 ? Math.round((pcmbiStats.remainingClasses / pcmbiStats.totalClasses) * 100) : 0}%;background:#dc2626"></div></div>
               </div>
             </div>
           </div>
@@ -10453,7 +10594,7 @@ const renderSettingsPanelBody = (state) => {
             ${group("Import / Export", `
               <div class="settings-action-stack">
                   <button class="btn-small btn-small--wide" type="button" data-action="backup-download-json">Export Full Backup (.json)</button>
-                  <button class="btn-small btn-small--wide" type="button" data-action="backup-import-trigger">Import Backup (.json)</button>
+                  <button class="btn-small btn-small--wide" type="button" data-action="backup-import-trigger" ${isSpectateReadOnly() ? `disabled data-readonly-blocked title="Disabled in Spectate read-only mode"` : ""}>Import Backup (.json)</button>
                   <button class="btn-small btn-small--wide" type="button" data-action="backup-open-dialog">Open Vault Restore Shell</button>
               </div>
             `)}
@@ -11031,22 +11172,34 @@ const loadModeSnapshot = (suffix = "") => {
   };
 };
 
-const createBackupPayload = (reason = "manual") => ({
-  version: 1,
-  exportedAt: new Date().toISOString(),
-  reason,
-  app: { ...APP_META },
-  activeStudyMode: currentStudyMode(),
-  userSettings: scaffoldState.userSettings,
-  chatPrefs: chatState.prefs,
-  chatProfile: chatState.profile,
-  localLogin: null,
-  pomodoroTrackLog: readTrackLog(),
-  modes: {
-    hsc: loadModeSnapshot(""),
-    ssc: loadModeSnapshot("ssc-v1"),
-  },
-});
+const createBackupPayload = (reason = "manual") => {
+  if (typeof isSpectateReadOnly === "function" && isSpectateReadOnly() && spectateState.payload) {
+    const payload = cloneSpectateData(spectateState.payload, {});
+    return {
+      ...payload,
+      exportedAt: new Date().toISOString(),
+      reason,
+      app: { ...APP_META, ...(payload.app || {}) },
+      localLogin: null,
+    };
+  }
+  return {
+    version: 1,
+    exportedAt: new Date().toISOString(),
+    reason,
+    app: { ...APP_META },
+    activeStudyMode: currentStudyMode(),
+    userSettings: scaffoldState.userSettings,
+    chatPrefs: chatState.prefs,
+    chatProfile: chatState.profile,
+    localLogin: null,
+    pomodoroTrackLog: readTrackLog(),
+    modes: {
+      hsc: loadModeSnapshot(""),
+      ssc: loadModeSnapshot("ssc-v1"),
+    },
+  };
+};
 
 const downloadJsonFile = (payload, filenamePrefix = "study-os-backup") => {
   const text = JSON.stringify(payload, null, 2);
@@ -11098,6 +11251,7 @@ const persistBackupSnapshot = (reason = "manual", options = {}) => {
 };
 
 const applyBackupPayload = (payload) => {
+  if (isSpectateReadOnly()) throw new Error("Restore is disabled in Spectate read-only mode.");
   if (!payload || typeof payload !== "object") throw new Error("Invalid backup file.");
   if (!payload.userSettings || !payload.modes?.hsc || !payload.modes?.ssc) throw new Error("Backup structure is incomplete.");
   localStorage.setItem(USER_SETTINGS_KEY, JSON.stringify({ ...defaultUserSettings, ...payload.userSettings }));
@@ -11129,8 +11283,9 @@ const applyBackupPayload = (payload) => {
 const backupVaultMarkup = () => {
   const items = readVaultBackups();
   if (!items.length) return `<div class="backup-vault-empty">No local vault snapshots yet. Create one from this dialog or let auto-backup generate them.</div>`;
+  const restoreAttrs = isSpectateReadOnly() ? `data-readonly-blocked title="Restore is disabled in Spectate read-only mode"` : `data-action="backup-restore-entry"`;
   return items.map((item) => `
-    <article class="backup-vault-item" data-action="backup-restore-entry" data-backup-id="${item.id}">
+    <article class="backup-vault-item" ${restoreAttrs} data-backup-id="${item.id}">
       <div class="backup-vault-item__head">
         <div>
           <strong>${escapeHtml(item.source === "auto" ? "Auto vault snapshot" : item.source === "import" ? "Imported backup" : "Manual backup")}</strong>
@@ -11144,6 +11299,7 @@ const backupVaultMarkup = () => {
 
 // ── Firebase Firestore Study Data Sync ────────────────────────────────────────
 function updateLocalWriteTimestamp() {
+  if (typeof isSpectateReadOnly === "function" && isSpectateReadOnly()) return;
   try {
     localStorage.setItem("hsc-last-local-write-time", new Date().toISOString());
   } catch(_) {}
@@ -11166,7 +11322,86 @@ const cloudSyncState = {
   lastError: null,
 };
 
+const blockReadOnlyAction = (label = "This action") => {
+  const message = `${label} is disabled in Spectate read-only mode. Export JSON is still allowed.`;
+  showBackupBanner("Spectate read-only", message);
+  setChatFeedback?.(message, "error");
+  return true;
+};
+
+const isReadOnlyBlockedAction = (action = "") => {
+  const exact = new Set([
+    "save-account-settings",
+    "account-login-guest",
+    "account-open-login",
+    "account-logout",
+    "login-guest",
+    "login-google",
+    "login-forgot",
+    "chat-send",
+    "chat-edit-msg",
+    "chat-delete-msg",
+    "chat-hide-msg",
+    "chat-unhide-all",
+    "chat-set-color",
+    "cloud-sync-upload",
+    "cloud-sync-download",
+    "backup-import-trigger",
+    "backup-restore-entry",
+    "backup-delete-entry",
+    "set-study-mode",
+    "chronos-apply-config",
+    "settings-chronos-apply-config",
+    "chronos-apply-preset",
+    "chronos-toggle-dataset",
+    "chronos-step",
+    "chronos-save-point",
+    "track-clear",
+    "add-subject",
+    "adjust-time",
+    "save-mission-settings",
+    "mission-clear",
+    "mission-month",
+    "mission-select-date",
+    "mission-today",
+    "ch-complete",
+    "ch-priority-move-down",
+    "ch-priority-move-up",
+    "ch-priority-toggle-track",
+    "ch-remove",
+    "ch-reset",
+    "ch-toggle-custom-priority",
+    "subj-def-track",
+    "subj-add-chapter",
+    "subj-apply-defaults",
+    "subj-apply-defaults-all",
+    "subj-clone",
+    "subj-delete",
+    "subj-remove-last-chapter",
+    "subj-reset-subject",
+    "toggle-view",
+    "set-view-class",
+    "set-view-perc",
+    "pomo-play",
+    "pomo-reset",
+    "pomo-skip",
+    "pomo-mode",
+    "pomo-adj",
+    "sw-play",
+    "sw-reset",
+    "sw-lap",
+    "sw-adj",
+  ]);
+  if (exact.has(action)) return true;
+  return /^(dl|adv|adm|frb|os|qs|perc)-(inc|dec|slide|total-inc|total-dec)$/.test(action)
+    || (/^composer-/.test(action) && action !== "composer-copy");
+};
+
 async function saveToCloud(silent = false) {
+  if (isSpectateReadOnly()) {
+    if (!silent) blockReadOnlyAction("Upload to Cloud");
+    return;
+  }
   if (!chatState.db) {
     if (!silent) alert("Firestore is not connected. Please check your internet connection.");
     return;
@@ -11198,6 +11433,10 @@ async function saveToCloud(silent = false) {
 }
 
 async function loadFromCloud(silent = false) {
+  if (isSpectateReadOnly()) {
+    if (!silent) blockReadOnlyAction("Cloud restore");
+    return;
+  }
   if (!chatState.db) {
     if (!silent) alert("Firestore is not connected.");
     return;
@@ -11246,6 +11485,7 @@ async function loadFromCloud(silent = false) {
 
 let cloudSaveTimeout = null;
 function triggerCloudSaveDebounced() {
+  if (isSpectateReadOnly()) return;
   if (!chatState.db) return;
   const session = readLocalLoginSession();
   if (!session) return; // Only sync if logged in
@@ -11256,6 +11496,7 @@ function triggerCloudSaveDebounced() {
 }
 
 async function syncChDataOnLogin() {
+  if (isSpectateReadOnly()) return;
   if (!chatState.db) return;
   const session = readLocalLoginSession();
   if (!session) return;
@@ -11296,6 +11537,19 @@ function renderSyncStatusUI() {
   const autoSpan = document.getElementById("cloudSyncAuto");
   
   if (!indicator) return;
+
+  if (isSpectateReadOnly()) {
+    indicator.textContent = "Read-only";
+    indicator.style.background = "rgba(96, 165, 250, 0.12)";
+    indicator.style.color = "#93c5fd";
+    if (account) account.textContent = spectateLabel();
+    if (time) time.textContent = "Spectate snapshot";
+    if (autoSpan) {
+      autoSpan.textContent = "Disabled while spectating";
+      autoSpan.style.color = "#93c5fd";
+    }
+    return;
+  }
   
   if (!chatState.db) {
     indicator.textContent = "Disconnected";
@@ -11341,8 +11595,155 @@ function renderSyncStatusUI() {
   }
 }
 
+const parseSpectatePayload = (data) => {
+  const raw = data?.payload;
+  if (!raw) return null;
+  if (typeof raw === "string") return JSON.parse(raw);
+  if (typeof raw === "object") return raw;
+  return null;
+};
+
+const cloneSpectateData = (value, fallback) => {
+  try {
+    return value == null ? fallback : JSON.parse(JSON.stringify(value));
+  } catch (_) {
+    return fallback;
+  }
+};
+
+const normalizeSpectateLogs = () => {
+  chronosDates().forEach((key) => {
+    if (!studyLogs[key]) studyLogs[key] = { classMins: 0, totalMins: 0 };
+    delete studyLogs[key].studyMins;
+    if (typeof studyLogs[key].classMins !== "number") studyLogs[key].classMins = 0;
+    if (typeof studyLogs[key].totalMins !== "number") studyLogs[key].totalMins = 0;
+  });
+};
+
+const getSpectateUserName = (payload, data) => {
+  const settings = payload?.userSettings || {};
+  const fromSettings = String(settings.customName || "").trim();
+  if (fromSettings) return fromSettings;
+  const fromData = String(data?.displayName || data?.name || "").trim();
+  if (fromData) return fromData;
+  const email = String(data?.email || "").trim();
+  return email ? email.split("@")[0] : "Unnamed Student";
+};
+
+const refreshSpectateDialogBody = () => {
+  const list = document.getElementById("spectateUserList");
+  if (list) list.innerHTML = renderSpectateUserRows();
+  const status = document.getElementById("spectateStatusText");
+  if (status) {
+    status.textContent = spectateState.active
+      ? `Currently viewing ${spectateLabel()}`
+      : "Choose a user to inspect their dashboard snapshot.";
+  }
+  if (window.lucide) window.lucide.createIcons({ attrs: { "stroke-width": 1.8 } });
+};
+
+const ensureSpectateDb = () => {
+  if (chatState.db) return chatState.db;
+  if (!window.firebase?.firestore) throw new Error("Firebase Firestore is not loaded.");
+  const app = window.firebase.apps?.length
+    ? window.firebase.app()
+    : window.firebase.initializeApp(CHAT_FIREBASE_CONFIG);
+  chatState.db = window.firebase.firestore(app);
+  return chatState.db;
+};
+
+const loadSpectateUsers = async () => {
+  spectateState.loading = true;
+  spectateState.error = "";
+  refreshSpectateDialogBody();
+  try {
+    const db = ensureSpectateDb();
+    const snap = await db.collection("hsc_study_data_forever").orderBy("updatedAt", "desc").limit(120).get();
+    spectateState.users = snap.docs.map((doc) => {
+      const data = doc.data() || {};
+      const payload = parseSpectatePayload(data);
+      return {
+        uid: doc.id,
+        name: getSpectateUserName(payload, data),
+        email: data.email || payload?.localLogin?.email || "No email saved",
+        updatedAt: data.updatedAt || payload?.exportedAt || "",
+        payload,
+      };
+    }).filter((user) => user.payload?.userSettings && user.payload?.modes);
+    if (!spectateState.users.length) {
+      spectateState.error = "No valid cloud backup payloads found in hsc_study_data_forever.";
+    }
+  } catch (error) {
+    spectateState.error = `Could not load users: ${error.message}`;
+    spectateState.users = [];
+  } finally {
+    spectateState.loading = false;
+    refreshSpectateDialogBody();
+  }
+};
+
+const applySpectatePayload = (user) => {
+  if (!user?.payload) {
+    spectateState.error = "Selected user has no valid backup payload.";
+    refreshSpectateDialogBody();
+    return;
+  }
+  const payload = user.payload;
+  const mode = payload.activeStudyMode === "ssc" || payload.userSettings?.studyMode === "ssc" ? "ssc" : "hsc";
+  const modePayload = payload.modes?.[mode] || payload.modes?.hsc || payload.modes?.ssc || {};
+  spectateState.active = true;
+  spectateState.targetUid = user.uid;
+  spectateState.targetName = user.name;
+  spectateState.targetEmail = user.email;
+  spectateState.trackLog = Array.isArray(payload.pomodoroTrackLog) ? cloneSpectateData(payload.pomodoroTrackLog, []) : [];
+  spectateState.payload = cloneSpectateData(payload, null);
+  document.body.classList.add("is-spectating");
+
+  scaffoldState.userSettings = { ...defaultUserSettings, ...(payload.userSettings || {}), studyMode: mode };
+  scaffoldState.syllabus = cloneSpectateData(modePayload.syllabus, createDefaultSyllabus(mode));
+  scaffoldState.graphConfig = { ...defaultGraphConfig, ...(cloneSpectateData(modePayload.chronosConfig, {}) || {}) };
+  studyLogs = cloneSpectateData(modePayload.studyLogs, createSeedLogs());
+  chatState.prefs = normalizeChatPrefs(payload.chatPrefs || {});
+  chatState.profile = payload.chatProfile?.id ? cloneSpectateData(payload.chatProfile, { id: user.uid }) : { id: user.uid };
+  cloudSyncState.status = "idle";
+  cloudSyncState.lastSynced = user.updatedAt ? new Date(user.updatedAt) : null;
+
+  scaffoldState.syllabus.forEach((subject) => {
+    const papers = subject.hasPapers ? subject.papers : [{ chapters: subject.chapters }];
+    papers.forEach((paper) => paper.chapters?.forEach(ensureChapterShape));
+  });
+  normalizeChronosVisibility();
+  normalizeSpectateLogs();
+  closeSpectateDialog();
+  mountApp();
+  showBackupBanner("Spectate mode active", `Viewing ${spectateLabel()} as read-only.`);
+  document.getElementById("dashboard")?.scrollIntoView({ behavior: "smooth", block: "start" });
+};
+
+const exitSpectateMode = () => {
+  if (!spectateState.active) return;
+  spectateState.active = false;
+  spectateState.targetUid = "";
+  spectateState.targetName = "";
+  spectateState.targetEmail = "";
+  spectateState.trackLog = [];
+  spectateState.payload = null;
+  document.body.classList.remove("is-spectating");
+  scaffoldState.userSettings = loadUserSettings();
+  scaffoldState.syllabus = createDefaultSyllabus(scaffoldState.userSettings.studyMode);
+  scaffoldState.graphConfig = { ...defaultGraphConfig };
+  chatState.prefs = loadChatPrefs();
+  chatState.profile = loadChatProfile();
+  restoreSavedSyllabus();
+  loadChronosConfig();
+  loadStudyLogs();
+  mountApp();
+  showBackupBanner("Spectate closed", "Returned to your own local account view.");
+};
+
 const renderBackupDialog = (state) => {
   const vaultItems = readVaultBackups();
+  const roAttrs = isSpectateReadOnly() ? `disabled data-readonly-blocked title="Disabled in Spectate read-only mode"` : "";
   return `
   <div class="account-dialog backup-dialog" id="backupDialog" hidden>
     <div class="account-dialog__backdrop" data-action="close-backup-dialog" aria-hidden="true"></div>
@@ -11377,7 +11778,7 @@ const renderBackupDialog = (state) => {
           </div>
           <div class="backup-actions">
             <button class="btn-small btn-small--primary" type="button" data-action="backup-download-json">${icon("download", "Download")} <span>Download</span></button>
-            <button class="btn-small" type="button" data-action="backup-import-trigger">${icon("upload", "Import")} <span>Import</span></button>
+            <button class="btn-small" type="button" data-action="backup-import-trigger" ${roAttrs}>${icon("upload", "Import")} <span>Import</span></button>
             <button class="btn-small" type="button" data-action="backup-export-png">${icon("image", "PNG")} <span>PNG</span></button>
           </div>
         </div>
@@ -11406,8 +11807,8 @@ const renderBackupDialog = (state) => {
             </div>
           </div>
           <div class="backup-actions" style="margin-top: 0;">
-            <button class="btn-small btn-small--primary" type="button" data-action="cloud-sync-upload">${icon("cloud-upload", "Upload")} <span>Upload to Cloud</span></button>
-            <button class="btn-small btn-small--primary" type="button" data-action="cloud-sync-download">${icon("cloud-download", "Download")} <span>Download from Cloud</span></button>
+            <button class="btn-small btn-small--primary" type="button" data-action="cloud-sync-upload" ${roAttrs}>${icon("cloud-upload", "Upload")} <span>Upload to Cloud</span></button>
+            <button class="btn-small btn-small--primary" type="button" data-action="cloud-sync-download" ${roAttrs}>${icon("cloud-download", "Download")} <span>Download from Cloud</span></button>
           </div>
         </div>
 
@@ -11503,6 +11904,89 @@ const renderAdminUnit = () =>
     `,
   });
 
+const spectateState = {
+  active: false,
+  targetUid: "",
+  targetName: "",
+  targetEmail: "",
+  loading: false,
+  error: "",
+  users: [],
+  trackLog: [],
+  payload: null,
+};
+
+const isSpectateReadOnly = () => !!spectateState.active;
+
+const spectateLabel = () => {
+  if (!spectateState.active) return "";
+  const name = spectateState.targetName || "Target user";
+  const uid = spectateState.targetUid || "unknown";
+  return `${name} (${uid})`;
+};
+
+const renderSpectateUserRows = () => {
+  if (spectateState.loading) {
+    return `<div class="spectate-empty">Loading registered users from Firestore...</div>`;
+  }
+  if (spectateState.error) {
+    return `<div class="spectate-empty">${escapeHtml(spectateState.error)}</div>`;
+  }
+  if (!spectateState.users.length) {
+    return `<div class="spectate-empty">No cloud user snapshots found yet. Saved accounts will appear here after their first cloud sync.</div>`;
+  }
+  return spectateState.users.map((user) => `
+    <div class="spectate-user-row">
+      <span class="spectate-uid" title="${escapeHtml(user.uid)}">${escapeHtml(user.uid)}</span>
+      <strong class="spectate-user-name" title="${escapeHtml(user.name)}">${escapeHtml(user.name)}</strong>
+      <span class="spectate-user-email" title="${escapeHtml(user.email)}">${escapeHtml(user.email)}</span>
+      <button class="btn-small btn-small--icon" type="button" data-action="spectate-inspect-user" data-uid="${escapeHtml(user.uid)}" title="Inspect ${escapeHtml(user.name)}" aria-label="Inspect ${escapeHtml(user.name)}">
+        ${icon("eye", "Inspect")}
+      </button>
+    </div>
+  `).join("");
+};
+
+const renderSpectateDialog = () => `
+  <div class="account-dialog spectate-dialog" id="spectateDialog" hidden>
+    <div class="account-dialog__backdrop" data-action="close-spectate-dialog" aria-hidden="true"></div>
+    <section class="account-dialog__card spectate-dialog__card" role="dialog" aria-modal="true" aria-labelledby="spectateDialogTitle">
+      <div class="account-dialog__head">
+        <div>
+          <p class="eyebrow">Community users</p>
+          <h3 id="spectateDialogTitle">${icon("eye", "Spectate")} <span>Spectate Users</span></h3>
+          <span>Read-only inspection for saved Study OS cloud snapshots. UID is shown first in each row.</span>
+        </div>
+        <button class="btn-small btn-small--icon" type="button" data-action="close-spectate-dialog" aria-label="Close spectate users">
+          ${icon("x", "Close")}
+        </button>
+      </div>
+      <div class="spectate-shell">
+        <div class="spectate-status">
+          <span id="spectateStatusText">${spectateState.active ? `Currently viewing ${escapeHtml(spectateLabel())}` : "Choose a user to inspect their dashboard snapshot."}</span>
+          <div class="backup-actions" style="margin-top:0;">
+            <button class="btn-small" type="button" data-action="spectate-refresh-users">${icon("refresh-cw", "Refresh")} <span>Refresh</span></button>
+            ${spectateState.active ? `<button class="btn-small btn-small--primary" type="button" data-action="spectate-exit">${icon("log-out", "Exit")} <span>Exit View</span></button>` : ""}
+          </div>
+        </div>
+        <div class="spectate-user-list" id="spectateUserList">
+          ${renderSpectateUserRows()}
+        </div>
+      </div>
+    </section>
+  </div>
+`;
+
+const renderSpectateBanner = () => spectateState.active ? `
+  <div class="spectate-banner" role="status">
+    <div>
+      <strong>${icon("eye", "Spectating")} Spectating read-only</strong>
+      <span>${escapeHtml(spectateLabel())}. Browse and export JSON only. Edits, imports, uploads, and message sends are blocked.</span>
+    </div>
+    <button class="btn-small btn-small--primary" type="button" data-action="spectate-exit">${icon("log-out", "Exit")} <span>Exit</span></button>
+  </div>
+` : "";
+
 // ── shared/app-shell.js ───────────────────────────────────────────────────────
 const renderAppShell = (state, units) => {
   const missionEnd = new Date(state.userSettings.missionEnd);
@@ -11519,9 +12003,9 @@ const renderAppShell = (state, units) => {
           ${icon("user-round-cog", "Account")}
           <span class="quick-action__label">Account</span>
         </button>
-        <button class="quick-action" type="button" style="--quick-width:104px" aria-label="User">
-          ${icon("user-round", "User")}
-          <span class="quick-action__label">User</span>
+        <button class="quick-action" type="button" style="--quick-width:126px" data-action="open-spectate-dialog" aria-label="Spectate">
+          ${icon("eye", "Spectate")}
+          <span class="quick-action__label">Spectate</span>
         </button>
         <button class="quick-action" type="button" style="--quick-width:118px" data-action="open-settings-dialog" aria-label="Setting">
           ${icon("settings", "Setting")}
@@ -11561,6 +12045,7 @@ const renderAppShell = (state, units) => {
         ${todoButton({ iconName: "moon", label: "Theme toggle", tone: "accent" })}
       </div>
     </header>
+    ${renderSpectateBanner()}
 
     <section class="hero-strip" aria-label="Project status">
       <div class="hero-strip__content">
@@ -11618,6 +12103,7 @@ const renderAppShell = (state, units) => {
     <input id="${BACKUP_IMPORT_INPUT_ID}" type="file" accept="application/json,.json" hidden>
     <div class="backup-banner" id="backupBanner" hidden></div>
     ${renderAccountDialog(state)}
+    ${renderSpectateDialog(state)}
     ${renderSettingsDialog(state)}
     ${renderBackupDialog(state)}
     ${renderChatExpandDialog(state)}
@@ -12378,6 +12864,7 @@ document.addEventListener("DOMContentLoaded", () => {
 const SYL_KEY = "hsc-syllabus-v1";
 
 const saveSyllabus = (syllabus) => {
+  if (isSpectateReadOnly()) return;
   try { localStorage.setItem(modeScopedKey(SYL_KEY), JSON.stringify(syllabus)); } catch(_) {}
   updateLocalWriteTimestamp();
   triggerCloudSaveDebounced();
@@ -12583,10 +13070,28 @@ const refreshSubjectRing = (si) => {
 
 const refreshDashboardGauge = () => {
   const sp = calculateSyllabusPercentage(scaffoldState.syllabus);
-  const fills = document.querySelectorAll(".stat-fill[style*='#2563eb']");
-  fills.forEach(el => { el.style.width = sp + "%"; });
-  const vals = document.querySelectorAll(".stat-val");
-  vals.forEach(el => { if (el.nextElementSibling?.classList.contains("stat-bar")) el.textContent = sp + "%"; });
+  const pcmbiStats = calculatePcmbiClassStats(scaffoldState.syllabus);
+  const pct = (value, total) => total > 0 ? Math.round((value / total) * 100) : 0;
+  const setText = (id, text) => {
+    const node = document.getElementById(id);
+    if (node) node.textContent = text;
+  };
+  const setWidth = (id, value) => {
+    const node = document.getElementById(id);
+    if (node) node.style.width = `${Math.max(0, Math.min(100, value))}%`;
+  };
+  setText("dashHoursCompleted", `${pcmbiStats.completedHours.toFixed(1)} hrs`);
+  setText("dashHoursCompletedDetail", `of ${pcmbiStats.totalHours.toFixed(1)} hrs planned`);
+  setWidth("dashHoursCompletedFill", pct(pcmbiStats.completedHours, pcmbiStats.totalHours));
+  setText("dashHoursLeft", `${pcmbiStats.remainingHours.toFixed(1)} hrs`);
+  setText("dashHoursLeftDetail", `${pcmbiStats.remainingClasses} classes remaining`);
+  setWidth("dashHoursLeftFill", pct(pcmbiStats.remainingHours, pcmbiStats.totalHours));
+  setText("dashClassesCompleted", String(pcmbiStats.doneClasses));
+  setText("dashClassesCompletedSub", `of ${pcmbiStats.totalClasses} planned`);
+  setWidth("dashClassesCompletedFill", pct(pcmbiStats.doneClasses, pcmbiStats.totalClasses));
+  setText("dashClassesLeft", String(pcmbiStats.remainingClasses));
+  setText("dashClassesLeftSub", `of ${pcmbiStats.totalClasses} planned`);
+  setWidth("dashClassesLeftFill", pct(pcmbiStats.remainingClasses, pcmbiStats.totalClasses));
   const gaugeOuter = document.querySelector("[stroke-dasharray='452']");
   if (gaugeOuter) gaugeOuter.setAttribute("stroke-dashoffset", 452 - Math.round((sp / 100) * 452));
   const gaugeCval = document.querySelector(".gauge-cval");
@@ -13330,6 +13835,7 @@ const loadChronosConfig = () => {
 };
 
 const saveChronosConfig = () => {
+  if (isSpectateReadOnly()) return;
   try { localStorage.setItem(modeScopedKey(CHRONOS_CFG_KEY), JSON.stringify(scaffoldState.graphConfig)); } catch(_) {}
   updateLocalWriteTimestamp();
   triggerCloudSaveDebounced();
@@ -13352,6 +13858,7 @@ const loadStudyLogs = () => {
 };
 
 const saveStudyLogs = () => {
+  if (isSpectateReadOnly()) return;
   try { localStorage.setItem(modeScopedKey(CHRONOS_LOG_KEY), JSON.stringify(studyLogs)); } catch(_) {}
   updateLocalWriteTimestamp();
   triggerCloudSaveDebounced();
@@ -13676,6 +14183,12 @@ const closeDialog = (id) => {
 
 const openAccountDialog = () => openDialog("accountDialog");
 const closeAccountDialog = () => closeDialog("accountDialog");
+const openSpectateDialog = () => {
+  openDialog("spectateDialog");
+  refreshSpectateDialogBody();
+  if (!spectateState.users.length && !spectateState.loading) loadSpectateUsers();
+};
+const closeSpectateDialog = () => closeDialog("spectateDialog");
 const openSettingsDialog = () => openDialog("settingsDialog");
 const closeSettingsDialog = () => closeDialog("settingsDialog");
 const openDeveloperDialog = () => openDialog("developerDialog");
@@ -13719,6 +14232,12 @@ const updateBackupSettings = (next) => {
 };
 
 const runBackupDownload = (source = "manual") => {
+  if (isSpectateReadOnly()) {
+    const payload = createBackupPayload("spectate-export");
+    downloadJsonFile(payload, `hsc-study-os-spectate-${spectateState.targetUid || "user"}`);
+    showBackupBanner("Spectate JSON exported", `${spectateLabel()} snapshot downloaded.`);
+    return;
+  }
   const entry = persistBackupSnapshot(source, {
     source,
     downloadJson: true,
@@ -13808,12 +14327,39 @@ document.addEventListener("click", (e) => {
   const action = e.target.closest("[data-action]")?.dataset?.action;
   const target = e.target.closest("[data-action]");
   if (!action) return;
+  if (isSpectateReadOnly() && isReadOnlyBlockedAction(action)) {
+    e.preventDefault();
+    blockReadOnlyAction(action.replace(/-/g, " "));
+    return;
+  }
   if (action === "open-account-dialog") {
     openAccountDialog();
     return;
   }
   if (action === "close-account-dialog") {
     closeAccountDialog();
+    return;
+  }
+  if (action === "open-spectate-dialog") {
+    openSpectateDialog();
+    return;
+  }
+  if (action === "close-spectate-dialog") {
+    closeSpectateDialog();
+    return;
+  }
+  if (action === "spectate-refresh-users") {
+    loadSpectateUsers();
+    return;
+  }
+  if (action === "spectate-inspect-user") {
+    const uid = target?.dataset?.uid || "";
+    const user = spectateState.users.find((item) => item.uid === uid);
+    applySpectatePayload(user);
+    return;
+  }
+  if (action === "spectate-exit") {
+    exitSpectateMode();
     return;
   }
   if (action === "open-settings-dialog") {
@@ -14132,6 +14678,7 @@ document.addEventListener("keydown", (event) => {
   if (event.key !== "Escape") return;
   closeSettingsDialog();
   closeAccountDialog();
+  closeSpectateDialog();
   closeBackupDialog();
   closeTrackDialog();
   closeDeveloperDialog();
@@ -14146,8 +14693,14 @@ const POMO_MODES = {
   long:  { label: "Long Break",   secs: 15 * 60 },
 };
 const TRACK_KEY = "hsc-pomo-track-v1";
-const readTrackLog  = () => { try { return JSON.parse(localStorage.getItem(TRACK_KEY) || "[]"); } catch { return []; } };
-const writeTrackLog = (d) => { try { localStorage.setItem(TRACK_KEY, JSON.stringify(d.slice(0, 200))); } catch {} };
+const readTrackLog  = () => {
+  if (isSpectateReadOnly()) return Array.isArray(spectateState.trackLog) ? spectateState.trackLog : [];
+  try { return JSON.parse(localStorage.getItem(TRACK_KEY) || "[]"); } catch { return []; }
+};
+const writeTrackLog = (d) => {
+  if (isSpectateReadOnly()) return;
+  try { localStorage.setItem(TRACK_KEY, JSON.stringify(d.slice(0, 200))); } catch {}
+};
 
 const pomoState = { mode:"work", totalSecs:25*60, remSecs:25*60, running:false, sessionsDone:0, _timer:null };
 const swState   = { running:false, ms:0, lapMs:0, laps:[], _baseMs:0, _lapBaseMs:0, _startTime:0, _lapStart:0, _raf:null };
@@ -14342,6 +14895,15 @@ const attachTimerBarVisibility = () => {
 document.addEventListener("change", (e) => {
   const target = e.target;
   if (!(target instanceof HTMLElement)) return;
+  if (isSpectateReadOnly() && !target.closest("#spectateDialog")) {
+    const allowedReadOnlySelectors = ["chatSortOrder", "chatMessagesPerPage"];
+    if (!allowedReadOnlySelectors.includes(target.id)) {
+      e.preventDefault();
+      blockReadOnlyAction("Changing fields");
+      mountApp();
+      return;
+    }
+  }
   if (target.id === "chatSortOrder") {
     applyChatPreference("sortOrder", target.value === "asc" ? "asc" : "desc");
     setChatFeedback(`Messages sorted ${target.value === "asc" ? "oldest first" : "newest first"}.`, "success");
