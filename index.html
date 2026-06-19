@@ -182,16 +182,18 @@ body:not(.login-locked) .login-gate {
 }
 
 .login-shell {
-  width: min(390px, calc(100vw - 32px));
+  width: min(390px, calc(100vw - 28px));
   min-height: 0;
   display: block;
-  border-radius: 30px;
+  border-radius: 28px;
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.58);
-  background: rgba(255, 255, 255, 0.08);
-  box-shadow: 0 28px 80px rgba(35, 20, 94, 0.3), inset 0 1px 0 rgba(255,255,255,0.18);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.055)),
+    rgba(92, 72, 181, 0.24);
+  box-shadow: 0 28px 80px rgba(35, 20, 94, 0.32), inset 0 1px 0 rgba(255,255,255,0.24);
+  backdrop-filter: blur(20px) saturate(1.12);
+  -webkit-backdrop-filter: blur(20px) saturate(1.12);
   animation: loginDrop 680ms cubic-bezier(.2, .82, .2, 1) both;
 }
 
@@ -199,28 +201,62 @@ body:not(.login-locked) .login-gate {
   display: grid;
   align-content: center;
   justify-items: center;
-  padding: clamp(24px, 3.3vw, 34px);
+  padding: clamp(24px, 3.1vw, 34px);
   background: transparent;
 }
 
 .login-media {
   position: relative;
   display: block;
-  height: clamp(210px, 42vh, 320px);
-  padding: 8px;
+  height: clamp(224px, 34vh, 300px);
+  margin: 4px 10px 18px;
+  padding: 6px;
   overflow: hidden;
-  border-top: 1px solid rgba(255, 255, 255, 0.24);
-  background:
-    linear-gradient(145deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.02)),
-    rgba(46, 28, 130, 0.12);
+  border-radius: 22px;
+  border: 1px solid rgba(255, 255, 255, 0.34);
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.16), 0 14px 32px rgba(42, 29, 100, 0.16);
+  --login-parallax-x: 0px;
+  --login-parallax-y: 0px;
+}
+
+.login-media__poster,
+.login-media__video {
+  position: absolute;
+  inset: 6px;
+  width: calc(100% - 12px);
+  height: calc(100% - 12px);
+  border-radius: 18px;
+  transition: opacity 520ms ease, transform 180ms ease-out, filter 520ms ease;
+  will-change: transform, opacity;
+}
+
+.login-media__poster {
+  object-fit: cover;
+  object-position: center center;
+  transform: translate3d(var(--login-parallax-x), var(--login-parallax-y), 0) scale(1);
 }
 
 .login-media__video {
   display: block;
-  width: 100%;
-  height: 100%;
+  opacity: 0;
+  pointer-events: none;
   object-fit: cover;
-  border-radius: 22px;
+  object-position: center center;
+  transform: translate3d(var(--login-parallax-x), var(--login-parallax-y), 0) scale(1);
+}
+
+.login-media.is-video-ready .login-media__video {
+  opacity: 1;
+}
+
+.login-media.is-video-ready .login-media__poster {
+  opacity: 0;
+}
+
+.login-media:hover .login-media__poster,
+.login-media:hover .login-media__video {
+  filter: drop-shadow(0 18px 24px rgba(37, 37, 90, 0.2));
 }
 
 .login-brand {
@@ -263,7 +299,7 @@ body:not(.login-locked) .login-gate {
 }
 
 .login-form {
-  width: min(300px, 100%);
+  width: min(326px, 100%);
   display: grid;
   gap: 10px;
 }
@@ -339,12 +375,12 @@ body:not(.login-locked) .login-gate {
 
 .login-actions {
   display: grid;
-  gap: 12px;
+  gap: 10px;
   margin-top: 6px;
 }
 
 .login-provider-divider {
-  display: grid;
+  display: none;
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
   gap: 14px;
@@ -371,16 +407,33 @@ body:not(.login-locked) .login-gate {
   padding: 6px 0 0;
 }
 
+.login-primary-row,
+.login-secondary-row {
+  width: 100%;
+  display: grid;
+  gap: 8px;
+}
+
+.login-primary-row {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+}
+
+.login-secondary-row {
+  grid-template-columns: minmax(0, 0.94fr) minmax(0, 1.06fr);
+  align-items: center;
+}
+
 .login-submit,
 .login-google,
 .login-facebook,
 .login-phone,
+.login-demo,
 .login-guest {
   min-height: 50px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 8px;
   border: 0;
   border-radius: 999px;
   font: inherit;
@@ -416,6 +469,7 @@ body:not(.login-locked) .login-gate {
 .login-social-row .login-google,
 .login-social-row .login-facebook,
 .login-social-row .login-phone,
+.login-social-row .login-demo,
 .login-social-row .login-guest {
   width: 54px;
   height: 54px;
@@ -430,12 +484,14 @@ body:not(.login-locked) .login-gate {
 .login-social-row .login-google:hover,
 .login-social-row .login-facebook:hover,
 .login-social-row .login-phone:hover,
+.login-social-row .login-demo:hover,
 .login-social-row .login-guest:hover {
   background: rgba(255, 255, 255, 0.085);
   box-shadow: 0 20px 42px rgba(14, 165, 233, 0.18), inset 0 1px 0 rgba(255,255,255,0.1);
 }
 
 .login-social-row .login-phone i,
+.login-social-row .login-demo i,
 .login-social-row .login-guest i {
   width: 24px;
   height: 24px;
@@ -445,6 +501,7 @@ body:not(.login-locked) .login-gate {
 .login-social-row .login-google > span:not(.login-google-mark),
 .login-social-row .login-facebook > span:not(.login-provider-mark),
 .login-social-row .login-phone > span,
+.login-social-row .login-demo > span,
 .login-social-row .login-guest > span {
   position: absolute;
   width: 1px;
@@ -464,6 +521,46 @@ body:not(.login-locked) .login-gate {
   font-size: 0.78rem;
   font-weight: 900;
   background: conic-gradient(from -40deg, #4285f4 0 25%, #34a853 0 50%, #fbbc05 0 75%, #ea4335 0);
+}
+
+.login-primary-row .login-submit,
+.login-primary-row .login-google,
+.login-secondary-row .login-demo,
+.login-secondary-row .login-guest {
+  width: 100%;
+  min-height: 44px;
+  padding: 0 12px;
+  white-space: nowrap;
+}
+
+.login-primary-row .login-submit,
+.login-primary-row .login-google {
+  font-size: 0.78rem;
+}
+
+.login-primary-row .login-google {
+  border: 0;
+  color: #111827;
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 14px 30px rgba(15, 23, 42, 0.16);
+}
+
+.login-primary-row .login-google > span:not(.login-google-mark),
+.login-secondary-row .login-demo > span,
+.login-secondary-row .login-guest > span {
+  position: static;
+  width: auto;
+  height: auto;
+  overflow: visible;
+  clip: auto;
+  white-space: nowrap;
+}
+
+.login-primary-row .login-google-mark {
+  width: 22px;
+  height: 22px;
+  font-size: 0.78rem;
+  flex: 0 0 auto;
 }
 
 .login-provider-mark {
@@ -491,10 +588,28 @@ body:not(.login-locked) .login-gate {
   border: 1px solid rgba(226, 232, 240, 0.13);
 }
 
+.login-demo {
+  color: #f8fafc;
+  background: linear-gradient(135deg, #62b43d, #3f8f26);
+  border: 1px solid rgba(209, 250, 229, 0.38);
+  box-shadow: 0 14px 28px rgba(34, 197, 94, 0.2), inset 0 1px 0 rgba(255,255,255,0.22);
+  font-size: 0.98rem;
+  letter-spacing: 0.04em;
+}
+
+.login-secondary-row .login-guest {
+  color: #eef2ff;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(226, 232, 240, 0.3);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+  font-size: 0.74rem;
+}
+
 .login-submit:hover,
 .login-google:hover,
 .login-facebook:hover,
 .login-phone:hover,
+.login-demo:hover,
 .login-guest:hover {
   transform: translateY(-2px);
 }
@@ -502,6 +617,7 @@ body:not(.login-locked) .login-gate {
 .login-submit i,
 .login-facebook i,
 .login-phone i,
+.login-demo i,
 .login-guest i {
   width: 18px;
   height: 18px;
@@ -634,6 +750,56 @@ body:not(.login-locked) .login-gate {
   color: #f8fafc;
 }
 
+.anonymous-warning {
+  position: fixed;
+  inset: 0;
+  z-index: 1500;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  background: rgba(8, 13, 34, 0.62);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.anonymous-warning[hidden] {
+  display: none;
+}
+
+.anonymous-warning__card {
+  width: min(430px, 100%);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 22px;
+  padding: 22px;
+  color: #f8fafc;
+  background:
+    linear-gradient(145deg, rgba(30, 41, 59, 0.92), rgba(49, 46, 129, 0.82)),
+    rgba(15, 23, 42, 0.86);
+  box-shadow: 0 24px 70px rgba(2, 6, 23, 0.42);
+}
+
+.anonymous-warning__card h3 {
+  margin: 0 0 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.15rem;
+}
+
+.anonymous-warning__card p {
+  margin: 0;
+  color: rgba(226, 232, 240, 0.84);
+  font-size: 0.92rem;
+  line-height: 1.55;
+}
+
+.anonymous-warning__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 18px;
+}
+
 .login-art {
   display: none;
 }
@@ -678,7 +844,7 @@ body:not(.login-locked) .login-gate {
 
 @media (max-width: 900px) {
   .login-gate {
-    padding: 18px;
+    padding: 14px;
     align-items: start;
   }
 
@@ -689,7 +855,7 @@ body:not(.login-locked) .login-gate {
   }
 
   .login-panel {
-    padding: 34px 22px;
+    padding: 28px 22px 16px;
   }
 
   .login-art {
@@ -707,9 +873,9 @@ body:not(.login-locked) .login-gate {
 
 @media (min-width: 920px) {
   .login-shell {
-    width: min(930px, calc(100vw - 56px));
+    width: min(880px, calc(100vw - 56px));
     display: grid;
-    grid-template-columns: minmax(340px, 390px) minmax(360px, 1fr);
+    grid-template-columns: minmax(330px, 380px) minmax(360px, 1fr);
     gap: 0;
     align-items: stretch;
     border: 1px solid rgba(255, 255, 255, 0.58);
@@ -725,20 +891,24 @@ body:not(.login-locked) .login-gate {
 
   .login-panel {
     overflow: auto;
-    border-right: 1px solid rgba(255, 255, 255, 0.18);
+    border-right: 0;
   }
 
   .login-media {
     display: block;
-    height: min(560px, calc(100vh - 56px));
-    min-height: 480px;
-    padding: 10px;
-    border-top: 0;
-    background: transparent;
+    height: min(520px, calc(100vh - 72px));
+    min-height: 438px;
+    margin: 14px 16px 14px 0;
+    padding: 8px;
+    background: rgba(255, 255, 255, 0.08);
   }
 
+  .login-media__poster,
   .login-media__video {
-    border-radius: 22px;
+    inset: 8px;
+    width: calc(100% - 16px);
+    height: calc(100% - 16px);
+    border-radius: 18px;
   }
 }
 
@@ -762,13 +932,48 @@ body:not(.login-locked) .login-gate {
   }
 
   .login-title {
-    font-size: 2.35rem;
+    font-size: 2.05rem;
   }
 
   .login-field input,
   .login-submit,
   .login-guest {
-    min-height: 54px;
+    min-height: 44px;
+  }
+
+  .login-primary-row,
+  .login-secondary-row {
+    gap: 7px;
+  }
+
+  .login-primary-row .login-submit,
+  .login-primary-row .login-google,
+  .login-secondary-row .login-demo,
+  .login-secondary-row .login-guest {
+    min-height: 40px;
+    padding: 0 8px;
+    font-size: 0.72rem;
+  }
+
+  .login-secondary-row .login-demo {
+    font-size: 0.86rem;
+  }
+
+  .login-secondary-row .login-guest {
+    font-size: 0.7rem;
+  }
+
+  .login-primary-row .login-google-mark {
+    width: 20px;
+    height: 20px;
+    font-size: 0.72rem;
+  }
+
+  .login-submit i,
+  .login-secondary-row .login-demo i,
+  .login-secondary-row .login-guest i {
+    width: 17px;
+    height: 17px;
   }
 }
 
@@ -7366,45 +7571,24 @@ body.is-spectating .spectate-disabled {
               <a class="login-link" href="#" data-action="login-forgot">Forgot password?</a>
             </div>
             <div class="login-actions">
-              <button class="login-submit" type="submit">
-                <span>Login with email</span>
-                <i data-lucide="send-horizontal" aria-hidden="true"></i>
-              </button>
-              <div class="login-provider-divider"><span>Login with -</span></div>
-              <div class="login-social-row" aria-label="Social login options">
+              <div class="login-primary-row">
+                <button class="login-submit" type="submit">
+                  <span>Login with email</span>
+                  <i data-lucide="send-horizontal" aria-hidden="true"></i>
+                </button>
                 <button class="login-google" type="button" data-action="login-google" aria-label="Login with Google">
                   <span class="login-google-mark" aria-hidden="true">G</span>
                   <span>Login with Google</span>
                 </button>
-                <button class="login-facebook" type="button" data-action="login-facebook" aria-label="Login with Facebook">
-                  <span class="login-provider-mark" aria-hidden="true">f</span>
-                  <span>Login with Facebook</span>
-                </button>
-                <button class="login-phone" type="button" data-action="login-phone-toggle" aria-label="Login with phone" aria-expanded="false">
-                  <i data-lucide="phone" aria-hidden="true"></i>
-                  <span>Login with phone</span>
-                </button>
-                <button class="login-guest" type="button" data-action="login-guest" aria-label="Continue as guest">
-                  <i data-lucide="user-round" aria-hidden="true"></i>
-                  <span>Continue as guest</span>
-                </button>
               </div>
-              <div class="login-phone-panel" id="loginPhonePanel" hidden>
-                <label class="login-field">
-                  <i data-lucide="phone" aria-hidden="true"></i>
-                  <input id="loginPhoneNumber" type="tel" autocomplete="tel" placeholder="+8801XXXXXXXXX" />
-                </label>
-                <button class="login-phone" type="button" data-action="login-phone-send">
-                  <i data-lucide="message-circle-code" aria-hidden="true"></i>
-                  <span>Send SMS code</span>
+              <div class="login-secondary-row" aria-label="Temporary login options">
+                <button class="login-demo" type="button" data-action="login-skip" aria-label="Skip login and use local mode">
+                  <i data-lucide="play" aria-hidden="true"></i>
+                  <span>SKIP</span>
                 </button>
-                <label class="login-field">
-                  <i data-lucide="key-round" aria-hidden="true"></i>
-                  <input id="loginPhoneCode" type="text" inputmode="numeric" autocomplete="one-time-code" placeholder="SMS code" />
-                </label>
-                <button class="login-submit" type="button" data-action="login-phone-confirm">
-                  <span>Confirm phone login</span>
-                  <i data-lucide="log-in" aria-hidden="true"></i>
+                <button class="login-guest" type="button" data-action="login-guest" aria-label="Anonymous Firebase login">
+                  <i data-lucide="user-round" aria-hidden="true"></i>
+                  <span>Anonymous Login</span>
                 </button>
               </div>
             </div>
@@ -7413,6 +7597,7 @@ body.is-spectating .spectate-disabled {
           </form>
         </div>
         <div class="login-media" aria-hidden="true">
+          <img class="login-media__poster" src="Assets/Images/live study.jpg" alt="" loading="eager" />
           <video
             class="login-media__video"
             autoplay
@@ -7420,13 +7605,23 @@ body.is-spectating .spectate-disabled {
             muted
             playsinline
             preload="none"
-            poster="Assets/Images/live study.png"
+            poster="Assets/Images/live study.jpg"
           >
             <source data-src="Assets/Videos/live_study.mp4" type="video/mp4" />
           </video>
         </div>
       </div>
     </section>
+    <div class="anonymous-warning" id="anonymousWarning" hidden>
+      <div class="anonymous-warning__card" role="dialog" aria-modal="true" aria-labelledby="anonymousWarningTitle">
+        <h3 id="anonymousWarningTitle"><i data-lucide="triangle-alert" aria-hidden="true"></i><span>Anonymous Login Warning</span></h3>
+        <p>এটি একটি অস্থায়ী অ্যাকাউন্ট। আগামী ৩ দিনের মধ্যে এই অ্যাকাউন্টটি আপনার স্থায়ী ইমেইল বা গুগল অ্যাকাউন্টের সাথে লিঙ্ক না করলে আপনার সমস্ত স্টাডি ডাটা মুছে (Delete) যাবে।</p>
+        <div class="anonymous-warning__actions">
+          <button class="btn-small" type="button" id="anonymousCancel">Cancel</button>
+          <button class="btn-small btn-small--primary" type="button" id="anonymousContinue">Continue</button>
+        </div>
+      </div>
+    </div>
     <div id="authRecaptchaContainer" aria-hidden="true"></div>
     <div id="app" class="app-root"></div>
     <script>
@@ -10626,7 +10821,6 @@ const subjectCard = (subject, index) => {
         <span class="subject-icon">${escapeHtml(subject.icon ?? subject.iconLabel)}</span>
         <div>
           <h3 class="subj-title-display" id="subj-title-${index}">${escapeHtml(subject.title)}</h3>
-          <p class="subj-prog-text" id="subj-prog-${index}">${done}/${total} full · ${pct}% avg</p>
         </div>
       </div>
       <div style="display:flex;align-items:center;gap:8px;">
@@ -11421,7 +11615,9 @@ const renderLoginStatusCard = (compact = false) => {
   const mode = session?.mode || "none";
   const title = session
     ? (mode === "guest"
-      ? "Guest account"
+      ? (session?.authIsAnonymous ? "Anonymous temporary account" : "Guest account")
+      : mode === "skip" || mode === "demo"
+        ? "Skip local mode"
       : mode === "admin"
         ? "Local admin"
       : mode === "google"
@@ -11434,6 +11630,10 @@ const renderLoginStatusCard = (compact = false) => {
     : "No active account";
   const detail = mode === "admin"
     ? "Local test bypass. Use Firebase login for cloud sync and provider linking."
+    : mode === "skip" || mode === "demo"
+      ? "Local-only session. No database upload or cloud restore will run."
+    : session?.authIsAnonymous
+      ? "Temporary Firebase anonymous account. Link Email or Google within 3 days to keep study data recoverable."
     : session?.email || session?.phoneNumber || (session ? "Session active and synced to database." : "Login to sync your progress to the database.");
   return `
     <div class="account-login-card ${compact ? "account-login-card--compact" : ""}">
@@ -11518,13 +11718,13 @@ const renderSecurityProviderRows = () => {
   if (user?.isAnonymous) providers.add("anonymous");
   const providerDetailMap = new Map((authMeta.providerDetails || []).map((item) => [item.providerId, item]));
   const rows = [
-    { id: "password", label: "Email + Password", iconName: "mail", detail: providerDetailMap.get("password")?.email || user?.email || "Link an email password for normal login.", action: "security-link-email", actionText: "Link" },
-    { id: "google.com", label: "Google", iconName: "badge-check", detail: providerDetailMap.get("google.com")?.email || "Use Google login for this same Study OS UID.", action: "security-link-google", actionText: "Link" },
+    { id: "password", label: "Link Email", iconName: "mail", detail: providerDetailMap.get("password")?.email || user?.email || "Make this temporary data recoverable with email/password.", action: "security-link-email", actionText: "Link" },
+    { id: "google.com", label: "Link Google", iconName: "badge-check", detail: providerDetailMap.get("google.com")?.email || "Link Google to this same UID and sync the current study data.", action: "security-link-google", actionText: "Link" },
     { id: "facebook.com", label: "Facebook", iconName: "users", detail: providerDetailMap.get("facebook.com")?.email || "Use Facebook login after Firebase provider setup.", action: "security-link-facebook", actionText: "Link" },
     { id: "phone", label: "Phone", iconName: "phone", detail: providerDetailMap.get("phone")?.phoneNumber || user?.phoneNumber || "Recover and login with SMS verification.", action: "security-phone-send", actionText: "Send SMS" },
   ];
   if (!user) {
-    return `<div class="spectate-empty">No Firebase Auth user is active. Login with Google, email, guest, Facebook, or phone first.</div>`;
+    return `<div class="spectate-empty">No Firebase Auth user is active. SKIP mode is local-only, so provider linking and cloud sync stay disabled. Use Anonymous Login, Google, or Email first to create a linkable account.</div>`;
   }
   return rows.map((row) => {
     const linked = providers.has(row.id);
@@ -11552,9 +11752,11 @@ const renderAccountSecurityDialog = () => {
   const session = readRenderableLoginSession();
   const authMeta = getAuthIdentitySnapshot(user);
   const identity = user
-    ? `${user.uid}${user.email ? " - " + user.email : user.phoneNumber ? " - " + user.phoneNumber : ""}`
+    ? `${user.uid}${user.email ? " - " + user.email : user.phoneNumber ? " - " + user.phoneNumber : user.isAnonymous ? " - temporary anonymous account" : ""}`
     : session?.mode === "admin"
       ? "Local admin bypass is active. Firebase provider linking is unavailable for admin/admin."
+      : session?.mode === "skip" || session?.mode === "demo"
+        ? "SKIP mode is local-only. No Firebase identity, personal email, or profile is attached."
       : "No Firebase user detected.";
   return `
     <div class="account-dialog" id="accountSecurityDialog" hidden>
@@ -11564,7 +11766,7 @@ const renderAccountSecurityDialog = () => {
           <div>
             <p class="eyebrow">Account security</p>
             <h3 id="accountSecurityTitle">${icon("shield-check", "Security")} <span>Security & Recovery</span></h3>
-            <span>Connect login methods to the same Firebase UID so the same Study OS account can be recovered.</span>
+            <span>Link Email or Google to the same Firebase UID so temporary study data becomes recoverable.</span>
           </div>
           <button class="btn-small btn-small--icon" type="button" data-action="close-account-security-dialog" aria-label="Close security settings">
             ${icon("x", "Close")}
@@ -11606,7 +11808,7 @@ const renderAccountSecurityDialog = () => {
                 </label>
                 <button class="btn-small btn-small--primary btn-small--wide" type="button" data-action="security-phone-confirm">${icon("shield-check", "Confirm")} <span>Confirm phone link</span></button>
                 <button class="btn-small btn-small--wide" type="button" data-action="security-send-reset">${icon("mail-check", "Reset")} <span>Send password reset</span></button>
-                <p class="security-note">Tip: guest accounts become recoverable after linking Google, Facebook, phone, or email/password to this same UID.</p>
+                <p class="security-note">Tip: Anonymous accounts become recoverable after linking Google or email/password to this same UID. The current local/temporary study data syncs after linking.</p>
                 <p class="security-feedback" id="securityFeedback" role="status"></p>
               </div>
             </div>
@@ -11619,13 +11821,15 @@ const renderAccountSecurityDialog = () => {
 
 const renderAccountPanelBody = (state) => {
   const user = state.userSettings;
+  const session = readRenderableLoginSession();
+  const isTemporarySession = session?.mode === "skip" || session?.mode === "demo" || session?.authIsAnonymous;
   return `
       <div class="account-shell">
         <div class="account-card">
           <div class="account-card__head">
             <div>
-              <strong>Profile information</strong>
-              <span>Your account details are synced with the database</span>
+              <strong>${isTemporarySession ? "Temporary profile state" : "Profile information"}</strong>
+              <span>${isTemporarySession ? "No personal email/profile is attached until you link Email or Google from Security." : "Your account details are synced with the database"}</span>
             </div>
           </div>
           <div class="account-form">
@@ -11880,9 +12084,21 @@ function getSyncDocId() {
 }
 
 const isCloudSyncEligibleSession = (session = readLocalLoginSession()) => {
-  if (!session || session.mode === "admin" || session.offline) return false;
+  if (!session || session.mode === "admin" || session.mode === "demo" || session.mode === "skip" || session.offline || session.noCloud) return false;
   const authUser = getCurrentAuthUser();
   return !!authUser && authUser.uid === session.uid;
+};
+
+const isDemoSession = () => {
+  const session = readLocalLoginSession();
+  return session?.mode === "demo" || session?.mode === "skip" || !!session?.noCloud;
+};
+
+const blockDemoDatabaseAction = (label = "Database action") => {
+  const message = `${label} is disabled in SKIP local mode. Login with Google or Anonymous for live sync features.`;
+  showBackupBanner?.("Skip mode", message);
+  setChatFeedback?.(message, "error");
+  return true;
 };
 
 const cloudSyncState = {
@@ -11905,6 +12121,7 @@ const isReadOnlyBlockedAction = (action = "") => {
     "account-open-login",
     "account-logout",
     "login-guest",
+    "login-skip",
     "login-google",
     "login-facebook",
     "login-phone-send",
@@ -12180,6 +12397,10 @@ function renderSyncStatusUI() {
     account.textContent = session.email;
   } else if (session && session.mode === "google") {
     account.textContent = "Google Account";
+  } else if (session && session.mode === "guest") {
+    account.textContent = session.authIsAnonymous ? "Anonymous Firebase" : `Guest (${(chatState.profile?.id || "N/A").slice(0, 8)}...)`;
+  } else if (session && (session.mode === "skip" || session.mode === "demo")) {
+    account.textContent = "SKIP local-only";
   } else {
     account.textContent = `Guest (${(chatState.profile?.id || "N/A").slice(0, 8)}...)`;
   }
@@ -12190,7 +12411,10 @@ function renderSyncStatusUI() {
     time.textContent = "Never";
   }
   
-  if (session) {
+  if (isDemoSession()) {
+    autoSpan.textContent = "Disabled (SKIP local-only)";
+    autoSpan.style.color = "#f59e0b";
+  } else if (session) {
     autoSpan.textContent = "Enabled (10s debounce)";
     autoSpan.style.color = "#10b981";
   } else {
@@ -12363,6 +12587,9 @@ const exitSpectateMode = () => {
 const renderBackupDialog = (state) => {
   const vaultItems = readVaultBackups();
   const roAttrs = isSpectateReadOnly() ? `disabled data-readonly-blocked title="Disabled in Spectate read-only mode"` : "";
+  const cloudAttrs = isDemoSession()
+    ? `disabled data-readonly-blocked title="Disabled in SKIP local mode"`
+    : roAttrs;
   return `
   <div class="account-dialog backup-dialog" id="backupDialog" hidden>
     <div class="account-dialog__backdrop" data-action="close-backup-dialog" aria-hidden="true"></div>
@@ -12426,8 +12653,8 @@ const renderBackupDialog = (state) => {
             </div>
           </div>
           <div class="backup-actions" style="margin-top: 0;">
-            <button class="btn-small btn-small--primary" type="button" data-action="cloud-sync-upload" ${roAttrs}>${icon("cloud-upload", "Upload")} <span>Upload to Cloud</span></button>
-            <button class="btn-small btn-small--primary" type="button" data-action="cloud-sync-download" ${roAttrs}>${icon("cloud-download", "Download")} <span>Download from Cloud</span></button>
+            <button class="btn-small btn-small--primary" type="button" data-action="cloud-sync-upload" ${cloudAttrs}>${icon("cloud-upload", "Upload")} <span>Upload to Cloud</span></button>
+            <button class="btn-small btn-small--primary" type="button" data-action="cloud-sync-download" ${cloudAttrs}>${icon("cloud-download", "Download")} <span>Download from Cloud</span></button>
           </div>
         </div>
 
@@ -12966,16 +13193,18 @@ const attachVisualEffects = () => {
   attachSmoothAnchorOffset();
   attachSettingsTabs();
   attachCardTilt();
+  attachLoginMediaEffects();
 };
 
 const syncLoginMediaVideo = () => {
   const video = document.querySelector(".login-media__video");
+  const media = document.querySelector(".login-media");
   const source = video?.querySelector("source");
   if (!video || !source) return;
-  const shouldLoad = document.body.classList.contains("login-locked")
-    && window.matchMedia("(min-width: 920px)").matches;
+  const shouldLoad = document.body.classList.contains("login-locked");
   const src = source.dataset.src || "";
   if (shouldLoad && src && !source.getAttribute("src")) {
+    media?.classList.remove("is-video-ready");
     source.setAttribute("src", src);
     video.load();
     video.play?.().catch(() => {});
@@ -12985,7 +13214,35 @@ const syncLoginMediaVideo = () => {
     video.pause?.();
     source.removeAttribute("src");
     video.load();
+    media?.classList.remove("is-video-ready");
   }
+};
+
+const attachLoginMediaEffects = () => {
+  const media = document.querySelector(".login-media");
+  const video = document.querySelector(".login-media__video");
+  if (!media) return;
+  if (video && !video.dataset.readyBound) {
+    video.dataset.readyBound = "true";
+    video.addEventListener("canplay", () => {
+      media.classList.add("is-video-ready");
+      video.play?.().catch(() => {});
+    });
+  }
+  if (media.dataset.parallaxBound) return;
+  media.dataset.parallaxBound = "true";
+  media.addEventListener("pointermove", (event) => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const rect = media.getBoundingClientRect();
+    const x = ((event.clientX - rect.left) / rect.width - 0.5) * -12;
+    const y = ((event.clientY - rect.top) / rect.height - 0.5) * -14;
+    media.style.setProperty("--login-parallax-x", `${x.toFixed(2)}px`);
+    media.style.setProperty("--login-parallax-y", `${y.toFixed(2)}px`);
+  });
+  media.addEventListener("pointerleave", () => {
+    media.style.setProperty("--login-parallax-x", "0px");
+    media.style.setProperty("--login-parallax-y", "0px");
+  });
 };
 
 // ── main.js ───────────────────────────────────────────────────────────────────
@@ -13066,7 +13323,7 @@ const resetAuthRecaptcha = () => {
   authRecaptchaVerifier = null;
 };
 
-const completeFirebaseUserLogin = (user, remember = true, fallbackMode = "email") => {
+const completeFirebaseUserLogin = (user, remember = true, fallbackMode = "email", extra = {}) => {
   if (!user) throw new Error("Firebase did not return an authenticated user.");
   const authMeta = getAuthIdentitySnapshot(user);
   completeLocalLogin({
@@ -13078,7 +13335,8 @@ const completeFirebaseUserLogin = (user, remember = true, fallbackMode = "email"
     authProviderLabels: authMeta.providerLabels,
     authIsAnonymous: authMeta.isAnonymous,
     displayName: authMeta.displayName,
-    createdAt: Date.now()
+    createdAt: Date.now(),
+    ...extra
   }, remember);
 };
 
@@ -13191,30 +13449,72 @@ const completeOfflineGuestLogin = (remember = true, reason = "") => {
   showLoginFeedback("");
 };
 
+const loginAsDemo = () => {
+  showLoginFeedback("Opening local mode...");
+  completeLocalLogin({
+    mode: "skip",
+    uid: `skip-${Date.now()}`,
+    offline: true,
+    noCloud: true,
+    temporary: true,
+    createdAt: Date.now()
+  }, true);
+  showLoginFeedback("");
+  showBackupBanner?.("Skip mode", "Database sync, cloud restore, upload, and chat posting are disabled.");
+};
+
+const showAnonymousLoginWarning = () => new Promise((resolve) => {
+  const dialog = document.getElementById("anonymousWarning");
+  const cancel = document.getElementById("anonymousCancel");
+  const proceed = document.getElementById("anonymousContinue");
+  if (!dialog || !cancel || !proceed) {
+    resolve(confirm("এটি একটি অস্থায়ী অ্যাকাউন্ট। আগামী ৩ দিনের মধ্যে এই অ্যাকাউন্টটি আপনার স্থায়ী ইমেইল বা গুগল অ্যাকাউন্টের সাথে লিঙ্ক না করলে আপনার সমস্ত স্টাডি ডাটা মুছে (Delete) যাবে।"));
+    return;
+  }
+  const cleanup = (result) => {
+    dialog.hidden = true;
+    cancel.removeEventListener("click", onCancel);
+    proceed.removeEventListener("click", onProceed);
+    document.removeEventListener("keydown", onKeydown);
+    resolve(result);
+  };
+  const onCancel = () => cleanup(false);
+  const onProceed = () => cleanup(true);
+  const onKeydown = (event) => {
+    if (event.key === "Escape") cleanup(false);
+  };
+  cancel.addEventListener("click", onCancel, { once: true });
+  proceed.addEventListener("click", onProceed, { once: true });
+  document.addEventListener("keydown", onKeydown);
+  dialog.hidden = false;
+  proceed.focus();
+  if (window.lucide) window.lucide.createIcons({ attrs: { "stroke-width": 1.8 } });
+});
+
 const loginAsGuest = (remember = true) => {
   try {
     ensureFirebaseInitialized();
-    showLoginFeedback("Creating guest session...");
+    showLoginFeedback("Creating anonymous Firebase session...");
     window.firebase.auth().signInAnonymously()
       .then((result) => {
-        completeLocalLogin({
-          mode: "guest",
-          uid: result.user.uid,
-          createdAt: Date.now()
-        }, remember);
+        completeFirebaseUserLogin(result.user, remember, "guest", {
+          temporary: true,
+          anonymousExpiresAt: Date.now() + 3 * 24 * 60 * 60 * 1000,
+        });
         showLoginFeedback("");
       })
       .catch((error) => {
-        completeOfflineGuestLogin(remember, error.message);
+        showLoginFeedback(`Anonymous login failed: ${error.message}`);
       });
   } catch (error) {
-    completeOfflineGuestLogin(remember, error.message);
+    showLoginFeedback(`Anonymous login failed: ${error.message}`);
   }
 };
 
 const getLoginDisplayName = (session) => {
   if (!session) return "";
-  if (session.mode === "guest") return "Guest";
+  if (session.mode === "demo" || session.mode === "skip") return "Local Student";
+  if (session.mode === "guest") return "Anonymous Student";
   if (session.mode === "google") return "Google User";
   if (session.mode === "facebook") return "Facebook User";
   if (session.mode === "phone") return "Phone User";
@@ -13225,12 +13525,15 @@ const getLoginDisplayName = (session) => {
 const applyLocalLoginSession = (session) => {
   if (!session) return;
   const displayName = getLoginDisplayName(session);
-  if (displayName && !String(scaffoldState.userSettings.customName || "").trim()) {
+  const canSeedProfileName = !session.temporary && session.mode !== "guest" && session.mode !== "skip" && session.mode !== "demo";
+  if (canSeedProfileName && displayName && !String(scaffoldState.userSettings.customName || "").trim()) {
     scaffoldState.userSettings.customName = displayName;
     saveUserSettings();
   }
   document.body.classList.remove("login-locked");
   document.body.classList.add("login-ready");
+  document.body.classList.toggle("is-demo-session", session.mode === "demo" || session.mode === "skip" || !!session.noCloud);
+  document.body.classList.toggle("is-skip-session", session.mode === "skip");
   syncLoginMediaVideo();
 };
 
@@ -13549,6 +13852,8 @@ const returnToLoginScreen = () => {
   closeBackupDialog?.();
   document.body.classList.add("login-locked");
   document.body.classList.remove("login-ready");
+  document.body.classList.remove("is-demo-session");
+  document.body.classList.remove("is-skip-session");
   syncLoginMediaVideo();
   showLoginFeedback("");
   try {
@@ -13975,8 +14280,6 @@ const refreshSubjectRing = (si) => {
   const papers = subj.hasPapers ? subj.papers : [{ chapters: subj.chapters }];
   const allChs = papers.flatMap(p => p.chapters);
   const { total, done, pct } = chapterAverageProgressStats(allChs);
-  const progText = document.getElementById(`subj-prog-${si}`);
-  if (progText) progText.textContent = `${done}/${total} full · ${pct}% avg`;
   const ring = document.getElementById(`subj-ring-${si}`);
   if (ring) ring.setAttribute("stroke-dashoffset", Math.round(94.2 - (pct / 100) * 94.2));
   const ringPct = document.getElementById(`subj-ring-pct-${si}`);
@@ -15277,6 +15580,11 @@ document.addEventListener("click", (e) => {
     blockReadOnlyAction(action.replace(/-/g, " "));
     return;
   }
+  if (isDemoSession() && ["chat-send", "cloud-sync-upload", "cloud-sync-download"].includes(action)) {
+    e.preventDefault();
+    blockDemoDatabaseAction(action.replace(/-/g, " "));
+    return;
+  }
   if (action === "open-account-dialog") {
     openAccountDialog();
     return;
@@ -15392,16 +15700,22 @@ document.addEventListener("click", (e) => {
     
     const feedback = document.getElementById("accountFeedback");
     if (feedback) {
-      feedback.textContent = chatState.db 
+      feedback.textContent = isDemoSession()
+        ? "SKIP account saved locally in this browser. No database sync."
+        : chatState.db 
         ? "Account saved and synced to database." 
         : "Account saved locally (will sync once connected).";
     }
     return;
   }
   if (action === "account-login-guest") {
-    loginAsGuest(true);
-    closeAccountDialog();
-    closeSettingsDialog();
+    showAnonymousLoginWarning().then((confirmed) => {
+      if (confirmed) {
+        loginAsGuest(true);
+        closeAccountDialog();
+        closeSettingsDialog();
+      }
+    });
     return;
   }
   if (action === "account-open-login") {
@@ -15413,7 +15727,17 @@ document.addEventListener("click", (e) => {
     return;
   }
   if (action === "login-guest") {
-    loginAsGuest(true);
+    showAnonymousLoginWarning().then((confirmed) => {
+      if (confirmed) loginAsGuest(true);
+    });
+    return;
+  }
+  if (action === "login-skip") {
+    loginAsDemo();
+    return;
+  }
+  if (action === "login-demo") {
+    loginAsDemo();
     return;
   }
   if (action === "login-google") {
