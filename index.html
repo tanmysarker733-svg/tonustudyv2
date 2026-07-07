@@ -8542,6 +8542,29 @@ html[data-theme="light"] .spectate-status {
   color: #334155 !important;
 }
 
+html[data-theme="light"] .spectate-user-list,
+html[data-theme="light"] .spectate-empty,
+html[data-theme="light"] .spectate-user-row {
+  border-color: rgba(148, 163, 184, 0.24) !important;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.88), rgba(241, 245, 249, 0.76)),
+    #ffffff !important;
+  color: #334155 !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.72) !important;
+}
+
+html[data-theme="light"] .spectate-empty {
+  color: #475569 !important;
+}
+
+html[data-theme="light"] .spectate-user-name {
+  color: #0f172a !important;
+}
+
+html[data-theme="light"] .spectate-user-email {
+  color: #64748b !important;
+}
+
 html[data-theme="light"] .chat-visibility-pill {
   border-color: rgba(37, 99, 235, 0.18) !important;
   background: rgba(37, 99, 235, 0.08) !important;
@@ -8552,6 +8575,41 @@ html[data-theme="light"] .chat-visibility-pill--private {
   border-color: rgba(217, 119, 6, 0.22) !important;
   background: rgba(245, 158, 11, 0.12) !important;
   color: #b45309 !important;
+}
+
+html[data-theme="light"] .chat-feed,
+html[data-theme="light"] .chat-item__card {
+  border-color: rgba(148, 163, 184, 0.22) !important;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(241, 245, 249, 0.78)),
+    #ffffff !important;
+  color: #0f172a !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.72) !important;
+}
+
+html[data-theme="light"] .chat-item--self .chat-item__card {
+  border-left-color: #10b981 !important;
+}
+
+html[data-theme="light"] .chat-item__head strong,
+html[data-theme="light"] .chat-item__body {
+  color: #0f172a !important;
+}
+
+html[data-theme="light"] .chat-item__meta {
+  color: #64748b !important;
+}
+
+html[data-theme="light"] .chat-action-btn {
+  border-color: rgba(148, 163, 184, 0.22) !important;
+  background: rgba(255, 255, 255, 0.72) !important;
+  color: #475569 !important;
+}
+
+html[data-theme="light"] .chat-action-btn:hover {
+  border-color: rgba(37, 99, 235, 0.24) !important;
+  background: rgba(239, 246, 255, 0.92) !important;
+  color: #1d4ed8 !important;
 }
 
 html[data-theme="light"] .backup-banner {
@@ -8600,6 +8658,2226 @@ html[data-theme="light"] #chatExpandDialog .account-dialog__card {
 html[data-theme="light"] #chatShowAllDialog .account-dialog__head {
   border-bottom-color: rgba(148, 163, 184, 0.18) !important;
 }
+
+html[data-theme="light"] body {
+  background:
+    radial-gradient(circle at 18% 12%, rgba(56, 189, 248, 0.16), transparent 30%),
+    radial-gradient(circle at 82% 18%, rgba(99, 102, 241, 0.1), transparent 28%),
+    linear-gradient(180deg, #edf7ff 0%, #eaf4ff 42%, #f8fbff 100%) !important;
+}
+
+html[data-theme="light"] .account-dialog__backdrop,
+html[data-theme="light"] .track-dialog__backdrop {
+  background:
+    radial-gradient(circle at 18% 12%, rgba(59, 130, 246, 0.16), transparent 34%),
+    rgba(15, 23, 42, 0.22) !important;
+  backdrop-filter: blur(10px) saturate(1.08);
+  -webkit-backdrop-filter: blur(10px) saturate(1.08);
+}
+
+html[data-theme="light"] #settingsDialog .account-dialog__card,
+html[data-theme="light"] #accountDialog .account-dialog__card,
+html[data-theme="light"] #spectateDialog .account-dialog__card,
+html[data-theme="light"] #backupDialog .account-dialog__card,
+html[data-theme="light"] #timerDialog .account-dialog__card,
+html[data-theme="light"] .settings-dialog__card,
+html[data-theme="light"] .account-dialog__card {
+  border-color: rgba(96, 165, 250, 0.28) !important;
+  background:
+    linear-gradient(180deg, rgba(250, 253, 255, 0.98), rgba(230, 243, 255, 0.94)),
+    #f8fbff !important;
+  color: #0f172a !important;
+  box-shadow: 0 24px 68px rgba(30, 64, 175, 0.16) !important;
+}
+
+html[data-theme="light"] #settingsDialog .account-dialog__head,
+html[data-theme="light"] #accountDialog .account-dialog__head,
+html[data-theme="light"] #spectateDialog .account-dialog__head,
+html[data-theme="light"] #backupDialog .account-dialog__head,
+html[data-theme="light"] #timerDialog .account-dialog__head {
+  margin: -4px -4px 14px;
+  padding: 10px 10px 16px !important;
+  border-bottom: 1px solid rgba(96, 165, 250, 0.16);
+  background:
+    radial-gradient(circle at 8% 0%, rgba(37, 99, 235, 0.1), transparent 42%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.8), rgba(239, 248, 255, 0.52));
+  border-radius: 20px 20px 14px 14px;
+}
+
+html[data-theme="light"] .account-dialog__head h3,
+html[data-theme="light"] .account-dialog__head strong,
+html[data-theme="light"] .settings-dialog .account-dialog__head h3 {
+  color: #10213f !important;
+}
+
+html[data-theme="light"] .account-dialog__head > div > span,
+html[data-theme="light"] .account-dialog__head span,
+html[data-theme="light"] .account-dialog .eyebrow {
+  color: #42638d !important;
+}
+
+html[data-theme="light"] #settingsDialog .settings-modal-card,
+html[data-theme="light"] #settingsDialog .settings-about-card,
+html[data-theme="light"] #accountDialog .account-card,
+html[data-theme="light"] #accountDialog .account-feed-panel,
+html[data-theme="light"] #accountDialog .account-feed-empty,
+html[data-theme="light"] #accountDialog .account-field,
+html[data-theme="light"] #accountDialog .account-login-card,
+html[data-theme="light"] .settings-dialog .settings-modal-card .settings-group {
+  border-color: rgba(96, 165, 250, 0.2) !important;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.84), rgba(230, 243, 255, 0.62)),
+    #f7fbff !important;
+  color: #10213f !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.78) !important;
+}
+
+html[data-theme="light"] .settings-tabs {
+  border-bottom-color: rgba(96, 165, 250, 0.16) !important;
+  background: linear-gradient(180deg, rgba(247, 252, 255, 0.96), rgba(228, 242, 255, 0.88)) !important;
+}
+
+html[data-theme="light"] .settings-tab {
+  background: rgba(255, 255, 255, 0.38) !important;
+  color: #3b5578 !important;
+}
+
+html[data-theme="light"] .settings-tab--active {
+  border-bottom-color: #2563eb !important;
+  background: rgba(255, 255, 255, 0.92) !important;
+  color: #1d4ed8 !important;
+}
+
+html[data-theme="light"] #settingsDialog .settings-body {
+  background:
+    linear-gradient(180deg, rgba(239, 248, 255, 0.72), rgba(248, 251, 255, 0.92)),
+    #f8fbff !important;
+}
+
+html[data-theme="light"] #settingsDialog .settings-about-card h3,
+html[data-theme="light"] #settingsDialog .settings-about-card strong,
+html[data-theme="light"] #accountDialog .account-card__head h4,
+html[data-theme="light"] #accountDialog .account-login-card strong,
+html[data-theme="light"] #accountDialog .account-field label,
+html[data-theme="light"] .account-login-card--compact strong {
+  color: #10213f !important;
+}
+
+html[data-theme="light"] #settingsDialog .settings-about-card p,
+html[data-theme="light"] #settingsDialog .settings-about-card span,
+html[data-theme="light"] #settingsDialog .account-login-card span,
+html[data-theme="light"] #accountDialog .account-login-card span,
+html[data-theme="light"] #accountDialog .account-card__head span,
+html[data-theme="light"] #accountDialog .account-field span,
+html[data-theme="light"] #accountDialog .account-feed-empty,
+html[data-theme="light"] .account-login-card--compact span {
+  color: #5f7898 !important;
+}
+
+html[data-theme="light"] #settingsDialog .account-login-card,
+html[data-theme="light"] #accountDialog .account-login-card {
+  border-color: rgba(14, 165, 233, 0.26) !important;
+  background:
+    linear-gradient(135deg, rgba(224, 242, 254, 0.82), rgba(219, 234, 254, 0.7)),
+    #f0f9ff !important;
+}
+
+html[data-theme="light"] .account-form input,
+html[data-theme="light"] .account-form select,
+html[data-theme="light"] .account-form textarea,
+html[data-theme="light"] #settingsDialog .settings-input {
+  border-color: rgba(96, 165, 250, 0.22) !important;
+  background: rgba(255, 255, 255, 0.82) !important;
+  color: #10213f !important;
+}
+
+html[data-theme="light"] .composer-sync-disabled,
+html[data-theme="light"] .composer-sync-disabled:hover {
+  border-color: rgba(148, 163, 184, 0.2) !important;
+  background: rgba(226, 232, 240, 0.72) !important;
+  color: #64748b !important;
+  box-shadow: none !important;
+  cursor: not-allowed !important;
+}
+
+html[data-theme="light"] .composer-sync-disabled svg {
+  color: #64748b !important;
+}
+
+/* v192 agency-grade theme polish: final layer, keeps behavior unchanged. */
+:root {
+  --premium-dark-bg: #07111f;
+  --premium-dark-surface: rgba(13, 25, 43, 0.86);
+  --premium-dark-surface-strong: rgba(15, 29, 50, 0.94);
+  --premium-dark-border: rgba(142, 180, 221, 0.18);
+  --premium-dark-text: #e7f1ff;
+  --premium-dark-muted: #9fb6cf;
+  --premium-blue: #2f7df4;
+  --premium-sky: #0ea5e9;
+  --premium-teal: #14b8a6;
+  --premium-violet: #7c3aed;
+  --premium-danger: #e85d75;
+  --premium-shadow: 0 22px 70px rgba(2, 8, 23, 0.38);
+}
+
+html[data-theme="light"] {
+  --bg: #f4f9ff;
+  --bg-gradient: linear-gradient(180deg, #eef7ff 0%, #f7fbff 48%, #ffffff 100%);
+  --card-bg: rgba(255, 255, 255, 0.86);
+  --nav-bg: rgba(248, 252, 255, 0.84);
+  --panel-bg: rgba(255, 255, 255, 0.78);
+  --panel-soft: rgba(47, 125, 244, 0.055);
+  --text-main: #10213f;
+  --text-sub: #58708f;
+  --border: rgba(87, 124, 170, 0.18);
+  --accent-blue: #2f7df4;
+  --accent-cyan: #0f9f9a;
+  --accent-violet: #7557e8;
+  --accent-gradient: linear-gradient(135deg, #2f7df4 0%, #0ea5e9 56%, #14b8a6 100%);
+  --shadow: rgba(35, 75, 130, 0.09);
+  --shadow-hover: rgba(35, 75, 130, 0.16);
+}
+
+body {
+  text-rendering: geometricPrecision;
+}
+
+html[data-theme="light"] body {
+  background:
+    radial-gradient(circle at 16% 7%, rgba(47, 125, 244, 0.14), transparent 28%),
+    radial-gradient(circle at 86% 10%, rgba(20, 184, 166, 0.1), transparent 25%),
+    linear-gradient(180deg, #edf7ff 0%, #f5fbff 44%, #ffffff 100%) !important;
+  color: #10213f !important;
+}
+
+html[data-theme="light"] .background-field {
+  opacity: 0.9;
+  background:
+    linear-gradient(140deg, rgba(47, 125, 244, 0.08), transparent 44%),
+    linear-gradient(28deg, rgba(20, 184, 166, 0.06), transparent 44%),
+    linear-gradient(330deg, rgba(124, 58, 237, 0.045), transparent 42%) !important;
+}
+
+html[data-theme="light"] .study-shell {
+  background: transparent !important;
+}
+
+html[data-theme="light"] .quick-action-rail,
+html[data-theme="light"] .top-nav {
+  border-color: rgba(127, 163, 204, 0.22) !important;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.82), rgba(241, 248, 255, 0.7)),
+    rgba(248, 252, 255, 0.76) !important;
+  box-shadow: 0 12px 34px rgba(35, 75, 130, 0.1) !important;
+  backdrop-filter: blur(22px) saturate(1.12) !important;
+  -webkit-backdrop-filter: blur(22px) saturate(1.12) !important;
+}
+
+html[data-theme="light"] .quick-action-track {
+  border-color: rgba(127, 163, 204, 0.22) !important;
+  background: rgba(255, 255, 255, 0.58) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.78) !important;
+}
+
+html[data-theme="light"] .quick-action,
+html[data-theme="light"] .icon-button,
+html[data-theme="light"] .btn-small {
+  border-color: rgba(127, 163, 204, 0.2) !important;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.94), rgba(238,247,255,0.74)),
+    #ffffff !important;
+  color: #10213f !important;
+  box-shadow: 0 8px 22px rgba(35, 75, 130, 0.09) !important;
+}
+
+html[data-theme="light"] .quick-action:hover,
+html[data-theme="light"] .icon-button:hover,
+html[data-theme="light"] .btn-small:hover {
+  border-color: rgba(47, 125, 244, 0.3) !important;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,1), rgba(231,243,255,0.9)),
+    #ffffff !important;
+  color: #1d4ed8 !important;
+  box-shadow: 0 14px 30px rgba(47, 125, 244, 0.16) !important;
+  transform: translateY(-1px);
+}
+
+html[data-theme="light"] .btn-small--primary,
+html[data-theme="light"] .btn-small--accent,
+html[data-theme="light"] .icon-button--accent {
+  border-color: rgba(47, 125, 244, 0.35) !important;
+  background: linear-gradient(135deg, #2f7df4, #0ea5e9) !important;
+  color: #ffffff !important;
+  box-shadow: 0 16px 32px rgba(47, 125, 244, 0.22) !important;
+}
+
+html[data-theme="light"] .brand-pill {
+  border-color: rgba(47, 125, 244, 0.18) !important;
+  background: rgba(230, 244, 255, 0.82) !important;
+  color: #1d4ed8 !important;
+}
+
+html[data-theme="light"] .hero-strip__content,
+html[data-theme="light"] .unit-section,
+html[data-theme="light"] .status-strip,
+html[data-theme="light"] .plain-panel,
+html[data-theme="light"] .chat-shell,
+html[data-theme="light"] .settings-group,
+html[data-theme="light"] .chronos-panel,
+html[data-theme="light"] .chart-shell,
+html[data-theme="light"] .subject-card,
+html[data-theme="light"] .mission-card,
+html[data-theme="light"] .pomo-card,
+html[data-theme="light"] .paper-section,
+html[data-theme="light"] .chapter-row,
+html[data-theme="light"] .account-card,
+html[data-theme="light"] .account-feed-panel,
+html[data-theme="light"] .backup-card,
+html[data-theme="light"] .backup-stat,
+html[data-theme="light"] .backup-settings-row,
+html[data-theme="light"] .backup-vault-item,
+html[data-theme="light"] .chat-update-composer,
+html[data-theme="light"] .composer-card,
+html[data-theme="light"] .composer-panel {
+  border-color: rgba(127, 163, 204, 0.2) !important;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.88), rgba(239,248,255,0.66)),
+    #ffffff !important;
+  color: #10213f !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.84),
+    0 18px 54px rgba(35, 75, 130, 0.1) !important;
+}
+
+html[data-theme="light"] .unit-section {
+  overflow: clip;
+  border-radius: 22px;
+}
+
+html[data-theme="light"] .unit-section::before {
+  opacity: 0.38 !important;
+  filter: blur(8px);
+}
+
+html[data-theme="light"] .unit-section:hover,
+html[data-theme="light"] .subject-card:hover,
+html[data-theme="light"] .mission-card:hover {
+  border-color: rgba(89, 128, 176, 0.18) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.86),
+    0 20px 52px rgba(35, 75, 130, 0.11) !important;
+}
+
+html[data-theme="light"] h1,
+html[data-theme="light"] h2,
+html[data-theme="light"] h3,
+html[data-theme="light"] h4,
+html[data-theme="light"] .unit-section__header h2,
+html[data-theme="light"] .chart-shell__head h3,
+html[data-theme="light"] .mission-card__head h3,
+html[data-theme="light"] .subject-card strong,
+html[data-theme="light"] .paper-section__title,
+html[data-theme="light"] .ch-name {
+  color: #10213f !important;
+  text-shadow: none !important;
+}
+
+html[data-theme="light"] p,
+html[data-theme="light"] small,
+html[data-theme="light"] .unit-section__note,
+html[data-theme="light"] .chart-shell__head p,
+html[data-theme="light"] .mission-card__head p,
+html[data-theme="light"] .account-card__head span,
+html[data-theme="light"] .settings-help,
+html[data-theme="light"] .settings-row small,
+html[data-theme="light"] .ch-pct,
+html[data-theme="light"] .backup-card p,
+html[data-theme="light"] .backup-card__meta {
+  color: #58708f !important;
+}
+
+html[data-theme="light"] input,
+html[data-theme="light"] select,
+html[data-theme="light"] textarea,
+html[data-theme="light"] .settings-input,
+html[data-theme="light"] .composer-input-field,
+html[data-theme="light"] .composer-textarea,
+html[data-theme="light"] .chat-input,
+html[data-theme="light"] #composerFinalTextArea {
+  border-color: rgba(127, 163, 204, 0.24) !important;
+  background: rgba(255,255,255,0.86) !important;
+  color: #10213f !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.82) !important;
+}
+
+html[data-theme="light"] input::placeholder,
+html[data-theme="light"] textarea::placeholder {
+  color: #7b93b0 !important;
+}
+
+html[data-theme="light"] input:focus,
+html[data-theme="light"] select:focus,
+html[data-theme="light"] textarea:focus,
+html[data-theme="light"] .settings-input:focus,
+html[data-theme="light"] .chat-input:focus {
+  border-color: rgba(47, 125, 244, 0.48) !important;
+  box-shadow: 0 0 0 3px rgba(47, 125, 244, 0.13) !important;
+}
+
+html[data-theme="light"] .account-dialog__backdrop,
+html[data-theme="light"] .track-dialog__backdrop {
+  background:
+    radial-gradient(circle at 18% 8%, rgba(47, 125, 244, 0.14), transparent 34%),
+    rgba(11, 28, 52, 0.22) !important;
+  backdrop-filter: blur(12px) saturate(1.08) !important;
+  -webkit-backdrop-filter: blur(12px) saturate(1.08) !important;
+}
+
+html[data-theme="light"] .account-dialog__card,
+html[data-theme="light"] .settings-dialog__card,
+html[data-theme="light"] .backup-dialog__card,
+html[data-theme="light"] .spectate-dialog__card,
+html[data-theme="light"] .timer-dialog__card,
+html[data-theme="light"] .developer-dialog__card,
+html[data-theme="light"] .chronos-config-dialog__card {
+  width: min(1100px, calc(100vw - 32px)) !important;
+  max-height: min(820px, calc(100vh - 28px)) !important;
+  border: 1px solid rgba(47, 125, 244, 0.22) !important;
+  border-radius: 24px !important;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.97), rgba(235,246,255,0.93)),
+    #f8fbff !important;
+  color: #10213f !important;
+  box-shadow: 0 30px 80px rgba(30, 64, 120, 0.2) !important;
+}
+
+html[data-theme="light"] .account-dialog__head {
+  border-bottom-color: rgba(127, 163, 204, 0.18) !important;
+}
+
+html[data-theme="light"] .account-dialog__head h3,
+html[data-theme="light"] .account-dialog__head strong {
+  color: #10213f !important;
+}
+
+html[data-theme="light"] .account-dialog__head span {
+  color: #58708f !important;
+}
+
+html[data-theme="light"] .settings-dialog .settings-modal-card {
+  border-color: rgba(127, 163, 204, 0.2) !important;
+  border-radius: 22px !important;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.94), rgba(236,247,255,0.8)),
+    #ffffff !important;
+  box-shadow: 0 18px 42px rgba(35, 75, 130, 0.08) !important;
+}
+
+html[data-theme="light"] .settings-tabs {
+  background:
+    linear-gradient(180deg, rgba(248,252,255,0.98), rgba(230,243,255,0.9)) !important;
+}
+
+html[data-theme="light"] .settings-tab {
+  min-height: 42px;
+  color: #435b7a !important;
+}
+
+html[data-theme="light"] .settings-tab--active {
+  background: rgba(255,255,255,0.92) !important;
+  color: #1d4ed8 !important;
+}
+
+html[data-theme="light"] .account-login-card,
+html[data-theme="light"] .settings-about-card,
+html[data-theme="light"] .account-feed-empty,
+html[data-theme="light"] .chat-settings-panel,
+html[data-theme="light"] .spectate-empty,
+html[data-theme="light"] .spectate-user-row,
+html[data-theme="light"] .chat-item__card {
+  border-color: rgba(127, 163, 204, 0.22) !important;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.86), rgba(230,243,255,0.68)),
+    #f6fbff !important;
+  color: #10213f !important;
+}
+
+html[data-theme="light"] #chatFeed .chat-item__card,
+html[data-theme="light"] #chatShowAllList .chat-item__card,
+html[data-theme="light"] #chatExpandBody .chat-item__card,
+html[data-theme="light"] .chat-feed .chat-item__card {
+  border-color: rgba(127, 163, 204, 0.22) !important;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(235, 247, 255, 0.78)),
+    #ffffff !important;
+  color: #10213f !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.84),
+    0 14px 34px rgba(35, 75, 130, 0.08) !important;
+}
+
+html[data-theme="light"] #chatFeed .chat-item--grayed .chat-item__card,
+html[data-theme="light"] #chatShowAllList .chat-item--grayed .chat-item__card {
+  background:
+    linear-gradient(180deg, rgba(244, 248, 252, 0.92), rgba(226, 235, 245, 0.78)),
+    #eef4fb !important;
+  opacity: 0.78;
+}
+
+html[data-theme="light"] #chatFeed .chat-item__body,
+html[data-theme="light"] #chatShowAllList .chat-item__body,
+html[data-theme="light"] #chatExpandBody .chat-item__body {
+  color: #13243f !important;
+}
+
+html[data-theme="light"] #chatFeed .chat-item__meta,
+html[data-theme="light"] #chatShowAllList .chat-item__meta,
+html[data-theme="light"] #chatExpandBody .chat-item__meta {
+  color: #607894 !important;
+}
+
+html[data-theme="light"] #chatShowAllList .chat-item__serial,
+html[data-theme="light"] #chatFeed .chat-item__serial {
+  border-color: rgba(127, 163, 204, 0.22) !important;
+  background: linear-gradient(180deg, rgba(226, 242, 255, 0.95), rgba(206, 230, 249, 0.86)) !important;
+  color: #42638d !important;
+  box-shadow: none !important;
+}
+
+html[data-theme="dark"] #chatFeed .chat-item__card,
+html[data-theme="dark"] #chatShowAllList .chat-item__card,
+html[data-theme="dark"] #chatExpandBody .chat-item__card {
+  background:
+    linear-gradient(180deg, rgba(22, 36, 60, 0.96), rgba(12, 22, 38, 0.92)),
+    rgba(15, 23, 42, 0.94) !important;
+  border-color: rgba(142, 180, 221, 0.16) !important;
+  color: #e7f1ff !important;
+}
+
+html[data-theme="dark"] #chatFeed .chat-item__body,
+html[data-theme="dark"] #chatShowAllList .chat-item__body,
+html[data-theme="dark"] #chatExpandBody .chat-item__body {
+  color: #e7f1ff !important;
+}
+
+.chat-edit-dialog__card {
+  width: min(980px, calc(100vw - 30px)) !important;
+  max-height: min(820px, calc(100vh - 28px)) !important;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.chat-edit-plate {
+  display: grid;
+  gap: 12px;
+  min-height: 0;
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02)),
+    var(--panel-bg);
+}
+
+.chat-edit-dialog__card.is-expanded {
+  width: min(1160px, calc(100vw - 22px)) !important;
+  max-height: calc(100vh - 18px) !important;
+}
+
+.chat-edit-dialog__card.is-expanded .chat-edit-plate {
+  min-height: min(68vh, 680px);
+}
+
+.chat-edit-textarea {
+  width: 100%;
+  min-height: 320px;
+  resize: vertical;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text-main);
+  font: 500 0.98rem/1.65 Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  white-space: pre-wrap;
+}
+
+.chat-edit-dialog__card.is-expanded .chat-edit-textarea {
+  min-height: min(62vh, 620px);
+}
+
+.chat-edit-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  color: var(--text-sub);
+  font-size: 0.78rem;
+}
+
+.chat-edit-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+html[data-theme="light"] .chat-edit-plate {
+  border-color: rgba(127, 163, 204, 0.22) !important;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.88), rgba(230, 243, 255, 0.68)),
+    #f6fbff !important;
+}
+
+html[data-theme="light"] .chat-edit-textarea {
+  border-color: rgba(127, 163, 204, 0.28) !important;
+  background: rgba(255, 255, 255, 0.92) !important;
+  color: #10213f !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.86) !important;
+}
+
+html[data-theme="light"] .chat-edit-meta {
+  color: #607894 !important;
+}
+
+html[data-theme="light"] .account-login-card strong,
+html[data-theme="light"] .settings-about-card strong,
+html[data-theme="light"] .settings-about-card h3,
+html[data-theme="light"] .chat-item__head strong,
+html[data-theme="light"] .chat-item__body {
+  color: #10213f !important;
+}
+
+html[data-theme="light"] .account-login-card span,
+html[data-theme="light"] .settings-about-card p,
+html[data-theme="light"] .chat-item__meta,
+html[data-theme="light"] .spectate-empty {
+  color: #58708f !important;
+}
+
+html[data-theme="light"] .progress-line,
+html[data-theme="light"] .chapter-progress-bar,
+html[data-theme="light"] .metric-track {
+  box-shadow: none !important;
+  filter: none !important;
+}
+
+html[data-theme="light"] .composer-sync-disabled,
+html[data-theme="light"] .composer-sync-disabled:hover {
+  opacity: 0.72;
+  transform: none !important;
+}
+
+html[data-theme="light"] * {
+  scrollbar-color: rgba(96, 165, 250, 0.42) rgba(226, 242, 255, 0.65);
+}
+
+html[data-theme="dark"] body {
+  background:
+    radial-gradient(circle at 16% 6%, rgba(47, 125, 244, 0.12), transparent 30%),
+    radial-gradient(circle at 84% 18%, rgba(20, 184, 166, 0.08), transparent 28%),
+    linear-gradient(180deg, #07111f 0%, #081827 48%, #06111d 100%) !important;
+}
+
+html[data-theme="dark"] .quick-action-rail,
+html[data-theme="dark"] .top-nav {
+  background: rgba(7, 17, 31, 0.76) !important;
+  border-color: rgba(142, 180, 221, 0.14) !important;
+  box-shadow: 0 16px 44px rgba(0, 0, 0, 0.34) !important;
+}
+
+html[data-theme="dark"] .hero-strip__content,
+html[data-theme="dark"] .unit-section,
+html[data-theme="dark"] .chat-shell,
+html[data-theme="dark"] .status-strip,
+html[data-theme="dark"] .plain-panel,
+html[data-theme="dark"] .subject-card,
+html[data-theme="dark"] .paper-section,
+html[data-theme="dark"] .chapter-row,
+html[data-theme="dark"] .account-dialog__card {
+  border-color: rgba(142, 180, 221, 0.16) !important;
+  background:
+    linear-gradient(180deg, rgba(15, 29, 50, 0.9), rgba(8, 18, 32, 0.86)),
+    rgba(13, 25, 43, 0.9) !important;
+  color: var(--premium-dark-text) !important;
+  box-shadow: var(--premium-shadow) !important;
+}
+
+html[data-theme] .unit-section:hover {
+  border-color: rgba(126, 158, 198, 0.22) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.04),
+    0 18px 48px rgba(2, 8, 23, 0.2) !important;
+}
+
+html[data-theme="light"] .unit-section:hover {
+  border-color: rgba(89, 128, 176, 0.18) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.82),
+    0 18px 48px rgba(35, 75, 130, 0.1) !important;
+}
+
+html[data-theme] .unit-section:hover::before {
+  opacity: 0.22 !important;
+}
+
+html[data-theme="dark"] h1,
+html[data-theme="dark"] h2,
+html[data-theme="dark"] h3,
+html[data-theme="dark"] h4 {
+  color: var(--premium-dark-text) !important;
+}
+
+html[data-theme="dark"] p,
+html[data-theme="dark"] small,
+html[data-theme="dark"] .unit-section__note {
+  color: var(--premium-dark-muted) !important;
+}
+
+@media (max-width: 820px) {
+  html[data-theme="light"] .account-dialog__card,
+  html[data-theme="light"] .settings-dialog__card,
+  html[data-theme="light"] .backup-dialog__card,
+  html[data-theme="light"] .spectate-dialog__card,
+  html[data-theme="light"] .timer-dialog__card {
+    width: calc(100vw - 18px) !important;
+    max-height: calc(100vh - 18px) !important;
+    border-radius: 18px !important;
+    padding: 14px !important;
+  }
+
+  html[data-theme="light"] .quick-action-track {
+    border-radius: 18px !important;
+  }
+
+  html[data-theme="light"] .unit-section,
+  html[data-theme="light"] .chat-shell,
+  html[data-theme="light"] .subject-card {
+    border-radius: 18px !important;
+  }
+}
+/* Premium Smart Update Composer refresh - v194 */
+#chatUpdateComposer.chat-update-composer {
+  overflow: hidden;
+  padding: 0;
+  gap: 0;
+  border-radius: 28px;
+  border: 1px solid rgba(148, 163, 184, 0.24);
+  background:
+    radial-gradient(circle at 15% 0%, rgba(59, 130, 246, 0.16), transparent 34%),
+    linear-gradient(180deg, rgba(15, 23, 42, 0.96), rgba(15, 23, 42, 0.9));
+  box-shadow: 0 24px 70px rgba(2, 6, 23, 0.34);
+}
+
+#chatUpdateComposer .composer-wizard-header,
+#chatUpdateComposer .composer-wizard-footer {
+  padding: 20px 24px;
+  border-color: rgba(148, 163, 184, 0.18);
+}
+
+#chatUpdateComposer .composer-wizard-title h3 {
+  font-size: clamp(1.1rem, 2vw, 1.55rem);
+  letter-spacing: -0.01em;
+}
+
+#chatUpdateComposer .composer-wizard-title span {
+  display: block;
+  margin-top: 4px;
+  font-size: 0.93rem;
+}
+
+#chatUpdateComposer .composer-step-indicator {
+  padding: 10px 16px;
+  font-size: 0.92rem;
+  border-radius: 16px;
+}
+
+#chatUpdateComposer .composer-step-tabs {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: 8px;
+  padding: 12px 24px;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.14);
+  background: rgba(15, 23, 42, 0.32);
+}
+
+#chatUpdateComposer .composer-step-tabs::before {
+  content: "";
+  position: absolute;
+  left: 42px;
+  right: 42px;
+  top: 50%;
+  height: 2px;
+  transform: translateY(-50%);
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(37, 99, 235, 0.55), rgba(148, 163, 184, 0.16));
+  pointer-events: none;
+}
+
+#chatUpdateComposer .composer-step-tab {
+  position: relative;
+  z-index: 1;
+  width: 42px;
+  height: 42px;
+  min-width: 42px;
+  min-height: 42px;
+  padding: 0;
+  border: 1px solid rgba(148, 163, 184, 0.24);
+  border-radius: 999px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.025)),
+    rgba(15, 23, 42, 0.82);
+  color: var(--text-sub);
+  display: inline-grid;
+  place-items: center;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(2, 6, 23, 0.14);
+  transition: transform 0.16s ease, background 0.16s ease, border-color 0.16s ease, color 0.16s ease, box-shadow 0.16s ease;
+}
+
+#chatUpdateComposer .composer-step-tab span {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  background: rgba(148, 163, 184, 0.14);
+  font-size: 0.9rem;
+  font-weight: 950;
+  line-height: 1;
+}
+
+#chatUpdateComposer .composer-step-tab:hover:not(:disabled) {
+  transform: translateY(-2px);
+  border-color: rgba(96, 165, 250, 0.42);
+  background: rgba(59, 130, 246, 0.12);
+  color: var(--text-main);
+  box-shadow: 0 12px 26px rgba(37, 99, 235, 0.18);
+}
+
+#chatUpdateComposer .composer-step-tab.is-active {
+  color: #fff;
+  border-color: rgba(59, 130, 246, 0.65);
+  background: linear-gradient(135deg, #2563eb, #38bdf8);
+  box-shadow: 0 14px 30px rgba(37, 99, 235, 0.32);
+}
+
+#chatUpdateComposer .composer-step-tab.is-active span {
+  background: rgba(255, 255, 255, 0.22);
+}
+
+#chatUpdateComposer .composer-step-tab.is-disabled {
+  opacity: 0.42;
+  cursor: not-allowed;
+}
+
+#chatUpdateComposer .composer-wizard-body {
+  padding: 24px;
+}
+
+#chatUpdateComposer .composer-accordion {
+  gap: 14px;
+}
+
+#chatUpdateComposer .accordion-item {
+  border-radius: 22px;
+  border: 1px solid rgba(148, 163, 184, 0.16);
+  background: rgba(255, 255, 255, 0.035);
+  box-shadow: 0 12px 34px rgba(2, 6, 23, 0.12);
+}
+
+#chatUpdateComposer .accordion-item.is-active {
+  background: rgba(15, 23, 42, 0.52);
+  border-color: rgba(96, 165, 250, 0.5);
+}
+
+#chatUpdateComposer .accordion-header {
+  padding: 18px 20px;
+  gap: 14px;
+}
+
+#chatUpdateComposer .accordion-number {
+  width: 34px;
+  height: 34px;
+  font-size: 0.95rem;
+}
+
+#chatUpdateComposer .accordion-title {
+  font-size: 1rem;
+  font-weight: 900;
+}
+
+#chatUpdateComposer .accordion-content {
+  padding: 20px;
+}
+
+#chatUpdateComposer .composer-instruction-note {
+  align-items: center !important;
+  gap: 12px !important;
+  margin-bottom: 20px !important;
+  padding: 15px 18px !important;
+  border-radius: 16px !important;
+  border: 1px solid rgba(96, 165, 250, 0.24) !important;
+  background: rgba(59, 130, 246, 0.1) !important;
+  color: var(--text-main) !important;
+  line-height: 1.55;
+}
+
+#chatUpdateComposer .composer-basic-grid {
+  display: grid;
+  grid-template-columns: minmax(220px, 0.85fr) minmax(280px, 1.15fr);
+  gap: 22px;
+  align-items: end;
+}
+
+#chatUpdateComposer .composer-field-card {
+  display: grid;
+  gap: 10px;
+}
+
+#chatUpdateComposer .composer-input-field,
+#chatUpdateComposer #composerTotalClasses {
+  min-height: 48px;
+  border-radius: 16px;
+  font-size: 1rem;
+  border: 1px solid rgba(148, 163, 184, 0.24);
+  background: rgba(255, 255, 255, 0.055);
+  color: var(--text-main);
+}
+
+#chatUpdateComposer #composerQuality {
+  width: 100%;
+  accent-color: var(--accent-blue);
+}
+
+#chatUpdateComposer .composer-range-labels {
+  display: flex;
+  justify-content: space-between;
+  color: var(--text-sub);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+#chatUpdateComposer .composer-duration-section {
+  margin-top: 26px;
+  padding-top: 22px;
+  border-top: 1px solid rgba(148, 163, 184, 0.16);
+}
+
+#chatUpdateComposer .composer-section-kicker {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 18px;
+  color: var(--text-main);
+}
+
+#chatUpdateComposer .composer-section-kicker svg {
+  flex: 0 0 auto;
+  color: var(--accent-blue);
+}
+
+#chatUpdateComposer .composer-section-kicker strong,
+#chatUpdateComposer .composer-section-kicker span {
+  display: block;
+}
+
+#chatUpdateComposer .composer-section-kicker span {
+  margin-top: 4px;
+  color: var(--text-sub);
+  font-size: 0.92rem;
+}
+
+#chatUpdateComposer .composer-time-card-row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+#chatUpdateComposer .composer-time-card {
+  margin: 0;
+  padding: 18px;
+  border-radius: 20px;
+  border-color: rgba(148, 163, 184, 0.2);
+  background: rgba(255, 255, 255, 0.045);
+}
+
+#chatUpdateComposer .composer-time-card__head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+#chatUpdateComposer .composer-time-card__icon {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
+  color: #60a5fa;
+  background: rgba(59, 130, 246, 0.12);
+}
+
+#chatUpdateComposer .adjuster-value {
+  margin: 10px 0 12px;
+  min-width: 0;
+  text-align: center;
+  font-size: 1.55rem;
+}
+
+#chatUpdateComposer .composer-time-card__actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+#chatUpdateComposer .composer-time-card__actions button {
+  min-height: 42px;
+  border-radius: 12px;
+  font-weight: 900;
+}
+
+#chatUpdateComposer .composer-time-card__actions button[data-delta^="-"] {
+  color: #ef4444;
+}
+
+#chatUpdateComposer .composer-time-card__actions button[data-delta="60"],
+#chatUpdateComposer .composer-time-card__actions button[data-delta="15"] {
+  color: #16a34a;
+}
+
+#chatUpdateComposer .composer-grid {
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 12px;
+}
+
+#chatUpdateComposer .composer-subject-card {
+  justify-content: flex-start;
+  gap: 12px;
+  min-height: 78px;
+  padding: 14px;
+}
+
+#chatUpdateComposer .composer-subject-card__media {
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 48px;
+  height: 48px;
+  border-radius: 16px;
+  background: rgba(59, 130, 246, 0.1);
+  overflow: hidden;
+}
+
+#chatUpdateComposer .composer-subject-card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 6px;
+}
+
+#chatUpdateComposer .composer-subject-card__text {
+  text-align: left;
+  line-height: 1.2;
+}
+
+#chatUpdateComposer .composer-chapter-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 16px;
+}
+
+#chatUpdateComposer .composer-chapter-card {
+  justify-content: flex-start;
+  min-height: 86px;
+  padding: 16px 18px;
+  gap: 14px;
+  text-align: left;
+}
+
+#chatUpdateComposer .composer-chapter-code {
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  color: #60a5fa;
+  background: rgba(59, 130, 246, 0.12);
+  font-size: 1.15rem;
+  font-weight: 950;
+}
+
+#chatUpdateComposer .composer-chapter-name {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+#chatUpdateComposer .composer-chapter-arrow {
+  color: var(--text-sub);
+}
+
+#chatUpdateComposer .composer-custom-line-card {
+  padding: 16px;
+}
+
+#chatUpdateComposer .composer-inline-entry {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: center;
+}
+
+#chatUpdateComposer .composer-prefix-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 42px;
+  padding: 0 12px;
+  border-radius: 12px;
+  background: rgba(59, 130, 246, 0.1);
+  color: var(--text-main);
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+#chatUpdateComposer .composer-lecture-panel {
+  display: grid;
+  gap: 18px;
+  padding: 18px;
+  border-radius: 22px;
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  background: rgba(255, 255, 255, 0.045);
+}
+
+#chatUpdateComposer .composer-lecture-toolbar {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 18px;
+  align-items: start;
+}
+
+#chatUpdateComposer .composer-class-type-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+#chatUpdateComposer .composer-type-chip {
+  min-height: 40px;
+  min-width: 98px;
+}
+
+#chatUpdateComposer .composer-total-control {
+  display: grid;
+  gap: 8px;
+  justify-items: end;
+}
+
+#chatUpdateComposer .composer-total-stepper {
+  display: grid;
+  grid-template-columns: 40px 70px 40px;
+  gap: 8px;
+  align-items: center;
+}
+
+#chatUpdateComposer .composer-total-stepper button {
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgba(148, 163, 184, 0.24);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.07);
+  color: var(--text-main);
+  font-size: 1.1rem;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+#chatUpdateComposer #composerTotalClasses {
+  width: 70px;
+  min-height: 40px;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+#chatUpdateComposer .composer-lecture-summary {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: rgba(59, 130, 246, 0.1);
+  color: var(--text-main);
+  font-size: 0.85rem;
+  font-weight: 800;
+}
+
+#chatUpdateComposer .composer-lecture-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(62px, 1fr));
+  gap: 10px;
+}
+
+#chatUpdateComposer .composer-lecture-chip {
+  min-height: 46px;
+  border-radius: 14px;
+  padding: 0;
+}
+
+#chatUpdateComposer .composer-help-text {
+  margin: 0;
+  color: var(--text-sub);
+  font-size: 0.82rem;
+}
+
+#chatUpdateComposer .btn-small--primary {
+  background: linear-gradient(135deg, #2563eb, #1d4ed8) !important;
+  color: #fff !important;
+  border-color: rgba(37, 99, 235, 0.55) !important;
+  box-shadow: 0 12px 28px rgba(37, 99, 235, 0.24);
+}
+
+html[data-theme="light"] #chatUpdateComposer.chat-update-composer {
+  border-color: rgba(203, 213, 225, 0.9);
+  background:
+    radial-gradient(circle at 15% 0%, rgba(219, 234, 254, 0.95), transparent 36%),
+    linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+  color: #0f172a;
+  box-shadow: 0 22px 58px rgba(15, 23, 42, 0.1);
+}
+
+html[data-theme="light"] #chatUpdateComposer .composer-step-tabs {
+  background: #f8fbff;
+  border-color: rgba(203, 213, 225, 0.82);
+}
+
+html[data-theme="light"] #chatUpdateComposer .composer-step-tabs::before {
+  background: linear-gradient(90deg, rgba(37, 99, 235, 0.4), rgba(203, 213, 225, 0.8));
+}
+
+html[data-theme="light"] #chatUpdateComposer .composer-step-tab,
+html[data-theme="light"] #chatUpdateComposer .accordion-item,
+html[data-theme="light"] #chatUpdateComposer .composer-field-card,
+html[data-theme="light"] #chatUpdateComposer .composer-time-card,
+html[data-theme="light"] #chatUpdateComposer .composer-preview-pane,
+html[data-theme="light"] #chatUpdateComposer .composer-lecture-panel {
+  border-color: rgba(203, 213, 225, 0.86);
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.055);
+}
+
+html[data-theme="light"] #chatUpdateComposer .accordion-item.is-active {
+  background: #ffffff;
+  border-color: rgba(59, 130, 246, 0.35);
+}
+
+html[data-theme="light"] #chatUpdateComposer .composer-instruction-note {
+  background: #eff6ff !important;
+  border-color: rgba(147, 197, 253, 0.72) !important;
+  color: #1e3a8a !important;
+}
+
+html[data-theme="light"] #chatUpdateComposer .composer-input-field,
+html[data-theme="light"] #chatUpdateComposer #composerTotalClasses {
+  background: #ffffff;
+  color: #0f172a;
+  border-color: rgba(203, 213, 225, 0.95);
+}
+
+html[data-theme="light"] #chatUpdateComposer .composer-prefix-pill,
+html[data-theme="light"] #chatUpdateComposer .composer-subject-card__media,
+html[data-theme="light"] #chatUpdateComposer .composer-chapter-code,
+html[data-theme="light"] #chatUpdateComposer .composer-time-card__icon,
+html[data-theme="light"] #chatUpdateComposer .composer-lecture-summary {
+  background: #eff6ff;
+  color: #1d4ed8;
+}
+
+html[data-theme="light"] #chatUpdateComposer .composer-btn {
+  background: #ffffff;
+  color: #0f172a;
+  border-color: rgba(203, 213, 225, 0.95);
+}
+
+html[data-theme="light"] #chatUpdateComposer .composer-btn:hover {
+  background: #f8fbff;
+  border-color: rgba(59, 130, 246, 0.45);
+}
+
+html[data-theme="light"] #chatUpdateComposer .composer-btn.is-selected {
+  color: #1d4ed8;
+  border-color: rgba(37, 99, 235, 0.65);
+  background: linear-gradient(180deg, #eff6ff, #dbeafe);
+  box-shadow: 0 12px 26px rgba(37, 99, 235, 0.12);
+}
+
+html[data-theme="light"] #chatUpdateComposer .composer-step-tab.is-active {
+  color: #ffffff;
+  border-color: rgba(37, 99, 235, 0.72);
+  background: linear-gradient(135deg, #2563eb, #38bdf8);
+  box-shadow: 0 14px 30px rgba(37, 99, 235, 0.22);
+}
+
+html[data-theme="light"] #chatUpdateComposer .composer-step-tab.is-active span {
+  background: rgba(255, 255, 255, 0.24);
+}
+
+@media (max-width: 760px) {
+  #chatUpdateComposer .composer-wizard-header,
+  #chatUpdateComposer .composer-wizard-footer,
+  #chatUpdateComposer .composer-wizard-body,
+  #chatUpdateComposer .composer-step-tabs {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  #chatUpdateComposer .composer-step-tabs {
+    gap: 6px;
+  }
+
+  #chatUpdateComposer .composer-step-tabs::before {
+    left: 28px;
+    right: 28px;
+  }
+
+  #chatUpdateComposer .composer-step-tab {
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+    min-height: 36px;
+  }
+
+  #chatUpdateComposer .composer-step-tab span {
+    width: 24px;
+    height: 24px;
+    font-size: 0.82rem;
+  }
+
+  #chatUpdateComposer .composer-basic-grid,
+  #chatUpdateComposer .composer-time-card-row,
+  #chatUpdateComposer .composer-lecture-toolbar {
+    grid-template-columns: 1fr;
+  }
+
+  #chatUpdateComposer .composer-inline-entry {
+    grid-template-columns: 1fr;
+  }
+
+  #chatUpdateComposer .composer-total-control {
+    justify-items: stretch;
+  }
+
+  #chatUpdateComposer .composer-total-stepper {
+    grid-template-columns: 44px minmax(80px, 1fr) 44px;
+  }
+}
+
+/* App-wide finishing pass - v196 */
+:root {
+  --finish-radius-sm: 12px;
+  --finish-radius-md: 18px;
+  --finish-radius-lg: 24px;
+  --finish-ring: 0 0 0 3px rgba(59, 130, 246, 0.22);
+  --finish-ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(148, 163, 184, 0.34) transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  border: 3px solid transparent;
+  border-radius: 999px;
+  background-clip: padding-box;
+  background-color: rgba(148, 163, 184, 0.34);
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(148, 163, 184, 0.52);
+}
+
+::selection {
+  background: rgba(59, 130, 246, 0.32);
+  color: #ffffff;
+}
+
+body {
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: antialiased;
+  font-variant-numeric: tabular-nums;
+}
+
+body:not(.login-locked) {
+  background:
+    radial-gradient(circle at 18% -8%, rgba(59, 130, 246, 0.2), transparent 30%),
+    radial-gradient(circle at 90% 2%, rgba(168, 85, 247, 0.12), transparent 32%),
+    var(--bg, #07111f);
+}
+
+html[data-theme="light"] body:not(.login-locked) {
+  background:
+    radial-gradient(circle at 18% -8%, rgba(147, 197, 253, 0.42), transparent 32%),
+    radial-gradient(circle at 92% 0%, rgba(125, 211, 252, 0.28), transparent 32%),
+    linear-gradient(180deg, #f8fbff 0%, #eef6ff 52%, #f8fbff 100%);
+}
+
+button,
+input,
+textarea,
+select,
+[tabindex] {
+  font: inherit;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+[role="button"]:focus-visible,
+[tabindex]:focus-visible {
+  outline: none;
+  box-shadow: var(--finish-ring), 0 0 0 1px rgba(59, 130, 246, 0.32) inset;
+}
+
+.study-shell {
+  isolation: isolate;
+}
+
+.top-nav,
+.quick-action-rail {
+  backdrop-filter: blur(22px) saturate(1.18);
+  -webkit-backdrop-filter: blur(22px) saturate(1.18);
+}
+
+.top-nav {
+  border-color: rgba(148, 163, 184, 0.16);
+  box-shadow: 0 16px 38px rgba(2, 6, 23, 0.16);
+}
+
+.top-nav.nav-scrolled {
+  box-shadow: 0 18px 42px rgba(2, 6, 23, 0.2);
+}
+
+.quick-action-track {
+  gap: 10px;
+}
+
+.quick-action,
+.icon-button,
+.btn-small {
+  will-change: transform;
+  transition:
+    transform 0.16s var(--finish-ease),
+    border-color 0.16s ease,
+    background-color 0.16s ease,
+    box-shadow 0.16s ease,
+    color 0.16s ease;
+}
+
+.quick-action:hover,
+.icon-button:hover,
+.btn-small:hover {
+  transform: translateY(-1px);
+}
+
+.quick-action:active,
+.icon-button:active,
+.btn-small:active {
+  transform: translateY(0) scale(0.985);
+}
+
+.btn-small,
+.icon-button,
+.quick-action {
+  border-color: rgba(148, 163, 184, 0.2);
+}
+
+.btn-small--primary,
+.btn-small--accent,
+.icon-button--accent {
+  box-shadow: 0 12px 26px rgba(37, 99, 235, 0.18);
+}
+
+.brand-pill {
+  letter-spacing: -0.02em;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.hero-strip {
+  padding-top: clamp(36px, 5vw, 68px);
+}
+
+.hero-strip__content {
+  max-width: min(1120px, calc(100vw - 40px));
+  border-color: rgba(148, 163, 184, 0.16);
+  box-shadow: 0 22px 60px rgba(2, 6, 23, 0.2);
+}
+
+.hero-strip h1 {
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+}
+
+.hero-strip p,
+.unit-section__note,
+.unit-section__header p,
+.chart-shell__head p,
+.mission-card__head p,
+.chat-toolbar__text span,
+.chat-compose__identity span {
+  text-wrap: pretty;
+}
+
+.unit-section,
+.chat-shell,
+.status-strip,
+.plain-panel,
+.chronos-panel,
+.chart-shell,
+.mission-card,
+.pomo-card,
+.subject-card,
+.paper-section,
+.chapter-row,
+.settings-group,
+.account-card,
+.backup-card,
+.backup-stat,
+.backup-settings-row,
+.backup-vault-item {
+  border-color: rgba(148, 163, 184, 0.16);
+  box-shadow: 0 18px 48px rgba(2, 6, 23, 0.16);
+}
+
+.unit-section {
+  border-radius: clamp(22px, 3vw, 34px);
+}
+
+.unit-section::before {
+  opacity: 0.6;
+}
+
+.unit-section:hover,
+.subject-card:hover,
+.mission-card:hover,
+.chat-shell:hover,
+.chart-shell:hover {
+  transform: translateY(-1px);
+  border-color: rgba(96, 165, 250, 0.2);
+}
+
+.unit-section__header {
+  gap: 18px;
+}
+
+.unit-section__header h2,
+.chart-shell__head h3,
+.mission-card__head h3,
+.subject-card__identity h3,
+.dash-greet,
+.chat-toolbar__text strong {
+  letter-spacing: -0.02em;
+}
+
+.subject-card::before,
+.subject-card::after,
+.unit-section::before {
+  pointer-events: none;
+}
+
+.subject-card {
+  overflow: clip;
+}
+
+.subject-card.is-hovering,
+.subject-card.is-active {
+  box-shadow: 0 18px 44px rgba(15, 23, 42, 0.16);
+}
+
+.paper-panel,
+.chapter-bar-container,
+.chat-toolbar,
+.chat-compose,
+.chat-feed-shell,
+.chat-settings-card,
+.composer-preview-pane,
+.settings-modal-card,
+.account-login-card,
+.account-feed-panel {
+  border-color: rgba(148, 163, 184, 0.16);
+}
+
+.chapter-bar,
+.vibe-bar,
+.stat-bar span,
+.count-bar span,
+.progress-line,
+.metric-track {
+  overflow: hidden;
+  box-shadow: inset 0 1px 2px rgba(2, 6, 23, 0.12);
+}
+
+input,
+select,
+textarea,
+.settings-input,
+.composer-input-field,
+.composer-textarea,
+.chat-input,
+#composerFinalTextArea {
+  border-radius: var(--finish-radius-sm);
+  transition:
+    border-color 0.16s ease,
+    box-shadow 0.16s ease,
+    background-color 0.16s ease;
+}
+
+input:hover,
+select:hover,
+textarea:hover,
+.settings-input:hover,
+.composer-input-field:hover,
+.composer-textarea:hover,
+.chat-input:hover {
+  border-color: rgba(96, 165, 250, 0.26);
+}
+
+.account-dialog__backdrop,
+.track-dialog__backdrop {
+  backdrop-filter: blur(16px) saturate(1.08);
+  -webkit-backdrop-filter: blur(16px) saturate(1.08);
+}
+
+.account-dialog__card,
+.settings-dialog__card,
+.backup-dialog__card,
+.spectate-dialog__card,
+.timer-dialog__card,
+.developer-dialog__card,
+.chronos-config-dialog__card {
+  border-color: rgba(148, 163, 184, 0.18);
+  box-shadow: 0 24px 80px rgba(2, 6, 23, 0.28);
+}
+
+.account-dialog__head {
+  border-bottom-color: rgba(148, 163, 184, 0.14);
+}
+
+#chatFeed .chat-item__card,
+#chatShowAllList .chat-item__card,
+#chatExpandBody .chat-item__card {
+  border-radius: 18px;
+}
+
+.chat-item__body {
+  line-height: 1.62;
+}
+
+.chat-action-btn {
+  transition: transform 0.16s var(--finish-ease), background-color 0.16s ease, border-color 0.16s ease;
+}
+
+.chat-action-btn:hover {
+  transform: translateY(-1px);
+}
+
+.chat-edit-plate,
+.chat-edit-textarea {
+  border-radius: var(--finish-radius-md);
+}
+
+#chatUpdateComposer {
+  max-width: 980px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#chatUpdateComposer .composer-step-tabs {
+  scrollbar-width: none;
+}
+
+#chatUpdateComposer .composer-step-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+#chatUpdateComposer .composer-wizard-header {
+  gap: 14px;
+}
+
+#chatUpdateComposer .composer-wizard-title h3,
+#chatUpdateComposer .accordion-title {
+  letter-spacing: -0.02em;
+}
+
+html[data-theme="light"] .top-nav,
+html[data-theme="light"] .quick-action-rail {
+  box-shadow: 0 14px 36px rgba(15, 23, 42, 0.08);
+}
+
+html[data-theme="light"] .unit-section,
+html[data-theme="light"] .chat-shell,
+html[data-theme="light"] .status-strip,
+html[data-theme="light"] .plain-panel,
+html[data-theme="light"] .chronos-panel,
+html[data-theme="light"] .chart-shell,
+html[data-theme="light"] .mission-card,
+html[data-theme="light"] .pomo-card,
+html[data-theme="light"] .subject-card,
+html[data-theme="light"] .paper-section,
+html[data-theme="light"] .chapter-row,
+html[data-theme="light"] .settings-group,
+html[data-theme="light"] .account-card,
+html[data-theme="light"] .backup-card,
+html[data-theme="light"] .backup-stat,
+html[data-theme="light"] .backup-settings-row,
+html[data-theme="light"] .backup-vault-item {
+  border-color: rgba(203, 213, 225, 0.86);
+  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.065);
+}
+
+html[data-theme="light"] .unit-section:hover,
+html[data-theme="light"] .subject-card:hover,
+html[data-theme="light"] .mission-card:hover,
+html[data-theme="light"] .chat-shell:hover,
+html[data-theme="light"] .chart-shell:hover {
+  border-color: rgba(96, 165, 250, 0.34);
+  box-shadow: 0 20px 46px rgba(15, 23, 42, 0.075);
+}
+
+html[data-theme="light"] .account-dialog__card,
+html[data-theme="light"] .settings-dialog__card,
+html[data-theme="light"] .backup-dialog__card,
+html[data-theme="light"] .spectate-dialog__card,
+html[data-theme="light"] .timer-dialog__card,
+html[data-theme="light"] .developer-dialog__card,
+html[data-theme="light"] .chronos-config-dialog__card {
+  border-color: rgba(203, 213, 225, 0.92);
+  box-shadow: 0 24px 80px rgba(15, 23, 42, 0.14);
+}
+
+html[data-theme="dark"] .unit-section,
+html[data-theme="dark"] .chat-shell,
+html[data-theme="dark"] .subject-card,
+html[data-theme="dark"] .account-dialog__card {
+  background-blend-mode: screen, normal;
+}
+
+@media (max-width: 820px) {
+  .hero-strip__content,
+  .unit-section,
+  .chat-shell {
+    max-width: calc(100vw - 24px);
+  }
+
+  .top-nav,
+  .quick-action-rail {
+    max-width: calc(100vw - 18px);
+  }
+
+  .unit-section {
+    padding: clamp(20px, 5vw, 28px);
+  }
+
+  .unit-section__header {
+    align-items: flex-start;
+  }
+
+  .unit-section__actions,
+  .wizard-footer-left,
+  .wizard-footer-right {
+    width: 100%;
+  }
+
+  .wizard-footer-left,
+  .wizard-footer-right {
+    justify-content: stretch;
+  }
+
+  .wizard-footer-left > *,
+  .wizard-footer-right > * {
+    flex: 1 1 auto;
+  }
+}
+
+@media (max-width: 520px) {
+  .brand-pill {
+    max-width: 150px;
+  }
+
+  .hero-strip h1 {
+    font-size: clamp(2.2rem, 12vw, 3.4rem);
+  }
+
+  .btn-small {
+    min-height: 40px;
+  }
+
+  #chatUpdateComposer .composer-step-tabs {
+    justify-content: space-between;
+  }
+}
+
+/* v197 mobile/data-entry polish */
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+.project-banner {
+  position: relative;
+  width: min(1180px, calc(100% - 32px));
+  margin: 20px auto 0;
+  border-radius: 24px;
+  overflow: hidden;
+  border: 1px solid rgba(148, 163, 184, 0.24);
+  box-shadow: 0 18px 50px rgba(2, 6, 23, 0.24);
+  background: rgba(15, 23, 42, 0.34);
+}
+
+.project-banner__img {
+  display: block;
+  width: 100%;
+  max-height: 190px;
+  object-fit: cover;
+}
+
+.project-banner__install {
+  position: absolute;
+  right: 18px;
+  bottom: 18px;
+  border-radius: 999px !important;
+}
+
+.install-guide-card {
+  width: min(460px, calc(100vw - 32px)) !important;
+}
+
+.install-guide-body {
+  display: grid;
+  gap: 10px;
+  padding: 18px;
+  color: var(--text-main);
+}
+
+#chatUpdateComposer .composer-active-panel {
+  border-radius: 22px;
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  background: rgba(255, 255, 255, 0.04);
+  box-shadow: 0 16px 38px rgba(2, 6, 23, 0.15);
+  overflow: visible;
+}
+
+#chatUpdateComposer .composer-active-panel__head {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+#chatUpdateComposer .composer-tip-wrap {
+  position: relative;
+  margin-left: auto;
+}
+
+.composer-tip-trigger {
+  display: inline-grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  border: 1px solid rgba(96, 165, 250, 0.28);
+  background: rgba(59, 130, 246, 0.1);
+  color: #60a5fa;
+  cursor: pointer;
+}
+
+.composer-tip-popover,
+.composer-smart-sync-tip {
+  position: absolute;
+  z-index: 20;
+  right: 0;
+  top: calc(100% + 10px);
+  width: min(300px, calc(100vw - 48px));
+  padding: 12px 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(96, 165, 250, 0.28);
+  background: rgba(15, 23, 42, 0.96);
+  color: #e5eefb;
+  box-shadow: 0 18px 42px rgba(2, 6, 23, 0.32);
+  font-size: 0.82rem;
+  line-height: 1.45;
+}
+
+.composer-smart-sync-tip {
+  position: relative;
+  inset: auto;
+  width: auto;
+  margin: 8px 0 12px;
+}
+
+#chatUpdateComposer .composer-completion-card {
+  display: grid;
+  gap: 16px;
+  padding: 18px;
+  border-radius: 20px;
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  background: rgba(59, 130, 246, 0.08);
+}
+
+#chatUpdateComposer .composer-completion-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  color: var(--text-main);
+  font-weight: 900;
+}
+
+#chatUpdateComposer #composerPercentRange {
+  width: 100%;
+  accent-color: var(--accent-blue);
+}
+
+#chatUpdateComposer .composer-percent-marks {
+  display: flex;
+  justify-content: space-between;
+  color: var(--text-sub);
+  font-size: 0.75rem;
+  font-weight: 800;
+}
+
+#chatUpdateComposer .composer-smart-sync.is-on {
+  color: #22c55e !important;
+  border-color: rgba(34, 197, 94, 0.45) !important;
+  background: rgba(34, 197, 94, 0.12) !important;
+}
+
+.chronos-preview {
+  display: grid;
+  place-items: center;
+}
+
+.chronos-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain !important;
+  object-position: center center !important;
+}
+
+.chronos-preview__veil {
+  inset: 0 !important;
+  display: grid !important;
+  place-items: center !important;
+}
+
+.chronos-chip {
+  border: 1px solid color-mix(in srgb, var(--chip-color, #38bdf8) 48%, transparent) !important;
+  background: color-mix(in srgb, var(--chip-color, #38bdf8) 10%, transparent) !important;
+  color: var(--text-main) !important;
+  box-shadow: none !important;
+}
+
+.chronos-chip.is-active {
+  background: color-mix(in srgb, var(--chip-color, #38bdf8) 18%, transparent) !important;
+  border-color: color-mix(in srgb, var(--chip-color, #38bdf8) 76%, transparent) !important;
+}
+
+.chronos-config-dialog__card input,
+.chronos-config-dialog__card select,
+.chat-settings-dialog__card input,
+.chat-settings-dialog__card select {
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: var(--text-main) !important;
+  border-color: rgba(148, 163, 184, 0.28) !important;
+}
+
+.chat-feed-head .btn-small--accent,
+.chat-compose__footer .btn-small--accent {
+  background: rgba(99, 102, 241, 0.14) !important;
+  border-color: rgba(129, 140, 248, 0.35) !important;
+  color: var(--text-main) !important;
+  box-shadow: 0 10px 24px rgba(79, 70, 229, 0.14) !important;
+}
+
+.toggle-label {
+  opacity: 0.52;
+}
+
+.dashboard-modern.dark .toggle-label--dark,
+html[data-theme="dark"] .toggle-label--dark,
+html[data-theme="light"] .toggle-label--light {
+  opacity: 1;
+  color: var(--text-main);
+}
+
+html[data-theme="light"] .mission-card,
+html[data-theme="light"] .chronos-config-dialog__card,
+html[data-theme="light"] .chat-settings-dialog__card {
+  background: #ffffff !important;
+  color: #0f172a !important;
+  border-color: rgba(203, 213, 225, 0.9) !important;
+  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.14) !important;
+}
+
+html[data-theme="light"] .mission-card__head h3,
+html[data-theme="light"] .mission-field > span,
+html[data-theme="light"] .chat-settings-dialog__card,
+html[data-theme="light"] .chronos-config-dialog__card {
+  color: #0f172a !important;
+}
+
+html[data-theme="light"] .mission-card__head p,
+html[data-theme="light"] .account-dialog__head span,
+html[data-theme="light"] .settings-row small,
+html[data-theme="light"] .composer-help-text,
+html[data-theme="light"] .chat-settings-panel__note {
+  color: #475569 !important;
+}
+
+html[data-theme="light"] .mission-date-display,
+html[data-theme="light"] .chronos-config-dialog__card input,
+html[data-theme="light"] .chronos-config-dialog__card select,
+html[data-theme="light"] .chat-settings-dialog__card input,
+html[data-theme="light"] .chat-settings-dialog__card select {
+  background: #f8fbff !important;
+  color: #0f172a !important;
+  border-color: rgba(203, 213, 225, 0.95) !important;
+}
+
+html[data-theme="light"] .composer-tip-popover,
+html[data-theme="light"] .composer-smart-sync-tip {
+  background: #ffffff;
+  color: #0f172a;
+  border-color: rgba(147, 197, 253, 0.7);
+  box-shadow: 0 18px 42px rgba(15, 23, 42, 0.14);
+}
+
+html[data-theme="light"] #chatUpdateComposer .composer-active-panel,
+html[data-theme="light"] #chatUpdateComposer .composer-completion-card {
+  background: #ffffff;
+  border-color: rgba(203, 213, 225, 0.9);
+}
+
+html[data-theme="light"] .chat-feed-head .btn-small--accent,
+html[data-theme="light"] .chat-compose__footer .btn-small--accent {
+  background: #eff6ff !important;
+  border-color: rgba(147, 197, 253, 0.82) !important;
+  color: #1d4ed8 !important;
+  box-shadow: 0 10px 24px rgba(37, 99, 235, 0.1) !important;
+}
+
+@media (max-width: 760px) {
+  .project-banner {
+    width: calc(100% - 20px);
+    margin-top: 12px;
+    border-radius: 18px;
+  }
+
+  .project-banner__img {
+    max-height: 124px;
+  }
+
+  .project-banner__install {
+    right: 10px;
+    bottom: 10px;
+    min-height: 34px !important;
+    padding: 6px 12px !important;
+  }
+
+  #chatUpdateComposer .composer-wizard-title span {
+    display: none;
+  }
+
+  #chatUpdateComposer .composer-wizard-body {
+    padding-top: 14px;
+  }
+
+  #chatUpdateComposer .accordion-header {
+    padding: 12px;
+    gap: 8px;
+  }
+
+  #chatUpdateComposer .accordion-content {
+    padding: 12px;
+  }
+
+  #chatUpdateComposer .composer-basic-grid {
+    gap: 12px;
+  }
+
+  #chatUpdateComposer .composer-duration-section {
+    margin-top: 14px;
+    padding-top: 14px;
+  }
+
+  #chatUpdateComposer .composer-section-kicker {
+    margin-bottom: 10px;
+  }
+
+  #chatUpdateComposer .composer-time-card-row {
+    grid-template-columns: repeat(3, minmax(88px, 1fr)) !important;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+  }
+
+  #chatUpdateComposer .composer-time-card {
+    min-width: 88px;
+    padding: 10px;
+    border-radius: 16px;
+  }
+
+  #chatUpdateComposer .composer-time-card__head {
+    gap: 6px;
+    align-items: center;
+  }
+
+  #chatUpdateComposer .composer-time-card__icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 10px;
+  }
+
+  #chatUpdateComposer .adjuster-label {
+    font-size: 0.72rem;
+    line-height: 1.15;
+  }
+
+  #chatUpdateComposer .adjuster-value {
+    margin: 8px 0;
+    font-size: 1.1rem;
+  }
+
+  #chatUpdateComposer .composer-time-card__actions {
+    gap: 6px;
+  }
+
+  #chatUpdateComposer .composer-time-card__actions button {
+    min-height: 30px;
+    padding: 0 4px;
+    font-size: 0.68rem;
+    border-radius: 10px;
+  }
+
+  #chatUpdateComposer .composer-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 8px;
+  }
+
+  #chatUpdateComposer .composer-subject-card {
+    min-height: 92px;
+    padding: 8px;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+  }
+
+  #chatUpdateComposer .composer-subject-card__media {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+  }
+
+  #chatUpdateComposer .composer-subject-card__text {
+    text-align: center;
+    font-size: 0.72rem;
+  }
+
+  #chatUpdateComposer .composer-chapter-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    gap: 8px;
+  }
+
+  #chatUpdateComposer .composer-chapter-card {
+    min-height: 58px;
+    padding: 6px;
+    justify-content: center;
+  }
+
+  #chatUpdateComposer .composer-chapter-code {
+    width: 46px;
+    height: 46px;
+    font-size: 0.95rem;
+  }
+
+  #chatUpdateComposer .composer-inline-entry {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    gap: 8px;
+  }
+
+  #chatUpdateComposer .composer-prefix-pill {
+    max-width: 92px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  #chatUpdateComposer .composer-lecture-toolbar {
+    gap: 12px;
+  }
+
+  #chatUpdateComposer .composer-lecture-grid {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 7px;
+  }
+}
+
+@media (max-width: 420px) {
+  #chatUpdateComposer .composer-step-tabs {
+    gap: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  #chatUpdateComposer .composer-step-tab {
+    width: 32px;
+    min-width: 32px;
+    height: 32px;
+    min-height: 32px;
+  }
+
+  #chatUpdateComposer .composer-step-tab span {
+    width: 22px;
+    height: 22px;
+    font-size: 0.76rem;
+  }
+
+  #chatUpdateComposer .composer-chapter-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
     </style>
   </head>
   <body class="login-locked">
@@ -8790,6 +11068,7 @@ const defaultUserSettings = {
     gaugeGradEnd: "#fb923c",
     gaugeInnerGradStart: "#06b6d4",
     gaugeInnerGradEnd: "#6366f1",
+    showProjectBanner: true,
   },
   autoBackupEnabled: true,
   backupTiming: "daily",
@@ -8884,6 +11163,32 @@ const CHAT_PROFILE_KEY = "hsc-group-chat-profile-v1";
 const BACKUP_VAULT_KEY = "hsc-vault-backups-v1";
 const AUTO_BACKUP_STAMP_KEY = "hsc-auto-backup-stamp-v1";
 const BACKUP_IMPORT_INPUT_ID = "backupImportInput";
+let deferredInstallPrompt = null;
+
+window.addEventListener("beforeinstallprompt", (event) => {
+  event.preventDefault();
+  deferredInstallPrompt = event;
+});
+
+const showInstallGuide = () => {
+  const dialog = document.getElementById("installGuideDialog");
+  if (dialog) {
+    dialog.removeAttribute("hidden");
+    if (window.lucide) window.lucide.createIcons({ attrs: { "stroke-width": 1.8 } });
+  } else {
+    alert("Install as app: use your browser menu and choose Install app, Add to Home screen, or Create shortcut.");
+  }
+};
+
+const installStudyOsApp = async () => {
+  if (deferredInstallPrompt) {
+    deferredInstallPrompt.prompt();
+    try { await deferredInstallPrompt.userChoice; } catch(_) {}
+    deferredInstallPrompt = null;
+    return;
+  }
+  showInstallGuide();
+};
 
 const CHAT_PALETTE = [
   { name: "Auto", value: "auto", color: "linear-gradient(135deg, #2563eb, #10b981)" },
@@ -8914,6 +11219,7 @@ const normalizeChatPrefs = (raw = {}) => ({
   hiddenMessageIds: Array.isArray(raw.hiddenMessageIds) ? raw.hiddenMessageIds : [],
   chatCardColor: raw.chatCardColor || "auto",
   messagesPerPage: parseInt(raw.messagesPerPage, 10) || 50,
+  smartSyncEnabled: raw.smartSyncEnabled === true,
 });
 
 const loadChatPrefs = () => {
@@ -8959,6 +11265,7 @@ const chatState = {
   feedbackMessage: "Firestore chat is live. Messages stay stored in the cloud.",
   status: "Connecting to Firestore...",
   showAllPage: 0,
+  editingMessageId: "",
 };
 
 const getChatAuthorName = () => {
@@ -9538,7 +11845,7 @@ function generateLineText(item) {
   const subjName = subj.title;
   const paperName = subj.hasPapers ? (item.paperIndex === 0 ? "P1" : "P2") : "";
   const chName = `C${item.chapterIndex + 1}`;
-  const typeText = item.classType === "Detailed" ? "" : (item.classType === "One Shot" ? "OS" : item.classType);
+  const typeText = item.classType === "One Shot" ? "1-Shot" : item.classType;
   const lectInfo = formatSelectedLectures(item.selectedLectures);
   const lecText = lectInfo.text;
   const isRange = lectInfo.isRange;
@@ -9575,7 +11882,7 @@ function getDefaultLineText(item) {
     const paperStr = item.paperIndex === 0 ? "1st Paper" : "2nd Paper";
     return `▶️ ${subj.title} ${paperStr} - `;
   }
-  if (isICT) {
+  if (isICT && !(item.classType || (item.selectedLectures && item.selectedLectures.length))) {
     const chStr = item.chapterIndex !== null ? `C${item.chapterIndex + 1}` : "";
     return `▶️ ICT ${chStr} - `;
   }
@@ -9629,45 +11936,31 @@ function syncComposerProgressToSyllabus() {
   });
 }
 
-function getNextStep(currentStep, subjectTitle) {
-  const isICT = subjectTitle === "ICT";
+function getComposerStepSequence(subjectTitle = "") {
   const isLanguage = ["Bangla", "English"].includes(subjectTitle);
+  const isICT = subjectTitle === "ICT";
+  if (isLanguage) return [1, 2, 8, 9, 10];
+  if (isICT) return [1, 2, 4, 6, 8, 9, 10];
+  return [1, 2, 4, 6, 7, 8, 9, 10];
+}
 
-  if (currentStep === 1) return 2;
-  if (currentStep === 2) {
-    if (isLanguage) return 8;
-    if (isICT) return 4;
-    return 4;
-  }
-  if (currentStep === 4) {
-    if (isICT) return 8;
-    return 5;
-  }
-  if (currentStep === 5) return 6;
-  if (currentStep === 6) return 7;
-  if (currentStep === 7) return 8;
-  if (currentStep === 8) return 9;
-  if (currentStep === 9) return 10;
-  return 10;
+function getComposerActiveSubjectTitle() {
+  const item = composerState.currentItem;
+  const subjIndex = item?.subjectIndex;
+  const subj = subjIndex !== null && subjIndex !== undefined ? scaffoldState.syllabus[subjIndex] : null;
+  return subj ? subj.title : "";
+}
+
+function getNextStep(currentStep, subjectTitle) {
+  const steps = getComposerStepSequence(subjectTitle);
+  const idx = steps.indexOf(currentStep);
+  return idx >= 0 && idx < steps.length - 1 ? steps[idx + 1] : steps[steps.length - 1];
 }
 
 function getPrevStep(currentStep, subjectTitle) {
-  const isICT = subjectTitle === "ICT";
-  const isLanguage = ["Bangla", "English"].includes(subjectTitle);
-
-  if (currentStep === 10) return 9;
-  if (currentStep === 9) return 8;
-  if (currentStep === 8) {
-    if (isLanguage) return 2;
-    if (isICT) return 4;
-    return 7;
-  }
-  if (currentStep === 7) return 6;
-  if (currentStep === 6) return 5;
-  if (currentStep === 5) return 4;
-  if (currentStep === 4) return 2;
-  if (currentStep === 2) return 1;
-  return 1;
+  const steps = getComposerStepSequence(subjectTitle);
+  const idx = steps.indexOf(currentStep);
+  return idx > 0 ? steps[idx - 1] : steps[0];
 }
 
 function getStepTitle(step) {
@@ -9676,7 +11969,7 @@ function getStepTitle(step) {
     case 2: return "Choose Subject";
     case 4: return "Choose Chapter";
     case 5: return "Choose Class Type";
-    case 6: return "Choose Lecture Badges";
+    case 6: return "Lecture Plan";
     case 7: return "Choose Completion %";
     case 8: return "Confirm Line";
     case 9: return "Review Added Lines";
@@ -9686,25 +11979,7 @@ function getStepTitle(step) {
 }
 
 function getStepProgressInfo() {
-  const item = composerState.currentItem;
-  const subjIndex = item?.subjectIndex;
-  const subj = subjIndex !== null && subjIndex !== undefined ? scaffoldState.syllabus[subjIndex] : null;
-  const subjTitle = subj ? subj.title : "";
-  const isLanguage = ["Bangla", "English"].includes(subjTitle);
-  const isICT = subjTitle === "ICT";
-
-  let steps = [1, 2];
-  if (subj) {
-    if (isLanguage) {
-      steps.push(8, 9, 10);
-    } else if (isICT) {
-      steps.push(4, 8, 9, 10);
-    } else {
-      steps.push(4, 5, 6, 7, 8, 9, 10);
-    }
-  } else {
-    steps.push(4, 5, 6, 7, 8, 9, 10);
-  }
+  const steps = getComposerStepSequence(getComposerActiveSubjectTitle());
 
   const currentIdx = steps.indexOf(composerState.step);
   const displayStep = currentIdx >= 0 ? currentIdx + 1 : composerState.step;
@@ -9713,26 +11988,7 @@ function getStepProgressInfo() {
 }
 
 function getStepsForAccordion() {
-  const item = composerState.currentItem;
-  const subjIndex = item?.subjectIndex;
-  const subj = subjIndex !== null && subjIndex !== undefined ? scaffoldState.syllabus[subjIndex] : null;
-  const subjTitle = subj ? subj.title : "";
-  const isLanguage = ["Bangla", "English"].includes(subjTitle);
-  const isICT = subjTitle === "ICT";
-
-  let steps = [1, 2];
-  if (subjIndex !== null && subjIndex !== undefined) {
-    if (isLanguage) {
-      steps.push(8);
-    } else if (isICT) {
-      steps.push(4, 8);
-    } else {
-      steps.push(4, 5, 6, 7, 8);
-    }
-  } else {
-    steps.push(4, 5, 6, 7, 8);
-  }
-  return steps;
+  return getComposerStepSequence(getComposerActiveSubjectTitle()).filter(stepNum => stepNum <= 8);
 }
 
 function getAccordionStepValue(step) {
@@ -9816,7 +12072,7 @@ function getLivePreviewText(includeCurrentDraft = true, currentDraftText = null)
     lines.push(`📊 Study Quality - ${composerState.studyQuality}%`);
   }
   if (composerState.selfStudyTime > 0) {
-    lines.push(`?? Self Study - ${formatDurationShort(composerState.selfStudyTime)}`);
+    lines.push(`Self Study - ${formatDurationShort(composerState.selfStudyTime)}`);
   }
   if (composerState.classDuration > 0) {
     lines.push(`⌛ Class Duration - ${formatDurationShort(composerState.classDuration)}`);
@@ -9839,17 +12095,20 @@ function getFinalPreviewText() {
 function makeAdjusterRow(label, stateKey) {
   const minutes = composerState[stateKey];
   const displayVal = formatDurationShort(minutes) || "0min";
+  const cleanLabel = label.replace(/^[^\w]+/, "").trim();
+  const iconName = stateKey === "selfStudyTime" ? "user" : (stateKey === "classDuration" ? "graduation-cap" : "clock-3");
   return `
-    <div class="composer-time-adjuster">
-      <div class="adjuster-label">${label}</div>
-      <div class="adjuster-row">
-        <div class="adjuster-value" id="${stateKey}Val">${displayVal}</div>
-        <div class="adjuster-actions">
-          <button type="button" data-action="adjust-time" data-key="${stateKey}" data-delta="-60">-1h</button>
-          <button type="button" data-action="adjust-time" data-key="${stateKey}" data-delta="-5">-5m</button>
-          <button type="button" data-action="adjust-time" data-key="${stateKey}" data-delta="5">+5m</button>
-          <button type="button" data-action="adjust-time" data-key="${stateKey}" data-delta="60">+1h</button>
-        </div>
+    <div class="composer-time-adjuster composer-time-card">
+      <div class="composer-time-card__head">
+        <span class="composer-time-card__icon">${icon(iconName, cleanLabel)}</span>
+        <span class="adjuster-label">${cleanLabel}</span>
+      </div>
+      <div class="adjuster-value" id="${stateKey}Val">${displayVal}</div>
+      <div class="adjuster-actions composer-time-card__actions">
+        <button type="button" data-action="adjust-time" data-key="${stateKey}" data-delta="-60">-1h</button>
+        <button type="button" data-action="adjust-time" data-key="${stateKey}" data-delta="60">+1h</button>
+        <button type="button" data-action="adjust-time" data-key="${stateKey}" data-delta="-15">-15min</button>
+        <button type="button" data-action="adjust-time" data-key="${stateKey}" data-delta="15">+15min</button>
       </div>
     </div>
   `;
@@ -10015,6 +12274,7 @@ function renderComposerFooter() {
       <button class="btn-small btn-small--primary" type="button" data-action="composer-step-next" ${hasItems ? '' : 'disabled'}>Done</button>
     `;
   } else if (step === 10) {
+    const syncOn = chatState.prefs.smartSyncEnabled === true;
     rightHtml += `
       <button class="btn-small" type="button" data-action="composer-new-update">
         ${icon("list-plus", "New")}
@@ -10024,9 +12284,12 @@ function renderComposerFooter() {
         ${icon("copy", "Copy")}
         <span>Copy</span>
       </button>
-      <button class="btn-small btn-small--primary" type="button" data-action="composer-save-sync">
-        ${icon("refresh-cw", "Sync")}
-        <span>Save & Sync</span>
+      <button class="btn-small composer-smart-sync ${syncOn ? "is-on" : ""}" type="button" data-action="composer-save-sync" aria-pressed="${syncOn ? "true" : "false"}" title="Smart Sync updates Subject Tracker only when clicked">
+        ${icon("refresh-cw", "Smart Sync")}
+        <span>Smart Sync</span>
+      </button>
+      <button class="btn-small btn-small--icon composer-tip-trigger" type="button" data-action="composer-toggle-tip" data-tip="smart-sync" aria-label="What Smart Sync does">
+        ${icon("info", "Smart Sync info")}
       </button>
       <button class="btn-small btn-small--primary" type="button" data-action="composer-send-message" style="background: var(--accent-blue); color: white; border-color: var(--accent-blue);">
         ${icon("send", "Send")}
@@ -10043,37 +12306,39 @@ function renderComposerFooter() {
 }
 
 function getSubjectIconPath(subjectTitle, paperIndex) {
+  const subjectIconBase = "https://raw.githubusercontent.com/tanmysarker733-svg/tonustudyv2/main/Assets/Images/SVGs%20and%20Icons/Subject%20PNGs/";
+  const fromSubjectIconRepo = (fileName) => subjectIconBase + encodeURIComponent(fileName);
   const mode = (scaffoldState.userSettings && scaffoldState.userSettings.studyMode) || "hsc";
   
   if (mode === "hsc") {
     if (subjectTitle === "Bangla") {
-      return paperIndex === 0 ? "Assets/SVGs and Icons/Subject PNGs/Bn1.png" : "Assets/SVGs and Icons/Subject PNGs/Bn2.png";
+      return paperIndex === 0 ? fromSubjectIconRepo("Bn1.png") : fromSubjectIconRepo("Bn2.png");
     }
     if (subjectTitle === "English") {
-      return paperIndex === 0 ? "Assets/SVGs and Icons/Subject PNGs/En1.jpg" : "Assets/SVGs and Icons/Subject PNGs/En2.png";
+      return paperIndex === 0 ? fromSubjectIconRepo("En1.jpg") : fromSubjectIconRepo("En2.png");
     }
     if (subjectTitle === "Physics") {
-      return paperIndex === 0 ? "Assets/SVGs and Icons/Subject PNGs/Phy1.png" : "Assets/SVGs and Icons/Subject PNGs/Phy2.png";
+      return paperIndex === 0 ? fromSubjectIconRepo("Phy1.png") : fromSubjectIconRepo("Phy2.png");
     }
     if (subjectTitle === "Chemistry") {
-      return paperIndex === 0 ? "Assets/SVGs and Icons/Subject PNGs/Chem1.png" : "Assets/SVGs and Icons/Subject PNGs/Chem2.png";
+      return paperIndex === 0 ? fromSubjectIconRepo("Chem1.png") : fromSubjectIconRepo("Chem2.png");
     }
     if (subjectTitle === "Higher Math") {
-      return paperIndex === 0 ? "Assets/SVGs and Icons/Subject PNGs/HM1.png" : "Assets/SVGs and Icons/Subject PNGs/HM2.png";
+      return paperIndex === 0 ? fromSubjectIconRepo("HM1.png") : fromSubjectIconRepo("HM2.png");
     }
     if (subjectTitle === "Biology") {
-      return paperIndex === 0 ? "Assets/SVGs and Icons/Subject PNGs/Bio1.png" : "Assets/SVGs and Icons/Subject PNGs/Bio2.png";
+      return paperIndex === 0 ? fromSubjectIconRepo("Bio1.png") : fromSubjectIconRepo("Bio2.png");
     }
     if (subjectTitle === "ICT") {
-      return "Assets/SVGs and Icons/Subject PNGs/ICT.png";
+      return fromSubjectIconRepo("ICT.png");
     }
   } else {
-    if (subjectTitle === "Physics") return "Assets/SVGs and Icons/Subject PNGs/Phy.png";
-    if (subjectTitle === "Chemistry") return "Assets/SVGs and Icons/Subject PNGs/Chem.png";
-    if (subjectTitle === "Biology") return "Assets/SVGs and Icons/Subject PNGs/Bio.png";
-    if (subjectTitle === "Higher Math") return "Assets/SVGs and Icons/Subject PNGs/HM.png";
-    if (subjectTitle === "General Math") return "Assets/SVGs and Icons/Subject PNGs/GM.png";
-    if (subjectTitle === "ICT") return "Assets/SVGs and Icons/Subject PNGs/ICT.png";
+    if (subjectTitle === "Physics") return fromSubjectIconRepo("Phy.png");
+    if (subjectTitle === "Chemistry") return fromSubjectIconRepo("Chem.png");
+    if (subjectTitle === "Biology") return fromSubjectIconRepo("Bio.png");
+    if (subjectTitle === "Higher Math") return fromSubjectIconRepo("HM.png");
+    if (subjectTitle === "General Math") return fromSubjectIconRepo("GM.png");
+    if (subjectTitle === "ICT") return fromSubjectIconRepo("ICT.png");
   }
   return null;
 }
@@ -10090,22 +12355,36 @@ function getStepFormHtml(stepNum) {
       else qualityText = "Low";
       
       return `
-        <div style="margin-bottom: 14px;">
-          <label class="adjuster-label" style="display:block; margin-bottom: 6px;">Select Update Date</label>
-          <input type="date" id="composerDate" class="composer-input-field" value="${composerState.date}">
-        </div>
-
-        <div class="composer-quality-row" style="margin-bottom: 14px;">
-          <div class="composer-quality-info">
-            <span>Study Quality Rating</span>
-            <strong><span id="composerQualityVal">${composerState.studyQuality}</span>% (${qualityText})</strong>
+        <div class="composer-basic-grid">
+          <div class="composer-field-card">
+            <label class="adjuster-label" for="composerDate">Select Update Date</label>
+            <input type="date" id="composerDate" class="composer-input-field" value="${composerState.date}">
           </div>
-          <input type="range" id="composerQuality" min="0" max="100" step="5" value="${composerState.studyQuality}" style="width: 100%; accent-color: var(--accent-blue);">
+          <div class="composer-field-card composer-quality-row">
+            <div class="composer-quality-info">
+              <span>Study Quality Rating</span>
+              <strong><span id="composerQualityVal">${composerState.studyQuality}</span>% (${qualityText})</strong>
+            </div>
+            <input type="range" id="composerQuality" min="0" max="100" step="5" value="${composerState.studyQuality}">
+            <div class="composer-range-labels" aria-hidden="true">
+              <span>0%</span><span>25%</span><span>50%</span><span>75%</span><span>100%</span>
+            </div>
+          </div>
         </div>
 
-        ${makeAdjusterRow("?? Self Study Time", "selfStudyTime")}
-        ${makeAdjusterRow("⌛ Class Duration", "classDuration")}
-        ${makeAdjusterRow("🕒 Study Duration", "totalStudyDuration")}
+        <div class="composer-duration-section">
+          <div class="composer-section-kicker">
+            ${icon("clock-3", "Adjust Study Durations")}
+            <div>
+              <strong>Adjust Study Durations</strong>
+            </div>
+          </div>
+          <div class="composer-time-card-row">
+            ${makeAdjusterRow("Self Study Time", "selfStudyTime")}
+            ${makeAdjusterRow("Class Duration", "classDuration")}
+            ${makeAdjusterRow("Total Study Duration", "totalStudyDuration")}
+          </div>
+        </div>
       `;
     }
     case 2: {
@@ -10115,6 +12394,7 @@ function getStepFormHtml(stepNum) {
           subj.papers.forEach((paper, pIdx) => {
             subjectOptions.push({
               label: `${subj.title} ${pIdx === 0 ? "1st" : "2nd"}`,
+              subjectTitle: subj.title,
               subjectIndex: sIdx,
               paperIndex: pIdx
             });
@@ -10122,6 +12402,7 @@ function getStepFormHtml(stepNum) {
         } else {
           subjectOptions.push({
             label: subj.title,
+            subjectTitle: subj.title,
             subjectIndex: sIdx,
             paperIndex: null
           });
@@ -10132,20 +12413,22 @@ function getStepFormHtml(stepNum) {
         <div class="composer-grid">
           ${subjectOptions.map(opt => {
             const isSel = (item?.subjectIndex === opt.subjectIndex) && (item?.paperIndex === opt.paperIndex);
+            const iconPath = getSubjectIconPath(opt.subjectTitle, opt.paperIndex);
             return `
-              <button class="composer-btn ${isSel ? 'is-selected' : ''}" type="button" data-action="composer-select-subject" data-subject-index="${opt.subjectIndex}" data-paper-index="${opt.paperIndex !== null ? opt.paperIndex : ''}">
-                <span>${escapeHtml(opt.label)}</span>
+              <button class="composer-btn composer-subject-card ${isSel ? 'is-selected' : ''}" type="button" data-action="composer-select-subject" data-subject-index="${opt.subjectIndex}" data-paper-index="${opt.paperIndex !== null ? opt.paperIndex : ''}" aria-pressed="${isSel ? 'true' : 'false'}">
+                ${iconPath ? `<span class="composer-subject-card__media"><img src="${iconPath}" alt="${escapeHtml(opt.label)} subject icon" loading="lazy"></span>` : `<span class="composer-subject-card__media composer-subject-card__media--fallback">${escapeHtml(opt.label.slice(0, 2))}</span>`}
+                <span class="composer-subject-card__text">${escapeHtml(opt.label)}</span>
               </button>
             `;
           }).join('')}
         </div>
         
-        <div class="composer-preview-pane" style="margin-top: 14px;">
+        <div class="composer-preview-pane composer-custom-line-card" style="margin-top: 14px;">
           <div class="preview-pane-label">Or Add Custom Line directly:</div>
-          <div style="display: flex; gap: 8px; align-items: center;">
-            <span style="font-family: monospace; font-size: 0.82rem; white-space: nowrap;">▶️ </span>
-            <input type="text" id="composerStep2CustomText" class="composer-input-field" style="margin-bottom: 0; min-height: 32px; padding: 4px 8px;" placeholder="e.g. Chemistry P1C2 Formula Revision">
-            <button class="btn-small btn-small--primary" type="button" data-action="composer-add-suffix-step2" style="min-height: 32px; padding: 0 12px;">Add</button>
+          <div class="composer-inline-entry">
+            <span class="composer-prefix-pill">▶</span>
+            <input type="text" id="composerStep2CustomText" class="composer-input-field" placeholder="e.g. Chemistry P1C2 Formula Revision">
+            <button class="btn-small btn-small--primary" type="button" data-action="composer-add-suffix-step2">Add</button>
           </div>
         </div>
       `;
@@ -10163,26 +12446,24 @@ function getStepFormHtml(stepNum) {
       const prefixText = `▶️ ${subj.title} ${paperSel}${chSel} - `;
       
       return `
-        <div class="composer-grid">
+        <div class="composer-chapter-grid">
           ${chapters.map((ch, index) => {
             const isSel = item.chapterIndex === index;
             return `
-              <button class="composer-btn ${isSel ? 'is-selected' : ''}" type="button" data-action="composer-select-chapter" data-index="${index}">
-                <div style="display:flex; flex-direction:column; align-items:center; gap:2px; width:100%;">
-                  <span>C${index + 1}</span>
-                  <span style="font-size:0.68rem; font-weight:normal; opacity:0.8; text-align:center; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:110px;">${ch.name}</span>
-                </div>
+              <button class="composer-btn composer-chapter-card ${isSel ? 'is-selected' : ''}" type="button" data-action="composer-select-chapter" data-index="${index}" aria-pressed="${isSel ? 'true' : 'false'}">
+                <span class="composer-chapter-code">C${index + 1}</span>
+                <span class="sr-only">${escapeHtml(ch.name || `Chapter ${index + 1}`)}</span>
               </button>
             `;
           }).join('')}
         </div>
         
-        <div class="composer-preview-pane" style="margin-top: 14px;">
+        <div class="composer-preview-pane composer-custom-line-card" style="margin-top: 14px;">
           <div class="preview-pane-label">Or Add Custom Suffix directly:</div>
-          <div style="display: flex; gap: 8px; align-items: center;">
-            <span style="font-family: monospace; font-size: 0.82rem; white-space: nowrap;" id="composerStep4Prefix">${prefixText}</span>
-            <input type="text" id="composerStep4CustomText" class="composer-input-field" style="margin-bottom: 0; min-height: 32px; padding: 4px 8px;" placeholder="e.g. Formula Practice">
-            <button class="btn-small btn-small--primary" type="button" data-action="composer-add-suffix-step4" style="min-height: 32px; padding: 0 12px;">Add</button>
+          <div class="composer-inline-entry">
+            <span class="composer-prefix-pill" id="composerStep4Prefix">${escapeHtml(prefixText)}</span>
+            <input type="text" id="composerStep4CustomText" class="composer-input-field" placeholder="e.g. Formula Practice">
+            <button class="btn-small btn-small--primary" type="button" data-action="composer-add-suffix-step4">Add</button>
           </div>
         </div>
       `;
@@ -10204,45 +12485,75 @@ function getStepFormHtml(stepNum) {
     }
     case 6: {
       const totalLecs = item.totalLectures;
+      const classTypes = [
+        { value: "Detailed", label: "Detailed" },
+        { value: "Advanced", label: "Advanced" },
+        { value: "Admission", label: "Admission" },
+        { value: "FRB", label: "FRB" },
+        { value: "One Shot", label: "1-Shot" }
+      ];
+      const selectedLectures = item.selectedLectures || [];
       let badgesHtml = "";
       for (let i = 1; i <= totalLecs; i++) {
-        const isSel = item.selectedLectures.includes(i);
+        const isSel = selectedLectures.includes(i);
         badgesHtml += `
-          <button class="composer-btn ${isSel ? 'is-selected' : ''}" type="button" data-action="composer-toggle-lecture" data-lecture="${i}" style="width: 38px; height: 38px; border-radius: 50%; min-height: unset; padding: 0;">
-            ${i}
+          <button class="composer-btn composer-lecture-chip ${isSel ? 'is-selected' : ''}" type="button" data-action="composer-toggle-lecture" data-lecture="${i}" aria-pressed="${isSel ? 'true' : 'false'}">
+            <span>L${i}</span>
           </button>
         `;
       }
+      const lectureSummary = selectedLectures.length ? formatSelectedLectures(selectedLectures).text : "No lecture selected";
       
       return `
-        <div style="margin-bottom: 14px; display: flex; align-items: center; gap: 8px;">
-          <span class="adjuster-label">Total Classes in Syllabus:</span>
-          <div style="display: inline-flex; align-items: center; gap: 4px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 8px; padding: 2px;">
-            <button type="button" data-action="composer-adjust-total-classes" data-delta="-1" style="width: 28px; height: 28px; border-radius: 6px; border: none; background: rgba(255,255,255,0.05); color: #fff; display: flex; align-items: center; justify-content: center; cursor: pointer; font-weight: bold;">-</button>
-            <input type="number" id="composerTotalClasses" class="composer-input-field" style="width: 50px; margin-bottom: 0; min-height: 28px; padding: 2px; text-align: center; border: none; background: transparent; font-weight: bold; color: #fff;" value="${totalLecs}">
-            <button type="button" data-action="composer-adjust-total-classes" data-delta="1" style="width: 28px; height: 28px; border-radius: 6px; border: none; background: rgba(255,255,255,0.05); color: #fff; display: flex; align-items: center; justify-content: center; cursor: pointer; font-weight: bold;">+</button>
+        <div class="composer-lecture-panel">
+          <div class="composer-lecture-toolbar">
+            <div>
+              <div class="preview-pane-label">Lecture Type</div>
+              <div class="composer-class-type-row">
+                ${classTypes.map(type => {
+                  const isSel = item.classType === type.value;
+                  return `
+                    <button class="composer-btn composer-type-chip ${isSel ? 'is-selected' : ''}" type="button" data-action="composer-select-class-type" data-type="${type.value}" aria-pressed="${isSel ? 'true' : 'false'}">
+                      ${type.label}
+                    </button>
+                  `;
+                }).join('')}
+              </div>
+            </div>
+            <div class="composer-total-control">
+              <span class="preview-pane-label">Total Lectures</span>
+              <div class="composer-total-stepper">
+                <button type="button" data-action="composer-adjust-total-classes" data-delta="-1">-</button>
+                <input type="number" id="composerTotalClasses" class="composer-input-field" value="${totalLecs}" min="1">
+                <button type="button" data-action="composer-adjust-total-classes" data-delta="1">+</button>
+              </div>
+            </div>
           </div>
-        </div>
-        <div class="composer-grid composer-grid--small" style="gap: 8px;">
-          ${badgesHtml}
-        </div>
-        <div style="font-size:0.75rem; color:var(--text-sub); margin-top:8px;">
-          Click to toggle lectures. Multiple consecutive lectures (4+) format as a revision range.
+          <div class="composer-lecture-summary">
+            <span>${icon("list-checks", "Selected lectures")} ${escapeHtml(lectureSummary)}</span>
+            <span>${escapeHtml(item.classType || "Detailed")} / ${totalLecs} total</span>
+          </div>
+          <div class="composer-lecture-grid">
+            ${badgesHtml}
+          </div>
         </div>
       `;
     }
     case 7: {
-      const percents = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
+      const value = item.percent || 100;
       return `
-        <div class="composer-grid composer-grid--cols3">
-          ${percents.map(pct => {
-            const isSel = item.percent === pct;
-            return `
-              <button class="composer-btn ${isSel ? 'is-selected' : ''}" type="button" data-action="composer-select-percent" data-percent="${pct}">
-                <span>${pct}%</span>
-              </button>
-            `;
-          }).join('')}
+        <div class="composer-completion-card">
+          <div class="composer-completion-head">
+            <span>Completion</span>
+            <strong id="composerPercentVal">${value}%</strong>
+          </div>
+          <input type="range" id="composerPercentRange" min="10" max="100" step="10" value="${value}" list="composerPercentMarks">
+          <datalist id="composerPercentMarks">
+            ${[10,20,30,40,50,60,70,80,90,100].map(pct => `<option value="${pct}" label="${pct}%"></option>`).join("")}
+          </datalist>
+          <div class="composer-percent-marks" aria-hidden="true">
+            <span>10</span><span>30</span><span>50</span><span>70</span><span>90</span><span>100</span>
+          </div>
         </div>
       `;
     }
@@ -10285,11 +12596,43 @@ function getStepInstruction(stepNum) {
     case 2: return "Click on the subject card you studied (e.g. Physics 1st). Or enter a custom line below.";
     case 4: return "Click on the specific chapter studied. Or enter a custom suffix below (e.g. Formula Practice).";
     case 5: return "Select the class type category (Detailed, Advanced, etc.) to set default lecture counts.";
-    case 6: return "Toggle the specific lecture numbers you completed. Use +/- to adjust total classes.";
+    case 6: return "Select lecture type, adjust total lectures, and multi-select the lecture numbers completed.";
     case 7: return "Choose the completion percentage for this syllabus item (normally 100%).";
     case 8: return "Edit the final line text if needed, preview the update log formatting, and click Done.";
     default: return "";
   }
+}
+
+function renderComposerStepTabs() {
+  const steps = getComposerStepSequence(getComposerActiveSubjectTitle());
+  const furthest = composerState.furthestStep || 1;
+  return `
+    <div class="composer-step-tabs" aria-label="Smart Update steps">
+      ${steps.map((stepNum, index) => {
+        const isActive = composerState.step === stepNum;
+        const isAvailable = stepNum <= furthest || isActive;
+        const title = getStepTitle(stepNum);
+        return `
+          <button class="composer-step-tab ${isActive ? 'is-active' : ''} ${isAvailable ? '' : 'is-disabled'}" type="button" data-action="${isAvailable ? 'composer-go-to-step' : ''}" data-step="${stepNum}" ${isAvailable ? '' : 'disabled'} aria-label="Step ${index + 1}: ${escapeHtml(title)}">
+            <span>${index + 1}</span>
+          </button>
+        `;
+      }).join('')}
+    </div>
+  `;
+}
+
+function renderComposerTip(stepNum) {
+  const instruction = getStepInstruction(stepNum);
+  if (!instruction) return "";
+  return `
+    <button class="composer-tip-trigger" type="button" data-action="composer-toggle-tip" data-tip="step-${stepNum}" aria-label="Show step tip">
+      ${icon("info", "Tip")}
+    </button>
+    <div class="composer-tip-popover" data-tip-panel="step-${stepNum}" hidden>
+      ${escapeHtml(instruction)}
+    </div>
+  `;
 }
 
 function renderComposerWizard() {
@@ -10307,49 +12650,26 @@ function renderComposerWizard() {
   
   let bodyHtml = "";
   if (step <= 8) {
-    bodyHtml = `<div class="composer-accordion">`;
-    const activeSteps = getStepsForAccordion();
-    const furthest = composerState.furthestStep || 1;
-    const visibleSteps = activeSteps.filter(stepNum => (stepNum <= furthest) || (stepNum === step));
-    visibleSteps.forEach(stepNum => {
-      const isActive = (step === stepNum);
-      const valueSummary = getAccordionStepValue(stepNum);
-      const isCompleted = (stepNum < step) || (stepNum <= furthest && stepNum !== step);
-      const isClickable = (stepNum <= furthest) && (stepNum !== step);
-      const title = getStepTitle(stepNum);
-      const stepIcon = getStepIcon(stepNum);
-      const stepInstruction = getStepInstruction(stepNum);
-      
-      bodyHtml += `
-        <div class="accordion-item ${isActive ? 'is-active' : ''} ${isCompleted ? 'is-completed' : ''}">
-          <div class="accordion-header" ${isClickable ? `data-action="composer-go-to-step" data-step="${stepNum}"` : 'style="cursor: not-allowed; opacity: 0.5;"'}>
-            <span class="accordion-number">${stepNum}</span>
-            <span class="accordion-icon" style="margin-right: 8px; display: inline-flex; align-items: center; opacity: 0.7;">
-              ${icon(stepIcon, title)}
-            </span>
-            <span class="accordion-title">${title}</span>
-            ${(isCompleted && !isActive && valueSummary) ? `<span class="accordion-value">${escapeHtml(valueSummary)}</span>` : ''}
-          </div>
-      `;
-      
-      const isExpanded = (stepNum <= furthest) || isActive;
-      if (isExpanded) {
-        bodyHtml += `
-          <div class="accordion-content">
-            ${stepInstruction ? `<div class="composer-instruction-note" style="font-size: 0.76rem; color: var(--text-sub); margin-bottom: 12px; display: flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.02); padding: 6px 10px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.04);">
-              <span>💡</span>
-              <span><strong>Instruction:</strong> ${stepInstruction}</span>
-            </div>` : ''}
-            ${getStepFormHtml(stepNum)}
-          </div>
-        `;
-      }
-      bodyHtml += `</div>`;
-    });
-    bodyHtml += `</div>`;
+    const valueSummary = getAccordionStepValue(step);
+    bodyHtml = `
+      <div class="composer-active-panel">
+        <div class="accordion-header composer-active-panel__head">
+          <span class="accordion-number">${progress.displayStep}</span>
+          <span class="accordion-icon" aria-hidden="true">
+            ${icon(getStepIcon(step), stepTitle)}
+          </span>
+          <span class="accordion-title">${stepTitle}</span>
+          ${valueSummary ? `<span class="accordion-value">${escapeHtml(valueSummary)}</span>` : ""}
+          <span class="composer-tip-wrap">${renderComposerTip(step)}</span>
+        </div>
+        <div class="accordion-content">
+          ${getStepFormHtml(step)}
+        </div>
+      </div>
+    `;
   } else if (step === 9) {
     bodyHtml = `
-      <div class="composer-step-title">Step 9: Review Added Lines (${composerState.addedItems.length})</div>
+      <div class="composer-step-title">Review Added Lines</div>
       <div class="review-lines-list">
         ${composerState.addedLines.length === 0 ? `
           <div style="text-align:center; padding: 20px; color: var(--text-sub); font-size:0.85rem;">
@@ -10373,7 +12693,7 @@ function renderComposerWizard() {
   } else if (step === 10) {
     const finalText = getFinalPreviewText();
     bodyHtml = `
-      <div class="composer-step-title">Step 10: Final Copy & Sync Preview</div>
+      <div class="composer-step-title">Final Copy & Sync Preview</div>
       
       <div class="composer-preview-pane" style="margin-bottom: 16px;">
         <div class="preview-pane-label">Final Update Message (Editable)</div>
@@ -10390,6 +12710,9 @@ function renderComposerWizard() {
           <span>Send Message</span>
         </button>
       </div>
+      <div class="composer-smart-sync-tip" data-tip-panel="smart-sync" hidden>
+        Smart Sync applies the added Smart Update lines to Subject Tracker. It is separate from Send Message, so chat sending will not change tracker progress.
+      </div>
       
       <div id="composerSyncFeedback" class="chat-feedback" style="margin-top: -6px; margin-bottom: 12px; display: none;"></div>
     `;
@@ -10401,10 +12724,10 @@ function renderComposerWizard() {
     <div class="composer-wizard-header">
       <div class="composer-wizard-title">
 <h3>${icon("sparkles", "Smart Update Composer")} Smart Update Composer</h3>
-        <span>Step ${progress.displayStep} of ${progress.totalSteps} — ${stepTitle} (${composerState.addedLines.length} lines)</span>
       </div>
       <div class="composer-step-indicator">Step ${progress.displayStep}/${progress.totalSteps}</div>
     </div>
+    ${renderComposerStepTabs()}
     <div class="composer-wizard-body">
       ${bodyHtml}
     </div>
@@ -10418,17 +12741,8 @@ function renderComposerWizard() {
   setTimeout(() => {
     const wizardBody = wizardNode.querySelector(".composer-wizard-body");
     if (prevStep !== null && prevStep !== step) {
-      if (step <= 8) {
-        const activeItem = wizardNode.querySelector(".accordion-item.is-active");
-        if (activeItem && wizardBody) {
-          // Scroll only within the wizard body — never the whole page
-          const itemTop = activeItem.offsetTop - wizardBody.offsetTop;
-          wizardBody.scrollTo({ top: Math.max(0, itemTop - 12), behavior: 'smooth' });
-        }
-      } else {
-        if (wizardBody) {
-          wizardBody.scrollTop = 0;
-        }
+      if (wizardBody) {
+        wizardBody.scrollTop = 0;
       }
     }
 
@@ -10539,20 +12853,22 @@ document.addEventListener("click", (e) => {
   // Chat message edit & delete handlers (can run even when composer is closed)
   if (action === "chat-edit-msg") {
     const id = btn.dataset.id;
-    const msg = chatState.messages.find(m => m.id === id);
-    if (msg) {
-      const newText = prompt("Edit your message:", msg.text);
-      if (newText !== null && newText.trim() !== "") {
-        try {
-          chatState.db.collection(CHAT_COLLECTION).doc(id).update({
-            text: newText.trim()
-          });
-          setChatFeedback("Message updated successfully.", "success");
-        } catch (error) {
-          setChatFeedback(`Update failed: ${error.message}`, "error");
-        }
-      }
-    }
+    openChatEditDialog(id);
+    return;
+  }
+
+  if (action === "close-chat-edit") {
+    closeChatEditDialog();
+    return;
+  }
+
+  if (action === "chat-edit-toggle-expand") {
+    toggleChatEditExpand();
+    return;
+  }
+
+  if (action === "chat-edit-save") {
+    saveChatEditMessage();
     return;
   }
   
@@ -10626,6 +12942,16 @@ document.addEventListener("click", (e) => {
   }
 
   if (!composerState.active) return;
+
+  if (action === "composer-toggle-tip") {
+    const key = btn.dataset.tip || "";
+    const root = btn.closest("#chatUpdateComposer") || document;
+    root.querySelectorAll("[data-tip-panel]").forEach((panel) => {
+      const isTarget = panel.dataset.tipPanel === key;
+      panel.hidden = isTarget ? !panel.hidden : true;
+    });
+    return;
+  }
   
   if (action === "composer-go-to-step") {
     const targetStep = parseInt(btn.dataset.step, 10);
@@ -10685,10 +13011,11 @@ document.addEventListener("click", (e) => {
     composerState.currentItem.isCustomLine = false;
     composerState.currentItem.customText = "";
     
-    const isScience = ["Physics", "Chemistry", "Higher Math", "Biology", "Math", "General Math"].includes(subj.title);
-    if (isScience) {
+    const isChapterSubject = !["Bangla", "English"].includes(subj.title);
+    if (isChapterSubject) {
       const firstChapter = subj.hasPapers ? subj.papers[pIdx]?.chapters?.[0] : subj.chapters?.[0];
       composerState.currentItem.totalLectures = firstChapter ? (firstChapter.totalDL || 10) : 10;
+      composerState.currentItem.classType = "Detailed";
     }
     
     composerState.furthestStep = nextStep;
@@ -10710,11 +13037,12 @@ document.addEventListener("click", (e) => {
     composerState.currentItem.isCustomLine = false;
     composerState.currentItem.customText = "";
     
-    const isScience = ["Physics", "Chemistry", "Higher Math", "Biology", "Math", "General Math"].includes(subj.title);
-    if (isScience) {
+    const isChapterSubject = !["Bangla", "English"].includes(subj.title);
+    if (isChapterSubject) {
       const paper = subj.hasPapers ? subj.papers[composerState.currentItem.paperIndex] : null;
       const ch = paper ? paper.chapters[idx] : subj.chapters[idx];
       composerState.currentItem.totalLectures = ch ? (ch.totalDL || 10) : 10;
+      composerState.currentItem.classType = "Detailed";
     }
     
     composerState.furthestStep = nextStep;
@@ -10727,7 +13055,7 @@ document.addEventListener("click", (e) => {
     const type = btn.dataset.type;
     const subj = scaffoldState.syllabus[composerState.currentItem.subjectIndex];
     if (!subj) return;
-    const nextStep = getNextStep(5, subj.title);
+    const nextStep = composerState.step === 6 ? 6 : getNextStep(5, subj.title);
     
     composerState.currentItem.classType = type;
     composerState.currentItem.selectedLectures = [];
@@ -10739,7 +13067,7 @@ document.addEventListener("click", (e) => {
     const totalKey = keyMap[type] || "totalDL";
     composerState.currentItem.totalLectures = ch ? (ch[totalKey] || 10) : 10;
     
-    composerState.furthestStep = nextStep;
+    composerState.furthestStep = Math.max(composerState.furthestStep || 1, nextStep);
     composerState.step = nextStep;
     renderComposerWizard();
     return;
@@ -10931,10 +13259,6 @@ document.addEventListener("click", (e) => {
     const authorName = getChatAuthorName();
     setChatFeedback("Sending composer message...", "");
     try {
-      syncComposerProgressToSyllabus();
-      saveSyllabus(scaffoldState.syllabus);
-      refreshSyllabusGrid();
-      
       chatState.db.collection(CHAT_COLLECTION).add({
         text,
         visibility,
@@ -10953,7 +13277,7 @@ document.addEventListener("click", (e) => {
         createdAt: window.firebase.firestore.FieldValue.serverTimestamp(),
         createdAtMs: Date.now(),
       });
-      setChatFeedback("Composer update stored in Firestore.", "success");
+      setChatFeedback("Composer message sent. Smart Sync remains separate.", "success");
       closeComposerWizard();
       clearComposerDraft();
       
@@ -10972,27 +13296,18 @@ document.addEventListener("click", (e) => {
   }
   
   if (action === "composer-save-sync") {
-    try {
-      syncComposerProgressToSyllabus();
-      
-      const fb = document.getElementById("composerSyncFeedback");
-      if (fb) {
-        fb.textContent = "Syllabus progress successfully synced & saved!";
-        fb.className = "chat-feedback is-success";
-        fb.style.display = "block";
-        setTimeout(() => { fb.style.display = "none"; }, 4000);
-      }
-      
-      saveSyllabus(scaffoldState.syllabus);
-      refreshSyllabusGrid();
-    } catch(err) {
-      const fb = document.getElementById("composerSyncFeedback");
-      if (fb) {
-        fb.textContent = `Sync error: ${err.message}`;
-        fb.className = "chat-feedback is-error";
-        fb.style.display = "block";
-      }
+    const fb = document.getElementById("composerSyncFeedback");
+    chatState.prefs.smartSyncEnabled = true;
+    saveChatPrefs();
+    syncComposerProgressToSyllabus();
+    refreshDashboardGauge();
+    if (fb) {
+      fb.textContent = "Smart Sync applied to Subject Tracker.";
+      fb.className = "chat-feedback chat-feedback--success";
+      fb.style.display = "block";
     }
+    btn.classList.add("is-on");
+    btn.setAttribute("aria-pressed", "true");
     return;
   }
   
@@ -11051,6 +13366,12 @@ document.addEventListener("input", (e) => {
     composerState.currentItem.selectedLectures = composerState.currentItem.selectedLectures.filter(l => l <= val);
     renderComposerWizard();
     return;
+  } else if (e.target.id === "composerPercentRange") {
+    const pct = Math.max(10, Math.min(100, Math.round((parseInt(e.target.value, 10) || 100) / 10) * 10));
+    composerState.currentItem.percent = pct;
+    const val = document.getElementById("composerPercentVal");
+    if (val) val.textContent = `${pct}%`;
+    needsSave = true;
   } else if (e.target.id === "composerLineText") {
     composerState.currentItem.customText = e.target.value;
     const linePreview = document.getElementById("composerLinePreview");
@@ -11967,7 +14288,7 @@ const renderChartUnit = (state) =>
     id: "chart",
     eyebrow: "Unit 04",
     title: "Chronos Analytics",
-    note: "Drag dots vertically in edit mode or click a point for precise hour/minute overrides.",
+    note: "",
     actions: "",
     body: `
       <div class="analytics-panel chronos-panel is-preview">
@@ -11988,7 +14309,7 @@ const renderChartUnit = (state) =>
           <button class="chronos-chip is-active" type="button" data-action="chronos-toggle-dataset" data-dataset="class" style="--chip-color:#ef4444"><span class="chronos-dot"></span>Class</button>
           <button class="chronos-chip is-active" type="button" data-action="chronos-toggle-dataset" data-dataset="total" style="--chip-color:#0ea5e9"><span class="chronos-dot"></span>Total</button>
         </div>
-        <p class="chronos-hint" id="chronosHint">Turn editing on to drag dots in 5-minute steps, or click a dot for manual overrides.</p>
+        <p class="chronos-hint" id="chronosHint" hidden></p>
         <div class="account-dialog chronos-config-dialog" id="chronosConfigPanel" hidden>
           <div class="account-dialog__backdrop" data-action="chronos-toggle-config" aria-hidden="true"></div>
           <section class="account-dialog__card chronos-config-dialog__card" style="width: min(460px, 100%);">
@@ -12007,9 +14328,9 @@ const renderChartUnit = (state) =>
               <div class="chronos-presets" aria-label="Chronos view presets" style="display: flex; flex-direction: column; gap: 8px;">
                 <span class="chronos-presets__label" style="font-size: 11px; font-weight: 600; color: var(--text-sub);">View presets</span>
                 <div style="display: flex; gap: 8px;">
-                  <button class="chronos-preset" type="button" data-action="chronos-apply-preset" data-days="20" data-pc="10" data-mob="10" style="padding: 6px 12px; border-radius: 8px; font-size: 12px;">20 / 10 / 10</button>
-                  <button class="chronos-preset" type="button" data-action="chronos-apply-preset" data-days="30" data-pc="15" data-mob="15" style="padding: 6px 12px; border-radius: 8px; font-size: 12px;">30 / 15 / 15</button>
-                  <button class="chronos-preset" type="button" data-action="chronos-apply-preset" data-days="60" data-pc="30" data-mob="30" style="padding: 6px 12px; border-radius: 8px; font-size: 12px;">60 / 30 / 30</button>
+                  <button class="chronos-preset" type="button" data-action="chronos-apply-preset" data-days="7" data-pc="7" data-mob="7" style="padding: 6px 12px; border-radius: 8px; font-size: 12px;">7 / 7 / 7</button>
+                  <button class="chronos-preset" type="button" data-action="chronos-apply-preset" data-days="15" data-pc="15" data-mob="15" style="padding: 6px 12px; border-radius: 8px; font-size: 12px;">15 / 15 / 15</button>
+                  <button class="chronos-preset" type="button" data-action="chronos-apply-preset" data-days="30" data-pc="30" data-mob="30" style="padding: 6px 12px; border-radius: 8px; font-size: 12px;">30 / 30 / 30</button>
                 </div>
               </div>
               
@@ -12204,6 +14525,7 @@ const renderSettingsPanelBody = (state) => {
                   { value: "hero", label: "Hero Only" },
                   { value: "full", label: "Full Page" },
                 ], userSettings.uiConfigs.auroraMode), "Animated colour mesh gradient")}
+                ${row("Project Banner", checkbox("tgl_project_banner", userSettings.uiConfigs.showProjectBanner !== false), "Top project banner")}
                 ${row("Show ETA Badge", checkbox("etaSettingToggle", userSettings.uiConfigs.etaOn))}
               `)}
             `, true)}
@@ -12240,9 +14562,9 @@ const renderSettingsPanelBody = (state) => {
               ${group("Chronos View Presets", `
                 <div class="chronos-presets" aria-label="Chronos view presets">
                   <span class="chronos-presets__label">View presets</span>
-                  <button class="chronos-preset" type="button" data-action="chronos-apply-preset" data-days="20" data-pc="10" data-mob="10">20 / 10 / 10</button>
-                  <button class="chronos-preset" type="button" data-action="chronos-apply-preset" data-days="30" data-pc="15" data-mob="15">30 / 15 / 15</button>
-                  <button class="chronos-preset" type="button" data-action="chronos-apply-preset" data-days="60" data-pc="30" data-mob="30">60 / 30 / 30</button>
+                  <button class="chronos-preset" type="button" data-action="chronos-apply-preset" data-days="7" data-pc="7" data-mob="7">7 / 7 / 7</button>
+                  <button class="chronos-preset" type="button" data-action="chronos-apply-preset" data-days="15" data-pc="15" data-mob="15">15 / 15 / 15</button>
+                  <button class="chronos-preset" type="button" data-action="chronos-apply-preset" data-days="30" data-pc="30" data-mob="30">30 / 30 / 30</button>
                 </div>
               `)}
               ${group("Chronos Graph Limits", `
@@ -12499,10 +14821,10 @@ const renderChatUnit = () =>
           <div class="chat-toolbar__actions">
             <button class="btn-small" type="button" data-action="chat-expand" title="Expand Chat" aria-label="Expand Chat">
               ${icon("maximize-2", "Expand")}
-              <span>Expand Chat</span>
+              <span class="sr-only">Expand Chat</span>
             </button>
             <button class="btn-small btn-small--primary" type="button" data-action="chat-toggle-list" data-chat-list-toggle>${chatState.prefs.isListVisible ? "Hide messages" : "Show messages"}</button>
-            <button class="btn-small" type="button" data-action="chat-toggle-settings">Message settings</button>
+            <button class="btn-small btn-small--icon" type="button" data-action="chat-toggle-settings" title="Message settings" aria-label="Message settings">${icon("sliders-horizontal", "Message settings")}</button>
           </div>
         </div>
 
@@ -12587,7 +14909,6 @@ const renderChatUnit = () =>
           <div class="chat-feed-head">
             <div>
               <strong>Message list</strong>
-              <span id="chatMessageCount">0 messages</span>
             </div>
             <div style="display: flex; gap: 8px; align-items: center;">
               <button class="btn-small btn-small--accent" type="button" data-action="open-chat-show-all">
@@ -12646,6 +14967,40 @@ const renderChatShowAllDialog = (state) => `
       </div>
       <div id="chatShowAllList" style="flex: 1; overflow-y: auto; padding: 6px; display: flex; flex-direction: column; gap: 12px; min-height: 0;">
         <div class="chat-empty-note">Loading history...</div>
+      </div>
+    </section>
+  </div>
+`;
+
+const renderChatEditDialog = () => `
+  <div class="account-dialog" id="chatEditDialog" hidden>
+    <div class="account-dialog__backdrop" data-action="close-chat-edit" aria-hidden="true"></div>
+    <section class="account-dialog__card chat-edit-dialog__card" role="dialog" aria-modal="true" aria-labelledby="chatEditDialogTitle">
+      <div class="account-dialog__head">
+        <div>
+          <p class="eyebrow">Message Editor</p>
+          <h3 id="chatEditDialogTitle">${icon("pencil-line", "Edit")} <span>Edit message</span></h3>
+          <span>Use the full text plate for long updates. Line breaks and emoji stay preserved.</span>
+        </div>
+        <button class="btn-small btn-small--icon" type="button" data-action="close-chat-edit" aria-label="Close message editor">
+          ${icon("x", "Close")}
+        </button>
+      </div>
+      <div class="chat-edit-plate">
+        <textarea id="chatEditTextarea" class="chat-edit-textarea" spellcheck="true" placeholder="Write your full message here..."></textarea>
+        <div class="chat-edit-meta">
+          <span id="chatEditMeta">No message selected</span>
+          <span>Ctrl + Enter saves</span>
+        </div>
+      </div>
+      <div class="chat-edit-actions">
+        <button class="btn-small" type="button" data-action="chat-edit-toggle-expand">
+          ${icon("maximize-2", "Expand")} <span id="chatEditExpandLabel">Expand editor</span>
+        </button>
+        <button class="btn-small" type="button" data-action="close-chat-edit">Cancel</button>
+        <button class="btn-small btn-small--primary" type="button" data-action="chat-edit-save">
+          ${icon("check", "Save")} <span>Save message</span>
+        </button>
       </div>
     </section>
   </div>
@@ -13223,6 +15578,8 @@ const isReadOnlyBlockedAction = (action = "") => {
     "security-unlink-provider",
     "chat-send",
     "chat-edit-msg",
+    "chat-edit-save",
+    "chat-edit-toggle-expand",
     "chat-delete-msg",
     "chat-hide-msg",
     "chat-unhide-all",
@@ -13984,6 +16341,16 @@ const renderAppShell = (state, units) => {
     </header>
     ${renderSpectateBanner()}
 
+    ${state.userSettings.uiConfigs?.showProjectBanner !== false ? `
+      <section class="project-banner" aria-label="Project banner">
+        <img class="project-banner__img" src="https://raw.githubusercontent.com/tanmysarker733-svg/tonustudyv2/main/Assets/Images/A%20project%20by.jpg" data-hires-src="https://raw.githubusercontent.com/tanmysarker733-svg/tonustudyv2/main/Assets/Images/A%20project%20by.png" alt="A project by Tanmoy Sarker" loading="eager">
+        <button class="btn-small btn-small--primary project-banner__install" type="button" data-action="install-app">
+          ${icon("download", "Install")}
+          <span>Install as app</span>
+        </button>
+      </section>
+    ` : ""}
+
     <section class="hero-strip" aria-label="Project status">
       <div class="hero-strip__content">
         <span class="hero-badge"><span class="hero-badge-dot"></span>Scaffold build</span>
@@ -14020,10 +16387,6 @@ const renderAppShell = (state, units) => {
           </div>
         </div>
         <div class="hero-pills" aria-label="Future feature groups">
-          <span>Chapter tracker</span>
-          <span>Study logs</span>
-          <span>Firebase sync</span>
-          <span>Vault backup</span>
         </div>
       </div>
     </section>
@@ -14038,6 +16401,23 @@ const renderAppShell = (state, units) => {
       </button>
     </footer>
     <input id="${BACKUP_IMPORT_INPUT_ID}" type="file" accept="application/json,.json" hidden>
+    <div class="account-dialog install-guide-dialog" id="installGuideDialog" hidden>
+      <div class="account-dialog__backdrop" data-action="close-install-guide" aria-hidden="true"></div>
+      <section class="account-dialog__card install-guide-card" role="dialog" aria-modal="true" aria-labelledby="installGuideTitle">
+        <div class="account-dialog__head">
+          <div>
+            <p class="eyebrow">Install Study OS</p>
+            <h3 id="installGuideTitle">${icon("download", "Install")} <span>Install as app</span></h3>
+            <span>Browser install prompt is not available for this single HTML session.</span>
+          </div>
+          <button class="btn-small btn-small--icon" type="button" data-action="close-install-guide" aria-label="Close install guide">${icon("x", "Close")}</button>
+        </div>
+        <div class="install-guide-body">
+          <p><strong>PC:</strong> open browser menu, then choose Install app or Create shortcut.</p>
+          <p><strong>Phone:</strong> open browser menu, then choose Add to Home screen.</p>
+        </div>
+      </section>
+    </div>
     <div class="backup-banner" id="backupBanner" hidden></div>
     ${renderAccountDialog(state)}
     ${renderAccountSecurityDialog()}
@@ -14046,6 +16426,7 @@ const renderAppShell = (state, units) => {
     ${renderBackupDialog(state)}
     ${renderChatExpandDialog(state)}
     ${renderChatShowAllDialog(state)}
+    ${renderChatEditDialog()}
     ${renderDeveloperDialog(state)}
     <!-- Timer Dialog -->
     <div class="account-dialog timer-dialog" id="timerDialog" hidden>
@@ -15115,10 +17496,24 @@ const buildUnits = () => [
   renderAdminUnit(scaffoldState),
 ];
 
+const initProjectBannerImages = () => {
+  document.querySelectorAll(".project-banner__img[data-hires-src]").forEach((img) => {
+    const hiresSrc = img.dataset.hiresSrc;
+    if (!hiresSrc || img.dataset.hiresLoaded === "true") return;
+    const hi = new Image();
+    hi.onload = () => {
+      img.src = hiresSrc;
+      img.dataset.hiresLoaded = "true";
+    };
+    hi.src = hiresSrc;
+  });
+};
+
 const mountApp = () => {
   document.querySelector("#app").innerHTML = renderAppShell(scaffoldState, buildUnits());
   applyUserThemeSettings();
   if (window.lucide) window.lucide.createIcons({ attrs: { "stroke-width": 1.8 } });
+  initProjectBannerImages();
   attachVisualEffects();
   initGroupChat();
   setTimeout(() => {
@@ -15129,6 +17524,7 @@ const mountApp = () => {
 
 document.querySelector("#app").innerHTML = renderAppShell(scaffoldState, buildUnits());
 applyUserThemeSettings();
+initProjectBannerImages();
 
 document.addEventListener("DOMContentLoaded", () => {
   if (window.lucide) {
@@ -16400,9 +18796,10 @@ const setChronosEditMode = (enabled) => {
   panel?.classList.toggle("is-editing", enabled);
   const canvas = document.getElementById("chronosChart");
   if (canvas) canvas.style.touchAction = enabled ? "none" : "";
-  if (hint) hint.textContent = enabled
-    ? "Drag dots vertically to edit in 5-minute steps, or click any point/area to open detailed manual overrides."
-    : "Turn editing on to drag dots in 5-minute steps, or click a dot for manual overrides.";
+  if (hint) {
+    hint.textContent = "";
+    hint.hidden = true;
+  }
 };
 
 const openChronosPointEditor = (datasetIndex, index) => {
@@ -16532,6 +18929,80 @@ const openChatShowAllDialog = () => {
 };
 const closeChatShowAllDialog = () => closeDialog("chatShowAllDialog");
 
+const updateChatEditMeta = () => {
+  const textarea = document.getElementById("chatEditTextarea");
+  const meta = document.getElementById("chatEditMeta");
+  if (!textarea || !meta) return;
+  const chars = textarea.value.length;
+  const lines = textarea.value ? textarea.value.split(/\r\n|\r|\n/).length : 0;
+  meta.textContent = `${chars.toLocaleString()} characters / ${lines.toLocaleString()} lines`;
+};
+
+const openChatEditDialog = (id = "") => {
+  const msg = chatState.messages.find((item) => item.id === id);
+  if (!msg) {
+    setChatFeedback("Message not found for editing.", "error");
+    return;
+  }
+  chatState.editingMessageId = id;
+  const card = document.querySelector("#chatEditDialog .chat-edit-dialog__card");
+  const textarea = document.getElementById("chatEditTextarea");
+  const label = document.getElementById("chatEditExpandLabel");
+  card?.classList.remove("is-expanded");
+  if (label) label.textContent = "Expand editor";
+  if (textarea) {
+    textarea.value = msg.text || "";
+    updateChatEditMeta();
+  }
+  openDialog("chatEditDialog");
+  setTimeout(() => {
+    textarea?.focus();
+    textarea?.setSelectionRange(textarea.value.length, textarea.value.length);
+  }, 80);
+};
+
+const closeChatEditDialog = () => {
+  chatState.editingMessageId = "";
+  closeDialog("chatEditDialog");
+};
+
+const toggleChatEditExpand = () => {
+  const card = document.querySelector("#chatEditDialog .chat-edit-dialog__card");
+  const label = document.getElementById("chatEditExpandLabel");
+  if (!card) return;
+  const expanded = card.classList.toggle("is-expanded");
+  if (label) label.textContent = expanded ? "Compact editor" : "Expand editor";
+  setTimeout(() => document.getElementById("chatEditTextarea")?.focus(), 40);
+};
+
+const saveChatEditMessage = async () => {
+  const textarea = document.getElementById("chatEditTextarea");
+  const id = chatState.editingMessageId;
+  const text = textarea?.value.trim() || "";
+  if (!id) {
+    setChatFeedback("No message selected for editing.", "error");
+    return;
+  }
+  if (!text) {
+    setChatFeedback("Edited message cannot be empty.", "error");
+    textarea?.focus();
+    return;
+  }
+  if (!chatState.db) {
+    setChatFeedback("Firestore is not ready yet. Try again in a moment.", "error");
+    return;
+  }
+  try {
+    await chatState.db.collection(CHAT_COLLECTION).doc(id).update({ text });
+    setChatFeedback("Message updated successfully.", "success");
+    closeChatEditDialog();
+    renderChatMessages();
+    renderChatShowAllList();
+  } catch (error) {
+    setChatFeedback(`Update failed: ${error.message}`, "error");
+  }
+};
+
 const syncBackupSettingControls = () => {
   const map = [
     ["autoBackupToggle", scaffoldState.userSettings.autoBackupEnabled],
@@ -16655,6 +19126,14 @@ document.addEventListener("click", (e) => {
   if (!action) return;
   if (action === "toggle-theme") {
     toggleThemeMode();
+    return;
+  }
+  if (action === "install-app") {
+    installStudyOsApp();
+    return;
+  }
+  if (action === "close-install-guide") {
+    document.getElementById("installGuideDialog")?.setAttribute("hidden", "");
     return;
   }
   if (isSpectateReadOnly() && isReadOnlyBlockedAction(action)) {
@@ -17080,13 +19559,27 @@ document.addEventListener("click", (e) => {
   }
 });
 
+document.addEventListener("input", (event) => {
+  const target = event.target;
+  if (!(target instanceof HTMLElement)) return;
+  if (target.id === "chatEditTextarea") {
+    updateChatEditMeta();
+  }
+});
+
 document.addEventListener("keydown", (event) => {
+  if (event.target?.id === "chatEditTextarea" && (event.ctrlKey || event.metaKey) && event.key === "Enter") {
+    event.preventDefault();
+    saveChatEditMessage();
+    return;
+  }
   if ((event.key === "Enter" || event.key === " ") && event.target?.id === "chronosPreview") {
     event.preventDefault();
     showChronosLive();
     return;
   }
   if (event.key !== "Escape") return;
+  closeChatEditDialog();
   closeSettingsDialog();
   closeAccountDialog();
   closeAccountSecurityDialog();
@@ -17348,6 +19841,15 @@ document.addEventListener("change", (e) => {
   }
   if (target.id === "autoBackupNotifToggle" || target.id === "backupDialogNotif") {
     updateBackupSettings({ autoBackupNotif: !!target.checked });
+    return;
+  }
+  if (target.id === "tgl_project_banner") {
+    scaffoldState.userSettings.uiConfigs = {
+      ...(scaffoldState.userSettings.uiConfigs || {}),
+      showProjectBanner: !!target.checked
+    };
+    saveUserSettings();
+    mountApp();
     return;
   }
   if (target.id === BACKUP_IMPORT_INPUT_ID) {
