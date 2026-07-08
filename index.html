@@ -3257,12 +3257,38 @@ html[data-theme="light"] .unit-section:hover {
 }
 
 .color-picker {
-  width: 42px;
-  height: 32px;
+  width: 48px;
+  height: 36px;
   overflow: hidden;
-  border: 1px solid rgba(71, 85, 105, 0.92);
-  border-radius: 8px;
-  background: rgba(30, 41, 59, 0.98);
+  border: 1px solid rgba(148, 163, 184, 0.32);
+  border-radius: 14px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.12), 0 8px 18px rgba(2,6,23,0.12);
+  cursor: pointer;
+  padding: 4px;
+  transition: border-color 0.16s ease, box-shadow 0.16s ease, transform 0.16s ease;
+}
+
+.color-picker:hover {
+  border-color: rgba(96, 165, 250, 0.5);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.18), 0 10px 24px rgba(37,99,235,0.14);
+  transform: translateY(-1px);
+}
+
+.color-picker::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+.color-picker::-webkit-color-swatch {
+  border: 0;
+  border-radius: 10px;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.38);
+}
+
+.color-picker::-moz-color-swatch {
+  border: 0;
+  border-radius: 10px;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.38);
 }
 
 .settings-check {
@@ -4146,6 +4172,79 @@ html[data-theme="light"] .unit-section:hover {
 #chatComposerMode, #chatLiveStatus {
   color: #94a3b8 !important;
   opacity: 0.75;
+}
+
+.chat-composer-visibility {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  gap: 7px;
+  min-height: 28px;
+  padding: 4px 10px 4px 8px;
+  border-radius: 999px;
+  border: 1px solid rgba(96, 165, 250, 0.24);
+  background: rgba(59, 130, 246, 0.1);
+  color: #bfdbfe !important;
+  opacity: 1 !important;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+
+.chat-composer-visibility__icon {
+  position: relative;
+  width: 18px;
+  height: 18px;
+  border-radius: 999px;
+  border: 1.8px solid currentColor;
+  flex: 0 0 auto;
+}
+
+.chat-composer-visibility__icon::before,
+.chat-composer-visibility__icon::after {
+  content: "";
+  position: absolute;
+  inset: 3px 6px;
+  border-left: 1.5px solid currentColor;
+  border-right: 1.5px solid currentColor;
+  border-radius: 999px;
+  opacity: 0.84;
+}
+
+.chat-composer-visibility__icon::after {
+  inset: 7px 2px auto;
+  height: 0;
+  border: 0;
+  border-top: 1.5px solid currentColor;
+}
+
+.chat-composer-visibility--private {
+  border-color: rgba(251, 191, 36, 0.32);
+  background: rgba(245, 158, 11, 0.12);
+  color: #fde68a !important;
+}
+
+.chat-composer-visibility--private .chat-composer-visibility__icon {
+  border-radius: 6px 6px 5px 5px;
+  border-top-width: 6px;
+}
+
+.chat-composer-visibility--private .chat-composer-visibility__icon::before {
+  inset: 5px 7px;
+  border-left: 1.5px solid currentColor;
+  border-right: 0;
+}
+
+.chat-composer-visibility--private .chat-composer-visibility__icon::after {
+  inset: auto;
+  left: 50%;
+  top: -8px;
+  width: 8px;
+  height: 7px;
+  border: 1.5px solid currentColor;
+  border-bottom: 0;
+  border-radius: 7px 7px 0 0;
+  transform: translateX(-50%);
 }
 
 /* Smart Update Composer Wizard */
@@ -5752,6 +5851,12 @@ body.is-spectating .spectate-disabled {
   transform: translateY(-4px);
 }
 
+.stat-box.eta-stat:hover {
+  background: linear-gradient(135deg, rgba(6, 182, 212, .15), rgba(59, 130, 246, .1));
+  border-color: rgba(6, 182, 212, .4);
+  transform: none;
+}
+
 .stat-icon {
   width: 40px;
   height: 40px;
@@ -5769,6 +5874,10 @@ body.is-spectating .spectate-disabled {
 .stat-box:hover .stat-icon {
   background: rgba(59, 130, 246, .15);
   transform: scale(1.1);
+}
+
+.stat-box.eta-stat:hover .eta-icon {
+  transform: none;
 }
 .people-icon {
   background:rgba(245,158,11,.16);
@@ -5959,6 +6068,7 @@ body.is-spectating .spectate-disabled {
   display: flex;
   align-items: center;
   justify-content: center;
+  isolation: isolate;
 }
 
 .eta-icon {
@@ -6004,16 +6114,41 @@ body.is-spectating .spectate-disabled {
   to { transform: translateX(-50%) rotate(360deg); }
 }
 
-.student-badge {
-  position: absolute;
-  top: -8px;
-  right: -8px;
-  padding: 4px 8px;
-  border-radius: 20px;
-  background: #10b981;
-  color: #fff;
-  font-size: 10px;
-  font-weight: 700;
+.hero-mission-edit {
+  position: relative;
+  top: -1px;
+  display: inline-grid;
+  place-items: center;
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: color-mix(in srgb, #22d3ee 58%, currentColor);
+  cursor: pointer;
+  box-shadow: none;
+  transition: color 0.16s ease, opacity 0.16s ease;
+  backface-visibility: hidden;
+  opacity: 0.66;
+  vertical-align: middle;
+}
+
+.hero-mission-edit:hover {
+  color: #22d3ee;
+  opacity: 0.9;
+}
+
+.hero-mission-edit:active {
+  opacity: 1;
+}
+
+.hero-mission-edit svg,
+.hero-mission-edit i[data-lucide] {
+  width: 13px;
+  height: 13px;
+  stroke-width: 2;
+  pointer-events: none;
 }
 
 .eta-val {
@@ -6026,6 +6161,10 @@ body.is-spectating .spectate-disabled {
 }
 
 .eta-days {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
   font-size: 12px;
   color: #cbd5e1;
   font-weight: 600;
@@ -7893,6 +8032,12 @@ html[data-theme="light"] .stat-box.green-theme:hover {
   transform: translateY(-2px);
 }
 
+html[data-theme="light"] .stat-box.eta-stat:hover {
+  border-color: rgba(148, 163, 184, 0.22);
+  background: rgba(255, 255, 255, 0.82);
+  transform: none;
+}
+
 html[data-theme="light"] .stat-val,
 html[data-theme="light"] .stat-box.blue-theme .stat-val,
 html[data-theme="light"] .stat-box.green-theme .stat-val {
@@ -8231,6 +8376,18 @@ html[data-theme="light"] #chatComposerMode,
 html[data-theme="light"] #chatLiveStatus {
   color: #64748b !important;
   opacity: 0.9;
+}
+
+html[data-theme="light"] .chat-composer-visibility {
+  border-color: rgba(37, 99, 235, 0.18) !important;
+  background: rgba(37, 99, 235, 0.08) !important;
+  color: #1d4ed8 !important;
+}
+
+html[data-theme="light"] .chat-composer-visibility--private {
+  border-color: rgba(217, 119, 6, 0.22) !important;
+  background: rgba(245, 158, 11, 0.12) !important;
+  color: #b45309 !important;
 }
 
 html[data-theme="light"] .subj-settings {
@@ -10460,8 +10617,10 @@ html[data-theme="dark"] .account-dialog__card {
 .project-banner__img {
   display: block;
   width: 100%;
-  max-height: 190px;
-  object-fit: cover;
+  height: auto;
+  max-height: none;
+  object-fit: contain;
+  object-position: center;
 }
 
 .project-banner__install {
@@ -10634,10 +10793,15 @@ html[data-theme="light"] .toggle-label--light {
 html[data-theme="light"] .mission-card,
 html[data-theme="light"] .chronos-config-dialog__card,
 html[data-theme="light"] .chat-settings-dialog__card {
-  background: #ffffff !important;
+  background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%) !important;
   color: #0f172a !important;
   border-color: rgba(203, 213, 225, 0.9) !important;
   box-shadow: 0 24px 60px rgba(15, 23, 42, 0.14) !important;
+}
+
+html[data-theme="light"] .mission-modal {
+  background: rgba(15, 23, 42, 0.46) !important;
+  backdrop-filter: blur(10px) !important;
 }
 
 html[data-theme="light"] .mission-card__head h3,
@@ -10661,6 +10825,16 @@ html[data-theme="light"] .chronos-config-dialog__card select,
 html[data-theme="light"] .chat-settings-dialog__card input,
 html[data-theme="light"] .chat-settings-dialog__card select {
   background: #f8fbff !important;
+  color: #0f172a !important;
+  border-color: rgba(203, 213, 225, 0.95) !important;
+}
+
+html[data-theme="light"] .mission-date-display svg {
+  color: #2563eb !important;
+}
+
+html[data-theme="light"] .mission-card .btn-small:not(.btn-small--primary) {
+  background: #ffffff !important;
   color: #0f172a !important;
   border-color: rgba(203, 213, 225, 0.95) !important;
 }
@@ -10695,7 +10869,7 @@ html[data-theme="light"] .chat-compose__footer .btn-small--accent {
   }
 
   .project-banner__img {
-    max-height: 124px;
+    max-height: none;
   }
 
   .project-banner__install {
@@ -10867,6 +11041,461 @@ html[data-theme="light"] .chat-compose__footer .btn-small--accent {
   }
 }
 
+/* v198 responsive modal/config hardening */
+.account-dialog,
+.track-dialog,
+.mission-modal {
+  box-sizing: border-box;
+  padding: clamp(10px, 2.6vw, 24px) !important;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+  overscroll-behavior: contain;
+}
+
+.account-dialog__card,
+.settings-dialog__card,
+.backup-dialog__card,
+.spectate-dialog__card,
+.security-dialog__card,
+.timer-dialog__card,
+.developer-dialog__card,
+.chronos-config-dialog__card,
+.chat-settings-dialog__card,
+.chat-edit-dialog__card,
+.install-guide-card,
+.track-dialog__card,
+.mission-card,
+#chatExpandDialog .account-dialog__card,
+#chatShowAllDialog .account-dialog__card {
+  box-sizing: border-box !important;
+  width: min(var(--dialog-max, 760px), calc(100vw - 24px)) !important;
+  max-width: calc(100vw - 24px) !important;
+  max-height: calc(100dvh - 24px) !important;
+  margin: auto !important;
+  overflow: auto !important;
+  overscroll-behavior: contain;
+}
+
+.settings-dialog__card { --dialog-max: 820px; }
+.backup-dialog__card { --dialog-max: 980px; }
+.spectate-dialog__card { --dialog-max: 980px; }
+.security-dialog__card { --dialog-max: 920px; }
+.developer-dialog__card { --dialog-max: 960px; }
+.timer-dialog__card { --dialog-max: 720px; }
+.chronos-config-dialog__card,
+.chat-settings-dialog__card,
+.mission-card,
+.install-guide-card { --dialog-max: 480px; }
+.chat-edit-dialog__card { --dialog-max: 980px; }
+#chatExpandDialog .account-dialog__card { --dialog-max: 1180px; }
+#chatShowAllDialog .account-dialog__card { --dialog-max: 920px; }
+
+.account-dialog__card *,
+.settings-dialog__card *,
+.backup-dialog__card *,
+.spectate-dialog__card *,
+.security-dialog__card *,
+.timer-dialog__card *,
+.developer-dialog__card *,
+.chronos-config-dialog__card *,
+.chat-settings-dialog__card *,
+.track-dialog__card *,
+.mission-card *,
+.install-guide-card * {
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.account-dialog__head,
+.settings-dialog__head,
+.chat-settings-card__head,
+.mission-card__head,
+.track-dialog__head {
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.account-dialog__head > div,
+.settings-dialog__head > div,
+.chat-settings-card__head > div,
+.mission-card__head > div {
+  min-width: 0;
+}
+
+.account-dialog__head h3,
+.account-dialog__head span,
+.settings-dialog__head h3,
+.settings-dialog__head span,
+.chat-settings-card__head h3,
+.chat-settings-card__head span,
+.mission-card__head h3,
+.mission-card__head p {
+  overflow-wrap: anywhere;
+}
+
+.settings-modal-shell,
+.settings-modal-card,
+.settings-pane,
+.settings-pane--active,
+.settings-group,
+.settings-row,
+.settings-about-card,
+.backup-settings-row,
+.backup-vault-list,
+.backup-vault-item,
+.spectate-shell,
+.spectate-status,
+.spectate-user-list,
+.spectate-user-row,
+.chat-settings-card__body,
+.chronos-config-dialog__body,
+.mission-form,
+.mission-field,
+.mission-date-wrap,
+.install-guide-body {
+  max-width: 100% !important;
+  min-width: 0 !important;
+}
+
+.settings-modal-card {
+  overflow: hidden !important;
+}
+
+.settings-tabs {
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  overflow: hidden !important;
+}
+
+.settings-tab {
+  min-width: 0 !important;
+  justify-content: center;
+  white-space: nowrap;
+}
+
+.settings-pane--active,
+.settings-group--stack,
+.settings-about-card,
+.chat-settings-card__body,
+.chronos-config-dialog__body {
+  overflow-x: hidden;
+}
+
+.settings-row {
+  grid-template-columns: minmax(0, 1fr) minmax(120px, auto);
+}
+
+.settings-row > *,
+.backup-settings-row > *,
+.spectate-user-row > *,
+.chat-settings-card__body > *,
+.chronos-config-dialog__body > *,
+.mission-field > * {
+  max-width: 100%;
+}
+
+.settings-input,
+.settings-modal-card input,
+.settings-modal-card select,
+.settings-modal-card textarea,
+.chat-settings-dialog__card input,
+.chat-settings-dialog__card select,
+.chat-settings-dialog__card textarea,
+.chronos-config-dialog__card input,
+.chronos-config-dialog__card select,
+.chronos-config-dialog__card textarea,
+.mission-card input,
+.mission-card button,
+.track-dialog__card input,
+.track-dialog__card select {
+  max-width: 100% !important;
+  min-width: 0 !important;
+}
+
+.chronos-config-dialog__body label,
+.chat-settings-card__body label {
+  max-width: 100%;
+  min-width: 0;
+}
+
+.chronos-config-dialog__body label > div,
+.chat-settings-card__body label > div {
+  flex-wrap: wrap;
+}
+
+.mission-picker {
+  max-width: min(286px, calc(100vw - 48px)) !important;
+}
+
+.chat-edit-actions,
+.mission-actions,
+.account-dialog__tools {
+  flex-wrap: wrap;
+}
+
+.chat-edit-actions .btn-small,
+.mission-actions .btn-small {
+  min-width: max-content;
+}
+
+html[data-theme="light"] .account-dialog__card,
+html[data-theme="light"] .settings-dialog__card,
+html[data-theme="light"] .backup-dialog__card,
+html[data-theme="light"] .spectate-dialog__card,
+html[data-theme="light"] .security-dialog__card,
+html[data-theme="light"] .timer-dialog__card,
+html[data-theme="light"] .developer-dialog__card,
+html[data-theme="light"] .chronos-config-dialog__card,
+html[data-theme="light"] .chat-settings-dialog__card,
+html[data-theme="light"] .track-dialog__card,
+html[data-theme="light"] .mission-card,
+html[data-theme="light"] .install-guide-card,
+html[data-theme="light"] #chatExpandDialog .account-dialog__card,
+html[data-theme="light"] #chatShowAllDialog .account-dialog__card {
+  background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%) !important;
+  color: #0f172a !important;
+  border-color: rgba(203, 213, 225, 0.92) !important;
+}
+
+html[data-theme="light"] .settings-modal-card,
+html[data-theme="light"] .settings-group,
+html[data-theme="light"] .settings-about-card,
+html[data-theme="light"] .backup-settings-row,
+html[data-theme="light"] .backup-vault-item,
+html[data-theme="light"] .spectate-status,
+html[data-theme="light"] .spectate-user-list,
+html[data-theme="light"] .spectate-user-row,
+html[data-theme="light"] .chat-settings-panel__note {
+  background: rgba(239, 246, 255, 0.72) !important;
+  color: #0f172a !important;
+  border-color: rgba(191, 219, 254, 0.86) !important;
+}
+
+html[data-theme="light"] .account-dialog__head h3,
+html[data-theme="light"] .account-dialog__head strong,
+html[data-theme="light"] .settings-dialog__head h3,
+html[data-theme="light"] .settings-group h3,
+html[data-theme="light"] .settings-group h4,
+html[data-theme="light"] .settings-row strong,
+html[data-theme="light"] .backup-settings-row strong,
+html[data-theme="light"] .backup-vault-item__head strong,
+html[data-theme="light"] .spectate-user-name,
+html[data-theme="light"] .mission-field > span {
+  color: #0f172a !important;
+}
+
+html[data-theme="light"] .account-dialog__head span,
+html[data-theme="light"] .settings-row small,
+html[data-theme="light"] .settings-help,
+html[data-theme="light"] .settings-about-card p,
+html[data-theme="light"] .backup-settings-row small,
+html[data-theme="light"] .backup-vault-item__head span,
+html[data-theme="light"] .backup-vault-item__foot small,
+html[data-theme="light"] .spectate-user-email,
+html[data-theme="light"] .spectate-uid,
+html[data-theme="light"] .mission-card__head p {
+  color: #475569 !important;
+}
+
+html[data-theme="light"] .settings-input,
+html[data-theme="light"] .settings-modal-card input,
+html[data-theme="light"] .settings-modal-card select,
+html[data-theme="light"] .chat-settings-dialog__card input,
+html[data-theme="light"] .chat-settings-dialog__card select,
+html[data-theme="light"] .chronos-config-dialog__card input,
+html[data-theme="light"] .chronos-config-dialog__card select,
+html[data-theme="light"] .mission-date-display {
+  background: #ffffff !important;
+  color: #0f172a !important;
+  border-color: rgba(203, 213, 225, 0.95) !important;
+}
+
+#settingsDialog .color-picker {
+  width: 48px !important;
+  height: 36px !important;
+  flex: 0 0 auto;
+  justify-self: end;
+  border-radius: 14px !important;
+  padding: 4px !important;
+}
+
+#settingsDialog .color-picker::-webkit-color-swatch {
+  border-radius: 10px !important;
+}
+
+#settingsDialog .color-picker::-moz-color-swatch {
+  border-radius: 10px !important;
+}
+
+html[data-theme="light"] #settingsDialog .color-picker {
+  background: linear-gradient(180deg, #ffffff, #edf6ff) !important;
+  border-color: rgba(148, 163, 184, 0.42) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.92), 0 8px 18px rgba(15,23,42,0.08) !important;
+}
+
+html[data-theme="light"] .settings-tab {
+  color: #475569 !important;
+}
+
+html[data-theme="light"] .settings-tab--active {
+  color: #1d4ed8 !important;
+  background: #eff6ff !important;
+}
+
+html[data-theme] .account-dialog__card,
+html[data-theme] .track-dialog__card,
+html[data-theme] .mission-card,
+html[data-theme] #chatExpandDialog .account-dialog__card,
+html[data-theme] #chatShowAllDialog .account-dialog__card {
+  max-height: calc(100dvh - 32px) !important;
+  max-width: calc(100vw - 32px) !important;
+}
+
+html[data-theme] #settingsDialog .settings-dialog__card {
+  width: min(820px, calc(100vw - 32px)) !important;
+}
+
+html[data-theme] #accountDialog .account-dialog__card,
+html[data-theme] #backupDialog .backup-dialog__card,
+html[data-theme] #spectateDialog .spectate-dialog__card,
+html[data-theme] #accountSecurityDialog .security-dialog__card,
+html[data-theme] #developerDialog .developer-dialog__card {
+  width: min(980px, calc(100vw - 32px)) !important;
+}
+
+html[data-theme] #timerDialog .timer-dialog__card {
+  width: min(720px, calc(100vw - 32px)) !important;
+}
+
+html[data-theme] #missionModal .mission-card,
+html[data-theme] #chronosConfigPanel .chronos-config-dialog__card,
+html[data-theme] #chatSettingsPanel .chat-settings-dialog__card,
+html[data-theme] #installGuideDialog .install-guide-card {
+  width: min(480px, calc(100vw - 32px)) !important;
+  max-width: calc(100vw - 32px) !important;
+}
+
+html[data-theme] #chronosConfigPanel,
+html[data-theme] #chatSettingsPanel {
+  justify-items: center !important;
+  align-items: center !important;
+}
+
+@media (max-width: 640px) {
+  .account-dialog,
+  .track-dialog,
+  .mission-modal {
+    align-items: center !important;
+    justify-items: center !important;
+    padding: 8px !important;
+  }
+
+  .account-dialog__card,
+  .settings-dialog__card,
+  .backup-dialog__card,
+  .spectate-dialog__card,
+  .security-dialog__card,
+  .timer-dialog__card,
+  .developer-dialog__card,
+  .chronos-config-dialog__card,
+  .chat-settings-dialog__card,
+  .chat-edit-dialog__card,
+  .install-guide-card,
+  .track-dialog__card,
+  .mission-card,
+  #chatExpandDialog .account-dialog__card,
+  #chatShowAllDialog .account-dialog__card {
+    width: calc(100vw - 16px) !important;
+    max-width: calc(100vw - 16px) !important;
+    max-height: calc(100dvh - 16px) !important;
+    border-radius: 18px !important;
+    padding: 14px !important;
+  }
+
+  html[data-theme] #settingsDialog .settings-dialog__card,
+  html[data-theme] #accountDialog .account-dialog__card,
+  html[data-theme] #backupDialog .backup-dialog__card,
+  html[data-theme] #spectateDialog .spectate-dialog__card,
+  html[data-theme] #accountSecurityDialog .security-dialog__card,
+  html[data-theme] #developerDialog .developer-dialog__card,
+  html[data-theme] #timerDialog .timer-dialog__card,
+  html[data-theme] #missionModal .mission-card,
+  html[data-theme] #chronosConfigPanel .chronos-config-dialog__card,
+  html[data-theme] #chatSettingsPanel .chat-settings-dialog__card,
+  html[data-theme] #installGuideDialog .install-guide-card {
+    width: calc(100vw - 16px) !important;
+    max-width: calc(100vw - 16px) !important;
+    max-height: calc(100dvh - 16px) !important;
+  }
+
+  .settings-modal-shell {
+    padding: 0 !important;
+  }
+
+  .settings-modal-card {
+    border-radius: 16px !important;
+  }
+
+  .settings-tabs {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .settings-tab {
+    min-height: 42px;
+    padding: 8px 6px !important;
+    font-size: 0.78rem;
+  }
+
+  .settings-pane {
+    padding: 12px !important;
+  }
+
+  .settings-group {
+    padding: 14px !important;
+    border-radius: 16px !important;
+  }
+
+  .settings-row,
+  .backup-settings-row {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 8px !important;
+    align-items: start !important;
+  }
+
+  .settings-row > *:last-child,
+  .backup-settings-row > *:last-child {
+    width: 100% !important;
+    justify-self: stretch !important;
+  }
+
+  #settingsDialog .color-picker {
+    width: 48px !important;
+    max-width: 48px !important;
+    justify-self: end !important;
+    margin-left: auto;
+  }
+
+  .spectate-user-row {
+    grid-template-columns: 1fr !important;
+  }
+
+  .mission-picker {
+    left: 50% !important;
+    transform: translateX(-50%);
+  }
+
+  .mission-actions,
+  .chat-edit-actions {
+    justify-content: stretch !important;
+  }
+
+  .mission-actions .btn-small,
+  .chat-edit-actions .btn-small {
+    flex: 1 1 auto;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -10875,6 +11504,205 @@ html[data-theme="light"] .chat-compose__footer .btn-small--accent {
     transition-duration: 0.01ms !important;
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
+  }
+}
+
+/* v207: global gray contrast pass + modern settings switches */
+html[data-theme="dark"] {
+  --text-sub: #d7e5f2;
+}
+
+html[data-theme="light"] {
+  --text-sub: #3f536b;
+}
+
+html[data-theme="light"] .muted,
+html[data-theme="light"] .settings-help,
+html[data-theme="light"] .settings-row small,
+html[data-theme="light"] .backup-settings-row small,
+html[data-theme="light"] .chronos-presets__label,
+html[data-theme="light"] .chat-settings-panel__note,
+html[data-theme="light"] .composer-tip,
+html[data-theme="light"] .track-empty,
+html[data-theme="light"] .eta-sub-label,
+html[data-theme="light"] .stat-note,
+html[data-theme="light"] .mission-card__head p,
+html[data-theme="light"] .account-dialog__head span {
+  color: #475569 !important;
+}
+
+html[data-theme="dark"] .muted,
+html[data-theme="dark"] .settings-help,
+html[data-theme="dark"] .settings-row small,
+html[data-theme="dark"] .backup-settings-row small,
+html[data-theme="dark"] .chronos-presets__label,
+html[data-theme="dark"] .chat-settings-panel__note,
+html[data-theme="dark"] .composer-tip,
+html[data-theme="dark"] .track-empty,
+html[data-theme="dark"] .eta-sub-label,
+html[data-theme="dark"] .stat-note,
+html[data-theme="dark"] .mission-card__head p,
+html[data-theme="dark"] .account-dialog__head span {
+  color: #cbd5e1 !important;
+}
+
+html[data-theme="light"] .btn-small:not(.btn-small--primary):not(.btn-small--accent):not(.btn-small--danger):not(.btn-small--active),
+html[data-theme="light"] .chronos-preset,
+html[data-theme="light"] .settings-tab:not(.settings-tab--active) {
+  background: #e2e8f0 !important;
+  border-color: rgba(100, 116, 139, 0.36) !important;
+  color: #334155 !important;
+}
+
+html[data-theme="light"] .btn-small:not(.btn-small--primary):not(.btn-small--accent):not(.btn-small--danger):not(.btn-small--active):hover,
+html[data-theme="light"] .chronos-preset:hover,
+html[data-theme="light"] .chronos-preset.is-active {
+  background: #dbeafe !important;
+  border-color: rgba(37, 99, 235, 0.42) !important;
+  color: #1e3a8a !important;
+}
+
+html[data-theme="dark"] .btn-small:not(.btn-small--primary):not(.btn-small--accent):not(.btn-small--danger):not(.btn-small--active),
+html[data-theme="dark"] .chronos-preset,
+html[data-theme="dark"] .settings-tab:not(.settings-tab--active) {
+  background: rgba(148, 163, 184, 0.14) !important;
+  border-color: rgba(203, 213, 225, 0.24) !important;
+  color: #dbeafe !important;
+}
+
+html[data-theme="dark"] .btn-small:not(.btn-small--primary):not(.btn-small--accent):not(.btn-small--danger):not(.btn-small--active):hover,
+html[data-theme="dark"] .chronos-preset:hover,
+html[data-theme="dark"] .chronos-preset.is-active {
+  background: rgba(96, 165, 250, 0.2) !important;
+  border-color: rgba(125, 211, 252, 0.42) !important;
+  color: #f0f9ff !important;
+}
+
+html[data-theme] .btn-small:disabled,
+html[data-theme] .settings-input:disabled,
+html[data-theme] .settings-range:disabled,
+html[data-theme] .cfg-val-input:disabled,
+html[data-theme] .cfg-arrow-btn:disabled {
+  opacity: 0.72 !important;
+}
+
+.settings-check {
+  -webkit-appearance: none !important;
+  appearance: none !important;
+  position: relative;
+  width: 52px !important;
+  min-width: 52px !important;
+  height: 30px !important;
+  border: 1px solid rgba(148, 163, 184, 0.36) !important;
+  border-radius: 999px !important;
+  background: rgba(148, 163, 184, 0.22) !important;
+  box-shadow: inset 0 1px 2px rgba(15, 23, 42, 0.22), 0 8px 18px rgba(15, 23, 42, 0.08);
+  cursor: pointer;
+  transition: background 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.settings-check::before {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  background: #ffffff;
+  box-shadow: 0 4px 10px rgba(15, 23, 42, 0.22);
+  transition: transform 0.18s ease, background 0.18s ease;
+}
+
+.settings-check:checked {
+  border-color: rgba(37, 99, 235, 0.72) !important;
+  background: linear-gradient(135deg, #2563eb 0%, #06b6d4 100%) !important;
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.2), 0 10px 22px rgba(37, 99, 235, 0.22);
+}
+
+.settings-check:checked::before {
+  transform: translateX(22px);
+}
+
+.settings-check:focus-visible {
+  outline: 3px solid rgba(37, 99, 235, 0.25);
+  outline-offset: 3px;
+}
+
+.settings-check:disabled {
+  cursor: not-allowed;
+  opacity: 0.78 !important;
+}
+
+html[data-theme="dark"] .settings-check {
+  background: rgba(148, 163, 184, 0.18) !important;
+  border-color: rgba(203, 213, 225, 0.28) !important;
+}
+
+html[data-theme="dark"] .settings-check::before {
+  background: #e2e8f0;
+}
+
+html[data-theme="light"] .settings-check {
+  background: #cbd5e1 !important;
+  border-color: rgba(100, 116, 139, 0.46) !important;
+}
+
+html[data-theme="light"] .settings-check::before {
+  background: #ffffff;
+}
+
+html[data-theme] .settings-modal-card input.settings-check,
+html[data-theme] .backup-dialog__card input.settings-check,
+html[data-theme] .settings-dialog__card input.settings-check {
+  width: 52px !important;
+  min-width: 52px !important;
+  height: 30px !important;
+  padding: 0 !important;
+  border-radius: 999px !important;
+}
+
+html[data-theme="light"] .settings-modal-card input.settings-check,
+html[data-theme="light"] .backup-dialog__card input.settings-check,
+html[data-theme="light"] .settings-dialog__card input.settings-check {
+  background: #cbd5e1 !important;
+  border-color: rgba(100, 116, 139, 0.46) !important;
+}
+
+html[data-theme="light"] .settings-modal-card input.settings-check:checked,
+html[data-theme="light"] .backup-dialog__card input.settings-check:checked,
+html[data-theme="light"] .settings-dialog__card input.settings-check:checked {
+  background: linear-gradient(135deg, #2563eb 0%, #06b6d4 100%) !important;
+  border-color: rgba(37, 99, 235, 0.72) !important;
+}
+
+html[data-theme="dark"] .settings-modal-card input.settings-check,
+html[data-theme="dark"] .backup-dialog__card input.settings-check,
+html[data-theme="dark"] .settings-dialog__card input.settings-check {
+  background: rgba(148, 163, 184, 0.18) !important;
+  border-color: rgba(203, 213, 225, 0.28) !important;
+}
+
+html[data-theme="dark"] .settings-modal-card input.settings-check:checked,
+html[data-theme="dark"] .backup-dialog__card input.settings-check:checked,
+html[data-theme="dark"] .settings-dialog__card input.settings-check:checked {
+  background: linear-gradient(135deg, #2563eb 0%, #06b6d4 100%) !important;
+  border-color: rgba(125, 211, 252, 0.58) !important;
+}
+
+#settingsDialog .settings-check,
+#backupDialog .settings-check {
+  justify-self: end !important;
+  align-self: center !important;
+}
+
+@media (max-width: 640px) {
+  #settingsDialog .settings-check,
+  #backupDialog .settings-check {
+    width: 52px !important;
+    min-width: 52px !important;
+    justify-self: end !important;
+    margin-left: auto;
   }
 }
 
@@ -11164,10 +11992,52 @@ const BACKUP_VAULT_KEY = "hsc-vault-backups-v1";
 const AUTO_BACKUP_STAMP_KEY = "hsc-auto-backup-stamp-v1";
 const BACKUP_IMPORT_INPUT_ID = "backupImportInput";
 let deferredInstallPrompt = null;
+let installManifestUrl = "";
+
+const ensureInstallManifest = () => {
+  if (document.querySelector("link[data-study-os-manifest]")) return;
+  const iconSvg = encodeURIComponent(`
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+      <rect width="512" height="512" rx="112" fill="#0f172a"/>
+      <path d="M118 166h276v54H286v126h-60V220H118z" fill="#38bdf8"/>
+      <path d="M140 354h232v40H140z" fill="#f97316"/>
+    </svg>
+  `.trim());
+  const manifest = {
+    name: "HSC Study OS",
+    short_name: "Study OS",
+    description: "HSC study tracking dashboard",
+    start_url: location.href.split("#")[0],
+    scope: location.href.split("#")[0].replace(/[^/]*$/, ""),
+    display: "standalone",
+    background_color: "#0f172a",
+    theme_color: "#2563eb",
+    icons: [
+      { src: `data:image/svg+xml,${iconSvg}`, sizes: "192x192", type: "image/svg+xml", purpose: "any maskable" },
+      { src: `data:image/svg+xml,${iconSvg}`, sizes: "512x512", type: "image/svg+xml", purpose: "any maskable" }
+    ]
+  };
+  try {
+    installManifestUrl = URL.createObjectURL(new Blob([JSON.stringify(manifest)], { type: "application/manifest+json" }));
+    const link = document.createElement("link");
+    link.rel = "manifest";
+    link.href = installManifestUrl;
+    link.dataset.studyOsManifest = "true";
+    document.head.appendChild(link);
+  } catch (_) {}
+};
+
+ensureInstallManifest();
 
 window.addEventListener("beforeinstallprompt", (event) => {
   event.preventDefault();
   deferredInstallPrompt = event;
+});
+
+window.addEventListener("appinstalled", () => {
+  deferredInstallPrompt = null;
+  document.getElementById("installGuideDialog")?.setAttribute("hidden", "");
+  showBackupBanner?.("Study OS installed", "Shortcut/app install completed.");
 });
 
 const showInstallGuide = () => {
@@ -11176,18 +12046,25 @@ const showInstallGuide = () => {
     dialog.removeAttribute("hidden");
     if (window.lucide) window.lucide.createIcons({ attrs: { "stroke-width": 1.8 } });
   } else {
-    alert("Install as app: use your browser menu and choose Install app, Add to Home screen, or Create shortcut.");
+    alert("Automatic install prompt is not available in this browser mode.");
   }
 };
 
 const installStudyOsApp = async () => {
+  ensureInstallManifest();
   if (deferredInstallPrompt) {
     deferredInstallPrompt.prompt();
     try { await deferredInstallPrompt.userChoice; } catch(_) {}
     deferredInstallPrompt = null;
     return;
   }
-  showInstallGuide();
+  setTimeout(() => {
+    if (deferredInstallPrompt) {
+      installStudyOsApp();
+    } else {
+      showInstallGuide();
+    }
+  }, 350);
 };
 
 const CHAT_PALETTE = [
@@ -11645,7 +12522,12 @@ const syncChatUi = () => {
   if (defaultVisibility) defaultVisibility.value = chatState.prefs.defaultVisibility;
   if (messagesPerPageSelect) messagesPerPageSelect.value = chatState.prefs.messagesPerPage;
   if (composerIdentity) composerIdentity.textContent = getChatAuthorName();
-  if (composerMode) composerMode.textContent = `Post visibility from settings: ${chatState.prefs.defaultVisibility}`;
+  if (composerMode) {
+    const visibility = chatState.prefs.defaultVisibility === "private" ? "private" : "public";
+    composerMode.className = `chat-composer-visibility chat-composer-visibility--${visibility}`;
+    composerMode.innerHTML = `<span class="chat-composer-visibility__icon" aria-hidden="true"></span><span>${visibility === "private" ? "Private" : "Public"}</span>`;
+    composerMode.setAttribute("aria-label", `Post visibility: ${visibility}`);
+  }
   toggleButtons.forEach((button) => {
     button.textContent = chatState.prefs.isListVisible ? "Hide messages" : "Show messages";
   });
@@ -12452,7 +13334,6 @@ function getStepFormHtml(stepNum) {
             return `
               <button class="composer-btn composer-chapter-card ${isSel ? 'is-selected' : ''}" type="button" data-action="composer-select-chapter" data-index="${index}" aria-pressed="${isSel ? 'true' : 'false'}">
                 <span class="composer-chapter-code">C${index + 1}</span>
-                <span class="sr-only">${escapeHtml(ch.name || `Chapter ${index + 1}`)}</span>
               </button>
             `;
           }).join('')}
@@ -13656,11 +14537,6 @@ const renderDashboardUnit = (state) => {
           <h2>Dashboard</h2>
           <p>Real-time progress tracking and mission status.</p>
         </div>
-        <div class="unit-section__actions">
-          <button class="icon-button icon-button--accent" type="button" data-action="open-mission-settings" title="Edit mission target" aria-label="Edit mission target">
-            ${icon("calendar-clock", "Edit mission target")}
-          </button>
-        </div>
       </div>
       
       <div class="dashboard-modern dark" id="dashboardModern">
@@ -13683,7 +14559,6 @@ const renderDashboardUnit = (state) => {
               <span class="eta-dot"></span>
               ETA &nbsp;${escapeHtml(typeof eta === "string" ? eta : eta + " days")}
             </div>
-            <div class="eta-sub">at current pace</div>
           </div>
           
           <div class="dash-body">
@@ -14821,7 +15696,6 @@ const renderChatUnit = () =>
           <div class="chat-toolbar__actions">
             <button class="btn-small" type="button" data-action="chat-expand" title="Expand Chat" aria-label="Expand Chat">
               ${icon("maximize-2", "Expand")}
-              <span class="sr-only">Expand Chat</span>
             </button>
             <button class="btn-small btn-small--primary" type="button" data-action="chat-toggle-list" data-chat-list-toggle>${chatState.prefs.isListVisible ? "Hide messages" : "Show messages"}</button>
             <button class="btn-small btn-small--icon" type="button" data-action="chat-toggle-settings" title="Message settings" aria-label="Message settings">${icon("sliders-horizontal", "Message settings")}</button>
@@ -14883,7 +15757,10 @@ const renderChatUnit = () =>
           <div class="chat-compose__row">
             <div class="chat-compose__identity">
               <strong id="chatComposerIdentity">Student</strong>
-              <span id="chatComposerMode">Post visibility from settings: public</span>
+              <span id="chatComposerMode" class="chat-composer-visibility chat-composer-visibility--public" aria-label="Post visibility: public">
+                <span class="chat-composer-visibility__icon" aria-hidden="true"></span>
+                <span>Public</span>
+              </span>
             </div>
           </div>
 
@@ -16364,11 +17241,15 @@ const renderAppShell = (state, units) => {
                 <div class="clock-circle">
                   <div class="clock-hand"></div>
                 </div>
-                <div class="student-badge">&lt;1%</div>
               </div>
             </div>
             <span class="eta-val">${heroDaysLeft}</span>
-            <span class="eta-days">days left</span>
+            <span class="eta-days">
+              <span>days left</span>
+              <button class="hero-mission-edit" type="button" data-action="open-mission-settings" title="Edit mission target" aria-label="Edit mission target">
+                ${icon("pencil", "Edit mission target")}
+              </button>
+            </span>
             <span class="eta-sub-label">to complete</span>
           </div>
 
@@ -16408,13 +17289,13 @@ const renderAppShell = (state, units) => {
           <div>
             <p class="eyebrow">Install Study OS</p>
             <h3 id="installGuideTitle">${icon("download", "Install")} <span>Install as app</span></h3>
-            <span>Browser install prompt is not available for this single HTML session.</span>
+            <span>Automatic shortcut prompt is unavailable in this browser mode.</span>
           </div>
           <button class="btn-small btn-small--icon" type="button" data-action="close-install-guide" aria-label="Close install guide">${icon("x", "Close")}</button>
         </div>
         <div class="install-guide-body">
-          <p><strong>PC:</strong> open browser menu, then choose Install app or Create shortcut.</p>
-          <p><strong>Phone:</strong> open browser menu, then choose Add to Home screen.</p>
+          <p>The app will open the native install/add-shortcut prompt automatically when Chrome, Edge, or Android WebView allows it.</p>
+          <button class="btn-small btn-small--primary btn-small--wide" type="button" data-action="install-app">${icon("download", "Retry")} <span>Try install prompt again</span></button>
         </div>
       </section>
     </div>
@@ -17509,9 +18390,30 @@ const initProjectBannerImages = () => {
   });
 };
 
+const FLOATING_PANEL_PORTAL_IDS = ["chronosConfigPanel", "chatSettingsPanel"];
+
+const clearFloatingPanelPortals = () => {
+  FLOATING_PANEL_PORTAL_IDS.forEach((id) => {
+    Array.from(document.body.children).forEach((child) => {
+      if (child.id === id) child.remove();
+    });
+  });
+};
+
+const portalFloatingPanels = () => {
+  FLOATING_PANEL_PORTAL_IDS.forEach((id) => {
+    const panel = document.getElementById(id);
+    if (panel && panel.parentElement !== document.body) {
+      document.body.appendChild(panel);
+    }
+  });
+};
+
 const mountApp = () => {
+  clearFloatingPanelPortals();
   document.querySelector("#app").innerHTML = renderAppShell(scaffoldState, buildUnits());
   applyUserThemeSettings();
+  portalFloatingPanels();
   if (window.lucide) window.lucide.createIcons({ attrs: { "stroke-width": 1.8 } });
   initProjectBannerImages();
   attachVisualEffects();
@@ -17524,6 +18426,7 @@ const mountApp = () => {
 
 document.querySelector("#app").innerHTML = renderAppShell(scaffoldState, buildUnits());
 applyUserThemeSettings();
+portalFloatingPanels();
 initProjectBannerImages();
 
 document.addEventListener("DOMContentLoaded", () => {
