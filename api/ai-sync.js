@@ -41,6 +41,7 @@ const RESPONSE_SCHEMA = {
               },
             },
           },
+          postText: { type: "string" },
           warnings: {
             type: "array",
             items: {
@@ -128,6 +129,11 @@ const intOrNull = (value) => {
   return n === null ? null : Math.round(n);
 };
 
+const positiveNumberArray = (value) =>
+  Array.isArray(value)
+    ? value.map((n) => Number(n)).filter((n) => Number.isFinite(n) && n > 0)
+    : [];
+
 const clampPercent = (value) => {
   const n = Number(value);
   if (!Number.isFinite(n)) return 100;
@@ -190,19 +196,24 @@ const validateParsed = (parsed) => {
         return null;
       }
 
-      const classType = normalizeClassType(item.classType);
+      let classType = normalizeClassType(item.classType);
       const paper = intOrNull(item.paper);
       const chapter = intOrNull(item.chapter);
       const totalLectures = intOrNull(item.totalLectures);
-      const lectures = Array.isArray(item.lectures)
-        ? item.lectures.map((n) => parseInt(n, 10)).filter((n) => Number.isInteger(n) && n > 0)
-        : [];
+      const lectures = positiveNumberArray(item.lectures);
       const maybeRange = item.lectureRange && typeof item.lectureRange === "object"
         ? { from: intOrNull(item.lectureRange.from), to: intOrNull(item.lectureRange.to) }
         : null;
       const lectureRange = maybeRange && maybeRange.from && maybeRange.to && maybeRange.to >= maybeRange.from
         ? maybeRange
         : null;
+      if (classType === "Custom" && (lectures.length || lectureRange || totalLectures)) {
+        classType = "Detailed";
+      }
+      const hasExplicitPercent = /(\d{1,3}\s*%|last\s*\d{1,3}|partial|half)/i.test(String(item.rawLine || ""));
+      const completionPercent = totalLectures && (lectures.length || lectureRange) && !hasExplicitPercent
+        ? 100
+        : clampPercent(item.completionPercent);
 
       return {
         subject,
@@ -213,7 +224,7 @@ const validateParsed = (parsed) => {
         lectures,
         lectureRange,
         totalLectures: totalLectures && totalLectures > 0 ? totalLectures : null,
-        completionPercent: clampPercent(item.completionPercent),
+        completionPercent,
         isRevision: item.isRevision === true || classType === "Revision",
         rawLine: String(item.rawLine || ""),
       };
@@ -244,6 +255,7 @@ const validateParsed = (parsed) => {
       studyDurationMinutes: numberOrNull(update.studyDurationMinutes),
       selfStudyMinutes: numberOrNull(update.selfStudyMinutes),
       items,
+      postText: String(update.postText || ""),
       warnings: updateWarnings,
       questions: stringArray(update.questions),
     };
@@ -252,8 +264,68 @@ const validateParsed = (parsed) => {
   return { updates, globalWarnings };
 };
 
-const buildPrompt = ({ rawText, currentSyllabus, userTimezone }) => {
+const SYLLABUS_CONTEXT = `
+Subject shorthand and NCTB/Banglish hints:
+- Math, HM, higher math -> Higher Math.
+- phy, physics -> Physics.
+- chem, chemistry -> Chemistry.
+- bio, biology -> Biology.
+- bangla, bn -> Bangla. eng, en -> English. ict -> ICT.
+- organic, joibo, jaibo, organic chemistry, roshayon organic -> Chemistry P2C2.
+- poribesh rosayon, environmental chemistry, environment, poribesh -> Chemistry P2C1.
+- current electricity, current el, current, bidyut probah -> Physics P2C3.
+- If an explicit P_C_ exists, trust it more than keyword mapping.
+- Do not create tracker sync data when Paper/Chapter is missing; keep the line in postText and ask a question.
+`;
+
+const buildSystemInstruction = ({ userTimezone, currentDate }) => `You are the HSC Study OS AI Smart Sync brain.
+
+Understand messy Bangla/Banglish/English study updates and produce strict JSON for:
+1. A clean human chat post in postText.
+2. Structured tracker sync data only when subject, paper, chapter, and progress can be inferred safely.
+
+Return JSON only. Never return markdown or explanation.
+
+Post format target:
+Update (8 June 2026)
+Math P1C7 Lec1/17 done
+Chemistry P2C2 Lec1-10 Rev
+Class Duration - 4hrs
+Study Duration - 4hrs
+
+Rules:
+- User timezone: ${userTimezone || "Asia/Dhaka"}.
+- Current date for inference: ${currentDate || new Date().toISOString().slice(0, 10)}.
+- If the user gives only a day number, use current month and current year.
+- If the user gives day+month without year, use current year.
+- If the user gives 5/5/26, interpret as day/month/year unless context clearly says otherwise.
+- Never output a blank date. If unclear, use current date and add a question.
+- P_C_ means Paper no. and Chapter no. P2C5 means Paper 2 Chapter 5.
+- If Paper/Chapter is absent, keep the text in postText but do not create a sync item; add a question asking for P_C_.
+- Lec, L, lecture all mean lecture.
+- Lec4/16 means lecture 4 out of 16.
+- Lec1+2+3 means lectures [1,2,3]. Lec8,9,10 means [8,9,10]. Lec1-10 means lectureRange 1 to 10.
+- Lec18.5 is valid as a partial lecture number.
+- Last 25% means completionPercent 25 for that lecture. Last 50% means 50.
+- A checkmark/done means completionPercent 100.
+- Rev means revision. Revision lines should set isRevision true and classType Revision unless another class type is explicit.
+- FRB, Advanced, Admission, Detailed, One Shot/Oneshot/Oshot are class types.
+- st, study, study time, study duration mean studyDurationMinutes.
+- ss, self, self study mean selfStudyMinutes.
+- ct, cls, class, class time, class duration mean classDurationMinutes.
+- If a duration label exists but amount is missing, set that duration field to null and add a question.
+- 4hrs = 240 minutes. 3:45hrs = 225 minutes. 1h30m = 90 minutes.
+- Preserve extra non-update text in postText at the same relative place but do not force it into tracker JSON.
+- Be interactive through questions when uncertain. Do not silently make high-risk corrections.
+- Chemistry C2C2 likely means Chemistry P2C2; add a warning/question but normalize the sync item if confidence is high.
+- Multiple update blocks must be parsed separately.
+- Keep duplicate lecture warnings when the same lecture appears twice.
+
+${SYLLABUS_CONTEXT}`;
+
+const buildPrompt = ({ rawText, currentSyllabus, userTimezone, currentDate, history }) => {
   const syllabusText = JSON.stringify(currentSyllabus || {}).slice(0, 20000);
+  const historyText = Array.isArray(history) ? JSON.stringify(history).slice(0, 12000) : "[]";
   return `You are the AI Smart Sync parser for HSC Study OS.
 
 Return JSON only. Do not return markdown. Do not return explanation.
@@ -282,6 +354,7 @@ Use this exact response schema:
           "rawLine": string
         }
       ],
+      "postText": "Clean editable message block for this date",
       "warnings": [{"message": string, "rawLine": string}],
       "questions": [string]
     }
@@ -307,6 +380,12 @@ Rules:
 Current syllabus snapshot:
 ${syllabusText}
 
+Current date for inference:
+${currentDate || new Date().toISOString().slice(0, 10)}
+
+Previous AI sync context or correction history:
+${historyText}
+
 Raw study update text:
 ${rawText}`;
 };
@@ -316,12 +395,15 @@ const buildRepairPrompt = (rawText) => `Repair this into valid JSON matching the
 Invalid response:
 ${rawText}`;
 
-const callGemini = async ({ apiKey, model, prompt }) => {
+const callGemini = async ({ apiKey, model, prompt, systemInstruction }) => {
   const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent?key=${encodeURIComponent(apiKey)}`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       contents: [{ role: "user", parts: [{ text: prompt }] }],
+      systemInstruction: {
+        parts: [{ text: systemInstruction }],
+      },
       generationConfig: {
         temperature: 0.1,
         topP: 0.8,
@@ -352,13 +434,13 @@ const getModelCandidates = () => {
   return configured.length ? configured : DEFAULT_MODELS;
 };
 
-const callGeminiWithFallback = async ({ apiKey, prompt }) => {
+const callGeminiWithFallback = async ({ apiKey, prompt, systemInstruction }) => {
   const models = getModelCandidates();
   let lastError = null;
   for (const model of models) {
     try {
       console.log("[ai-sync] trying model:", model);
-      const text = await callGemini({ apiKey, model, prompt });
+      const text = await callGemini({ apiKey, model, prompt, systemInstruction });
       return { text, model };
     } catch (error) {
       lastError = error;
@@ -403,13 +485,20 @@ module.exports = async function handler(req, res) {
       return res.status(400).json({ ok: false, message: "rawText is too long. Split the update into smaller batches." });
     }
 
+    const currentDate = body.currentDate || new Date().toISOString().slice(0, 10);
+    const systemInstruction = buildSystemInstruction({
+      userTimezone: body.userTimezone || "Asia/Dhaka",
+      currentDate,
+    });
     const prompt = buildPrompt({
       rawText,
       currentSyllabus: body.currentSyllabus || {},
       userTimezone: body.userTimezone || "Asia/Dhaka",
+      currentDate,
+      history: body.history || body.context || [],
     });
 
-    const first = await callGeminiWithFallback({ apiKey, prompt });
+    const first = await callGeminiWithFallback({ apiKey, prompt, systemInstruction });
     const firstText = first.text;
     let parsed;
 
@@ -417,7 +506,7 @@ module.exports = async function handler(req, res) {
       parsed = validateParsed(safeParseJson(firstText));
     } catch (firstError) {
       console.log("[ai-sync] first parse failed:", firstError.message);
-      const repairedText = await callGemini({ apiKey, model: first.model, prompt: buildRepairPrompt(firstText) });
+      const repairedText = await callGemini({ apiKey, model: first.model, prompt: buildRepairPrompt(firstText), systemInstruction });
       try {
         parsed = validateParsed(safeParseJson(repairedText));
       } catch (repairError) {
