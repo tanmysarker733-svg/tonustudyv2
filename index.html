@@ -1432,6 +1432,7 @@ h4 {
 .hero-strip__content {
   width: min(100%, 1060px);
   position: relative;
+  overflow: hidden;
   padding: 30px 28px;
   border: 1px solid rgba(255, 255, 255, 0.07);
   border-radius: 28px;
@@ -1441,6 +1442,50 @@ h4 {
   box-shadow: 0 24px 70px rgba(0, 0, 0, 0.18);
   transform-style: preserve-3d;
   transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+.hero-strip__content::before,
+.hero-strip__content::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.28s ease;
+}
+
+.hero-strip__content::before {
+  z-index: 0;
+  background:
+    radial-gradient(ellipse at 18% 25%, rgba(249, 115, 22, 0.18), transparent 30%),
+    radial-gradient(ellipse at 75% 18%, rgba(124, 58, 237, 0.16), transparent 34%),
+    radial-gradient(ellipse at 58% 80%, rgba(6, 182, 212, 0.13), transparent 38%),
+    linear-gradient(135deg, rgba(15, 23, 42, 0.12), rgba(2, 6, 23, 0.34));
+}
+
+.hero-strip__content::after {
+  z-index: 1;
+  inset: -18% -12%;
+  background:
+    linear-gradient(105deg, transparent 13%, rgba(249, 115, 22, 0.18) 23%, transparent 35%),
+    linear-gradient(98deg, transparent 31%, rgba(124, 58, 237, 0.14) 45%, transparent 58%),
+    linear-gradient(112deg, transparent 50%, rgba(6, 182, 212, 0.12) 64%, transparent 76%);
+  filter: blur(11px);
+  transform: translate3d(var(--scroll-drift, 0px), 0, 0);
+  mix-blend-mode: screen;
+}
+
+html[data-theme="dark"][data-scaffold-strands="on"] .hero-strip__content::before {
+  opacity: 1;
+}
+
+html[data-theme="dark"][data-scaffold-strands="on"] .hero-strip__content::after {
+  opacity: 0.78;
+}
+
+.hero-strip__content > * {
+  position: relative;
+  z-index: 2;
 }
 
 .hero-strip__content:hover {
@@ -11706,6 +11751,245 @@ html[data-theme="dark"] .settings-dialog__card input.settings-check:checked {
   }
 }
 
+/* v208: AI Smart Sync preview, confirmation, and status surfaces */
+.ai-smart-sync-panel {
+  margin-top: 14px;
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--panel-bg);
+  box-shadow: 0 18px 42px rgba(2, 6, 23, 0.12);
+  display: grid;
+  gap: 12px;
+}
+
+.chat-ai-live-preview {
+  margin-top: 10px;
+  padding: 12px;
+  border-radius: 15px;
+  border: 1px solid rgba(96, 165, 250, 0.22);
+  background: linear-gradient(145deg, rgba(37, 99, 235, 0.12), rgba(14, 165, 233, 0.07));
+  display: grid;
+  gap: 8px;
+}
+
+.chat-ai-live-preview[hidden] {
+  display: none;
+}
+
+.chat-ai-live-preview__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  color: var(--text-main);
+  font-size: 0.75rem;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.chat-ai-live-preview__meta {
+  color: var(--text-sub);
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.chat-ai-live-preview__body {
+  min-height: 58px;
+  max-height: 180px;
+  overflow: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+  color: var(--text-main);
+  font-size: 0.86rem;
+  line-height: 1.55;
+  padding: 10px;
+  border-radius: 12px;
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  background: rgba(15, 23, 42, 0.16);
+}
+
+.chat-ai-live-preview__placeholder {
+  color: var(--text-sub);
+  font-style: italic;
+}
+
+.chat-ai-toggle {
+  min-width: 48px;
+  justify-content: center;
+  border-color: rgba(34, 211, 238, 0.34) !important;
+}
+
+.chat-ai-toggle.is-on {
+  color: #e0f2fe !important;
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.92), rgba(14, 165, 233, 0.8)) !important;
+  box-shadow: 0 12px 24px rgba(14, 165, 233, 0.22);
+}
+
+.ai-smart-sync-panel[hidden] {
+  display: none;
+}
+
+.ai-smart-sync-head,
+.ai-smart-sync-actions,
+.ai-sync-block__meta,
+.ai-sync-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ai-smart-sync-head {
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.ai-smart-sync-title {
+  display: grid;
+  gap: 3px;
+}
+
+.ai-smart-sync-title strong {
+  color: var(--text-main);
+  font-size: 0.95rem;
+}
+
+.ai-smart-sync-title span,
+.ai-sync-block__meta,
+.ai-sync-warning-list,
+.ai-sync-empty {
+  color: var(--text-sub);
+  font-size: 0.78rem;
+  line-height: 1.5;
+}
+
+.ai-smart-sync-badge {
+  border-radius: 999px;
+  padding: 6px 10px;
+  background: rgba(59, 130, 246, 0.16);
+  border: 1px solid rgba(59, 130, 246, 0.28);
+  color: #bfdbfe;
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.ai-smart-sync-badge--warn {
+  background: rgba(245, 158, 11, 0.16);
+  border-color: rgba(245, 158, 11, 0.32);
+  color: #fcd34d;
+}
+
+.ai-sync-block {
+  display: grid;
+  gap: 10px;
+  padding: 12px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid rgba(148, 163, 184, 0.16);
+}
+
+.ai-sync-block__date {
+  color: var(--text-main);
+  font-size: 0.86rem;
+  font-weight: 900;
+}
+
+.ai-sync-block__meta {
+  flex-wrap: wrap;
+}
+
+.ai-sync-pill {
+  border-radius: 999px;
+  padding: 5px 8px;
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  background: rgba(148, 163, 184, 0.1);
+  color: var(--text-sub);
+  font-weight: 800;
+}
+
+.ai-sync-item-list {
+  display: grid;
+  gap: 8px;
+}
+
+.ai-sync-item {
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 10px;
+  border-radius: 12px;
+  background: rgba(15, 23, 42, 0.16);
+  border: 1px solid rgba(148, 163, 184, 0.14);
+}
+
+.ai-sync-item strong {
+  color: var(--text-main);
+  font-size: 0.82rem;
+}
+
+.ai-sync-item span {
+  color: var(--text-sub);
+  font-size: 0.74rem;
+  line-height: 1.45;
+}
+
+.ai-sync-warning-list {
+  display: grid;
+  gap: 6px;
+  padding: 10px;
+  border-radius: 12px;
+  background: rgba(245, 158, 11, 0.12);
+  border: 1px solid rgba(245, 158, 11, 0.22);
+}
+
+.ai-smart-sync-actions {
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}
+
+html[data-theme="light"] .ai-smart-sync-panel,
+html[data-theme="light"] .ai-sync-block,
+html[data-theme="light"] .chat-ai-live-preview {
+  background: #f8fbff;
+  border-color: rgba(191, 219, 254, 0.9);
+}
+
+html[data-theme="light"] .ai-sync-item,
+html[data-theme="light"] .chat-ai-live-preview__body {
+  background: #eef6ff;
+  border-color: rgba(148, 163, 184, 0.24);
+}
+
+html[data-theme="light"] .chat-ai-toggle.is-on {
+  color: #ffffff !important;
+}
+
+html[data-theme="light"] .ai-smart-sync-badge {
+  color: #1d4ed8;
+}
+
+html[data-theme="light"] .ai-smart-sync-badge--warn {
+  color: #92400e;
+}
+
+@media (max-width: 640px) {
+  .ai-smart-sync-head,
+  .ai-smart-sync-actions,
+  .ai-sync-item {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .ai-smart-sync-actions .btn-small {
+    width: 100%;
+  }
+}
+
     </style>
   </head>
   <body class="login-locked">
@@ -11897,6 +12181,7 @@ const defaultUserSettings = {
     gaugeInnerGradStart: "#06b6d4",
     gaugeInnerGradEnd: "#6366f1",
     showProjectBanner: true,
+    showScaffoldStrands: false,
   },
   autoBackupEnabled: true,
   backupTiming: "daily",
@@ -11909,7 +12194,15 @@ const USER_SETTINGS_KEY = "hsc-user-settings-v1";
 const loadUserSettings = () => {
   try {
     const raw = localStorage.getItem(USER_SETTINGS_KEY);
-    return raw ? { ...defaultUserSettings, ...JSON.parse(raw) } : { ...defaultUserSettings };
+    if (!raw) return { ...defaultUserSettings };
+    const parsed = JSON.parse(raw);
+    return {
+      ...defaultUserSettings,
+      ...parsed,
+      barColors: { ...defaultUserSettings.barColors, ...(parsed.barColors || {}) },
+      graphColors: { ...defaultUserSettings.graphColors, ...(parsed.graphColors || {}) },
+      uiConfigs: { ...defaultUserSettings.uiConfigs, ...(parsed.uiConfigs || {}) },
+    };
   } catch(_) {
     return { ...defaultUserSettings };
   }
@@ -11947,6 +12240,10 @@ const applyUserThemeSettings = () => {
   const theme = normalizeThemeMode(scaffoldState.userSettings?.themeMode);
   if (scaffoldState.userSettings) scaffoldState.userSettings.themeMode = theme;
   root.setAttribute("data-theme", theme);
+  root.setAttribute(
+    "data-scaffold-strands",
+    scaffoldState.userSettings?.uiConfigs?.showScaffoldStrands === true ? "on" : "off"
+  );
 
   const modern = document.getElementById("dashboardModern");
   const card = document.getElementById("dashboardCard");
@@ -12097,6 +12394,7 @@ const normalizeChatPrefs = (raw = {}) => ({
   chatCardColor: raw.chatCardColor || "auto",
   messagesPerPage: parseInt(raw.messagesPerPage, 10) || 50,
   smartSyncEnabled: raw.smartSyncEnabled === true,
+  aiPreviewEnabled: raw.aiPreviewEnabled !== false,
 });
 
 const loadChatPrefs = () => {
@@ -12143,6 +12441,13 @@ const chatState = {
   status: "Connecting to Firestore...",
   showAllPage: 0,
   editingMessageId: "",
+  aiSync: {
+    status: "idle",
+    parsed: null,
+    rawText: "",
+    message: "",
+    applied: false,
+  },
 };
 
 const getChatAuthorName = () => {
@@ -12185,6 +12490,30 @@ const setChatFeedback = (message, tone = "") => {
       }, 100);
     }
   }
+};
+
+const renderChatAiLivePreview = () => {
+  const box = document.getElementById("chatAiLivePreview");
+  const body = document.getElementById("chatAiLivePreviewText");
+  const meta = document.getElementById("chatAiLivePreviewMeta");
+  const toggle = document.getElementById("chatAiPreviewToggle");
+  const textarea = document.getElementById("chatMessageInput");
+  const enabled = chatState.prefs.aiPreviewEnabled !== false;
+  if (toggle) {
+    toggle.classList.toggle("is-on", enabled);
+    toggle.setAttribute("aria-pressed", enabled ? "true" : "false");
+    toggle.title = enabled ? "AI live post preview is on" : "AI live post preview is off";
+  }
+  if (!box || !body) return;
+  box.hidden = !enabled;
+  if (!enabled) return;
+  const raw = textarea?.value || "";
+  const trimmed = raw.trim();
+  const visibility = chatState.prefs.defaultVisibility === "private" ? "Private" : "Public";
+  if (meta) meta.textContent = `${getChatAuthorName()} · ${visibility}`;
+  body.innerHTML = trimmed
+    ? escapeHtml(raw).replace(/\n/g, "<br>")
+    : `<span class="chat-ai-live-preview__placeholder">Write a study update to preview exactly how the chat post will look.</span>`;
 };
 
 const getAuthUid = () => {
@@ -12532,6 +12861,8 @@ const syncChatUi = () => {
     button.textContent = chatState.prefs.isListVisible ? "Hide messages" : "Show messages";
   });
   setChatFeedback(chatState.feedbackMessage, chatState.feedbackTone);
+  renderChatAiLivePreview();
+  syncAiSmartSyncPanel();
   renderChatMessages();
   renderChatPalette();
 };
@@ -12638,6 +12969,678 @@ const sendChatMessage = async () => {
   } catch (error) {
     setChatFeedback(`Send failed: ${error.message}`, "error");
   }
+};
+
+// ── AI Smart Sync parser/preview/apply layer ─────────────────────────────────
+const AI_SYNC_ENDPOINT = "/api/ai-sync";
+const AI_SYNC_ALLOWED_SUBJECTS = ["Higher Math", "Physics", "Chemistry", "Biology", "Bangla", "English", "ICT"];
+const AI_SYNC_ALLOWED_CLASS_TYPES = ["Detailed", "Advanced", "Admission", "FRB", "One Shot", "Revision", "Custom"];
+
+const normalizeAiText = (value = "") =>
+  String(value || "").toLowerCase().replace(/[^a-z0-9]+/g, "");
+
+const normalizeAiSubjectName = (subject = "") => {
+  const key = normalizeAiText(subject);
+  if (["math", "highermath", "hmath", "hm"].includes(key)) return "Higher Math";
+  if (["physics", "phy"].includes(key)) return "Physics";
+  if (["chemistry", "chem"].includes(key)) return "Chemistry";
+  if (["biology", "bio"].includes(key)) return "Biology";
+  if (["bangla", "bn", "bengali"].includes(key)) return "Bangla";
+  if (["english", "eng", "en"].includes(key)) return "English";
+  if (["ict", "informationcommunicationtechnology"].includes(key)) return "ICT";
+  return subject;
+};
+
+const normalizeAiClassType = (type = "") => {
+  const key = normalizeAiText(type);
+  if (["advanced", "adv"].includes(key)) return "Advanced";
+  if (["admission", "adm"].includes(key)) return "Admission";
+  if (["frb"].includes(key)) return "FRB";
+  if (["oneshot", "1shot", "oshot", "os"].includes(key)) return "One Shot";
+  if (["revision", "rev"].includes(key)) return "Revision";
+  if (["custom"].includes(key)) return "Custom";
+  return "Detailed";
+};
+
+const clampAiPercent = (value) => {
+  const n = Number(value);
+  if (!Number.isFinite(n)) return 100;
+  return Math.max(0, Math.min(100, Math.round(n)));
+};
+
+const asNumberOrNull = (value) => {
+  if (value === null || value === undefined || value === "") return null;
+  const n = Number(value);
+  return Number.isFinite(n) ? n : null;
+};
+
+const makeAiWarning = (message, rawLine = "") => ({ message: String(message || ""), rawLine: String(rawLine || "") });
+const aiWarningToText = (warning) => {
+  if (!warning) return "";
+  if (typeof warning === "string") return warning;
+  if (typeof warning === "object") {
+    const message = warning.message ? String(warning.message) : "";
+    const rawLine = warning.rawLine ? String(warning.rawLine) : "";
+    return rawLine ? `${message} (${rawLine})` : message;
+  }
+  return String(warning);
+};
+
+const validateAiSmartSyncParsed = (parsed) => {
+  const warnings = [];
+  if (!parsed || typeof parsed !== "object" || !Array.isArray(parsed.updates)) {
+    throw new Error("AI parser returned invalid JSON structure.");
+  }
+  const normalized = {
+    updates: parsed.updates.map((update, updateIndex) => {
+      if (!update || typeof update !== "object") {
+        warnings.push(makeAiWarning(`Update block ${updateIndex + 1} was invalid and was skipped.`));
+        return null;
+      }
+      const date = /^\d{4}-\d{2}-\d{2}$/.test(String(update.date || "")) ? String(update.date) : null;
+      if (!date) warnings.push(makeAiWarning(`Update block ${updateIndex + 1} has missing or invalid date.`));
+      const items = Array.isArray(update.items) ? update.items.map((item, itemIndex) => {
+        if (!item || typeof item !== "object") {
+          warnings.push(makeAiWarning(`Item ${itemIndex + 1} in block ${updateIndex + 1} was invalid and was skipped.`));
+          return null;
+        }
+        const subject = normalizeAiSubjectName(item.subject);
+        if (!AI_SYNC_ALLOWED_SUBJECTS.includes(subject)) {
+          warnings.push(makeAiWarning(`Unknown subject "${item.subject || ""}" was skipped.`, item.rawLine));
+          return null;
+        }
+        const classType = normalizeAiClassType(item.classType);
+        const lectures = Array.isArray(item.lectures)
+          ? item.lectures.map((n) => parseInt(n, 10)).filter((n) => Number.isInteger(n) && n > 0)
+          : [];
+        const lectureRange = item.lectureRange && typeof item.lectureRange === "object"
+          ? {
+              from: parseInt(item.lectureRange.from, 10),
+              to: parseInt(item.lectureRange.to, 10),
+            }
+          : null;
+        const safeRange = lectureRange && Number.isInteger(lectureRange.from) && Number.isInteger(lectureRange.to) && lectureRange.from > 0 && lectureRange.to >= lectureRange.from
+          ? lectureRange
+          : null;
+        const chapter = asNumberOrNull(item.chapter);
+        const paper = asNumberOrNull(item.paper);
+        const totalLectures = asNumberOrNull(item.totalLectures);
+        return {
+          subject,
+          paper: paper === 1 || paper === 2 ? paper : null,
+          chapter: chapter && chapter > 0 ? Math.round(chapter) : null,
+          chapterLabel: item.chapterLabel ? String(item.chapterLabel) : (chapter ? `C${Math.round(chapter)}` : ""),
+          classType: AI_SYNC_ALLOWED_CLASS_TYPES.includes(classType) ? classType : "Detailed",
+          lectures,
+          lectureRange: safeRange,
+          totalLectures: totalLectures && totalLectures > 0 ? Math.round(totalLectures) : null,
+          completionPercent: clampAiPercent(item.completionPercent),
+          isRevision: item.isRevision === true || classType === "Revision",
+          rawLine: String(item.rawLine || ""),
+        };
+      }).filter(Boolean) : [];
+      return {
+        date,
+        studyQuality: asNumberOrNull(update.studyQuality),
+        classDurationMinutes: asNumberOrNull(update.classDurationMinutes),
+        studyDurationMinutes: asNumberOrNull(update.studyDurationMinutes),
+        selfStudyMinutes: asNumberOrNull(update.selfStudyMinutes),
+        items,
+        warnings: Array.isArray(update.warnings) ? update.warnings.map(aiWarningToText).filter(Boolean) : [],
+        questions: Array.isArray(update.questions) ? update.questions.map(String) : [],
+      };
+    }).filter(Boolean),
+    globalWarnings: Array.isArray(parsed.globalWarnings) ? parsed.globalWarnings.map(aiWarningToText).filter(Boolean) : [],
+  };
+  normalized.globalWarnings.push(...warnings.filter((w) => w.message).map((w) => w.rawLine ? `${w.message} (${w.rawLine})` : w.message));
+  return normalized;
+};
+
+const createAiSyllabusSnapshot = () => ({
+  studyMode: currentStudyMode(),
+  subjects: scaffoldState.syllabus.map((subject) => ({
+    title: subject.title,
+    hasPapers: !!subject.hasPapers,
+    papers: (subject.hasPapers ? subject.papers : [{ title: "Chapters", chapters: subject.chapters }]).map((paper, pi) => ({
+      index: subject.hasPapers ? pi + 1 : null,
+      title: paper.title,
+      chapters: (paper.chapters || []).map((chapter, ci) => {
+        const safe = ensureChapterShape({ ...chapter });
+        return {
+          index: ci + 1,
+          name: safe.name,
+          isPercentage: !!safe.isPerc || safe.viewStyle === "perc",
+          done: {
+            detailed: safe.doneDL,
+            advanced: safe.doneAdv,
+            admission: safe.doneAdm,
+            frb: safe.doneFRB,
+            oneShot: safe.doneOS,
+            percent: safe.donePerc,
+          },
+          totals: {
+            detailed: safe.totalDL,
+            advanced: safe.totalAdv,
+            admission: safe.totalAdm,
+            frb: safe.totalFRB,
+            oneShot: safe.totalOS,
+          },
+        };
+      }),
+    })),
+  })),
+});
+
+const AI_SYNC_MONTHS = {
+  jan: 1, january: 1,
+  feb: 2, february: 2,
+  mar: 3, march: 3,
+  apr: 4, april: 4,
+  may: 5,
+  jun: 6, june: 6,
+  jul: 7, july: 7,
+  aug: 8, august: 8,
+  sep: 9, sept: 9, september: 9,
+  oct: 10, october: 10,
+  nov: 11, november: 11,
+  dec: 12, december: 12,
+};
+
+const toIsoAiDate = (year, month, day) => {
+  const y = parseInt(year, 10);
+  const m = parseInt(month, 10);
+  const d = parseInt(day, 10);
+  if (!y || !m || !d || m < 1 || m > 12 || d < 1 || d > 31) return "";
+  return `${y}-${String(m).padStart(2, "0")}-${String(d).padStart(2, "0")}`;
+};
+
+const parseAiSyncDateText = (text = "") => {
+  const line = String(text || "");
+  const iso = line.match(/\b(20\d{2})[-/](\d{1,2})[-/](\d{1,2})\b/);
+  if (iso) return toIsoAiDate(iso[1], iso[2], iso[3]);
+  const named = line.match(/\b(\d{1,2})\s+([A-Za-z]+)\s+(20\d{2})\b/);
+  if (named) {
+    const month = AI_SYNC_MONTHS[named[2].toLowerCase()];
+    if (month) return toIsoAiDate(named[3], month, named[1]);
+  }
+  const slash = line.match(/\b(\d{1,2})[/-](\d{1,2})[/-](20\d{2})\b/);
+  if (slash) return toIsoAiDate(slash[3], slash[2], slash[1]);
+  return "";
+};
+
+const parseAiDurationMinutes = (text = "") => {
+  const line = String(text || "").toLowerCase();
+  const hourColon = line.match(/(\d{1,3})\s*:\s*(\d{1,2})\s*(?:h|hr|hrs|hour|hours)?/);
+  if (hourColon) return (parseInt(hourColon[1], 10) * 60) + parseInt(hourColon[2], 10);
+  const hours = line.match(/(\d+(?:\.\d+)?)\s*(?:h|hr|hrs|hour|hours)\b/);
+  if (hours) return Math.round(parseFloat(hours[1]) * 60);
+  const minutes = line.match(/(\d{1,4})\s*(?:m|min|mins|minute|minutes)\b/);
+  if (minutes) return parseInt(minutes[1], 10);
+  return null;
+};
+
+const parseAiSubjectFromLine = (line = "") => {
+  const text = String(line || "").toLowerCase();
+  if (/\b(higher\s*math|math|hm)\b/.test(text)) return "Higher Math";
+  if (/\b(physics|phy)\b/.test(text)) return "Physics";
+  if (/\b(chemistry|chem)\b/.test(text)) return "Chemistry";
+  if (/\b(biology|bio)\b/.test(text)) return "Biology";
+  if (/\b(bangla|bengali|bn)\b/.test(text)) return "Bangla";
+  if (/\b(english|eng|en)\b/.test(text)) return "English";
+  if (/\bict\b/.test(text)) return "ICT";
+  return "";
+};
+
+const parseAiClassTypeFromLine = (line = "") => {
+  const text = normalizeAiText(line);
+  if (text.includes("advanced") || /\badv\b/i.test(line)) return "Advanced";
+  if (text.includes("admission") || /\badm\b/i.test(line)) return "Admission";
+  if (/\bfrb\b/i.test(line)) return "FRB";
+  if (text.includes("oneshot") || text.includes("oshot") || /\b1\s*shot\b/i.test(line)) return "One Shot";
+  if (text.includes("revision") || /\brev\b/i.test(line)) return "Revision";
+  return "Detailed";
+};
+
+const parseAiSyncItemLine = (line = "") => {
+  const rawLine = String(line || "").trim();
+  const subject = parseAiSubjectFromLine(rawLine);
+  if (!subject) return null;
+  const warnings = [];
+  let paper = null;
+  let chapter = null;
+  const typo = rawLine.match(/\bC\s*([12])\s*C\s*(\d{1,2})\b/i);
+  if (typo && !/\bP\s*[12]\b/i.test(rawLine)) {
+    paper = parseInt(typo[1], 10);
+    chapter = parseInt(typo[2], 10);
+    warnings.push(`${rawLine} looks like it may mean P${paper}C${chapter}.`);
+  }
+  const paperMatch = rawLine.match(/\bP\s*([12])\b/i);
+  if (paperMatch) paper = parseInt(paperMatch[1], 10);
+  const chapterMatch = rawLine.match(/\bC\s*(\d{1,2})\b/i);
+  if (chapterMatch && !chapter) chapter = parseInt(chapterMatch[1], 10);
+  const range = rawLine.match(/\bLec(?:ture)?\s*(\d{1,3})\s*[-–]\s*(\d{1,3})\b/i);
+  const withTotal = rawLine.match(/\bLec(?:ture)?\s*(\d{1,3})\s*\/\s*(\d{1,3})\b/i);
+  const single = rawLine.match(/\bLec(?:ture)?\s*(\d{1,3})\b/i);
+  const lectureRange = range ? { from: parseInt(range[1], 10), to: parseInt(range[2], 10) } : null;
+  const lectures = !lectureRange && single ? [parseInt(single[1], 10)] : [];
+  const totalLectures = withTotal ? parseInt(withTotal[2], 10) : null;
+  const percentMatch = rawLine.match(/(\d{1,3})\s*%/);
+  const completionPercent = percentMatch ? clampAiPercent(percentMatch[1]) : (/✅|🟩|done|complete/i.test(rawLine) ? 100 : 100);
+  const classType = parseAiClassTypeFromLine(rawLine);
+  return {
+    item: {
+      subject,
+      paper,
+      chapter,
+      chapterLabel: chapter ? `C${chapter}` : "",
+      classType,
+      lectures,
+      lectureRange,
+      totalLectures,
+      completionPercent,
+      isRevision: classType === "Revision",
+      rawLine,
+    },
+    warnings,
+  };
+};
+
+const addAiLocalDuplicateWarnings = (update) => {
+  const seen = new Map();
+  (update.items || []).forEach((item) => {
+    const base = `${item.subject}|P${item.paper || "?"}|${item.chapterLabel || "?"}|${item.classType}`;
+    const lectures = item.lectureRange
+      ? Array.from({ length: item.lectureRange.to - item.lectureRange.from + 1 }, (_, i) => item.lectureRange.from + i)
+      : (item.lectures || []);
+    lectures.forEach((lecture) => {
+      const key = `${base}|L${lecture}`;
+      if (seen.has(key)) {
+        const prev = seen.get(key);
+        const highest = Math.max(prev.completionPercent || 0, item.completionPercent || 0);
+        prev.completionPercent = highest;
+        item.completionPercent = highest;
+        update.warnings.push(`Duplicate lecture detected for ${item.subject} ${item.paper ? `P${item.paper}` : ""}${item.chapterLabel} Lec${lecture}. Highest completion was kept.`);
+      } else {
+        seen.set(key, item);
+      }
+    });
+  });
+};
+
+const parseAiSmartSyncLocally = (rawText = "") => {
+  const lines = String(rawText || "").split(/\r?\n/).map((line) => line.trim()).filter(Boolean);
+  const fallbackDate = new Date().toISOString().slice(0, 10);
+  const parsed = { updates: [], globalWarnings: ["Single-file local parser used. Gemini backend is not bundled because that would expose the API key."] };
+  let current = null;
+  const ensureBlock = () => {
+    if (!current) {
+      current = {
+        date: fallbackDate,
+        studyQuality: null,
+        classDurationMinutes: null,
+        studyDurationMinutes: null,
+        selfStudyMinutes: null,
+        items: [],
+        warnings: ["No explicit update date found for this block; today's date was used."],
+        questions: [],
+      };
+      parsed.updates.push(current);
+    }
+    return current;
+  };
+  lines.forEach((line) => {
+    const date = parseAiSyncDateText(line);
+    if (/update/i.test(line) && date) {
+      current = {
+        date,
+        studyQuality: null,
+        classDurationMinutes: null,
+        studyDurationMinutes: null,
+        selfStudyMinutes: null,
+        items: [],
+        warnings: [],
+        questions: [],
+      };
+      parsed.updates.push(current);
+      return;
+    }
+    const block = ensureBlock();
+    if (/quality|rating/i.test(line) && /%/.test(line)) {
+      const match = line.match(/(\d{1,3})\s*%/);
+      if (match) block.studyQuality = clampAiPercent(match[1]);
+      return;
+    }
+    if (/self/i.test(line) && /study/i.test(line)) {
+      block.selfStudyMinutes = parseAiDurationMinutes(line);
+      return;
+    }
+    if (/class/i.test(line) && /duration/i.test(line)) {
+      block.classDurationMinutes = parseAiDurationMinutes(line);
+      return;
+    }
+    if (/study/i.test(line) && /duration/i.test(line)) {
+      block.studyDurationMinutes = parseAiDurationMinutes(line);
+      return;
+    }
+    const parsedLine = parseAiSyncItemLine(line);
+    if (parsedLine?.item) {
+      block.items.push(parsedLine.item);
+      block.warnings.push(...parsedLine.warnings);
+    }
+  });
+  parsed.updates.forEach(addAiLocalDuplicateWarnings);
+  return validateAiSmartSyncParsed(parsed);
+};
+
+const aiSyncHasQuestions = (parsed) =>
+  !!parsed?.globalWarnings?.length ||
+  parsed?.updates?.some((update) => update.warnings?.length || update.questions?.length);
+
+const getAiSyncLectures = (item) => {
+  if (item.lectureRange) {
+    const lectures = [];
+    for (let n = item.lectureRange.from; n <= item.lectureRange.to; n += 1) lectures.push(n);
+    return lectures;
+  }
+  return Array.isArray(item.lectures) ? item.lectures : [];
+};
+
+const findAiSubjectIndex = (subjectName) => {
+  const target = normalizeAiSubjectName(subjectName);
+  return scaffoldState.syllabus.findIndex((subject) => normalizeAiSubjectName(subject.title) === target);
+};
+
+const applyAiSmartSyncToSyllabus = (parsed, options = {}) => {
+  const allowRisky = options.allowRisky === true;
+  const results = { applied: 0, skipped: 0, warnings: [] };
+  if (isSpectateReadOnly()) {
+    results.warnings.push("Spectate read-only mode blocks tracker updates.");
+    return results;
+  }
+  const typeMap = {
+    "Detailed": { done: "doneDL", total: "totalDL" },
+    "Advanced": { done: "doneAdv", total: "totalAdv" },
+    "Admission": { done: "doneAdm", total: "totalAdm" },
+    "FRB": { done: "doneFRB", total: "totalFRB" },
+    "One Shot": { done: "doneOS", total: "totalOS" },
+  };
+
+  (parsed?.updates || []).forEach((update) => {
+    (update.items || []).forEach((item) => {
+      const si = findAiSubjectIndex(item.subject);
+      if (si < 0) {
+        results.skipped += 1;
+        results.warnings.push(`Skipped unknown subject: ${item.subject}`);
+        return;
+      }
+      const subject = scaffoldState.syllabus[si];
+      const pi = subject.hasPapers ? ((item.paper || 0) - 1) : 0;
+      if (subject.hasPapers && (pi < 0 || pi >= subject.papers.length)) {
+        results.skipped += 1;
+        results.warnings.push(`Skipped ${item.subject}: missing paper in "${item.rawLine || item.chapterLabel}".`);
+        return;
+      }
+      const chapters = subject.hasPapers ? subject.papers[pi].chapters : subject.chapters;
+      const ci = (item.chapter || 0) - 1;
+      if (ci < 0 || ci >= chapters.length) {
+        results.skipped += 1;
+        results.warnings.push(`Skipped ${item.subject}: chapter ${item.chapter || "?"} was not found.`);
+        return;
+      }
+      const ch = chapters[ci];
+      ensureChapterShape(ch);
+      if (ch.isPerc || ch.viewStyle === "perc") {
+        ch.donePerc = Math.max(ch.donePerc || 0, clampAiPercent(item.completionPercent));
+        results.applied += 1;
+        return;
+      }
+      if (item.isRevision && !allowRisky) {
+        results.skipped += 1;
+        results.warnings.push(`Skipped revision-only line until confirmation: ${item.rawLine || item.subject}`);
+        return;
+      }
+      const effectiveType = item.classType === "Revision" ? "Detailed" : item.classType;
+      const fields = typeMap[effectiveType];
+      if (!fields) {
+        results.skipped += 1;
+        results.warnings.push(`Skipped unsupported class type "${item.classType}" for ${item.subject}.`);
+        return;
+      }
+      if (item.totalLectures) ch[fields.total] = Math.max(1, item.totalLectures);
+      const lectures = getAiSyncLectures(item);
+      if (!lectures.length) {
+        if (item.completionPercent !== null && item.completionPercent !== undefined) {
+          ch[fields.done] = Math.max(ch[fields.done] || 0, (ch[fields.total] || 1) * (clampAiPercent(item.completionPercent) / 100));
+          results.applied += 1;
+        } else {
+          results.skipped += 1;
+          results.warnings.push(`Skipped ${item.subject} ${item.chapterLabel || ""}: no lecture or percentage value.`);
+        }
+        return;
+      }
+      const highestLecture = Math.max(...lectures);
+      const progressValue = (highestLecture - 1) + (clampAiPercent(item.completionPercent) / 100);
+      ch[fields.done] = Math.max(ch[fields.done] || 0, progressValue);
+      results.applied += 1;
+    });
+  });
+
+  if (results.applied > 0) {
+    saveSyllabus(scaffoldState.syllabus);
+    refreshSyllabusGrid();
+    showBackupBanner("Smart Sync applied", `${results.applied} tracker item${results.applied === 1 ? "" : "s"} updated.`);
+  }
+  return results;
+};
+
+const renderAiSmartSyncPreview = () => {
+  const state = chatState.aiSync;
+  if (state.status === "idle") return "";
+  if (state.status === "loading") {
+    return `
+      <div class="ai-smart-sync-panel">
+        <div class="ai-smart-sync-head">
+          <div class="ai-smart-sync-title">
+            <strong>${icon("sparkles", "AI")} AI Smart Sync</strong>
+            <span>Analyzing update...</span>
+          </div>
+          <span class="ai-smart-sync-badge">Loading</span>
+        </div>
+      </div>
+    `;
+  }
+  if (state.status === "error") {
+    return `
+      <div class="ai-smart-sync-panel">
+        <div class="ai-smart-sync-head">
+          <div class="ai-smart-sync-title">
+            <strong>${icon("circle-alert", "Error")} AI Smart Sync</strong>
+            <span>${escapeHtml(state.message || "Could not analyze update.")}</span>
+          </div>
+          <span class="ai-smart-sync-badge ai-smart-sync-badge--warn">Error</span>
+        </div>
+        <div class="ai-smart-sync-actions">
+          <button class="btn-small" type="button" data-action="ai-sync-clear">Close</button>
+          <button class="btn-small btn-small--primary" type="button" data-action="ai-sync-edit-manually">Edit Manually</button>
+        </div>
+      </div>
+    `;
+  }
+  const parsed = state.parsed;
+  const needsConfirmation = aiSyncHasQuestions(parsed);
+  const blocks = (parsed?.updates || []).map((update) => {
+    const meta = [
+      update.studyQuality !== null && update.studyQuality !== undefined ? `Quality ${update.studyQuality}%` : "",
+      update.classDurationMinutes ? `Class ${formatDurationShort(update.classDurationMinutes)}` : "",
+      update.studyDurationMinutes ? `Study ${formatDurationShort(update.studyDurationMinutes)}` : "",
+      update.selfStudyMinutes ? `Self ${formatDurationShort(update.selfStudyMinutes)}` : "",
+    ].filter(Boolean);
+    const warnings = [...(update.warnings || []), ...(update.questions || [])];
+    return `
+      <article class="ai-sync-block">
+        <div>
+          <div class="ai-sync-block__date">${escapeHtml(update.date || "Unknown date")}</div>
+          ${meta.length ? `<div class="ai-sync-block__meta">${meta.map((m) => `<span class="ai-sync-pill">${escapeHtml(m)}</span>`).join("")}</div>` : ""}
+        </div>
+        <div class="ai-sync-item-list">
+          ${(update.items || []).length ? update.items.map((item) => {
+            const lec = item.lectureRange
+              ? `Lec ${item.lectureRange.from}-${item.lectureRange.to}`
+              : (item.lectures || []).length ? `Lec ${(item.lectures || []).join(", ")}` : "No lecture";
+            const paper = item.paper ? `P${item.paper}` : "";
+            const total = item.totalLectures ? `/${item.totalLectures}` : "";
+            return `
+              <div class="ai-sync-item">
+                <div>
+                  <strong>${escapeHtml(item.subject)} ${escapeHtml(paper)}${escapeHtml(item.chapterLabel || "")}</strong>
+                  <span>${escapeHtml(item.classType)} • ${escapeHtml(lec)}${escapeHtml(total)} • ${item.completionPercent}%${item.isRevision ? " • Revision" : ""}</span>
+                </div>
+                <span>${escapeHtml(item.rawLine || "")}</span>
+              </div>
+            `;
+          }).join("") : `<div class="ai-sync-empty">No subject lines detected in this block.</div>`}
+        </div>
+        ${warnings.length ? `<div class="ai-sync-warning-list">${warnings.map((w) => `<span>${escapeHtml(w)}</span>`).join("")}</div>` : ""}
+      </article>
+    `;
+  }).join("");
+  const globalWarnings = parsed?.globalWarnings?.length
+    ? `<div class="ai-sync-warning-list">${parsed.globalWarnings.map((w) => `<span>${escapeHtml(w)}</span>`).join("")}</div>`
+    : "";
+  return `
+    <div class="ai-smart-sync-panel">
+      <div class="ai-smart-sync-head">
+        <div class="ai-smart-sync-title">
+          <strong>${icon("sparkles", "AI")} AI Smart Sync Preview</strong>
+          <span>${needsConfirmation ? "Needs Confirmation before tracker update." : "Review detected updates before applying to Subject Tracker."}</span>
+        </div>
+        <span class="ai-smart-sync-badge ${needsConfirmation ? "ai-smart-sync-badge--warn" : ""}">${needsConfirmation ? "Needs Confirmation" : "Preview"}</span>
+      </div>
+      ${globalWarnings}
+      ${blocks || `<div class="ai-sync-empty">No update blocks detected.</div>`}
+      <div class="ai-smart-sync-actions">
+        ${needsConfirmation ? `
+          <button class="btn-small btn-small--primary" type="button" data-action="ai-sync-apply">Auto-fix recommended</button>
+          <button class="btn-small" type="button" data-action="ai-sync-edit-manually">Edit manually</button>
+          <button class="btn-small btn-small--danger" type="button" data-action="ai-sync-apply-anyway">Apply anyway</button>
+        ` : `
+          <button class="btn-small" type="button" data-action="ai-sync-edit-manually">Edit Manually</button>
+          <button class="btn-small btn-small--primary" type="button" data-action="ai-sync-apply">Apply Smart Sync</button>
+        `}
+        <button class="btn-small" type="button" data-action="ai-sync-clear">Close</button>
+      </div>
+    </div>
+  `;
+};
+
+const syncAiSmartSyncPanel = () => {
+  const panel = document.getElementById("aiSmartSyncPanel");
+  if (!panel) return;
+  const html = renderAiSmartSyncPreview();
+  panel.hidden = !html;
+  panel.innerHTML = html;
+  if (window.lucide) window.lucide.createIcons({ attrs: { "stroke-width": 1.8 } });
+};
+
+const normalizeAiSyncErrorMessage = (error) => {
+  const message = error?.message || String(error || "AI Sync failed.");
+  if (/failed to fetch|networkerror|load failed|fetch/i.test(message) && AI_SYNC_ENDPOINT) {
+    return "API endpoint not found";
+  }
+  if (/gemini api key missing|gemini_api_key|api key/i.test(message)) return "Gemini API key missing";
+  if (/invalid json|non-json|json/i.test(message)) return "AI returned invalid JSON";
+  return message;
+};
+
+const runAiSmartSyncFromChat = async (options = {}) => {
+  const textarea = document.getElementById("chatMessageInput");
+  const rawText = textarea?.value.trim() || "";
+  if (!rawText) {
+    openComposerWizard();
+    return;
+  }
+  chatState.aiSync = { status: "loading", parsed: null, rawText, message: "Analyzing update...", applied: false };
+  setChatFeedback("Analyzing update...", "");
+  syncAiSmartSyncPanel();
+  try {
+    let parsed;
+    if (AI_SYNC_ENDPOINT) {
+      const response = await fetch(AI_SYNC_ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          rawText,
+          currentSyllabus: createAiSyllabusSnapshot(),
+          userTimezone: "Asia/Dhaka",
+        }),
+      });
+      const payload = await response.json().catch(() => null);
+      if (response.status === 404) {
+        throw new Error("API endpoint not found");
+      }
+      if (!payload) {
+        throw new Error("AI returned invalid JSON");
+      }
+      if (payload?.message && /gemini api key missing|gemini_api_key|api key/i.test(payload.message)) {
+        throw new Error("Gemini API key missing");
+      }
+      if (payload?.message && /invalid json|non-json|json/i.test(payload.message)) {
+        throw new Error("AI returned invalid JSON");
+      }
+      if (!response.ok || !payload?.ok) {
+        throw new Error(payload?.message || `AI sync failed with HTTP ${response.status}.`);
+      }
+      parsed = validateAiSmartSyncParsed(payload.parsed);
+    } else {
+      parsed = parseAiSmartSyncLocally(rawText);
+    }
+    chatState.aiSync = { status: "preview", parsed, rawText, message: "", applied: false };
+    if (options.autoApply === true && !aiSyncHasQuestions(parsed)) {
+      applyAiSmartSyncPreview({ allowRisky: false });
+      return;
+    }
+    setChatFeedback(aiSyncHasQuestions(parsed) ? "AI Sync needs confirmation before applying." : "AI Sync preview ready.", aiSyncHasQuestions(parsed) ? "" : "success");
+  } catch (error) {
+    const message = normalizeAiSyncErrorMessage(error);
+    chatState.aiSync = { status: "error", parsed: null, rawText, message, applied: false };
+    setChatFeedback(`AI Sync failed: ${message}`, "error");
+  }
+  syncAiSmartSyncPanel();
+};
+
+const clearAiSmartSyncState = () => {
+  chatState.aiSync = { status: "idle", parsed: null, rawText: "", message: "", applied: false };
+  syncAiSmartSyncPanel();
+};
+
+const applyAiSmartSyncPreview = (options = {}) => {
+  const parsed = chatState.aiSync?.parsed;
+  if (!parsed) {
+    setChatFeedback("No AI Sync preview is ready.", "error");
+    return;
+  }
+  const result = applyAiSmartSyncToSyllabus(parsed, options);
+  chatState.prefs.smartSyncEnabled = true;
+  saveChatPrefs();
+  chatState.aiSync.applied = true;
+  chatState.aiSync.status = "preview";
+  const suffix = result.warnings.length ? ` ${result.warnings.slice(0, 2).join(" ")}` : "";
+  setChatFeedback(`Smart Sync applied: ${result.applied} updated, ${result.skipped} skipped.${suffix}`, result.applied ? "success" : "error");
+  syncAiSmartSyncPanel();
+};
+
+const autoSyncFromChat = () => {
+  const parsed = chatState.aiSync?.parsed;
+  if (parsed) {
+    if (aiSyncHasQuestions(parsed)) {
+      setChatFeedback("AI Sync needs confirmation. Review the preview, then choose Auto-fix recommended or Apply anyway.", "error");
+      syncAiSmartSyncPanel();
+      return;
+    }
+    applyAiSmartSyncPreview({ allowRisky: false });
+    return;
+  }
+  runAiSmartSyncFromChat({ autoApply: true });
 };
 
 /* Smart Update Composer Wizard Logic */
@@ -13723,7 +14726,17 @@ document.addEventListener("click", (e) => {
   }
   
   if (action === "open-update-composer") {
-    openComposerWizard();
+    runAiSmartSyncFromChat();
+    return;
+  }
+  if (action === "toggle-ai-preview") {
+    chatState.prefs.aiPreviewEnabled = chatState.prefs.aiPreviewEnabled === false;
+    saveChatPrefs();
+    renderChatAiLivePreview();
+    return;
+  }
+  if (action === "ai-sync-auto") {
+    autoSyncFromChat();
     return;
   }
   if (action === "close-composer-wizard") {
@@ -13819,6 +14832,27 @@ document.addEventListener("click", (e) => {
       renderChatMessages();
       renderChatPalette();
     }
+    return;
+  }
+
+  if (action === "ai-sync-clear") {
+    clearAiSmartSyncState();
+    return;
+  }
+
+  if (action === "ai-sync-edit-manually") {
+    clearAiSmartSyncState();
+    openComposerWizard();
+    return;
+  }
+
+  if (action === "ai-sync-apply") {
+    applyAiSmartSyncPreview({ allowRisky: false });
+    return;
+  }
+
+  if (action === "ai-sync-apply-anyway") {
+    applyAiSmartSyncPreview({ allowRisky: true });
     return;
   }
 
@@ -15395,6 +16429,7 @@ const renderSettingsPanelBody = (state) => {
               ${group("UI Elements", `
                 ${row("Ambient Hero Orbs", checkbox("tgl_orbs", userSettings.uiConfigs.showOrbs))}
                 ${row("Subject Vibe Animations", checkbox("tgl_vibes", userSettings.uiConfigs.showVibes))}
+                ${row("Scaffold Strands BG", checkbox("tgl_scaffold_strands", userSettings.uiConfigs.showScaffoldStrands === true, false), "Dark-mode lightweight gradient inside Scaffold shell")}
                 ${row("Aurora Background", selectInput("tgl_aurora_mode", [
                   { value: "off", label: "Off" },
                   { value: "hero", label: "Hero Only" },
@@ -15766,13 +16801,29 @@ const renderChatUnit = () =>
 
           <textarea id="chatMessageInput" placeholder="Write a message… (Ctrl+Enter to send)"></textarea>
           <span class="chat-compose__char-count" id="chatCharCount"></span>
+          <div class="chat-ai-live-preview" id="chatAiLivePreview" aria-live="polite">
+            <div class="chat-ai-live-preview__head">
+              <span>${icon("sparkles", "AI preview")} AI Post Preview</span>
+              <span class="chat-ai-live-preview__meta" id="chatAiLivePreviewMeta">Student · Public</span>
+            </div>
+            <div class="chat-ai-live-preview__body" id="chatAiLivePreviewText">
+              <span class="chat-ai-live-preview__placeholder">Write a study update to preview exactly how the chat post will look.</span>
+            </div>
+          </div>
 
           <div class="chat-compose__footer">
             <p class="chat-feedback" id="chatFeedback">Firestore chat is live. Messages stay stored in the cloud.</p>
-            <div style="display: flex; gap: 8px;">
+            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
               <button class="btn-small btn-small--accent" type="button" data-action="open-update-composer">
                 ${icon("sparkles", "Smart Update")}
                 <span>Smart Update</span>
+              </button>
+              <button class="btn-small chat-ai-toggle ${chatState.prefs.aiPreviewEnabled !== false ? "is-on" : ""}" id="chatAiPreviewToggle" type="button" data-action="toggle-ai-preview" aria-pressed="${chatState.prefs.aiPreviewEnabled !== false ? "true" : "false"}">
+                <span>AI</span>
+              </button>
+              <button class="btn-small btn-small--accent" type="button" data-action="ai-sync-auto">
+                ${icon("database-zap", "Auto Sync")}
+                <span>Auto Sync</span>
               </button>
               <button class="btn-small btn-small--primary" type="button" data-action="chat-send">
                 ${icon("send-horizontal", "Send chat")}
@@ -15780,6 +16831,7 @@ const renderChatUnit = () =>
               </button>
             </div>
           </div>
+          <div id="aiSmartSyncPanel" hidden></div>
         </div>
 
         <div class="chat-feed-shell" id="chatFeedShell" ${chatState.prefs.isListVisible ? "" : "hidden"}>
@@ -16461,6 +17513,9 @@ const isReadOnlyBlockedAction = (action = "") => {
     "chat-hide-msg",
     "chat-unhide-all",
     "chat-set-color",
+    "ai-sync-auto",
+    "ai-sync-apply",
+    "ai-sync-apply-anyway",
     "cloud-sync-upload",
     "cloud-sync-download",
     "backup-import-trigger",
@@ -18469,10 +19524,15 @@ document.addEventListener("DOMContentLoaded", () => {
       const counter = document.getElementById("chatCharCount");
       if (!counter) return;
       const len = e.target.value.length;
-      if (len === 0) { counter.textContent = ""; return; }
+      if (len === 0) {
+        counter.textContent = "";
+        renderChatAiLivePreview();
+        return;
+      }
       counter.textContent = `${len} char${len === 1 ? "" : "s"}`;
       counter.classList.toggle("is-long", len > 800);
       counter.classList.toggle("is-over", len > 2000);
+      renderChatAiLivePreview();
     }
   });
 
@@ -19327,6 +20387,16 @@ document.addEventListener("change", (e) => {
       subj.defaultTracks[track] = chk.checked;
       saveSyllabus(scaffoldState.syllabus);
     }
+  }
+
+  if (e.target?.id === "tgl_scaffold_strands") {
+    scaffoldState.userSettings.uiConfigs = {
+      ...(scaffoldState.userSettings.uiConfigs || {}),
+      showScaffoldStrands: !!e.target.checked,
+    };
+    applyUserThemeSettings();
+    saveUserSettings();
+    return;
   }
 });
 
