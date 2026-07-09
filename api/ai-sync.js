@@ -15,6 +15,9 @@ const RESPONSE_SCHEMA = {
           classDurationMinutes: { type: "number", nullable: true },
           studyDurationMinutes: { type: "number", nullable: true },
           selfStudyMinutes: { type: "number", nullable: true },
+          status: { type: "string" },
+          clarificationQuestion: { type: "string" },
+          assumptions: { type: "array", items: { type: "string" } },
           items: {
             type: "array",
             items: {
@@ -254,6 +257,9 @@ const validateParsed = (parsed) => {
       classDurationMinutes: numberOrNull(update.classDurationMinutes),
       studyDurationMinutes: numberOrNull(update.studyDurationMinutes),
       selfStudyMinutes: numberOrNull(update.selfStudyMinutes),
+      status: String(update.status || ""),
+      clarificationQuestion: String(update.clarificationQuestion || ""),
+      assumptions: stringArray(update.assumptions),
       items,
       postText: String(update.postText || ""),
       warnings: updateWarnings,
@@ -299,9 +305,11 @@ Rules:
 - If the user gives only a day number, use current month and current year.
 - If the user gives day+month without year, use current year.
 - If the user gives 5/5/26, interpret as day/month/year unless context clearly says otherwise.
-- Never output a blank date. If unclear, use current date and add a question.
+- Date is important. If no date is present, set status to needs_clarification, leave the inferred date as current date only as a placeholder, and ask a bilingual clarification question.
 - P_C_ means Paper no. and Chapter no. P2C5 means Paper 2 Chapter 5.
-- If Paper/Chapter is absent, keep the text in postText but do not create a sync item; add a question asking for P_C_.
+- Subject, P_C_, lecture number/total, study time, and class time are the only critical follow-up fields.
+- If subject/P_C_/lecture/date/study time/class time is missing from a syncable update, set status to needs_clarification and ask one concise bilingual question.
+- If Paper/Chapter is absent, keep the text in postText but do not create a sync item; ask for P_C_.
 - Lec, L, lecture all mean lecture.
 - Lec4/16 means lecture 4 out of 16.
 - Lec1+2+3 means lectures [1,2,3]. Lec8,9,10 means [8,9,10]. Lec1-10 means lectureRange 1 to 10.
@@ -316,7 +324,13 @@ Rules:
 - If a duration label exists but amount is missing, set that duration field to null and add a question.
 - 4hrs = 240 minutes. 3:45hrs = 225 minutes. 1h30m = 90 minutes.
 - Preserve extra non-update text in postText at the same relative place but do not force it into tracker JSON.
+- Preserve these methodology keywords in postText and rawLine; do not summarize or remove them: revision, calculator hacks, detailed class, frb, advance, admission, oneshot.
 - Be interactive through questions when uncertain. Do not silently make high-risk corrections.
+- Clarification questions must be one combined English + Bengali string, for example: "Which paper, chapter, lecture, class time, and study time should I use? / কোন paper, chapter, lecture, class time আর study time ধরবো?"
+- If previous AI sync context/history is provided, treat the new rawText as a user correction or clarification when it looks like one. Update the previous parsed JSON/postText using that reply instead of starting over.
+- If the user says "keep as it is", "skip", or gives text that is not enough to resolve a missing critical field, preserve the postText but keep sync items incomplete or omitted.
+- If an assumption is made but data is still syncable, set status to assumption_made and list the assumption in assumptions.
+- If everything is clear, set status to ready.
 - Chemistry C2C2 likely means Chemistry P2C2; add a warning/question but normalize the sync item if confidence is high.
 - Multiple update blocks must be parsed separately.
 - Keep duplicate lecture warnings when the same lecture appears twice.
@@ -335,6 +349,9 @@ Use this exact response schema:
   "updates": [
     {
       "date": "YYYY-MM-DD",
+      "status": "ready | needs_clarification | assumption_made",
+      "clarificationQuestion": "English + Bengali question when clarification is needed",
+      "assumptions": ["Any assumption made before sync"],
       "studyQuality": number or null,
       "classDurationMinutes": number or null,
       "studyDurationMinutes": number or null,
