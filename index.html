@@ -6281,9 +6281,12 @@ body.is-spectating .spectate-disabled {
   box-shadow: 0 1px 3px rgba(0,0,0,0.15);
 }
 .dashboard-modern.dark .toggle-thumb {
-  transform: translateX(20px);
   background: #38bdf8;
   box-shadow: 0 0 10px rgba(56, 189, 248, 0.6), 0 1px 3px rgba(0,0,0,0.4);
+}
+
+.dashboard-modern.light .toggle-thumb {
+  transform: translateX(20px);
 }
 
 .dash-card {
@@ -11861,8 +11864,55 @@ html[data-theme="dark"] .settings-dialog__card input.settings-check:checked {
 .ai-sync-block__meta,
 .ai-sync-warning-list,
 .ai-sync-empty {
+      color: var(--text-sub);
+      font-size: 0.78rem;
+      line-height: 1.5;
+}
+
+.ai-sync-clarification {
+  display: grid;
+  gap: 10px;
+  padding: 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(245, 158, 11, 0.28);
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.14), rgba(59, 130, 246, 0.07));
+}
+
+.ai-sync-clarification strong {
+  color: var(--text-main);
+  font-size: 0.84rem;
+}
+
+.ai-sync-clarification__questions {
+  display: grid;
+  gap: 6px;
   color: var(--text-sub);
-  font-size: 0.78rem;
+  font-size: 0.82rem;
+  line-height: 1.55;
+}
+
+.ai-sync-clarification__reply {
+  width: 100%;
+  min-height: 86px;
+  resize: vertical;
+  border: 1px solid rgba(148, 163, 184, 0.24);
+  border-radius: 12px;
+  padding: 11px;
+  background: rgba(15, 23, 42, 0.16);
+  color: var(--text-main);
+  font: inherit;
+  line-height: 1.5;
+}
+
+.ai-sync-assumption-list {
+  display: grid;
+  gap: 6px;
+  padding: 10px;
+  border-radius: 12px;
+  border: 1px solid rgba(59, 130, 246, 0.22);
+  background: rgba(59, 130, 246, 0.09);
+  color: var(--text-sub);
+  font-size: 0.8rem;
   line-height: 1.5;
 }
 
@@ -11999,7 +12049,8 @@ html[data-theme="light"] .chat-ai-live-preview {
 
 html[data-theme="light"] .ai-sync-item,
 html[data-theme="light"] .chat-ai-live-preview__body,
-html[data-theme="light"] .ai-sync-post-editor {
+html[data-theme="light"] .ai-sync-post-editor,
+html[data-theme="light"] .ai-sync-clarification__reply {
   background: #eef6ff;
   border-color: rgba(148, 163, 184, 0.24);
 }
@@ -12016,6 +12067,310 @@ html[data-theme="light"] .ai-smart-sync-badge--warn {
   color: #92400e;
 }
 
+/* v216 semantic button and icon polish */
+:root {
+  --btn-neutral-bg: rgba(15, 23, 42, 0.14);
+  --btn-neutral-border: rgba(148, 163, 184, 0.26);
+  --btn-neutral-hover: rgba(96, 165, 250, 0.16);
+  --btn-blue: linear-gradient(135deg, #2563eb, #0ea5e9);
+  --btn-green: linear-gradient(135deg, #059669, #14b8a6);
+  --btn-purple: linear-gradient(135deg, #6d28d9, #2563eb);
+  --btn-orange: linear-gradient(135deg, #f97316, #f59e0b);
+  --btn-red: linear-gradient(135deg, #dc2626, #f43f5e);
+}
+
+.btn-small,
+.icon-button,
+.quick-action,
+.nav-btn,
+.settings-tab {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn-small {
+  min-height: 40px;
+  border-radius: 12px;
+  border-width: 1px;
+  letter-spacing: 0.005em;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.035);
+}
+
+.btn-small svg,
+.icon-button svg,
+.quick-action svg,
+.nav-btn svg,
+.settings-tab svg {
+  width: 17px;
+  height: 17px;
+  flex: 0 0 auto;
+  stroke-width: 2;
+}
+
+.btn-small--icon svg,
+.icon-button svg,
+.quick-action svg {
+  width: 18px;
+  height: 18px;
+}
+
+.btn-small:not(.btn-small--primary):not(.btn-small--accent):not(.btn-small--danger):not(.btn-small--active) {
+  background: var(--btn-neutral-bg);
+  border-color: var(--btn-neutral-border);
+  color: var(--text-main);
+}
+
+.btn-small:not(.btn-small--primary):not(.btn-small--accent):not(.btn-small--danger):not(.btn-small--active):hover {
+  background: var(--btn-neutral-hover);
+  border-color: rgba(96, 165, 250, 0.36);
+  color: #dbeafe;
+}
+
+.btn-small--primary,
+.icon-button--accent {
+  background: var(--btn-blue);
+  border-color: rgba(59, 130, 246, 0.58);
+  color: #fff;
+  box-shadow: 0 12px 24px rgba(37, 99, 235, 0.2);
+}
+
+.btn-small--primary:hover,
+.icon-button--accent:hover {
+  border-color: rgba(125, 211, 252, 0.62);
+  box-shadow: 0 14px 28px rgba(37, 99, 235, 0.28);
+}
+
+.btn-small--accent {
+  animation: none;
+  background: rgba(99, 102, 241, 0.16);
+  border-color: rgba(129, 140, 248, 0.34);
+  color: #c7d2fe;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.btn-small--accent:hover {
+  background: rgba(99, 102, 241, 0.24);
+  border-color: rgba(165, 180, 252, 0.54);
+  color: #eef2ff;
+  box-shadow: 0 12px 24px rgba(79, 70, 229, 0.18);
+}
+
+.btn-small--accent svg {
+  filter: none;
+  animation: none;
+}
+
+.btn-small--danger,
+[data-action="chronos-toggle-edit"],
+[data-action="track-clear"],
+[data-action="ai-sync-apply-anyway"] {
+  background: rgba(239, 68, 68, 0.12);
+  border-color: rgba(248, 113, 113, 0.34);
+  color: #fecaca;
+}
+
+.btn-small--danger:hover,
+[data-action="chronos-toggle-edit"]:hover,
+[data-action="track-clear"]:hover,
+[data-action="ai-sync-apply-anyway"]:hover {
+  background: var(--btn-red);
+  border-color: rgba(254, 202, 202, 0.5);
+  color: #fff;
+  box-shadow: 0 14px 28px rgba(220, 38, 38, 0.24);
+}
+
+[data-action="ai-sync-run"] {
+  background: var(--btn-purple) !important;
+  border-color: rgba(196, 181, 253, 0.5) !important;
+  color: #fff !important;
+  box-shadow: 0 14px 28px rgba(109, 40, 217, 0.22);
+}
+
+[data-action="ai-sync-auto"],
+[data-action="composer-save-sync"],
+[data-action="ai-sync-apply"],
+[data-action="ai-sync-send-clarification"] {
+  background: var(--btn-green) !important;
+  border-color: rgba(94, 234, 212, 0.52) !important;
+  color: #ecfeff !important;
+  box-shadow: 0 14px 28px rgba(20, 184, 166, 0.2);
+}
+
+[data-action="chat-send"],
+[data-action="composer-send-message"],
+[data-action="save-mission-settings"],
+[data-action="save-account-settings"],
+[data-action="chronos-save-point"],
+[data-action="chronos-apply-config"],
+[data-action="settings-chronos-apply-config"] {
+  background: var(--btn-blue) !important;
+  border-color: rgba(125, 211, 252, 0.52) !important;
+  color: #fff !important;
+  box-shadow: 0 14px 28px rgba(37, 99, 235, 0.22);
+}
+
+[data-action="chronos-show-live"] {
+  background: linear-gradient(135deg, #0891b2, #2563eb) !important;
+  border-color: rgba(125, 211, 252, 0.52) !important;
+  color: #ecfeff !important;
+}
+
+[data-action="chronos-toggle-edit"] {
+  background: rgba(249, 115, 22, 0.14) !important;
+  border-color: rgba(251, 146, 60, 0.38) !important;
+  color: #fed7aa !important;
+}
+
+[data-action="chronos-toggle-edit"]:hover {
+  background: var(--btn-orange) !important;
+  color: #111827 !important;
+}
+
+[data-action="chronos-save-png"],
+[data-action="backup-download-json"],
+[data-action="backup-export-png"] {
+  color: #bbf7d0 !important;
+  border-color: rgba(34, 197, 94, 0.36) !important;
+  background: rgba(22, 163, 74, 0.12) !important;
+}
+
+[data-action="chronos-export-csv"],
+[data-action="chronos-toggle-config"],
+[data-action="close-track-dialog"],
+[data-action="ai-sync-clear"],
+[data-action="ai-sync-edit-manually"],
+[data-action="ai-sync-skip-clarification"] {
+  background: rgba(100, 116, 139, 0.14) !important;
+  border-color: rgba(148, 163, 184, 0.3) !important;
+  color: #dbeafe !important;
+}
+
+.chat-ai-toggle {
+  min-width: 50px;
+  border-color: rgba(148, 163, 184, 0.34) !important;
+  color: var(--text-sub) !important;
+  background: rgba(148, 163, 184, 0.14) !important;
+}
+
+.chat-ai-toggle.is-on {
+  background: linear-gradient(135deg, #0f172a, #334155) !important;
+  border-color: rgba(125, 211, 252, 0.42) !important;
+  color: #e0f2fe !important;
+  box-shadow: 0 12px 24px rgba(14, 165, 233, 0.14);
+}
+
+.quick-action {
+  border-color: rgba(148, 163, 184, 0.24);
+  box-shadow: 0 10px 22px rgba(2, 6, 23, 0.2);
+}
+
+.quick-action[data-action="open-account-dialog"] { color: #1d4ed8; }
+.quick-action[data-action="open-spectate-dialog"] { color: #7c3aed; }
+.quick-action[data-action="open-settings-dialog"] { color: #0f766e; }
+.quick-action[data-action="open-backup-dialog"] { color: #c2410c; }
+.quick-action[data-action="open-timer-dialog"] { color: #0369a1; }
+.quick-action[aria-label="PDF"] { color: #be123c; }
+
+.quick-action:hover,
+.quick-action.is-label-visible {
+  border-color: currentColor;
+}
+
+html[data-theme="light"] {
+  --btn-neutral-bg: #f8fbff;
+  --btn-neutral-border: rgba(148, 163, 184, 0.34);
+  --btn-neutral-hover: #eaf3ff;
+}
+
+html[data-theme="light"] .btn-small:not(.btn-small--primary):not(.btn-small--accent):not(.btn-small--danger):not(.btn-small--active) {
+  color: #334155 !important;
+  box-shadow: 0 8px 18px rgba(15, 23, 42, 0.045);
+}
+
+html[data-theme="light"] .btn-small:not(.btn-small--primary):not(.btn-small--accent):not(.btn-small--danger):not(.btn-small--active):hover {
+  color: #1e40af !important;
+}
+
+html[data-theme="light"] .btn-small--accent {
+  background: #eef2ff !important;
+  border-color: rgba(99, 102, 241, 0.26) !important;
+  color: #3730a3 !important;
+}
+
+html[data-theme="light"] .btn-small--accent:hover {
+  background: #e0e7ff !important;
+  color: #312e81 !important;
+}
+
+html[data-theme="light"] .chat-ai-toggle {
+  background: #f8fafc !important;
+  color: #64748b !important;
+}
+
+html[data-theme="light"] .chat-ai-toggle.is-on {
+  background: linear-gradient(135deg, #eff6ff, #dbeafe) !important;
+  color: #1d4ed8 !important;
+  border-color: rgba(37, 99, 235, 0.36) !important;
+}
+
+.chat-compose__footer button.btn-small[data-action="ai-sync-run"] {
+  background: var(--btn-purple) !important;
+  border-color: rgba(196, 181, 253, 0.58) !important;
+  color: #ffffff !important;
+}
+
+.chat-compose__footer button.btn-small[data-action="ai-sync-auto"] {
+  background: var(--btn-green) !important;
+  border-color: rgba(94, 234, 212, 0.58) !important;
+  color: #ecfeff !important;
+}
+
+.chat-compose__footer button.btn-small[data-action="chat-send"] {
+  background: var(--btn-blue) !important;
+  border-color: rgba(125, 211, 252, 0.58) !important;
+  color: #ffffff !important;
+}
+
+.chat-compose__footer button.btn-small[data-action="toggle-ai-preview"] {
+  background: rgba(148, 163, 184, 0.14) !important;
+  border-color: rgba(148, 163, 184, 0.34) !important;
+  color: var(--text-sub) !important;
+}
+
+.chat-compose__footer button.btn-small[data-action="toggle-ai-preview"].is-on {
+  background: linear-gradient(135deg, #0f172a, #334155) !important;
+  border-color: rgba(125, 211, 252, 0.46) !important;
+  color: #e0f2fe !important;
+}
+
+.chat-feed-head button.btn-small[data-action="open-chat-show-all"] {
+  background: rgba(14, 165, 233, 0.14) !important;
+  border-color: rgba(56, 189, 248, 0.36) !important;
+  color: #bae6fd !important;
+}
+
+html[data-theme="light"] .quick-action {
+  background: #ffffff;
+  border-color: rgba(148, 163, 184, 0.28);
+  box-shadow: 0 10px 22px rgba(15, 23, 42, 0.08);
+}
+
+html[data-theme="light"] .quick-action[data-action="open-account-dialog"] { color: #1d4ed8 !important; }
+html[data-theme="light"] .quick-action[data-action="open-spectate-dialog"] { color: #6d28d9 !important; }
+html[data-theme="light"] .quick-action[data-action="open-settings-dialog"] { color: #0f766e !important; }
+html[data-theme="light"] .quick-action[data-action="open-backup-dialog"] { color: #c2410c !important; }
+html[data-theme="light"] .quick-action[data-action="open-timer-dialog"] { color: #0369a1 !important; }
+html[data-theme="light"] .quick-action[aria-label="PDF"] { color: #be123c !important; }
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-small,
+  .icon-button,
+  .quick-action,
+  .nav-btn,
+  .settings-tab {
+    transition: none !important;
+  }
+}
+
 @media (max-width: 640px) {
   .ai-smart-sync-head,
   .ai-smart-sync-actions,
@@ -12026,6 +12381,327 @@ html[data-theme="light"] .ai-smart-sync-badge--warn {
 
   .ai-smart-sync-actions .btn-small {
     width: 100%;
+  }
+}
+
+/* v217 targeted bug-fix pass */
+.chat-feed-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.chat-feed-head__actions,
+.chat-compose__footer-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.chat-lock-btn.is-locked {
+  background: linear-gradient(135deg, #0f766e, #14b8a6) !important;
+  color: #ecfeff !important;
+  border-color: rgba(20, 184, 166, 0.55) !important;
+  box-shadow: 0 12px 24px rgba(15, 118, 110, 0.18);
+}
+
+.chat-feed-shell--locked {
+  max-height: min(72vh, 760px);
+  overflow: hidden;
+}
+
+.chat-feed-shell--locked .chat-feed {
+  max-height: calc(min(72vh, 760px) - 68px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding-right: 4px;
+}
+
+body.chat-list-scroll-locked {
+  overflow: hidden;
+}
+
+body.chat-list-scroll-locked .content-grid {
+  overscroll-behavior: none;
+}
+
+.quick-action,
+.icon-button,
+.btn-small,
+.settings-tab,
+.chat-action-btn,
+.pomo-mode-btn,
+.pomo-btn,
+.card-adj-btn,
+.chronos-chip,
+.chronos-preset,
+.hero-mission-edit {
+  backface-visibility: hidden;
+  transform: translateZ(0);
+  will-change: transform, opacity;
+}
+
+.developer-dialog__card {
+  width: min(1320px, calc(100vw - 24px)) !important;
+  max-width: calc(100vw - 24px) !important;
+  max-height: calc(100dvh - 24px) !important;
+}
+
+.developer-dialog__body {
+  min-height: calc(100dvh - 116px);
+}
+
+html[data-theme="light"] .security-status,
+html[data-theme="light"] .security-card,
+html[data-theme="light"] .security-provider-row {
+  background: rgba(255, 255, 255, 0.92) !important;
+  border-color: rgba(191, 219, 254, 0.86) !important;
+  color: #0f172a !important;
+}
+
+html[data-theme="light"] .security-status strong,
+html[data-theme="light"] .security-card h4,
+html[data-theme="light"] .security-provider-main strong {
+  color: #0f172a !important;
+}
+
+html[data-theme="light"] .security-provider-main span,
+html[data-theme="light"] .security-note,
+html[data-theme="light"] .security-feedback {
+  color: #475569 !important;
+}
+
+html[data-theme="light"] .security-provider-status {
+  color: #64748b !important;
+}
+
+html[data-theme="light"] .security-provider-status.is-linked {
+  color: #15803d !important;
+}
+
+html[data-theme="light"] .security-provider-status.is-open {
+  color: #c2410c !important;
+}
+
+html[data-theme="light"] .subj-settings,
+html[data-theme="light"] .ss-track-chk,
+html[data-theme="light"] .ss-input,
+html[data-theme="light"] .paper-panel .subj-settings {
+  background: rgba(255, 255, 255, 0.94) !important;
+  color: #0f172a !important;
+  border-color: rgba(191, 219, 254, 0.86) !important;
+}
+
+html[data-theme="light"] .subj-settings .ss-label,
+html[data-theme="light"] .subj-settings strong,
+html[data-theme="light"] .subj-settings .ss-apply-btn {
+  color: #0f172a !important;
+}
+
+html[data-theme="light"] .subj-settings small,
+html[data-theme="light"] .subj-settings .ss-divider {
+  color: #475569 !important;
+}
+
+html[data-theme="light"] .mission-modal {
+  background: rgba(226, 232, 240, 0.68) !important;
+  backdrop-filter: blur(10px);
+}
+
+html[data-theme="light"] .mission-card {
+  box-shadow: 0 24px 64px rgba(15, 23, 42, 0.18);
+}
+
+@media (max-width: 820px) {
+  .chat-feed-head__actions,
+  .chat-compose__footer-actions {
+    width: 100%;
+  }
+
+  .chat-feed-head__actions .btn-small,
+  .chat-compose__footer-actions .btn-small {
+    flex: 1 1 calc(50% - 8px);
+    justify-content: center;
+  }
+
+  .chat-compose__identity {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+  }
+
+  .chronos-actions,
+  .chronos-tools {
+    gap: 6px;
+  }
+
+  .chronos-actions .btn-small,
+  .chronos-tools .btn-small {
+    min-height: 34px;
+    padding: 8px 12px;
+    font-size: 0.8rem;
+  }
+
+  .chronos-preview img {
+    object-fit: contain;
+    transform: scale(1);
+  }
+}
+
+@media (max-width: 640px) {
+  .chat-compose {
+    padding: 14px;
+    border-radius: 18px;
+  }
+
+  .chat-compose__row {
+    display: flex !important;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+  }
+
+  .chat-compose__identity strong {
+    font-size: 1rem;
+  }
+
+  .chat-composer-visibility {
+    min-height: 30px;
+    padding: 0 10px;
+    font-size: 0.72rem;
+  }
+
+  .chat-ai-live-preview__head {
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .chat-ai-live-preview__meta {
+    width: 100%;
+    text-align: left;
+  }
+
+  .chat-compose__footer {
+    gap: 12px;
+  }
+
+  .chat-compose__footer-actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    width: 100%;
+  }
+
+  .chat-compose__footer-actions .btn-small {
+    min-height: 40px;
+    padding: 10px 10px;
+    font-size: 0.8rem;
+    min-width: 0;
+  }
+
+  .chat-compose__footer-actions .chat-ai-toggle {
+    min-width: 0;
+    padding-inline: 0;
+  }
+
+  .chat-feed-head__actions {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .chat-feed-head__actions .btn-small {
+    min-width: 0;
+    padding-inline: 10px;
+  }
+
+  .chat-item {
+    gap: 8px;
+  }
+
+  .chat-item__serial {
+    min-width: 38px;
+    min-height: 38px;
+    font-size: 0.86rem;
+  }
+
+  .chat-item__card {
+    padding: 12px;
+    border-radius: 16px;
+  }
+
+  .chat-item__head {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .chat-item__actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+
+  .chat-feed-shell--locked {
+    max-height: min(62vh, 620px);
+  }
+
+  .chat-feed-shell--locked .chat-feed {
+    max-height: calc(min(62vh, 620px) - 74px);
+  }
+
+  #chatUpdateComposer .composer-step-indicator {
+    padding: 8px 12px;
+    font-size: 0.82rem;
+  }
+
+  #chatUpdateComposer .composer-wizard-title {
+    min-width: 0;
+  }
+
+  #chatUpdateComposer .composer-wizard-title span {
+    overflow-wrap: anywhere;
+  }
+
+  #chatUpdateComposer .composer-inline-entry,
+  #chatUpdateComposer .composer-lecture-toolbar,
+  #chatUpdateComposer .composer-total-control,
+  #chatUpdateComposer .composer-completion-card,
+  #chatUpdateComposer .composer-active-panel {
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  #chatUpdateComposer .composer-chapter-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  #chatUpdateComposer .composer-chapter-card {
+    min-height: 74px;
+    padding: 14px;
+  }
+
+  #chatUpdateComposer .composer-chapter-name {
+    display: none;
+  }
+
+  #chatUpdateComposer #composerFinalTextArea,
+  #chatUpdateComposer .composer-textarea,
+  #chatUpdateComposer .composer-input-field {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  #chatUpdateComposer .composer-time-card {
+    padding: 14px;
+  }
+
+  #chatUpdateComposer .composer-time-card__actions button,
+  #chatUpdateComposer .composer-total-stepper button {
+    min-height: 40px;
   }
 }
 
@@ -12428,6 +13104,7 @@ const normalizeChatPrefs = (raw = {}) => ({
   sortOrder: raw.sortOrder === "asc" ? "asc" : "desc",
   defaultVisibility: raw.defaultVisibility === "private" ? "private" : "public",
   isListVisible: !!raw.isListVisible,
+  listScrollLocked: raw.listScrollLocked === true,
   isSettingsOpen: !!raw.isSettingsOpen,
   hiddenMessageIds: Array.isArray(raw.hiddenMessageIds) ? raw.hiddenMessageIds : [],
   chatCardColor: raw.chatCardColor || "auto",
@@ -12485,6 +13162,8 @@ const chatState = {
     parsed: null,
     rawText: "",
     postText: "",
+    history: [],
+    questionSkipped: false,
     message: "",
     applied: false,
   },
@@ -12732,10 +13411,10 @@ const renderChatMessages = () => {
         <div class="chat-item__card" style="background: ${cardBg}; border-color: ${cardBorder}; ${leftAccent}">
           <div class="chat-item__head" style="display: flex; align-items: center; width: 100%; justify-content: space-between; gap: 8px;">
             <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
-              <strong>${escapeHtml(message.authorName || "Student")}</strong>
               <div class="chat-item__meta" style="display: inline-flex; align-items: center; gap: 6px; margin: 0;">
-                <span>${escapeHtml(formatChatTime(message))}</span>
+                <strong>${escapeHtml(message.authorName || "Student")}</strong>
                 <span class="${visibilityClass}">${escapeHtml(message.visibility || "public")}</span>
+                <span>${escapeHtml(formatChatTime(message))}</span>
               </div>
             </div>
             <div class="chat-item__actions" style="display: flex; align-items: center; gap: 4px;">
@@ -12872,10 +13551,10 @@ const renderChatShowAllList = () => {
         <div class="chat-item__card" style="background: ${cardBg}; border-color: ${cardBorder}; ${leftAccent}">
           <div class="chat-item__head" style="display: flex; align-items: center; width: 100%; justify-content: space-between; gap: 8px;">
             <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
-              <strong>${escapeHtml(message.authorName || "Student")}</strong>
               <div class="chat-item__meta" style="display: inline-flex; align-items: center; gap: 6px; margin: 0;">
-                <span>${escapeHtml(formatChatTime(message))}</span>
+                <strong>${escapeHtml(message.authorName || "Student")}</strong>
                 <span class="${visibilityClass}">${escapeHtml(message.visibility || "public")}</span>
+                <span>${escapeHtml(formatChatTime(message))}</span>
               </div>
             </div>
             <div class="chat-item__actions" style="display: flex; align-items: center; gap: 4px;">
@@ -12943,11 +13622,28 @@ const syncChatUi = () => {
   toggleButtons.forEach((button) => {
     button.textContent = chatState.prefs.isListVisible ? "Hide messages" : "Show messages";
   });
+  syncChatListLockState();
   setChatFeedback(chatState.feedbackMessage, chatState.feedbackTone);
   renderChatAiLivePreview();
   syncAiSmartSyncPanel();
   renderChatMessages();
   renderChatPalette();
+};
+
+const syncChatListLockState = () => {
+  const locked = chatState.prefs.listScrollLocked === true;
+  document.body.classList.toggle("chat-list-scroll-locked", locked);
+  const feedShell = document.getElementById("chatFeedShell");
+  if (feedShell) {
+    feedShell.classList.toggle("chat-feed-shell--locked", locked);
+  }
+  document.querySelectorAll("[data-chat-lock-toggle]").forEach((button) => {
+    button.classList.toggle("is-locked", locked);
+    button.setAttribute("aria-pressed", locked ? "true" : "false");
+    button.title = locked ? "Message list locked. Double-click to unlock." : "Lock page scroll to the message list";
+    const text = button.querySelector("span");
+    if (text) text.textContent = locked ? "Locked" : "Lock";
+  });
 };
 
 const startChatListener = () => {
@@ -13171,6 +13867,9 @@ const validateAiSmartSyncParsed = (parsed) => {
       }).filter(Boolean) : [];
       return {
         date,
+        status: String(update.status || ""),
+        clarificationQuestion: String(update.clarificationQuestion || ""),
+        assumptions: Array.isArray(update.assumptions) ? update.assumptions.map(String).filter(Boolean) : [],
         studyQuality: asNumberOrNull(update.studyQuality),
         classDurationMinutes: asNumberOrNull(update.classDurationMinutes),
         studyDurationMinutes: asNumberOrNull(update.studyDurationMinutes),
@@ -13452,9 +14151,31 @@ const parseAiSmartSyncLocally = (rawText = "") => {
   return validateAiSmartSyncParsed(parsed);
 };
 
-const aiSyncHasQuestions = (parsed) =>
-  !!parsed?.globalWarnings?.length ||
-  parsed?.updates?.some((update) => update.warnings?.length || update.questions?.length);
+const getAiSyncQuestions = (parsed) => {
+  const questions = [];
+  (parsed?.updates || []).forEach((update) => {
+    if (update.clarificationQuestion) questions.push(update.clarificationQuestion);
+    (update.questions || []).forEach((question) => questions.push(String(question || "")));
+  });
+  return [...new Set(questions.map((q) => q.trim()).filter(Boolean))];
+};
+
+const getAiSyncAssumptions = (parsed) => {
+  const assumptions = [];
+  (parsed?.updates || []).forEach((update) => {
+    (update.assumptions || []).forEach((assumption) => assumptions.push(String(assumption || "")));
+  });
+  return [...new Set(assumptions.map((a) => a.trim()).filter(Boolean))];
+};
+
+const getAiSyncMode = (parsed) => {
+  const statuses = (parsed?.updates || []).map((update) => String(update.status || "").toLowerCase());
+  if (statuses.includes("needs_clarification") || getAiSyncQuestions(parsed).length) return "needs_clarification";
+  if (statuses.includes("assumption_made") || getAiSyncAssumptions(parsed).length) return "assumption_made";
+  return "ready";
+};
+
+const aiSyncHasQuestions = (parsed) => getAiSyncMode(parsed) === "needs_clarification";
 
 const getAiSyncLectures = (item) => {
   if (item.lectureRange) {
@@ -13548,6 +14269,10 @@ const applyAiSmartSyncToSyllabus = (parsed, options = {}) => {
   if (results.applied > 0) {
     saveSyllabus(scaffoldState.syllabus);
     refreshSyllabusGrid();
+    if (typeof triggerCloudSaveDebounced === "function") triggerCloudSaveDebounced();
+    if (typeof saveToCloud === "function" && typeof isCloudSyncEligibleSession === "function" && isCloudSyncEligibleSession()) {
+      saveToCloud(true).catch?.(() => {});
+    }
     showBackupBanner("Smart Sync applied", `${results.applied} tracker item${results.applied === 1 ? "" : "s"} updated.`);
   }
   return results;
@@ -13631,7 +14356,11 @@ const renderAiSmartSyncPreview = () => {
     `;
   }
   const parsed = state.parsed;
-  const needsConfirmation = aiSyncHasQuestions(parsed);
+  const mode = getAiSyncMode(parsed);
+  const needsClarification = mode === "needs_clarification" && !state.questionSkipped;
+  const needsConfirmation = mode !== "ready";
+  const questions = getAiSyncQuestions(parsed);
+  const assumptions = getAiSyncAssumptions(parsed);
   const postText = state.postText || buildAiPostTextFromParsed(parsed);
   const blocks = (parsed?.updates || []).map((update) => {
     const meta = [
@@ -13672,16 +14401,38 @@ const renderAiSmartSyncPreview = () => {
   const globalWarnings = parsed?.globalWarnings?.length
     ? `<div class="ai-sync-warning-list">${parsed.globalWarnings.map((w) => `<span>${escapeHtml(w)}</span>`).join("")}</div>`
     : "";
+  const clarificationPanel = needsClarification ? `
+    <div class="ai-sync-clarification">
+      <strong>${icon("message-circle-question", "Question")} AI needs a little clarification</strong>
+      <div class="ai-sync-clarification__questions">
+        ${questions.length ? questions.map((q) => `<span>${escapeHtml(q)}</span>`).join("") : `<span>Which date, paper, chapter, lecture, class time, and study time should I use? / কোন date, paper, chapter, lecture, class time আর study time ধরবো?</span>`}
+      </div>
+      <textarea id="aiSyncClarificationInput" class="ai-sync-clarification__reply" spellcheck="true" placeholder="Reply here, e.g. Date 27 May, Physics P2C5 Lec4/5, Chemistry P2C2 Lec4/5, class 3h, study 4h"></textarea>
+      <div class="ai-smart-sync-actions">
+        <button class="btn-small btn-small--primary" type="button" data-action="ai-sync-send-clarification">${icon("send", "Send")} Send Reply</button>
+        <button class="btn-small" type="button" data-action="ai-sync-skip-clarification">Skip / Keep as-is</button>
+      </div>
+    </div>
+  ` : "";
+  const assumptionPanel = !needsClarification && assumptions.length ? `
+    <div class="ai-sync-assumption-list">
+      <strong>${icon("info", "Info")} Assumptions before sync</strong>
+      ${assumptions.map((assumption) => `<span>${escapeHtml(assumption)}</span>`).join("")}
+    </div>
+  ` : "";
+  const badgeText = needsClarification ? "Clarification" : (mode === "assumption_made" ? "Assumption" : "Ready");
   return `
     <div class="ai-smart-sync-panel">
       <div class="ai-smart-sync-head">
         <div class="ai-smart-sync-title">
           <strong>${icon("sparkles", "AI")} AI Smart Sync Preview</strong>
-          <span>${needsConfirmation ? "Needs Confirmation before tracker update." : "Review detected updates before applying to Subject Tracker."}</span>
+          <span>${needsClarification ? "Reply to the question, or keep the post as-is without tracker sync." : (mode === "assumption_made" ? "Review assumptions before applying to Subject Tracker." : "Review detected updates before applying to Subject Tracker.")}</span>
         </div>
-        <span class="ai-smart-sync-badge ${needsConfirmation ? "ai-smart-sync-badge--warn" : ""}">${needsConfirmation ? "Needs Confirmation" : "Preview"}</span>
+        <span class="ai-smart-sync-badge ${needsConfirmation ? "ai-smart-sync-badge--warn" : ""}">${badgeText}</span>
       </div>
       ${globalWarnings}
+      ${clarificationPanel}
+      ${assumptionPanel}
       <div class="ai-sync-post-editor-wrap">
         <label for="aiSyncPostEditor">Editable Chat Post Preview</label>
         <textarea id="aiSyncPostEditor" class="ai-sync-post-editor" spellcheck="true">${escapeHtml(postText)}</textarea>
@@ -13689,8 +14440,11 @@ const renderAiSmartSyncPreview = () => {
       <div class="ai-sync-understanding-title">Sync Understanding</div>
       ${blocks || `<div class="ai-sync-empty">No update blocks detected.</div>`}
       <div class="ai-smart-sync-actions">
-        ${needsConfirmation ? `
-          <button class="btn-small btn-small--primary" type="button" data-action="ai-sync-apply">Auto-fix recommended</button>
+        ${needsClarification ? `
+          <button class="btn-small" type="button" data-action="ai-sync-edit-manually">Edit manually</button>
+          <button class="btn-small btn-small--danger" type="button" data-action="ai-sync-apply-anyway">Apply anyway</button>
+        ` : mode === "assumption_made" ? `
+          <button class="btn-small btn-small--primary" type="button" data-action="ai-sync-apply">Confirm & Apply Smart Sync</button>
           <button class="btn-small" type="button" data-action="ai-sync-edit-manually">Edit manually</button>
           <button class="btn-small btn-small--danger" type="button" data-action="ai-sync-apply-anyway">Apply anyway</button>
         ` : `
@@ -13728,12 +14482,29 @@ const normalizeAiSyncErrorMessage = (error) => {
 
 const runAiSmartSyncFromChat = async (options = {}) => {
   const textarea = document.getElementById("chatMessageInput");
-  const rawText = textarea?.value.trim() || "";
+  const previousAiSync = chatState.aiSync || {};
+  const rawText = String(options.rawTextOverride !== undefined ? options.rawTextOverride : (textarea?.value || "")).trim();
   if (!rawText) {
     openComposerWizard();
     return;
   }
-  chatState.aiSync = { status: "loading", parsed: null, rawText, postText: "", message: "Analyzing update...", applied: false };
+  const history = previousAiSync.parsed ? [{
+    originalRawText: previousAiSync.rawText || "",
+    previousParsed: previousAiSync.parsed,
+    previousPostText: getEditedAiPostText() || previousAiSync.postText || "",
+    clarificationReply: options.isClarification ? rawText : "",
+  }] : [];
+  const sourceRawText = options.isClarification ? (previousAiSync.rawText || rawText) : rawText;
+  chatState.aiSync = {
+    status: "loading",
+    parsed: previousAiSync.parsed || null,
+    rawText: sourceRawText,
+    postText: getEditedAiPostText() || previousAiSync.postText || "",
+    history,
+    questionSkipped: false,
+    message: "Analyzing update...",
+    applied: false,
+  };
   setChatFeedback("Analyzing update...", "");
   syncAiSmartSyncPanel();
   try {
@@ -13747,17 +14518,17 @@ const runAiSmartSyncFromChat = async (options = {}) => {
           currentSyllabus: createAiSyllabusSnapshot(),
           userTimezone: "Asia/Dhaka",
           currentDate: new Date().toISOString().slice(0, 10),
-          history: chatState.aiSync?.parsed ? [{
-            rawText: chatState.aiSync.rawText || "",
-            parsed: chatState.aiSync.parsed,
-            postText: getEditedAiPostText() || chatState.aiSync.postText || "",
-          }] : [],
+          history,
         }),
       });
-      const payload = await response.json().catch(() => null);
       if (response.status === 404) {
         throw new Error("API endpoint not found");
       }
+      const responseContentType = response.headers.get("content-type") || "";
+      if (!responseContentType.toLowerCase().includes("application/json")) {
+        throw new Error("API endpoint not found");
+      }
+      const payload = await response.json().catch(() => null);
       if (!payload) {
         throw new Error("AI returned invalid JSON");
       }
@@ -13774,22 +14545,41 @@ const runAiSmartSyncFromChat = async (options = {}) => {
     } else {
       parsed = parseAiSmartSyncLocally(rawText);
     }
-    chatState.aiSync = { status: "preview", parsed, rawText, postText: buildAiPostTextFromParsed(parsed), message: "", applied: false };
+    chatState.aiSync = {
+      status: "preview",
+      parsed,
+      rawText: sourceRawText,
+      postText: buildAiPostTextFromParsed(parsed),
+      history,
+      questionSkipped: false,
+      message: "",
+      applied: false,
+    };
     if (options.autoApply === true && !aiSyncHasQuestions(parsed)) {
       applyAiSmartSyncPreview({ allowRisky: false });
       return;
     }
-    setChatFeedback(aiSyncHasQuestions(parsed) ? "AI Sync needs confirmation before applying." : "AI Sync preview ready.", aiSyncHasQuestions(parsed) ? "" : "success");
+    const mode = getAiSyncMode(parsed);
+    setChatFeedback(mode === "needs_clarification" ? "AI Sync needs your reply before tracker sync." : (mode === "assumption_made" ? "AI Sync made assumptions. Confirm before applying." : "AI Sync preview ready."), mode === "ready" ? "success" : "");
   } catch (error) {
     const message = normalizeAiSyncErrorMessage(error);
-    chatState.aiSync = { status: "error", parsed: null, rawText, postText: "", message, applied: false };
+    chatState.aiSync = {
+      status: "error",
+      parsed: previousAiSync.parsed || null,
+      rawText: sourceRawText,
+      postText: getEditedAiPostText() || previousAiSync.postText || "",
+      history,
+      questionSkipped: false,
+      message,
+      applied: false,
+    };
     setChatFeedback(`AI Sync failed: ${message}`, "error");
   }
   syncAiSmartSyncPanel();
 };
 
 const clearAiSmartSyncState = () => {
-  chatState.aiSync = { status: "idle", parsed: null, rawText: "", postText: "", message: "", applied: false };
+  chatState.aiSync = { status: "idle", parsed: null, rawText: "", postText: "", history: [], questionSkipped: false, message: "", applied: false };
   syncAiSmartSyncPanel();
 };
 
@@ -13797,6 +14587,11 @@ const applyAiSmartSyncPreview = (options = {}) => {
   const parsed = chatState.aiSync?.parsed;
   if (!parsed) {
     setChatFeedback("No AI Sync preview is ready.", "error");
+    return;
+  }
+  if (getAiSyncMode(parsed) === "needs_clarification" && !chatState.aiSync.questionSkipped && options.allowRisky !== true) {
+    setChatFeedback("AI needs clarification before tracker sync. Reply first, or choose Apply anyway.", "error");
+    syncAiSmartSyncPanel();
     return;
   }
   chatState.aiSync.postText = getEditedAiPostText() || chatState.aiSync.postText || "";
@@ -15024,6 +15819,27 @@ document.addEventListener("click", (e) => {
   if (action === "ai-sync-edit-manually") {
     clearAiSmartSyncState();
     openComposerWizard();
+    return;
+  }
+
+  if (action === "ai-sync-send-clarification") {
+    const input = document.getElementById("aiSyncClarificationInput");
+    const reply = input?.value.trim() || "";
+    if (!reply) {
+      setChatFeedback("Write a clarification reply first.", "error");
+      input?.focus();
+      return;
+    }
+    runAiSmartSyncFromChat({ rawTextOverride: reply, isClarification: true });
+    return;
+  }
+
+  if (action === "ai-sync-skip-clarification") {
+    if (chatState.aiSync) {
+      chatState.aiSync.questionSkipped = true;
+      setChatFeedback("Clarification skipped. Chat post can be sent as-is; tracker sync may skip incomplete lines.", "");
+      syncAiSmartSyncPanel();
+    }
     return;
   }
 
@@ -16426,22 +17242,22 @@ const renderChartUnit = (state) =>
               
               <label class="chronos-field" style="display: flex; align-items: center; justify-content: space-between; gap: 12px;">
                 <span style="font-size: 12px; font-weight: 600; color: var(--text-sub);">Max hours</span>
-                <input id="chronosMaxLimit" type="number" min="1" max="24" value="${escapeHtml(state.graphConfig.maxLimit)}" style="background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); border-radius: 6px; padding: 6px 10px; color: #f1f5f9; outline: none; width: 80px; text-align: center;">
+                <input id="chronosMaxLimit" type="number" min="1" max="24" value="${escapeHtml(state.graphConfig.maxLimit)}" style="background: var(--card-bg); border: 1px solid var(--border); border-radius: 6px; padding: 6px 10px; color: var(--text-main); outline: none; width: 80px; text-align: center;">
               </label>
               
               <label class="chronos-field" style="display: flex; align-items: center; justify-content: space-between; gap: 12px;">
                 <span style="font-size: 12px; font-weight: 600; color: var(--text-sub);">Days loaded</span>
-                <input id="chronosDaysToLoad" type="number" min="3" max="120" value="${escapeHtml(state.graphConfig.daysToLoad)}" style="background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); border-radius: 6px; padding: 6px 10px; color: #f1f5f9; outline: none; width: 80px; text-align: center;">
+                <input id="chronosDaysToLoad" type="number" min="3" max="120" value="${escapeHtml(state.graphConfig.daysToLoad)}" style="background: var(--card-bg); border: 1px solid var(--border); border-radius: 6px; padding: 6px 10px; color: var(--text-main); outline: none; width: 80px; text-align: center;">
               </label>
               
               <label class="chronos-field" style="display: flex; align-items: center; justify-content: space-between; gap: 12px;">
                 <span style="font-size: 12px; font-weight: 600; color: var(--text-sub);">Desktop view</span>
-                <input id="chronosPcView" type="number" min="3" max="60" value="${escapeHtml(state.graphConfig.pcDaysView)}" style="background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); border-radius: 6px; padding: 6px 10px; color: #f1f5f9; outline: none; width: 80px; text-align: center;">
+                <input id="chronosPcView" type="number" min="3" max="60" value="${escapeHtml(state.graphConfig.pcDaysView)}" style="background: var(--card-bg); border: 1px solid var(--border); border-radius: 6px; padding: 6px 10px; color: var(--text-main); outline: none; width: 80px; text-align: center;">
               </label>
               
               <label class="chronos-field" style="display: flex; align-items: center; justify-content: space-between; gap: 12px;">
                 <span style="font-size: 12px; font-weight: 600; color: var(--text-sub);">Mobile view</span>
-                <input id="chronosMobView" type="number" min="3" max="40" value="${escapeHtml(state.graphConfig.mobDaysView)}" style="background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); border-radius: 6px; padding: 6px 10px; color: #f1f5f9; outline: none; width: 80px; text-align: center;">
+                <input id="chronosMobView" type="number" min="3" max="40" value="${escapeHtml(state.graphConfig.mobDaysView)}" style="background: var(--card-bg); border: 1px solid var(--border); border-radius: 6px; padding: 6px 10px; color: var(--text-main); outline: none; width: 80px; text-align: center;">
               </label>
               
               <button class="btn-small btn-small--primary" type="button" data-action="chronos-apply-config" style="width: 100%; justify-content: center; padding: 8px;">Apply Changes</button>
@@ -16689,8 +17505,8 @@ const renderSettingsPanelBody = (state) => {
                   every-open mode triggers whenever the app opens. Vault snapshots are stored locally and can be restored from the Restore menu dialog.
                 </p>
                 <div class="settings-action-stack">
-                  <button class="btn-small btn-small--wide btn-small--primary" type="button" data-action="backup-download-json">Download Backup Now</button>
-                  <button class="btn-small btn-small--wide" type="button" data-action="backup-export-png">Export Chronos PNG</button>
+                  <button class="btn-small btn-small--wide btn-small--primary" type="button" data-action="backup-download-json">${icon("database-backup", "Backup")} <span>Download Backup Now</span></button>
+                  <button class="btn-small btn-small--wide" type="button" data-action="backup-export-png">${icon("image", "PNG")} <span>Export Chronos PNG</span></button>
                 </div>
               `)}
             `)}
@@ -16935,28 +17751,28 @@ const renderChatUnit = () =>
             <div class="chat-settings-card__body" style="display: flex; flex-direction: column; gap: 14px; margin-top: 20px;">
               <label style="display: flex; flex-direction: column; gap: 6px;">
                 <span style="font-size: 12px; font-weight: 600; color: var(--text-sub);">Sort by time</span>
-                <select id="chatSortOrder" style="background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); border-radius: 8px; padding: 8px 12px; color: #f1f5f9; outline: none; width: 100%;">
-                  <option value="desc">Descending</option>
-                  <option value="asc">Ascending</option>
+                <select id="chatSortOrder" class="chat-input" style="background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px; padding: 8px 12px; color: var(--text-main); outline: none; width: 100%;">
+                  <option value="desc" style="background: var(--card-bg); color: var(--text-main);">Descending</option>
+                  <option value="asc" style="background: var(--card-bg); color: var(--text-main);">Ascending</option>
                 </select>
               </label>
               
               <label style="display: flex; flex-direction: column; gap: 6px;">
                 <span style="font-size: 12px; font-weight: 600; color: var(--text-sub);">Default upload visibility</span>
-                <select id="chatDefaultVisibility" style="background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); border-radius: 8px; padding: 8px 12px; color: #f1f5f9; outline: none; width: 100%;">
-                  <option value="public">Public</option>
-                  <option value="private">Private</option>
+                <select id="chatDefaultVisibility" class="chat-input" style="background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px; padding: 8px 12px; color: var(--text-main); outline: none; width: 100%;">
+                  <option value="public" style="background: var(--card-bg); color: var(--text-main);">Public</option>
+                  <option value="private" style="background: var(--card-bg); color: var(--text-main);">Private</option>
                 </select>
               </label>
 
               <label style="display: flex; flex-direction: column; gap: 6px;">
                 <span style="font-size: 12px; font-weight: 600; color: var(--text-sub);">Messages per page (Show all history)</span>
-                <select id="chatMessagesPerPage" style="background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); border-radius: 8px; padding: 8px 12px; color: #f1f5f9; outline: none; width: 100%;">
-                  <option value="10">10 messages</option>
-                  <option value="25">25 messages</option>
-                  <option value="50">50 messages</option>
-                  <option value="100">100 messages</option>
-                  <option value="200">200 messages</option>
+                <select id="chatMessagesPerPage" class="chat-input" style="background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px; padding: 8px 12px; color: var(--text-main); outline: none; width: 100%;">
+                  <option value="10" style="background: var(--card-bg); color: var(--text-main);">10 messages</option>
+                  <option value="25" style="background: var(--card-bg); color: var(--text-main);">25 messages</option>
+                  <option value="50" style="background: var(--card-bg); color: var(--text-main);">50 messages</option>
+                  <option value="100" style="background: var(--card-bg); color: var(--text-main);">100 messages</option>
+                  <option value="200" style="background: var(--card-bg); color: var(--text-main);">200 messages</option>
                 </select>
               </label>
               
@@ -16994,7 +17810,7 @@ const renderChatUnit = () =>
 
           <div class="chat-compose__footer">
             <p class="chat-feedback" id="chatFeedback">Firestore chat is live. Messages stay stored in the cloud.</p>
-            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+            <div class="chat-compose__footer-actions">
               <button class="btn-small btn-small--accent" type="button" data-action="ai-sync-run">
                 ${icon("sparkles", "Smart Update")}
                 <span>Smart Update</span>
@@ -17020,7 +17836,11 @@ const renderChatUnit = () =>
             <div>
               <strong>Message list</strong>
             </div>
-            <div style="display: flex; gap: 8px; align-items: center;">
+            <div class="chat-feed-head__actions">
+              <button class="btn-small chat-lock-btn" type="button" data-action="chat-lock-list" data-chat-lock-toggle aria-pressed="${chatState.prefs.listScrollLocked === true ? "true" : "false"}">
+                ${icon("lock-keyhole", "Lock message list")}
+                <span>${chatState.prefs.listScrollLocked === true ? "Locked" : "Lock"}</span>
+              </button>
               <button class="btn-small btn-small--accent" type="button" data-action="open-chat-show-all">
                 ${icon("history", "History")} <span>Show all</span>
               </button>
@@ -20747,19 +21567,21 @@ const setLogMinutes = (key, datasetKey, mins) => {
 
 const getChronosDataset = (datasetKey, keys) => {
   const cfg = chronosDatasets[datasetKey];
+  const stroke = `color-mix(in srgb, ${cfg.color} 62%, transparent)`;
+  const fill = `color-mix(in srgb, ${cfg.color} 28%, transparent)`;
   return {
     label: cfg.label,
     chronosKey: datasetKey,
     data: keys.map(key => minsToHours(studyLogs[key]?.[cfg.field] || 0)),
-    borderColor: cfg.color,
-    backgroundColor: cfg.color,
-    pointBackgroundColor: cfg.color,
+    borderColor: stroke,
+    backgroundColor: fill,
+    pointBackgroundColor: stroke,
     pointBorderColor: "#f8fafc",
     pointBorderWidth: 2,
-    pointRadius: 5.2,
-    pointHoverRadius: 7,
+    pointRadius: 4.8,
+    pointHoverRadius: 6.2,
     pointHitRadius: 26,
-    borderWidth: 2.8,
+    borderWidth: 2.4,
     tension: 0,
     hidden: !isChronosDatasetVisible(datasetKey),
     dragData: true,
@@ -21538,11 +22360,25 @@ document.addEventListener("click", (e) => {
     return;
   }
   if (action === "chat-toggle-list") {
-    applyChatPreference("isListVisible", !chatState.prefs.isListVisible);
+    const nextVisible = !chatState.prefs.isListVisible;
+    applyChatPreference("isListVisible", nextVisible);
+    if (!nextVisible && chatState.prefs.listScrollLocked) {
+      applyChatPreference("listScrollLocked", false);
+    }
     return;
   }
   if (action === "chat-toggle-settings") {
     applyChatPreference("isSettingsOpen", !chatState.prefs.isSettingsOpen);
+    return;
+  }
+  if (action === "chat-lock-list") {
+    if (!chatState.prefs.listScrollLocked) {
+      applyChatPreference("isListVisible", true);
+      applyChatPreference("listScrollLocked", true);
+      document.getElementById("chatFeedShell")?.scrollIntoView({ behavior: prefersReducedMotion() ? "auto" : "smooth", block: "nearest" });
+    } else {
+      setChatFeedback("Message list is locked. Double-click the lock button to unlock.", "live");
+    }
     return;
   }
   if (action === "chat-send") {
@@ -21725,6 +22561,17 @@ document.addEventListener("input", (event) => {
   }
 });
 
+document.addEventListener("dblclick", (event) => {
+  const target = event.target;
+  if (!(target instanceof HTMLElement)) return;
+  const lockButton = target.closest("[data-action='chat-lock-list']");
+  if (!lockButton) return;
+  event.preventDefault();
+  if (chatState.prefs.listScrollLocked) {
+    applyChatPreference("listScrollLocked", false);
+  }
+});
+
 document.addEventListener("keydown", (event) => {
   if (event.target?.id === "chatEditTextarea" && (event.ctrlKey || event.metaKey) && event.key === "Enter") {
     event.preventDefault();
@@ -21765,7 +22612,19 @@ const writeTrackLog = (d) => {
   try { localStorage.setItem(TRACK_KEY, JSON.stringify(d.slice(0, 200))); } catch {}
 };
 
-const pomoState = { mode:"work", totalSecs:25*60, remSecs:25*60, running:false, sessionsDone:0, _timer:null };
+const pomoState = {
+  mode:"work",
+  totalSecs:25*60,
+  remSecs:25*60,
+  running:false,
+  sessionsDone:0,
+  modeSecs: {
+    work: POMO_MODES.work.secs,
+    break: POMO_MODES.break.secs,
+    long: POMO_MODES.long.secs,
+  },
+  _timer:null
+};
 const swState   = { running:false, ms:0, lapMs:0, laps:[], _baseMs:0, _lapBaseMs:0, _startTime:0, _lapStart:0, _raf:null };
 
 const padZ = (n, w=2) => String(Math.floor(n)).padStart(w, "0");
@@ -21838,8 +22697,12 @@ const pomoTick = () => {
 };
 
 const pomoSetMode = (mode) => {
+  if (!POMO_MODES[mode]) return;
   clearInterval(pomoState._timer); pomoState.running = false;
-  pomoState.mode = mode; pomoState.totalSecs = POMO_MODES[mode].secs; pomoState.remSecs = POMO_MODES[mode].secs;
+  const nextSecs = Math.max(60, Number(pomoState.modeSecs?.[mode]) || POMO_MODES[mode].secs);
+  pomoState.mode = mode;
+  pomoState.totalSecs = nextSecs;
+  pomoState.remSecs = nextSecs;
   document.querySelectorAll("[data-action='pomo-mode']").forEach(b => b.classList.toggle("is-active", b.dataset.mode === mode));
   updatePomoUI();
 };
@@ -21855,7 +22718,15 @@ const pomoPlay = () => {
 };
 
 const pomoReset = () => { clearInterval(pomoState._timer); pomoState.running=false; pomoState.remSecs=pomoState.totalSecs; updatePomoUI(); };
-const pomoAdj   = (delta) => { clearInterval(pomoState._timer); pomoState.running=false; pomoState.totalSecs=Math.max(60,pomoState.totalSecs+delta); pomoState.remSecs=Math.max(60,pomoState.remSecs+delta); updatePomoUI(); };
+const pomoAdj   = (delta) => {
+  clearInterval(pomoState._timer);
+  pomoState.running = false;
+  const nextSecs = Math.max(60, pomoState.totalSecs + delta);
+  pomoState.totalSecs = nextSecs;
+  pomoState.remSecs = Math.max(60, Math.min(nextSecs, pomoState.remSecs + delta));
+  pomoState.modeSecs[pomoState.mode] = nextSecs;
+  updatePomoUI();
+};
 
 const swPlaySVG  = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>`;
 const swPauseSVG = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>`;
