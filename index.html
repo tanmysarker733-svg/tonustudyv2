@@ -3087,23 +3087,23 @@ html[data-theme="light"] .unit-section:hover {
   display: flex;
   flex-direction: column;
   gap: 0;
-  padding: 16px;
-  border-radius: 16px;
+  padding: 10px;
+  border-radius: 12px;
   background:
     linear-gradient(135deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.018)),
     var(--panel-bg);
 }
 
 .settings-group--stack h4 {
-  margin: 0 0 10px;
+  margin: 0 0 6px;
   color: #bfdbfe;
-  font-size: 0.92rem;
+  font-size: 0.85rem;
 }
 
 .settings-group ul {
   display: grid;
-  gap: 8px;
-  margin-top: 12px;
+  gap: 4px;
+  margin-top: 8px;
   color: var(--text-sub);
   list-style: none;
 }
@@ -3124,10 +3124,10 @@ html[data-theme="light"] .unit-section:hover {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 14px;
-  min-height: 44px;
+  gap: 10px;
+  min-height: 36px;
   min-width: 0;
-  padding: 10px 0;
+  padding: 6px 0;
   border-bottom: 1px solid rgba(71, 85, 105, 0.6);
 }
 
@@ -3144,14 +3144,14 @@ html[data-theme="light"] .unit-section:hover {
 
 .settings-row strong {
   color: #f8fafc;
-  font-size: 0.85rem;
+  font-size: 0.78rem;
 }
 
 .settings-row small,
 .settings-help {
   color: #cbd5e1;
-  font-size: 0.74rem;
-  line-height: 1.55;
+  font-size: 0.7rem;
+  line-height: 1.4;
 }
 
 .settings-value {
@@ -3248,28 +3248,29 @@ html[data-theme="light"] .unit-section:hover {
 
 /* ── Smart Update button glow ─────────────────────────────────────────────── */
 .btn-small--accent {
-  background: linear-gradient(135deg, rgba(109, 40, 217, 0.28) 0%, rgba(49, 130, 206, 0.28) 100%);
-  border: 1.5px solid rgba(139, 92, 246, 0.5);
+  background: rgba(124, 58, 237, 0.15);
+  border: 1px solid rgba(124, 58, 237, 0.4);
   color: #c4b5fd;
-  font-weight: 800;
-  animation: smart-btn-glow 2.2s ease-in-out infinite;
-  transition: background 0.25s ease, transform 0.18s ease, border-color 0.25s ease;
+  font-weight: 700;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 12px rgba(124, 58, 237, 0.12);
 }
 
 .btn-small--accent:hover {
-  background: linear-gradient(135deg, rgba(109, 40, 217, 0.45) 0%, rgba(49, 130, 206, 0.45) 100%);
-  border-color: rgba(167, 139, 250, 0.85);
+  background: rgba(124, 58, 237, 0.25);
+  border-color: rgba(139, 92, 246, 0.6);
   color: #ede9fe;
   transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(124, 58, 237, 0.2);
 }
 
 .btn-small--accent:active {
-  transform: translateY(0) scale(0.98);
+  transform: translateY(0) scale(0.97);
 }
 
 .btn-small--accent svg {
-  filter: drop-shadow(0 0 5px rgba(167, 139, 250, 0.85));
-  animation: smart-icon-pulse 2.2s ease-in-out infinite;
+  filter: none;
+  animation: none;
 }
 
 @keyframes smart-btn-glow {
@@ -3768,10 +3769,10 @@ html[data-theme="light"] .unit-section:hover {
 }
 .card-adj-btn--pos:hover { background: rgba(21,94,117,0.32); }
 .card-adj-pos-group {
-  flex: 0 0 100%;
   display: flex;
   justify-content: center;
   gap: 5px;
+  margin-left: auto;
 }
 @media (max-width:640px) {
   .pomo-sw-grid { grid-template-columns:1fr; }
@@ -4004,8 +4005,8 @@ html[data-theme="light"] .unit-section:hover {
 }
 
 .chat-item__card {
-  padding: 14px 16px;
-  border-radius: 18px 18px 18px 8px;
+  padding: 10px 14px;
+  border-radius: 16px 16px 16px 6px;
   background: rgba(59, 130, 246, 0.12);
   border: 1px solid rgba(96, 165, 250, 0.12);
 }
@@ -4019,8 +4020,8 @@ html[data-theme="light"] .unit-section:hover {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 10px;
-  margin-bottom: 8px;
+  gap: 8px;
+  margin-bottom: 6px;
 }
 
 .chat-item__head strong {
@@ -4059,8 +4060,8 @@ html[data-theme="light"] .unit-section:hover {
 
 .chat-item__body {
   color: var(--text-main);
-  font-size: 0.95rem;
-  line-height: 1.65;
+  font-size: 0.88rem;
+  line-height: 1.5;
   white-space: pre-wrap;
   word-break: break-word;
 }
@@ -4150,10 +4151,10 @@ html[data-theme="light"] .unit-section:hover {
 }
 
 .chat-compose textarea {
-  min-height: 154px;
+  min-height: 80px;
   max-height: 360px;
   resize: vertical;
-  padding: 14px 16px;
+  padding: 10px 14px;
   outline: none;
 }
 
@@ -4180,6 +4181,55 @@ html[data-theme="light"] .unit-section:hover {
   outline: none;
   border-color: rgba(59, 130, 246, 0.8);
   box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
+}
+
+.cssbuttons-io-button {
+  background: #a370f0;
+  color: white;
+  font-family: inherit;
+  padding: 0.35em;
+  padding-left: 1.2em;
+  font-size: 15px;
+  font-weight: 500;
+  border-radius: 0.9em;
+  border: none;
+  letter-spacing: 0.05em;
+  display: flex;
+  align-items: center;
+  box-shadow: inset 0 0 1.6em -0.6em #714da6;
+  overflow: hidden;
+  position: relative;
+  height: 2.5em;
+  padding-right: 3.3em;
+  cursor: pointer;
+}
+.cssbuttons-io-button .icon {
+  background: white;
+  margin-left: 1em;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 2.2em;
+  width: 2.2em;
+  border-radius: 0.7em;
+  box-shadow: 0.1em 0.1em 0.6em 0.2em #7b52b9;
+  right: 0.15em;
+  transition: all 0.3s;
+}
+.cssbuttons-io-button:hover .icon {
+  width: calc(100% - 0.3em);
+}
+.cssbuttons-io-button .icon svg {
+  width: 1.1em;
+  transition: transform 0.3s;
+  color: #7b52b9;
+}
+.cssbuttons-io-button:hover .icon svg {
+  transform: translateX(0.1em);
+}
+.cssbuttons-io-button:active .icon {
+  transform: scale(0.95);
 }
 
 .chat-feedback.is-error {
@@ -4367,13 +4417,13 @@ html[data-theme="light"] .unit-section:hover {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 44px;
-  padding: 8px 14px;
-  border-radius: 12px;
+  min-height: 36px;
+  padding: 6px 10px;
+  border-radius: 10px;
   border: 1.5px solid rgba(255, 255, 255, 0.15); /* bolder, seeable */
   background: rgba(255,255,255,0.03);
   color: var(--text-main);
-  font-size: 0.82rem;
+  font-size: 0.78rem;
   font-weight: 700;
   cursor: pointer;
   transition: border-color 0.18s ease, background-color 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
@@ -4426,10 +4476,10 @@ html[data-theme="light"] .unit-section:hover {
   gap: 6px;
 }
 .adjuster-actions button {
-  min-width: 46px;
-  min-height: 34px;
-  padding: 0 8px;
-  font-size: 0.72rem;
+  min-width: 40px;
+  min-height: 30px;
+  padding: 0 6px;
+  font-size: 0.7rem;
   border-radius: 8px;
   border: 1.5px solid rgba(255, 255, 255, 0.15); /* seeable border */
   background: rgba(255, 255, 255, 0.06);
@@ -4478,7 +4528,9 @@ html[data-theme="light"] .unit-section:hover {
 }
 .wizard-footer-right {
   display: flex;
-  gap: 8px;
+  gap: 6px;
+  flex-wrap: wrap;
+  align-items: center;
 }
 
 .composer-preview-pane {
@@ -10491,7 +10543,7 @@ textarea:hover,
 }
 
 .chat-item__body {
-  line-height: 1.62;
+  line-height: 1.5;
 }
 
 .chat-action-btn {
@@ -10515,6 +10567,8 @@ textarea:hover,
 
 #chatUpdateComposer .composer-step-tabs {
   scrollbar-width: none;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 #chatUpdateComposer .composer-step-tabs::-webkit-scrollbar {
@@ -10607,6 +10661,7 @@ html[data-theme="dark"] .account-dialog__card {
   .wizard-footer-left,
   .wizard-footer-right {
     width: 100%;
+    flex-wrap: wrap;
   }
 
   .wizard-footer-left,
@@ -10617,6 +10672,13 @@ html[data-theme="dark"] .account-dialog__card {
   .wizard-footer-left > *,
   .wizard-footer-right > * {
     flex: 1 1 auto;
+    min-width: 100px;
+  }
+
+  .wizard-footer-left > .btn-small--icon,
+  .wizard-footer-right > .btn-small--icon {
+    flex: 0 0 auto;
+    min-width: 0;
   }
 }
 
@@ -10634,7 +10696,7 @@ html[data-theme="dark"] .account-dialog__card {
   }
 
   #chatUpdateComposer .composer-step-tabs {
-    justify-content: space-between;
+    justify-content: flex-start;
   }
 }
 
@@ -10958,48 +11020,50 @@ html[data-theme="light"] .chat-compose__footer .btn-small--accent {
   }
 
   #chatUpdateComposer .composer-time-card-row {
-    grid-template-columns: repeat(3, minmax(88px, 1fr)) !important;
-    gap: 8px;
-    overflow-x: auto;
-    padding-bottom: 4px;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 6px;
+    overflow-x: visible;
+    padding-bottom: 0;
   }
 
   #chatUpdateComposer .composer-time-card {
-    min-width: 88px;
-    padding: 10px;
+    min-width: 0;
+    padding: 8px 6px;
     border-radius: 16px;
   }
 
   #chatUpdateComposer .composer-time-card__head {
-    gap: 6px;
+    gap: 4px;
     align-items: center;
   }
 
   #chatUpdateComposer .composer-time-card__icon {
-    width: 30px;
-    height: 30px;
-    border-radius: 10px;
+    width: 26px;
+    height: 26px;
+    border-radius: 8px;
   }
 
   #chatUpdateComposer .adjuster-label {
-    font-size: 0.72rem;
-    line-height: 1.15;
+    font-size: 0.66rem;
+    line-height: 1.1;
   }
 
   #chatUpdateComposer .adjuster-value {
-    margin: 8px 0;
-    font-size: 1.1rem;
+    margin: 6px 0;
+    font-size: 1rem;
   }
 
   #chatUpdateComposer .composer-time-card__actions {
-    gap: 6px;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 4px;
   }
 
   #chatUpdateComposer .composer-time-card__actions button {
     min-height: 30px;
     padding: 0 4px;
-    font-size: 0.68rem;
-    border-radius: 10px;
+    font-size: 0.7rem;
+    border-radius: 8px;
+    white-space: nowrap;
   }
 
   #chatUpdateComposer .composer-grid {
@@ -12139,25 +12203,6 @@ html[data-theme="light"] .ai-smart-sync-badge--warn {
   box-shadow: 0 14px 28px rgba(37, 99, 235, 0.28);
 }
 
-.btn-small--accent {
-  animation: none;
-  background: rgba(99, 102, 241, 0.16);
-  border-color: rgba(129, 140, 248, 0.34);
-  color: #c7d2fe;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
-}
-
-.btn-small--accent:hover {
-  background: rgba(99, 102, 241, 0.24);
-  border-color: rgba(165, 180, 252, 0.54);
-  color: #eef2ff;
-  box-shadow: 0 12px 24px rgba(79, 70, 229, 0.18);
-}
-
-.btn-small--accent svg {
-  filter: none;
-  animation: none;
-}
 
 .btn-small--danger,
 [data-action="chronos-toggle-edit"],
@@ -12185,7 +12230,6 @@ html[data-theme="light"] .ai-smart-sync-badge--warn {
   box-shadow: 0 14px 28px rgba(109, 40, 217, 0.22);
 }
 
-[data-action="ai-sync-auto"],
 [data-action="composer-save-sync"],
 [data-action="ai-sync-apply"],
 [data-action="ai-sync-send-clarification"] {
@@ -12316,12 +12360,6 @@ html[data-theme="light"] .chat-ai-toggle.is-on {
   background: var(--btn-purple) !important;
   border-color: rgba(196, 181, 253, 0.58) !important;
   color: #ffffff !important;
-}
-
-.chat-compose__footer button.btn-small[data-action="ai-sync-auto"] {
-  background: var(--btn-green) !important;
-  border-color: rgba(94, 234, 212, 0.58) !important;
-  color: #ecfeff !important;
 }
 
 .chat-compose__footer button.btn-small[data-action="chat-send"] {
@@ -12630,8 +12668,8 @@ html[data-theme="light"] .mission-card {
   }
 
   .chat-item__card {
-    padding: 12px;
-    border-radius: 16px;
+    padding: 10px;
+    border-radius: 14px 14px 14px 4px;
   }
 
   .chat-item__head {
@@ -12696,15 +12734,45 @@ html[data-theme="light"] .mission-card {
   }
 
   #chatUpdateComposer .composer-time-card {
-    padding: 14px;
+    padding: 8px 6px;
   }
 
-  #chatUpdateComposer .composer-time-card__actions button,
-  #chatUpdateComposer .composer-total-stepper button {
-    min-height: 40px;
+  #chatUpdateComposer .composer-time-card__actions button {
+    min-height: 30px;
   }
 }
 
+:root { --master-font-scale: 0.95; }
+body, .composer-wizard-body, .chat-shell { font-size: calc(1rem * var(--master-font-scale)); }
+.btn-small { font-size: calc(0.82rem * var(--master-font-scale)); }
+.composer-wizard-header, .composer-step-tabs { flex-wrap: wrap !important; }
+.composer-step-tabs { overflow-x: auto; }
+.composer-time-card__actions { flex-wrap: wrap !important; gap: 4px !important; }
+.composer-subject-card__media img { object-fit: cover !important; width: 100% !important; height: 100% !important; border-radius: inherit !important; }
+.composer-prefix-pill { overflow: visible !important; text-overflow: unset !important; white-space: normal !important; word-break: break-word; }
+.composer-wizard-body { min-height: 120px; }
+.accordion-title { font-size: 0.85rem; }
+.accordion-header { font-size: 0.82rem; }
+.composer-step-title { font-size: 0.85rem; }
+.composer-inline-entry { gap: 6px; }
+.chat-compose__footer-actions .btn-small { padding: 5px 8px; min-height: 28px; font-size: 0.78rem; }
+.chat-compose__footer-actions .btn-small span { font-size: 0.78rem; }
+.chat-toolbar__actions .btn-small { padding: 5px 8px; min-height: 28px; font-size: 0.78rem; }
+.composer-chapter-grid { grid-template-columns: repeat(auto-fill, minmax(40px, 1fr)); gap: 6px; }
+@media (max-width: 600px) {
+  .composer-wizard-body { padding-left: 10px !important; padding-right: 10px !important; }
+  .composer-tip-popover { left: 8px !important; right: 8px !important; transform: none !important; width: auto !important; max-width: calc(100vw - 16px) !important; }
+  .composer-btn { padding: 5px 8px !important; min-height: 32px !important; font-size: 0.75rem !important; }
+  .btn-small { padding: 5px 8px !important; min-height: 28px !important; font-size: 0.75rem !important; }
+  .composer-grid { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 6px; }
+  .composer-subject-card__text { font-size: 0.72rem; }
+  .chat-compose__footer-actions { gap: 4px; }
+  .chat-toolbar__actions { gap: 4px; }
+  .adjuster-actions button { min-width: 36px; min-height: 28px; padding: 0 5px; font-size: 0.68rem; }
+  .adjuster-value { font-size: 0.9rem; min-width: 60px; }
+  .composer-time-card-row { gap: 6px; }
+  .composer-basic-grid { gap: 8px; }
+}
     </style>
   </head>
   <body class="login-locked">
@@ -12902,6 +12970,8 @@ const defaultUserSettings = {
   backupTiming: "daily",
   autoBackupAutoDownload: false,
   autoBackupNotif: true,
+  aiFeaturesEnabled: false,
+  fontScale: 95,
 };
 
 const USER_SETTINGS_KEY = "hsc-user-settings-v1";
@@ -13104,13 +13174,14 @@ const normalizeChatPrefs = (raw = {}) => ({
   sortOrder: raw.sortOrder === "asc" ? "asc" : "desc",
   defaultVisibility: raw.defaultVisibility === "private" ? "private" : "public",
   isListVisible: !!raw.isListVisible,
-  listScrollLocked: raw.listScrollLocked === true,
+  listScrollLocked: false,
   isSettingsOpen: !!raw.isSettingsOpen,
   hiddenMessageIds: Array.isArray(raw.hiddenMessageIds) ? raw.hiddenMessageIds : [],
   chatCardColor: raw.chatCardColor || "auto",
   messagesPerPage: parseInt(raw.messagesPerPage, 10) || 50,
   smartSyncEnabled: raw.smartSyncEnabled === true,
   aiPreviewEnabled: raw.aiPreviewEnabled !== false,
+  autoSyncOnSend: raw.autoSyncOnSend === true,
 });
 
 const loadChatPrefs = () => {
@@ -13246,6 +13317,7 @@ function formatChatAiLivePreviewText(raw = "") {
       if (!(update.items || []).length && !update.classDurationMinutes && !update.studyDurationMinutes && !update.selfStudyMinutes && update.studyQuality === null) {
         lines.push(trimmed);
       }
+      (update.warnings || []).forEach((warning) => lines.push(`⚠️ ${warning}`));
     });
     return lines.filter(Boolean).join("\n").trim() || trimmed;
   } catch (_) {
@@ -13710,6 +13782,7 @@ const sendChatMessage = async () => {
   const textarea = document.getElementById("chatMessageInput");
   if (!textarea) return;
   const text = getEditedAiPostText() || textarea.value.trim();
+  textarea.style.height = '';
   if (!text) {
     setChatFeedback("Write a message before sending.", "error");
     return;
@@ -13740,11 +13813,15 @@ const sendChatMessage = async () => {
       createdAt: window.firebase.firestore.FieldValue.serverTimestamp(),
       createdAtMs: Date.now(),
     });
+    const shouldAutoSync = chatState.prefs.autoSyncOnSend === true;
     textarea.value = "";
     chatState.prefs.defaultVisibility = visibility;
     saveChatPrefs();
-    setChatFeedback("Message stored in Firestore.", "success");
+    setChatFeedback(shouldAutoSync ? "Message stored in Firestore. Running Auto Sync..." : "Message stored in Firestore.", "success");
     syncChatUi();
+    if (shouldAutoSync) {
+      await runAiSmartSyncFromChat({ autoApply: true, rawTextOverride: text });
+    }
   } catch (error) {
     setChatFeedback(`Send failed: ${error.message}`, "error");
   }
@@ -14028,10 +14105,18 @@ const parseAiSyncItemLine = (line = "") => {
     chapter = parseInt(typo[2], 10);
     warnings.push(`${rawLine} looks like it may mean P${paper}C${chapter}.`);
   }
-  const paperMatch = rawLine.match(/\bP\s*([12])\b/i);
-  if (paperMatch) paper = parseInt(paperMatch[1], 10);
-  const chapterMatch = rawLine.match(/\bC\s*(\d{1,2})\b/i);
-  if (chapterMatch && !chapter) chapter = parseInt(chapterMatch[1], 10);
+  // Match combined P#C# as one unit first (handles glued shorthand like "p2c2" where a
+  // trailing \b after just "P2" fails because "c" is a word character with no boundary).
+  const combined = rawLine.match(/\bP\s*([12])\s*C\s*(\d{1,2})\b/i);
+  if (combined) {
+    paper = parseInt(combined[1], 10);
+    chapter = parseInt(combined[2], 10);
+  } else {
+    const paperMatch = rawLine.match(/\bP\s*([12])\b/i);
+    if (paperMatch) paper = parseInt(paperMatch[1], 10);
+    const chapterMatch = rawLine.match(/\bC\s*(\d{1,2})\b/i);
+    if (chapterMatch && !chapter) chapter = parseInt(chapterMatch[1], 10);
+  }
   const lectureToken = "(?:Lec(?:ture)?|L)";
   const range = rawLine.match(new RegExp(`\\b${lectureToken}\\s*(\\d{1,3})\\s*[-–]\\s*(\\d{1,3})\\b`, "i"));
   const withTotal = rawLine.match(new RegExp(`\\b${lectureToken}\\s*(\\d{1,3})\\s*\\/\\s*(\\d{1,3})\\b`, "i"));
@@ -14040,8 +14125,17 @@ const parseAiSyncItemLine = (line = "") => {
   const lectures = !lectureRange && single ? [parseInt(single[1], 10)] : [];
   const totalLectures = withTotal ? parseInt(withTotal[2], 10) : null;
   const percentMatch = rawLine.match(/(\d{1,3})\s*%/);
-  const completionPercent = percentMatch ? clampAiPercent(percentMatch[1]) : (/✅|🟩|done|complete/i.test(rawLine) ? 100 : 100);
+  const hasProgressSignal = Boolean(lectureRange || lectures.length || percentMatch || /✅|🟩|done|complete/i.test(rawLine));
+  const completionPercent = percentMatch ? clampAiPercent(percentMatch[1]) : 100;
   const classType = parseAiClassTypeFromLine(rawLine);
+  // No paper/chapter/lecture/percent detected: this is likely free-text (methodology notes,
+  // general revision, etc.), not a trackable syllabus line. Ask instead of guessing P/C or 100%.
+  if (!paper && !chapter && !hasProgressSignal) {
+    return {
+      item: null,
+      warnings: [`${rawLine} — Which paper/chapter should this update? / কোন paper/chapter এর জন্য এটা ধরবো?`],
+    };
+  }
   return {
     item: {
       subject,
@@ -14144,6 +14238,8 @@ const parseAiSmartSyncLocally = (rawText = "") => {
     const parsedLine = parseAiSyncItemLine(line);
     if (parsedLine?.item) {
       block.items.push(parsedLine.item);
+      block.warnings.push(...parsedLine.warnings);
+    } else if (parsedLine?.warnings?.length) {
       block.warnings.push(...parsedLine.warnings);
     }
   });
@@ -14640,10 +14736,10 @@ function resetComposerCurrentItem() {
     subjectIndex: null,
     paperIndex: null,
     chapterIndex: null,
-    classType: null,
+    classType: "Detailed",
     selectedLectures: [],
     totalLectures: 10,
-    percent: null,
+    percent: 100,
     isCustomLine: false,
     customText: ""
   };
@@ -14802,7 +14898,7 @@ function getComposerStepSequence(subjectTitle = "") {
   const isICT = subjectTitle === "ICT";
   if (isLanguage) return [1, 2, 8, 9, 10];
   if (isICT) return [1, 2, 4, 6, 8, 9, 10];
-  return [1, 2, 4, 6, 7, 8, 9, 10];
+  return [1, 2, 4, 6, 8, 9, 10];
 }
 
 function getComposerActiveSubjectTitle() {
@@ -14968,8 +15064,8 @@ function makeAdjusterRow(label, stateKey) {
       <div class="adjuster-actions composer-time-card__actions">
         <button type="button" data-action="adjust-time" data-key="${stateKey}" data-delta="-60">-1h</button>
         <button type="button" data-action="adjust-time" data-key="${stateKey}" data-delta="60">+1h</button>
-        <button type="button" data-action="adjust-time" data-key="${stateKey}" data-delta="-15">-15min</button>
-        <button type="button" data-action="adjust-time" data-key="${stateKey}" data-delta="15">+15min</button>
+        <button type="button" data-action="adjust-time" data-key="${stateKey}" data-delta="-15">-15m</button>
+        <button type="button" data-action="adjust-time" data-key="${stateKey}" data-delta="15">+15m</button>
       </div>
     </div>
   `;
@@ -15138,12 +15234,8 @@ function renderComposerFooter() {
     const syncOn = chatState.prefs.smartSyncEnabled === true;
     rightHtml += `
       <button class="btn-small" type="button" data-action="composer-new-update">
-        ${icon("list-plus", "New")}
-        <span>New Update</span>
-      </button>
-      <button class="btn-small btn-small--accent" type="button" data-action="composer-copy">
-        ${icon("copy", "Copy")}
-        <span>Copy</span>
+        ${icon("list-plus", "New Day")}
+        <span>New Day</span>
       </button>
       <button class="btn-small composer-smart-sync ${syncOn ? "is-on" : ""}" type="button" data-action="composer-save-sync" aria-pressed="${syncOn ? "true" : "false"}" title="Smart Sync updates Subject Tracker only when clicked">
         ${icon("refresh-cw", "Smart Sync")}
@@ -15152,11 +15244,7 @@ function renderComposerFooter() {
       <button class="btn-small btn-small--icon composer-tip-trigger" type="button" data-action="composer-toggle-tip" data-tip="smart-sync" aria-label="What Smart Sync does">
         ${icon("info", "Smart Sync info")}
       </button>
-      <button class="btn-small btn-small--primary" type="button" data-action="composer-send-message" style="background: var(--accent-blue); color: white; border-color: var(--accent-blue);">
-        ${icon("send", "Send")}
-        <span>Send Message</span>
-      </button>
-      <button class="btn-small" type="button" data-action="close-composer-wizard">Close</button>
+      <button class="btn-small" type="button" data-action="close-composer-wizard">❌</button>
     `;
   }
   
@@ -15320,8 +15408,8 @@ function getStepFormHtml(stepNum) {
         
         <div class="composer-preview-pane composer-custom-line-card" style="margin-top: 14px;">
           <div class="preview-pane-label">Or Add Custom Suffix directly:</div>
-          <div class="composer-inline-entry">
-            <span class="composer-prefix-pill" id="composerStep4Prefix">${escapeHtml(prefixText)}</span>
+          <div class="composer-inline-entry" style="flex-wrap: wrap;">
+            <span class="composer-prefix-pill" id="composerStep4Prefix" style="font-size: 0.8rem; white-space: normal;">${escapeHtml(prefixText)}</span>
             <input type="text" id="composerStep4CustomText" class="composer-input-field" placeholder="e.g. Formula Practice">
             <button class="btn-small btn-small--primary" type="button" data-action="composer-add-suffix-step4">Add</button>
           </div>
@@ -15396,26 +15484,24 @@ function getStepFormHtml(stepNum) {
           <div class="composer-lecture-grid">
             ${badgesHtml}
           </div>
+          <div class="composer-completion-card" style="margin-top: 14px; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 14px;">
+            <div class="composer-completion-head">
+              <span>Completion</span>
+              <strong id="composerPercentVal">${item.percent || 100}%</strong>
+            </div>
+            <input type="range" id="composerPercentRange" min="10" max="100" step="10" value="${item.percent || 100}" list="composerPercentMarks">
+            <datalist id="composerPercentMarks">
+              ${[10,20,30,40,50,60,70,80,90,100].map(pct => `<option value="${pct}" label="${pct}%"></option>`).join("")}
+            </datalist>
+            <div class="composer-percent-marks" aria-hidden="true">
+              <span>10</span><span>30</span><span>50</span><span>70</span><span>90</span><span>100</span>
+            </div>
+          </div>
         </div>
       `;
     }
     case 7: {
-      const value = item.percent || 100;
-      return `
-        <div class="composer-completion-card">
-          <div class="composer-completion-head">
-            <span>Completion</span>
-            <strong id="composerPercentVal">${value}%</strong>
-          </div>
-          <input type="range" id="composerPercentRange" min="10" max="100" step="10" value="${value}" list="composerPercentMarks">
-          <datalist id="composerPercentMarks">
-            ${[10,20,30,40,50,60,70,80,90,100].map(pct => `<option value="${pct}" label="${pct}%"></option>`).join("")}
-          </datalist>
-          <div class="composer-percent-marks" aria-hidden="true">
-            <span>10</span><span>30</span><span>50</span><span>70</span><span>90</span><span>100</span>
-          </div>
-        </div>
-      `;
+      return ``;
     }
     case 8: {
       const currentLineText = item.customText || getDefaultLineText(item);
@@ -15560,14 +15646,13 @@ function renderComposerWizard() {
         <textarea id="composerFinalTextArea" style="font-family: monospace; white-space: pre-wrap; font-size: 0.88rem; line-height: 1.4; background: rgba(0,0,0,0.25); padding: 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.15); margin: 0; color: #fff; width: 100%; min-height: 180px; resize: vertical; outline: none; box-sizing: border-box;">${escapeHtml(finalText)}</textarea>
       </div>
       
-      <div style="display: flex; gap: 8px; margin-bottom: 12px;">
-        <button class="btn-small btn-small--primary" type="button" data-action="composer-copy" style="flex: 1; min-height: 38px; font-size: 0.85rem; border-color: rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: center; gap: 6px;">
-          ${icon("copy", "Copy")}
-          <span>Copy Message</span>
+      <div style="display: flex; justify-content: flex-end; gap: 8px; margin-bottom: 12px;">
+        <button class="btn-small btn-small--primary" type="button" data-action="composer-copy" title="Copy Text" style="padding: 6px 12px; display: flex; align-items: center; justify-content: center;">
+          ${icon("copy", "")}
         </button>
-        <button class="btn-small btn-small--primary" type="button" data-action="composer-send-message" style="flex: 1; min-height: 38px; font-size: 0.85rem; background: var(--accent-blue); color: white; border-color: var(--accent-blue); display: flex; align-items: center; justify-content: center; gap: 6px;">
-          ${icon("send", "Send")}
-          <span>Send Message</span>
+        <button class="btn-small btn-small--primary" type="button" data-action="composer-send-message" title="Send" style="padding: 6px 12px; display: flex; align-items: center; justify-content: center;">
+          ${icon("send", "")}
+          <span style="margin-left: 6px;">Send</span>
         </button>
       </div>
       <div class="composer-smart-sync-tip" data-tip-panel="smart-sync" hidden>
@@ -15712,7 +15797,20 @@ document.addEventListener("click", (e) => {
     return;
   }
   if (action === "ai-sync-auto") {
-    autoSyncFromChat();
+    chatState.prefs.autoSyncOnSend = chatState.prefs.autoSyncOnSend !== true;
+    saveChatPrefs();
+    const autoBtn = document.getElementById("chatAutoSyncToggle");
+    if (autoBtn) {
+      const isOn = chatState.prefs.autoSyncOnSend === true;
+      autoBtn.classList.toggle("is-on", isOn);
+      autoBtn.setAttribute("aria-pressed", isOn ? "true" : "false");
+      autoBtn.title = isOn
+        ? "Auto Sync is ON: sending a message will auto-run Smart Update and sync to Subject Tracker"
+        : "Auto Sync is OFF: use Smart Update manually before sending";
+      const label = autoBtn.querySelector("span:last-child");
+      if (label) label.textContent = `Auto Sync: ${isOn ? "On" : "Off"}`;
+    }
+    setChatFeedback(chatState.prefs.autoSyncOnSend === true ? "Auto Sync turned on: new messages will auto-sync to Subject Tracker." : "Auto Sync turned off.", "");
     return;
   }
   if (action === "close-composer-wizard") {
@@ -16566,7 +16664,6 @@ const renderDashboardUnit = (state) => {
         <div>
           <p class="eyebrow">Unit 01</p>
           <h2>Dashboard</h2>
-          <p>Real-time progress tracking and mission status.</p>
         </div>
       </div>
       
@@ -17204,10 +17301,10 @@ const renderChartUnit = (state) =>
             <p>Online Class and Total Study across the last <span id="chronosDaysLabel">${escapeHtml(state.graphConfig.daysToLoad)}</span> days.</p>
           </div>
           <div class="chronos-tools">
-            <button class="btn-small btn-small--primary chronos-show-btn" type="button" data-action="chronos-show-live">${icon("activity", "Show Chronos")} <span>Show Chronos</span></button>
-            <button class="btn-small btn-small--danger" type="button" data-action="chronos-toggle-edit" id="chronosEditBtn">Start Editing</button>
-            <button class="btn-small" type="button" data-action="chronos-toggle-config">Config</button>
-            <button class="btn-small" type="button" data-action="chronos-save-png">Save</button>
+            <button class="btn-small btn-small--primary chronos-show-btn" type="button" data-action="chronos-show-live" title="Show Chronos">${icon("activity", "")}</button>
+            <button class="btn-small btn-small--danger" type="button" data-action="chronos-toggle-edit" id="chronosEditBtn">${icon("pencil", "")} <span>Edit</span></button>
+            <button class="btn-small" type="button" data-action="chronos-toggle-config" title="Config">${icon("settings", "")}</button>
+            <button class="btn-small" type="button" data-action="chronos-save-png" title="Save">${icon("save", "")}</button>
             <button class="btn-small" type="button" data-action="chronos-export-csv">CSV</button>
           </div>
         </div>
@@ -17242,22 +17339,22 @@ const renderChartUnit = (state) =>
               
               <label class="chronos-field" style="display: flex; align-items: center; justify-content: space-between; gap: 12px;">
                 <span style="font-size: 12px; font-weight: 600; color: var(--text-sub);">Max hours</span>
-                <input id="chronosMaxLimit" type="number" min="1" max="24" value="${escapeHtml(state.graphConfig.maxLimit)}" style="background: var(--card-bg); border: 1px solid var(--border); border-radius: 6px; padding: 6px 10px; color: var(--text-main); outline: none; width: 80px; text-align: center;">
+                <input id="chronosMaxLimit" type="number" min="1" max="24" value="${escapeHtml(state.graphConfig.maxLimit)}" style="background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); border-radius: 6px; padding: 6px 10px; color: #f1f5f9; outline: none; width: 80px; text-align: center;">
               </label>
               
               <label class="chronos-field" style="display: flex; align-items: center; justify-content: space-between; gap: 12px;">
                 <span style="font-size: 12px; font-weight: 600; color: var(--text-sub);">Days loaded</span>
-                <input id="chronosDaysToLoad" type="number" min="3" max="120" value="${escapeHtml(state.graphConfig.daysToLoad)}" style="background: var(--card-bg); border: 1px solid var(--border); border-radius: 6px; padding: 6px 10px; color: var(--text-main); outline: none; width: 80px; text-align: center;">
+                <input id="chronosDaysToLoad" type="number" min="3" max="120" value="${escapeHtml(state.graphConfig.daysToLoad)}" style="background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); border-radius: 6px; padding: 6px 10px; color: #f1f5f9; outline: none; width: 80px; text-align: center;">
               </label>
               
               <label class="chronos-field" style="display: flex; align-items: center; justify-content: space-between; gap: 12px;">
                 <span style="font-size: 12px; font-weight: 600; color: var(--text-sub);">Desktop view</span>
-                <input id="chronosPcView" type="number" min="3" max="60" value="${escapeHtml(state.graphConfig.pcDaysView)}" style="background: var(--card-bg); border: 1px solid var(--border); border-radius: 6px; padding: 6px 10px; color: var(--text-main); outline: none; width: 80px; text-align: center;">
+                <input id="chronosPcView" type="number" min="3" max="60" value="${escapeHtml(state.graphConfig.pcDaysView)}" style="background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); border-radius: 6px; padding: 6px 10px; color: #f1f5f9; outline: none; width: 80px; text-align: center;">
               </label>
               
               <label class="chronos-field" style="display: flex; align-items: center; justify-content: space-between; gap: 12px;">
                 <span style="font-size: 12px; font-weight: 600; color: var(--text-sub);">Mobile view</span>
-                <input id="chronosMobView" type="number" min="3" max="40" value="${escapeHtml(state.graphConfig.mobDaysView)}" style="background: var(--card-bg); border: 1px solid var(--border); border-radius: 6px; padding: 6px 10px; color: var(--text-main); outline: none; width: 80px; text-align: center;">
+                <input id="chronosMobView" type="number" min="3" max="40" value="${escapeHtml(state.graphConfig.mobDaysView)}" style="background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); border-radius: 6px; padding: 6px 10px; color: #f1f5f9; outline: none; width: 80px; text-align: center;">
               </label>
               
               <button class="btn-small btn-small--primary" type="button" data-action="chronos-apply-config" style="width: 100%; justify-content: center; padding: 8px;">Apply Changes</button>
@@ -17267,7 +17364,7 @@ const renderChartUnit = (state) =>
         <div class="chronos-scroll" id="chronosScroll">
           <div class="chronos-canvas-wrap" id="chronosCanvasWrap">
             <div class="chronos-preview" id="chronosPreview" data-action="chronos-show-live" role="button" tabindex="0" aria-label="Show Chronos graph">
-              <img src="Assets/Images/Demo Graph.png" alt="">
+              <img src="Assets/Images/Demo Graph.png" alt="" style="width: 100%; height: 100%; object-fit: contain;">
               <div class="chronos-preview__veil"><span>${icon("mouse-pointer-click", "Click")} Click Show</span></div>
             </div>
             <canvas id="chronosChart"></canvas>
@@ -17425,7 +17522,7 @@ const renderSettingsPanelBody = (state) => {
               `)}
               ${group("UI Elements", `
                 ${row("Ambient Hero Orbs", checkbox("tgl_orbs", userSettings.uiConfigs.showOrbs))}
-                ${row("Subject Vibe Animations", checkbox("tgl_vibes", userSettings.uiConfigs.showVibes))}
+                ${row("Subject Vibe Animations", checkbox("tgl_vibes", userSettings.uiConfigs.showVibes), "Plays an effect when expanding subjects")}
                 ${row("Scaffold Strands BG", checkbox("tgl_scaffold_strands", userSettings.uiConfigs.showScaffoldStrands === true, false), "Dark-mode lightweight gradient inside Scaffold shell")}
                 ${row("Aurora Background", selectInput("tgl_aurora_mode", [
                   { value: "off", label: "Off" },
@@ -17434,20 +17531,18 @@ const renderSettingsPanelBody = (state) => {
                 ], userSettings.uiConfigs.auroraMode), "Animated colour mesh gradient")}
                 ${row("Project Banner", checkbox("tgl_project_banner", userSettings.uiConfigs.showProjectBanner !== false), "Top project banner")}
                 ${row("Show ETA Badge", checkbox("etaSettingToggle", userSettings.uiConfigs.etaOn))}
+                ${row("Font Scale", `<input type="range" id="fontScaleRange" min="80" max="120" step="5" value="${userSettings.fontScale || 100}" oninput="document.getElementById('fontScaleVal').textContent=this.value+'%';document.documentElement.style.setProperty('--master-font-scale', this.value/100)"><span id="fontScaleVal" style="margin-left: 8px; font-size: 0.8rem; min-width: 3ch; display: inline-block;">${userSettings.fontScale || 100}%</span>`, "Adjust overall text size")}
               `)}
             `, true)}
             ${pane("data", `
               ${group("Study Mode", `
                 <div class="settings-choice-grid">
-                  <button class="btn-small ${userSettings.studyMode !== "ssc" ? "btn-small--active" : ""}" type="button" data-action="set-study-mode" data-mode="hsc">
-                    <span>HSC Mode</span>
-                    <small>Default two-paper layout</small>
-                  </button>
-                  <button class="btn-small ${userSettings.studyMode === "ssc" ? "btn-small--active" : ""}" type="button" data-action="set-study-mode" data-mode="ssc">
-                    <span>One-Paper / SSC Mode</span>
-                    <small>PCMB single list + General Math</small>
-                  </button>
+                  <button class="btn-small ${userSettings.studyMode !== "ssc" ? "btn-small--active" : ""}" type="button" data-action="set-study-mode" data-mode="hsc">HSC Mode</button>
+                  <button class="btn-small ${userSettings.studyMode === "ssc" ? "btn-small--active" : ""}" type="button" data-action="set-study-mode" data-mode="ssc">SSC Mode</button>
                 </div>
+              `)}
+              ${group("AI & Smart Sync", `
+                ${row("Enable AI Features", checkbox("aiFeaturesToggle", userSettings.aiFeaturesEnabled, false), "Show AI and Auto Sync buttons in Chat")}
               `)}
               ${group("Syllabus Builder", `
                 <div class="syllabus-builder">
@@ -17721,16 +17816,8 @@ const renderChatUnit = () =>
           <div class="chat-toolbar__meta">
             <span class="chat-toolbar__status" id="chatLiveDot" aria-hidden="true"></span>
             <div class="chat-toolbar__text">
-              <strong>Show messages inside this box</strong>
               <span id="chatLiveStatus">Connecting to Firestore...</span>
             </div>
-          </div>
-          <div class="chat-toolbar__actions">
-            <button class="btn-small" type="button" data-action="chat-expand" title="Expand Chat" aria-label="Expand Chat">
-              ${icon("maximize-2", "Expand")}
-            </button>
-            <button class="btn-small btn-small--primary" type="button" data-action="chat-toggle-list" data-chat-list-toggle>${chatState.prefs.isListVisible ? "Hide messages" : "Show messages"}</button>
-            <button class="btn-small btn-small--icon" type="button" data-action="chat-toggle-settings" title="Message settings" aria-label="Message settings">${icon("sliders-horizontal", "Message settings")}</button>
           </div>
         </div>
 
@@ -17751,28 +17838,28 @@ const renderChatUnit = () =>
             <div class="chat-settings-card__body" style="display: flex; flex-direction: column; gap: 14px; margin-top: 20px;">
               <label style="display: flex; flex-direction: column; gap: 6px;">
                 <span style="font-size: 12px; font-weight: 600; color: var(--text-sub);">Sort by time</span>
-                <select id="chatSortOrder" class="chat-input" style="background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px; padding: 8px 12px; color: var(--text-main); outline: none; width: 100%;">
-                  <option value="desc" style="background: var(--card-bg); color: var(--text-main);">Descending</option>
-                  <option value="asc" style="background: var(--card-bg); color: var(--text-main);">Ascending</option>
+                <select id="chatSortOrder" style="background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); border-radius: 8px; padding: 8px 12px; color: #f1f5f9; outline: none; width: 100%;">
+                  <option value="desc">Descending</option>
+                  <option value="asc">Ascending</option>
                 </select>
               </label>
               
               <label style="display: flex; flex-direction: column; gap: 6px;">
                 <span style="font-size: 12px; font-weight: 600; color: var(--text-sub);">Default upload visibility</span>
-                <select id="chatDefaultVisibility" class="chat-input" style="background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px; padding: 8px 12px; color: var(--text-main); outline: none; width: 100%;">
-                  <option value="public" style="background: var(--card-bg); color: var(--text-main);">Public</option>
-                  <option value="private" style="background: var(--card-bg); color: var(--text-main);">Private</option>
+                <select id="chatDefaultVisibility" style="background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); border-radius: 8px; padding: 8px 12px; color: #f1f5f9; outline: none; width: 100%;">
+                  <option value="public">Public</option>
+                  <option value="private">Private</option>
                 </select>
               </label>
 
               <label style="display: flex; flex-direction: column; gap: 6px;">
                 <span style="font-size: 12px; font-weight: 600; color: var(--text-sub);">Messages per page (Show all history)</span>
-                <select id="chatMessagesPerPage" class="chat-input" style="background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px; padding: 8px 12px; color: var(--text-main); outline: none; width: 100%;">
-                  <option value="10" style="background: var(--card-bg); color: var(--text-main);">10 messages</option>
-                  <option value="25" style="background: var(--card-bg); color: var(--text-main);">25 messages</option>
-                  <option value="50" style="background: var(--card-bg); color: var(--text-main);">50 messages</option>
-                  <option value="100" style="background: var(--card-bg); color: var(--text-main);">100 messages</option>
-                  <option value="200" style="background: var(--card-bg); color: var(--text-main);">200 messages</option>
+                <select id="chatMessagesPerPage" style="background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); border-radius: 8px; padding: 8px 12px; color: #f1f5f9; outline: none; width: 100%;">
+                  <option value="10">10 messages</option>
+                  <option value="25">25 messages</option>
+                  <option value="50">50 messages</option>
+                  <option value="100">100 messages</option>
+                  <option value="200">200 messages</option>
                 </select>
               </label>
               
@@ -17787,17 +17874,25 @@ const renderChatUnit = () =>
 
         <div class="chat-compose">
           <div class="chat-compose__row">
-            <div class="chat-compose__identity">
-              <strong id="chatComposerIdentity">Student</strong>
-              <span id="chatComposerMode" class="chat-composer-visibility chat-composer-visibility--public" aria-label="Post visibility: public">
-                <span class="chat-composer-visibility__icon" aria-hidden="true"></span>
-                <span>Public</span>
-              </span>
+            <div class="chat-compose__identity" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <strong id="chatComposerIdentity">Student</strong>
+                <span id="chatComposerMode" class="chat-composer-visibility chat-composer-visibility--public" aria-label="Post visibility: public">
+                  <span class="chat-composer-visibility__icon" aria-hidden="true"></span>
+                  <span>Public</span>
+                </span>
+              </div>
+              <div class="chat-toolbar__actions" style="margin-left: auto;">
+                <button class="btn-small btn-small--icon" type="button" data-action="chat-toggle-settings" title="Message settings" aria-label="Message settings">${icon("sliders-horizontal", "Message settings")}</button>
+                <button class="btn-small btn-small--primary" type="button" data-action="chat-toggle-list" data-chat-list-toggle>${chatState.prefs.isListVisible ? "Hide messages" : "Show messages"}</button>
+                <button class="btn-small" type="button" data-action="chat-expand" title="Expand Chat" aria-label="Expand Chat">${icon("maximize-2", "Expand")}</button>
+              </div>
             </div>
           </div>
 
           <textarea id="chatMessageInput" placeholder="Write a message… (Ctrl+Enter to send)"></textarea>
           <span class="chat-compose__char-count" id="chatCharCount"></span>
+          ${scaffoldState.userSettings.aiFeaturesEnabled ? `
           <div class="chat-ai-live-preview" id="chatAiLivePreview" aria-live="polite">
             <div class="chat-ai-live-preview__head">
               <span>${icon("sparkles", "AI preview")} AI Post Preview</span>
@@ -17807,6 +17902,7 @@ const renderChatUnit = () =>
               <span class="chat-ai-live-preview__placeholder">Write a study update to preview exactly how the chat post will look.</span>
             </div>
           </div>
+          ` : ""}
 
           <div class="chat-compose__footer">
             <p class="chat-feedback" id="chatFeedback">Firestore chat is live. Messages stay stored in the cloud.</p>
@@ -17815,16 +17911,20 @@ const renderChatUnit = () =>
                 ${icon("sparkles", "Smart Update")}
                 <span>Smart Update</span>
               </button>
+              ${scaffoldState.userSettings.aiFeaturesEnabled ? `
               <button class="btn-small chat-ai-toggle ${chatState.prefs.aiPreviewEnabled !== false ? "is-on" : ""}" id="chatAiPreviewToggle" type="button" data-action="toggle-ai-preview" aria-pressed="${chatState.prefs.aiPreviewEnabled !== false ? "true" : "false"}">
                 <span>AI</span>
               </button>
-              <button class="btn-small btn-small--accent" type="button" data-action="ai-sync-auto">
+              <button class="btn-small chat-ai-toggle ${chatState.prefs.autoSyncOnSend === true ? "is-on" : ""}" id="chatAutoSyncToggle" type="button" data-action="ai-sync-auto" aria-pressed="${chatState.prefs.autoSyncOnSend === true ? "true" : "false"}" title="${chatState.prefs.autoSyncOnSend === true ? "Auto Sync is ON: sending a message will auto-run Smart Update and sync to Subject Tracker" : "Auto Sync is OFF: use Smart Update manually before sending"}">
                 ${icon("database-zap", "Auto Sync")}
-                <span>Auto Sync</span>
+                <span>Auto Sync: ${chatState.prefs.autoSyncOnSend === true ? "On" : "Off"}</span>
               </button>
-              <button class="btn-small btn-small--primary" type="button" data-action="chat-send">
-                ${icon("send-horizontal", "Send chat")}
-                <span>Send message</span>
+              ` : ""}
+              <button class="cssbuttons-io-button" type="button" data-action="chat-send" style="margin-left: auto;">
+                Send
+                <div class="icon">
+                  ${icon("send-horizontal", "")}
+                </div>
               </button>
             </div>
           </div>
@@ -19656,6 +19756,7 @@ const attachLoginMediaEffects = () => {
 
 // ── main.js ───────────────────────────────────────────────────────────────────
 const initialUserSettings = loadUserSettings();
+document.documentElement.style.setProperty('--master-font-scale', (initialUserSettings.fontScale || 100) / 100);
 
 const scaffoldState = {
   meta: APP_META,
@@ -20526,6 +20627,8 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
     if (e.target?.id === "chatMessageInput") {
+      e.target.style.height = 'auto';
+      e.target.style.height = Math.min(e.target.scrollHeight, 360) + 'px';
       const counter = document.getElementById("chatCharCount");
       if (!counter) return;
       const len = e.target.value.length;
@@ -22872,13 +22975,29 @@ document.addEventListener("change", (e) => {
     updateBackupSettings({ autoBackupNotif: !!target.checked });
     return;
   }
-  if (target.id === "tgl_project_banner") {
+  if (target.id === "tgl_project_banner" || target.id === "tgl_orbs" || target.id === "tgl_vibes" || target.id === "tgl_aurora_mode" || target.id === "etaSettingToggle") {
     scaffoldState.userSettings.uiConfigs = {
       ...(scaffoldState.userSettings.uiConfigs || {}),
-      showProjectBanner: !!target.checked
+      showProjectBanner: document.getElementById("tgl_project_banner")?.checked !== false,
+      showOrbs: document.getElementById("tgl_orbs")?.checked || false,
+      showVibes: document.getElementById("tgl_vibes")?.checked || false,
+      auroraMode: document.getElementById("tgl_aurora_mode")?.value || "off",
+      etaOn: document.getElementById("etaSettingToggle")?.checked || false
     };
     saveUserSettings();
     mountApp();
+    return;
+  }
+  if (target.id === "aiFeaturesToggle") {
+    scaffoldState.userSettings.aiFeaturesEnabled = !!target.checked;
+    saveUserSettings();
+    mountApp();
+    return;
+  }
+  if (target.id === "fontScaleRange") {
+    const val = parseInt(target.value, 10) || 100;
+    scaffoldState.userSettings.fontScale = val;
+    saveUserSettings();
     return;
   }
   if (target.id === BACKUP_IMPORT_INPUT_ID) {
