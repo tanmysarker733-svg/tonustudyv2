@@ -2699,14 +2699,12 @@ html[data-theme="light"] .unit-section:hover {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: grayscale(100%) brightness(.65); /* Gray opacity effect */
-  opacity: 0.72;
   transform: scale(1.018);
   transition: filter 0.3s ease, opacity 0.3s ease;
 }
-.chronos-preview:hover img {
-  filter: grayscale(0%) brightness(0.85);
-  opacity: 1;
+
+html[data-theme="light"] .chronos-preview img {
+  filter: invert(1) hue-rotate(180deg) brightness(0.9) contrast(1.05);
 }
 .chronos-preview__veil {
   position: absolute;
@@ -3981,7 +3979,7 @@ html[data-theme="light"] .unit-section:hover {
   gap: 12px;
   max-height: 540px;
   overflow-y: auto;
-  padding: 14px 16px 16px;
+  padding: 14px 16px 80px;
 }
 
 .chat-item {
@@ -8605,11 +8603,11 @@ html[data-theme="light"] .developer-dialog__close:focus-visible {
 }
 
 html[data-theme="light"] #chronosPreview > img {
-  filter: invert(1) grayscale(100%) brightness(0.72) contrast(1.08);
+  filter: grayscale(100%) brightness(.65);
 }
 
 html[data-theme="light"] #chronosPreview:hover > img {
-  filter: invert(1) grayscale(0%) brightness(0.9) contrast(1.05);
+  filter: grayscale(0%) brightness(0.85);
 }
 
 html[data-theme="light"] .product-highlight,
@@ -9426,7 +9424,9 @@ html[data-theme="dark"] #chatExpandBody .chat-item__body {
 }
 
 .chat-edit-plate {
-  display: grid;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 0%;
   gap: 12px;
   min-height: 0;
   padding: 14px;
@@ -9448,7 +9448,9 @@ html[data-theme="dark"] #chatExpandBody .chat-item__body {
 
 .chat-edit-textarea {
   width: 100%;
-  min-height: 320px;
+  flex: 1 1 0%;
+  height: 320px;
+  min-height: 80px;
   resize: vertical;
   padding: 16px;
   border: 1px solid var(--border);
@@ -9885,12 +9887,15 @@ html[data-theme="dark"] .unit-section__note {
 }
 
 #chatUpdateComposer .composer-time-card__actions {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px;
 }
 
 #chatUpdateComposer .composer-time-card__actions button {
+  flex: 1 1 calc(50% - 8px);
+  min-width: 48px;
   min-height: 42px;
   border-radius: 12px;
   font-weight: 900;
@@ -10565,6 +10570,47 @@ textarea:hover,
   margin-right: auto;
 }
 
+/* Adding backdrop for fullscreen composer */
+#chatUpdateComposer.chat-update-composer--fullscreen:not([hidden])::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(8px);
+  z-index: -1;
+  pointer-events: all;
+}
+#chatUpdateComposer.chat-update-composer--fullscreen:not([hidden]) {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 95vw;
+  height: 90vh;
+  z-index: 99999;
+  padding: 0;
+  max-width: 1200px;
+  margin: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+#chatUpdateComposer.chat-update-composer--fullscreen .composer-wizard-body {
+  flex-grow: 1;
+  overflow-y: auto;
+}
+@media (max-width: 768px) {
+  #chatUpdateComposer.chat-update-composer--fullscreen:not([hidden]) {
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    transform: none;
+    border-radius: 0;
+    border: none;
+  }
+}
+
 #chatUpdateComposer .composer-step-tabs {
   scrollbar-width: none;
   overflow-x: auto;
@@ -10850,7 +10896,7 @@ html[data-theme="dark"] .account-dialog__card {
 .chronos-preview img {
   width: 100%;
   height: 100%;
-  object-fit: contain !important;
+  object-fit: fill !important;
   object-position: center center !important;
 }
 
@@ -11054,7 +11100,6 @@ html[data-theme="light"] .chat-compose__footer .btn-small--accent {
   }
 
   #chatUpdateComposer .composer-time-card__actions {
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
     gap: 4px;
   }
 
@@ -12585,7 +12630,7 @@ html[data-theme="light"] .mission-card {
   }
 
   .chronos-preview img {
-    object-fit: contain;
+    object-fit: fill;
     transform: scale(1);
   }
 }
@@ -12773,6 +12818,27 @@ body, .composer-wizard-body, .chat-shell { font-size: calc(1rem * var(--master-f
   .composer-time-card-row { gap: 6px; }
   .composer-basic-grid { gap: 8px; }
 }
+/* Compact Mode */
+body.compact-mode {
+  --master-font-scale: 0.88;
+}
+body.compact-mode .app-shell { padding: 8px; }
+body.compact-mode .main-content { padding: 10px; gap: 10px; }
+body.compact-mode .module { padding: 10px; border-radius: 12px; }
+body.compact-mode .subj-card { padding: 8px; gap: 6px; border-radius: 10px; }
+body.compact-mode .chat-card { padding: 8px 10px; }
+body.compact-mode .btn, body.compact-mode .btn-small { padding-top: 4px; padding-bottom: 4px; font-size: 0.8rem; }
+body.compact-mode h1 { font-size: 1.3rem; margin-bottom: 4px; }
+body.compact-mode h2 { font-size: 1.15rem; margin-bottom: 4px; }
+body.compact-mode h3 { font-size: 1rem; }
+body.compact-mode .scaffold-grid { gap: 8px; }
+body.compact-mode .chapter-bar-wrap { margin-bottom: 4px; }
+body.compact-mode .chat-compose { padding: 6px 10px; }
+body.compact-mode .top-nav { padding: 4px 12px; min-height: 48px; }
+body.compact-mode .chat-list { padding: 8px; gap: 8px; }
+body.compact-mode .chat-message { padding: 8px; }
+body.compact-mode .quick-action-rail { padding: 6px 0; gap: 12px; }
+
     </style>
   </head>
   <body class="login-locked">
@@ -12965,6 +13031,7 @@ const defaultUserSettings = {
     gaugeInnerGradEnd: "#6366f1",
     showProjectBanner: true,
     showScaffoldStrands: false,
+    composerFullscreen: false,
   },
   autoBackupEnabled: true,
   backupTiming: "daily",
@@ -13029,6 +13096,11 @@ const applyUserThemeSettings = () => {
     "data-scaffold-strands",
     scaffoldState.userSettings?.uiConfigs?.showScaffoldStrands === true ? "on" : "off"
   );
+  if (scaffoldState.userSettings?.uiConfigs?.compactMode) {
+    document.body.classList.add("compact-mode");
+  } else {
+    document.body.classList.remove("compact-mode");
+  }
 
   const modern = document.getElementById("dashboardModern");
   const card = document.getElementById("dashboardCard");
@@ -15585,6 +15657,12 @@ function renderComposerWizard() {
   const wizardNode = document.getElementById("chatUpdateComposer");
   if (!wizardNode) return;
   
+  if (scaffoldState.userSettings.uiConfigs?.composerFullscreen) {
+    wizardNode.classList.add("chat-update-composer--fullscreen");
+  } else {
+    wizardNode.classList.remove("chat-update-composer--fullscreen");
+  }
+  
   // Auto-save draft on any render (state update)
   saveComposerDraft();
   
@@ -15670,7 +15748,10 @@ function renderComposerWizard() {
       <div class="composer-wizard-title">
 <h3>${icon("sparkles", "Smart Update Composer")} Smart Update Composer</h3>
       </div>
-      <div class="composer-step-indicator">Step ${progress.displayStep}/${progress.totalSteps}</div>
+      <div style="display:flex; gap:8px; align-items:center;">
+        <div class="composer-step-indicator">Step ${progress.displayStep}/${progress.totalSteps}</div>
+        ${scaffoldState.userSettings.uiConfigs?.composerFullscreen ? `<button class="btn-small btn-small--icon" data-action="close-composer" type="button" aria-label="Close" style="border:none;background:rgba(255,255,255,0.06);box-shadow:none;">${icon("x", "Close")}</button>` : ""}
+      </div>
     </div>
     ${renderComposerStepTabs()}
     <div class="composer-wizard-body">
@@ -17364,7 +17445,7 @@ const renderChartUnit = (state) =>
         <div class="chronos-scroll" id="chronosScroll">
           <div class="chronos-canvas-wrap" id="chronosCanvasWrap">
             <div class="chronos-preview" id="chronosPreview" data-action="chronos-show-live" role="button" tabindex="0" aria-label="Show Chronos graph">
-              <img src="Assets/Images/Demo Graph.png" alt="" style="width: 100%; height: 100%; object-fit: contain;">
+              <img src="Assets/Images/Demo Graph.png" alt="" style="width: 100%; height: 100%; object-fit: fill;">
               <div class="chronos-preview__veil"><span>${icon("mouse-pointer-click", "Click")} Click Show</span></div>
             </div>
             <canvas id="chronosChart"></canvas>
@@ -17530,6 +17611,8 @@ const renderSettingsPanelBody = (state) => {
                   { value: "full", label: "Full Page" },
                 ], userSettings.uiConfigs.auroraMode), "Animated colour mesh gradient")}
                 ${row("Project Banner", checkbox("tgl_project_banner", userSettings.uiConfigs.showProjectBanner !== false), "Top project banner")}
+                ${row("Compact Mode", checkbox("tgl_compact_mode", userSettings.uiConfigs.compactMode), "Reduces padding and sizes to fit more content")}
+                ${row("Fullscreen Composer", checkbox("tgl_composer_fs", userSettings.uiConfigs.composerFullscreen), "Show composer as full screen overlay")}
                 ${row("Show ETA Badge", checkbox("etaSettingToggle", userSettings.uiConfigs.etaOn))}
                 ${row("Font Scale", `<input type="range" id="fontScaleRange" min="80" max="120" step="5" value="${userSettings.fontScale || 100}" oninput="document.getElementById('fontScaleVal').textContent=this.value+'%';document.documentElement.style.setProperty('--master-font-scale', this.value/100)"><span id="fontScaleVal" style="margin-left: 8px; font-size: 0.8rem; min-width: 3ch; display: inline-block;">${userSettings.fontScale || 100}%</span>`, "Adjust overall text size")}
               `)}
@@ -22975,14 +23058,16 @@ document.addEventListener("change", (e) => {
     updateBackupSettings({ autoBackupNotif: !!target.checked });
     return;
   }
-  if (target.id === "tgl_project_banner" || target.id === "tgl_orbs" || target.id === "tgl_vibes" || target.id === "tgl_aurora_mode" || target.id === "etaSettingToggle") {
+  if (target.id === "tgl_project_banner" || target.id === "tgl_orbs" || target.id === "tgl_vibes" || target.id === "tgl_aurora_mode" || target.id === "etaSettingToggle" || target.id === "tgl_composer_fs" || target.id === "tgl_compact_mode") {
     scaffoldState.userSettings.uiConfigs = {
       ...(scaffoldState.userSettings.uiConfigs || {}),
       showProjectBanner: document.getElementById("tgl_project_banner")?.checked !== false,
       showOrbs: document.getElementById("tgl_orbs")?.checked || false,
       showVibes: document.getElementById("tgl_vibes")?.checked || false,
       auroraMode: document.getElementById("tgl_aurora_mode")?.value || "off",
-      etaOn: document.getElementById("etaSettingToggle")?.checked || false
+      etaOn: document.getElementById("etaSettingToggle")?.checked || false,
+      composerFullscreen: document.getElementById("tgl_composer_fs")?.checked || false,
+      compactMode: document.getElementById("tgl_compact_mode")?.checked || false
     };
     saveUserSettings();
     mountApp();
