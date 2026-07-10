@@ -17514,13 +17514,13 @@ const renderChartUnit = (state) =>
   });
 
 // ── features/settings/settings.view.js ───────────────────────────────────────
-const colorInput = (id, value, disabled = true) =>
+const colorInput = (id, value, disabled = false) =>
   `<input class="color-picker" id="${escapeHtml(id)}" type="color" value="${escapeHtml(value)}" ${disabled ? "disabled" : ""} />`;
 
-const checkbox = (id, checked = false, disabled = true) =>
+const checkbox = (id, checked = false, disabled = false) =>
   `<input class="settings-check" id="${escapeHtml(id)}" type="checkbox" ${checked ? "checked" : ""} ${disabled ? "disabled" : ""} />`;
 
-const selectInput = (id, options, selected, disabled = true) => `
+const selectInput = (id, options, selected, disabled = false) => `
   <select class="settings-input" id="${escapeHtml(id)}" ${disabled ? "disabled" : ""}>
     ${options.map((option) =>
       `<option value="${escapeHtml(option.value)}" ${option.value === selected ? "selected" : ""}>${escapeHtml(option.label)}</option>`
