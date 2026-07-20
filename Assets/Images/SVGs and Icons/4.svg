@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024" role="img" aria-label="TONU STUDY progress ring logo">
-  
-      <g transform="translate(512 410) rotate(-44)" fill="none" stroke-linecap="round">
-        <circle r="154" stroke="#E8DDF0" stroke-width="34"/>
-        <circle r="154" stroke="#70427E" stroke-width="34" stroke-dasharray="720 248"/>
-        <circle cx="0" cy="-154" r="17" fill="#A87DB5" stroke="none"/>
-      </g>
-      <path d="m448 410 44 44 94-108" fill="none" stroke="#70427E" stroke-width="27" stroke-linecap="round" stroke-linejoin="round"/>
-      <text x="512" y="686" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="88" font-weight="800" letter-spacing="7" fill="#43264C">TONU</text>
-      <text x="512" y="758" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="32" font-weight="750" letter-spacing="19" fill="#8E629A">STUDY</text>
-    
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024" role="img" aria-label="Tonu Study progress check mark">
+  <circle cx="512" cy="410" r="154" fill="#FFFFFF"/>
+  <g transform="translate(512 410) rotate(-44)" fill="none" stroke-linecap="round">
+    <circle r="154" stroke="#E8DDF0" stroke-width="34"/>
+    <circle r="154" stroke="#70427E" stroke-width="34" stroke-dasharray="720 248"/>
+    <circle cx="0" cy="-154" r="17" fill="#A87DB5" stroke="none"/>
+  </g>
+  <path d="m448 410 44 44 94-108" fill="none" stroke="#70427E" stroke-width="27" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
