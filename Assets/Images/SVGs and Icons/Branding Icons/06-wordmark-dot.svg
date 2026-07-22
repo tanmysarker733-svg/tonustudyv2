@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024" role="img" aria-label="TONU STUDY typography progress logo">
+  
+      <circle cx="771" cy="344" r="30" fill="#5B8CFF"/>
+      <text x="512" y="515" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="142" font-weight="800" letter-spacing="-4" fill="#111827">TONU</text>
+      <text x="512" y="640" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="69" font-weight="650" letter-spacing="31" fill="#58708E">STUDY</text>
+      <path d="M287 699h450" stroke="#D8E3F7" stroke-width="16" stroke-linecap="round"/>
+      <path d="M287 699h314" stroke="#5B8CFF" stroke-width="16" stroke-linecap="round"/>
+    
+</svg>
