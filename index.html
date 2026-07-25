@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>HSC Study OS</title>
   <meta name="description" content="Non-functional modular scaffold for the HSC Study OS remake." />
-  <link rel="icon" type="image/svg+xml" href="Assets/Images/SVGs%20and%20Icons/4.svg" />
+  <link rel="icon" type="image/svg+xml" href="Assets/SVGs%20and%20Icons/Webapp%20icons/4-clean.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -303,6 +303,7 @@
       width: min(300px, 100%);
       margin: 0 0 22px;
       color: #f8fafc;
+      font-family: Georgia, "Times New Roman", serif;
       font-size: clamp(1.7rem, 3vw, 2rem);
       line-height: 1;
       letter-spacing: 0;
@@ -772,6 +773,11 @@
       color: rgba(226, 232, 240, 0.62);
       font-size: 0.86rem;
       text-align: center;
+    }
+
+    #loginToggleRow {
+      color: #e1e8ef;
+      font-family: Georgia, "Times New Roman", serif;
     }
 
     .login-register strong {
@@ -4409,6 +4415,18 @@
       gap: 8px;
     }
 
+    .chat-settings-panel__field {
+      position: relative;
+      display: grid;
+      gap: 6px;
+    }
+
+    .chat-settings-panel__field-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-sub);
+    }
+
     .chat-settings-panel__note {
       grid-column: 1 / -1;
       padding: 12px 14px;
@@ -4434,19 +4452,168 @@
     }
 
     .chat-settings-panel select,
+    .chat-settings-dialog select,
+    .chat-settings-panel__field select,
     .chat-compose select {
       min-height: 44px;
-      padding: 0 24px 0 12px;
+      padding: 0 42px 0 14px;
       appearance: none;
       -webkit-appearance: none;
       cursor: pointer;
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2394a3b8' stroke-width='3'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19.5 8.25l-7.5 7.5-7.5-7.5'/%3E%3C/svg%3E");
       background-repeat: no-repeat;
-      background-position: right 12px center;
+      background-position: right 14px center;
       background-size: 12px;
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.04),
+        0 10px 22px rgba(2, 8, 23, 0.16);
+    }
+
+    .chat-settings-panel select[data-customized="true"],
+    .chat-settings-dialog select[data-customized="true"],
+    .chat-settings-panel__field select[data-customized="true"] {
+      display: none !important;
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      margin: -1px;
+      padding: 0;
+      opacity: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .chat-select-ui {
+      position: relative;
+      z-index: 5;
+    }
+
+    .chat-select-ui__trigger {
+      width: 100%;
+      min-height: 42px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 0 12px 0 14px;
+      border: 1.5px solid rgba(125, 211, 252, 0.32);
+      border-radius: 11px;
+      background:
+        linear-gradient(180deg, rgba(37, 99, 235, 0.12), rgba(15, 23, 42, 0.18)),
+        rgba(20, 33, 55, 0.94);
+      color: #e7f1ff;
+      font: inherit;
+      font-weight: 650;
+      text-align: left;
+      cursor: pointer;
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.08),
+        0 12px 22px rgba(2, 8, 23, 0.16);
+      transition: transform 0.16s ease, border-color 0.16s ease, background 0.16s ease, box-shadow 0.16s ease;
+    }
+
+    .chat-select-ui__trigger:hover,
+    .chat-select-ui.is-open .chat-select-ui__trigger {
+      border-color: rgba(56, 189, 248, 0.72);
+      background:
+        linear-gradient(180deg, rgba(14, 165, 233, 0.22), rgba(30, 41, 59, 0.26)),
+        rgba(21, 35, 60, 0.98);
+      box-shadow:
+        0 0 0 3px rgba(14, 165, 233, 0.16),
+        0 14px 28px rgba(2, 8, 23, 0.2);
+    }
+
+    .chat-select-ui__trigger:active {
+      transform: translateY(1px) scale(0.99);
+    }
+
+    .chat-select-ui__chevron {
+      width: 26px;
+      height: 26px;
+      flex: 0 0 auto;
+      border-radius: 8px;
+      display: inline-grid;
+      place-items: center;
+      color: #7dd3fc;
+      background: rgba(14, 165, 233, 0.12);
+      border: 1px solid rgba(125, 211, 252, 0.18);
+      transition: transform 0.16s ease;
+    }
+
+    .chat-select-ui.is-open .chat-select-ui__chevron {
+      transform: rotate(180deg);
+    }
+
+    .chat-select-ui__menu {
+      position: absolute;
+      inset-inline: 0;
+      top: calc(100% + 6px);
+      display: none;
+      padding: 6px;
+      border-radius: 12px;
+      border: 1px solid rgba(125, 211, 252, 0.24);
+      background: rgba(12, 23, 40, 0.98);
+      box-shadow:
+        0 20px 42px rgba(2, 8, 23, 0.42),
+        inset 0 1px 0 rgba(255, 255, 255, 0.06);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      max-height: 220px;
+      overflow-y: auto;
+    }
+
+    .chat-select-ui.is-open .chat-select-ui__menu {
+      display: grid;
+      gap: 4px;
+    }
+
+    .chat-select-ui__option {
+      min-height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      width: 100%;
+      padding: 0 10px;
+      border: 1px solid transparent;
+      border-radius: 9px;
+      background: transparent;
+      color: #dbeafe;
+      font: inherit;
+      font-weight: 600;
+      text-align: left;
+      cursor: pointer;
+      transition: background 0.14s ease, border-color 0.14s ease, color 0.14s ease;
+    }
+
+    .chat-select-ui__option:hover,
+    .chat-select-ui__option.is-active {
+      background: rgba(14, 165, 233, 0.16);
+      border-color: rgba(56, 189, 248, 0.28);
+      color: #f8fbff;
+    }
+
+    .chat-select-ui__option.is-active::after {
+      content: "";
+      width: 8px;
+      height: 8px;
+      flex: 0 0 auto;
+      border-radius: 999px;
+      background: #38bdf8;
+      box-shadow: 0 0 14px rgba(56, 189, 248, 0.65);
+    }
+
+    .chat-settings-panel select option,
+    .chat-settings-dialog select option,
+    .chat-settings-panel__field select option,
+    .chat-compose select option {
+      background: #15223a;
+      color: #e5eefc;
     }
 
     .chat-settings-panel select:hover,
+    .chat-settings-dialog select:hover,
+    .chat-settings-panel__field select:hover,
     .chat-compose select:hover,
     .chat-compose textarea:hover {
       background-color: rgba(20, 28, 48, 0.85);
@@ -5810,22 +5977,78 @@
 
     .backup-banner {
       position: fixed;
-      right: 18px;
-      bottom: 18px;
+      left: 50%;
+      right: auto;
+      bottom: calc(86px + env(safe-area-inset-bottom, 0px));
       z-index: 1100;
-      max-width: min(360px, calc(100vw - 32px));
-      padding: 14px 16px;
-      border: 1px solid rgba(56, 189, 248, 0.28);
-      border-radius: 18px;
-      background: rgba(15, 23, 42, 0.94);
+      width: max-content;
+      max-width: min(420px, calc(100vw - 32px));
+      padding: 11px 16px 11px 14px;
+      border: 1px solid rgba(125, 211, 252, 0.42);
+      border-radius: 14px;
+      background: linear-gradient(135deg, rgba(24, 53, 88, 0.98), rgba(15, 31, 55, 0.96));
       color: #e2e8f0;
-      box-shadow: 0 22px 58px rgba(2, 6, 23, 0.32);
+      box-shadow: 0 14px 34px rgba(2, 6, 23, 0.34), 0 0 0 3px rgba(56, 189, 248, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      transform: translate(-50%, 0);
+      backdrop-filter: blur(16px) saturate(1.15);
+      -webkit-backdrop-filter: blur(16px) saturate(1.15);
+    }
+
+    .backup-banner:not([hidden]) {
+      animation: backupBannerIn 0.24s cubic-bezier(.2, .8, .2, 1) both;
+    }
+
+    @keyframes backupBannerIn {
+      from { opacity: 0; transform: translate(-50%, 12px) scale(0.96); }
+      to { opacity: 1; transform: translate(-50%, 0) scale(1); }
     }
 
     .backup-banner strong {
-      display: block;
+      display: flex;
+      align-items: center;
+      gap: 7px;
       margin-bottom: 4px;
       color: #f8fafc;
+    }
+
+    .backup-banner strong::before {
+      content: "✦";
+      display: inline-grid;
+      place-items: center;
+      width: 20px;
+      height: 20px;
+      flex: 0 0 auto;
+      border-radius: 7px;
+      color: #082f49;
+      background: #7dd3fc;
+      font-size: 12px;
+      box-shadow: 0 0 14px rgba(125, 211, 252, 0.35);
+    }
+
+    .backup-banner span {
+      display: block;
+      padding-left: 27px;
+      line-height: 1.35;
+    }
+
+    @media (max-width: 560px) {
+      .backup-banner {
+        left: 12px;
+        right: 12px;
+        bottom: calc(78px + env(safe-area-inset-bottom, 0px));
+        width: auto;
+        max-width: none;
+        transform: none;
+      }
+
+      .backup-banner:not([hidden]) {
+        animation-name: backupBannerInMobile;
+      }
+    }
+
+    @keyframes backupBannerInMobile {
+      from { opacity: 0; transform: translateY(12px) scale(0.97); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
     }
 
     @keyframes accountDialogIn {
@@ -6442,7 +6665,7 @@
       .dash-stats-col {
         padding: 16px;
       }
-      
+
       .analytics-panel {
         padding: 0;
       }
@@ -9823,6 +10046,9 @@
       border-color: rgba(148, 163, 184, 0.24);
       background-color: rgba(255, 255, 255, 0.92);
       color: #0f172a;
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.92),
+        0 10px 22px rgba(148, 163, 184, 0.12);
     }
 
     html[data-theme="light"] .chat-settings-panel select:hover,
@@ -9837,6 +10063,64 @@
       border-color: rgba(148, 163, 184, 0.22);
       background: rgba(248, 250, 252, 0.82);
       color: #64748b;
+    }
+
+    html[data-theme="light"] .chat-settings-panel select option,
+    html[data-theme="light"] .chat-compose select option {
+      background: #ffffff;
+      color: #0f172a;
+    }
+
+    html[data-theme="light"] .chat-select-ui__trigger {
+      border-color: rgba(37, 99, 235, 0.22);
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(241, 245, 249, 0.9)),
+        #ffffff;
+      color: #10213f;
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.95),
+        0 10px 22px rgba(148, 163, 184, 0.14);
+    }
+
+    html[data-theme="light"] .chat-select-ui__trigger:hover,
+    html[data-theme="light"] .chat-select-ui.is-open .chat-select-ui__trigger {
+      border-color: rgba(37, 99, 235, 0.5);
+      background:
+        linear-gradient(180deg, rgba(239, 246, 255, 0.98), rgba(219, 234, 254, 0.74)),
+        #ffffff;
+      box-shadow:
+        0 0 0 3px rgba(37, 99, 235, 0.12),
+        0 14px 28px rgba(148, 163, 184, 0.18);
+    }
+
+    html[data-theme="light"] .chat-select-ui__chevron {
+      color: #2563eb;
+      background: rgba(37, 99, 235, 0.08);
+      border-color: rgba(37, 99, 235, 0.14);
+    }
+
+    html[data-theme="light"] .chat-select-ui__menu {
+      border-color: rgba(37, 99, 235, 0.18);
+      background: rgba(255, 255, 255, 0.98);
+      box-shadow:
+        0 18px 36px rgba(15, 23, 42, 0.14),
+        inset 0 1px 0 rgba(255, 255, 255, 0.95);
+    }
+
+    html[data-theme="light"] .chat-select-ui__option {
+      color: #10213f;
+    }
+
+    html[data-theme="light"] .chat-select-ui__option:hover,
+    html[data-theme="light"] .chat-select-ui__option.is-active {
+      background: rgba(37, 99, 235, 0.09);
+      border-color: rgba(37, 99, 235, 0.16);
+      color: #0f172a;
+    }
+
+    html[data-theme="light"] .chat-select-ui__option.is-active::after {
+      background: #2563eb;
+      box-shadow: 0 0 14px rgba(37, 99, 235, 0.45);
     }
 
     html[data-theme="light"] .chat-update-composer {
@@ -14605,7 +14889,7 @@
       border-radius: 0 !important;
       color: inherit !important;
     }
-    
+
     #settingsDialog .settings-tabs {
       display: flex !important;
       gap: 6px !important;
@@ -14616,7 +14900,7 @@
       margin-bottom: 16px !important;
       overflow: hidden !important;
     }
-    
+
     html[data-theme="light"] #settingsDialog .settings-tabs {
       background: rgba(0, 0, 0, 0.05) !important;
     }
@@ -14636,12 +14920,12 @@
       font-weight: 700 !important;
       transition: all 0.2s ease !important;
     }
-    
+
     #settingsDialog .settings-tab:hover {
       background: rgba(255, 255, 255, 0.06) !important;
       color: var(--text-main) !important;
     }
-    
+
     html[data-theme="light"] #settingsDialog .settings-tab:hover {
       background: rgba(0, 0, 0, 0.04) !important;
       color: var(--text-main) !important;
@@ -14652,7 +14936,7 @@
       color: var(--text-main) !important;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
     }
-    
+
     html[data-theme="light"] #settingsDialog .settings-tab--active {
       background: #ffffff !important;
       box-shadow: 0 4px 12px rgba(37, 99, 235, 0.08) !important;
@@ -21067,12 +21351,18 @@
       #settingsDialog .settings-tabs {
         display: grid !important;
         grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+        gap: 5px !important;
+        padding: 6px 6px 8px !important;
+        overflow: visible !important;
+        align-items: stretch !important;
       }
 
       #settingsDialog .settings-tab {
-        min-height: 36px !important;
-        padding: 6px 3px !important;
-        font-size: .7rem !important;
+        min-height: 40px !important;
+        padding: 8px 4px !important;
+        font-size: .72rem !important;
+        line-height: 1.05 !important;
+        overflow: visible !important;
       }
 
       .developer-footer-preview {
@@ -21164,6 +21454,754 @@
         transition: none !important;
       }
     }
+    /* v322: chooser layout and theme-state repair. */
+    #chatUpdateComposer .composer-subject-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    #chatUpdateComposer .composer-subject-grid .composer-subject-card {
+      min-width: 0;
+      min-height: 96px;
+      display: grid;
+      grid-template-columns: 1fr;
+      justify-items: center;
+      align-content: center;
+      gap: 7px;
+      padding: 9px 6px;
+      text-align: center;
+    }
+
+    #chatUpdateComposer .composer-subject-grid .composer-subject-card__media {
+      width: 40px;
+      height: 40px;
+      border-radius: 9px;
+    }
+
+    #chatUpdateComposer .composer-subject-grid .composer-subject-card__text {
+      max-width: 100%;
+      text-align: center;
+      font-size: .72rem;
+      line-height: 1.17;
+    }
+
+    @media (max-width: 860px) {
+      #chatUpdateComposer .composer-subject-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 8px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      #chatUpdateComposer .composer-subject-grid .composer-subject-card {
+        min-height: 82px;
+        gap: 5px;
+        padding: 7px 4px !important;
+      }
+
+      #chatUpdateComposer .composer-subject-grid .composer-subject-card:last-child:nth-child(4n + 1) {
+        grid-column: auto;
+        min-height: 82px;
+        grid-template-columns: 1fr;
+        justify-items: center;
+        padding-inline: 4px !important;
+      }
+    }
+
+    /* Light mode uses quiet positive/negative controls rather than the
+       accidental dark-mode inversion that hid +/- values. */
+    html[data-theme="light"] #chatUpdateComposer .composer-time-card__actions button {
+      background: #f6f8fb !important;
+      border-color: #c4d1df !important;
+      box-shadow: inset 0 1px 0 #fff, 0 2px 5px rgba(36, 56, 77, .06) !important;
+      font-weight: 850;
+    }
+
+    html[data-theme="light"] #chatUpdateComposer .composer-time-card__actions button[data-delta^="-"] {
+      color: #b4233c !important;
+    }
+
+    html[data-theme="light"] #chatUpdateComposer .composer-time-card__actions button[data-delta="60"],
+    html[data-theme="light"] #chatUpdateComposer .composer-time-card__actions button[data-delta="15"] {
+      color: #087443 !important;
+    }
+
+    html[data-theme="light"] #chatUpdateComposer .composer-time-card__actions button:hover {
+      background: #fff !important;
+      border-color: #94a9bd !important;
+    }
+
+    /* Step state stays legible in both themes; orange is reserved for the
+       active selection and no stale dark circles remain in light mode. */
+    html[data-theme="light"] #chatUpdateComposer .composer-step-tab:not(.is-active) {
+      background: #f8fafc;
+      border-color: #cbd5e1;
+      color: #334155;
+      box-shadow: 0 3px 8px rgba(15, 23, 42, .07);
+    }
+
+    html[data-theme="light"] #chatUpdateComposer .composer-step-tab.is-disabled {
+      background: #e8edf3;
+      border-color: #d3dce6;
+      color: #64748b;
+      opacity: .78;
+    }
+
+    html[data-theme="dark"] #chatUpdateComposer .composer-step-tab:not(.is-active) {
+      background: #1c2c42;
+      border-color: #405671;
+      color: #d9e5f2;
+    }
+
+    html[data-theme="dark"] #chatUpdateComposer .composer-step-tab.is-disabled {
+      background: #162337;
+      border-color: #2b3c54;
+      color: #8496aa;
+      opacity: .74;
+    }
+    /* v323: remove the remaining dark-surface imports from the light composer. */
+    html[data-theme="light"] #chatUpdateComposer .composer-date-display,
+    html[data-theme="light"] #chatUpdateComposer .composer-date-display:hover,
+    html[data-theme="light"] #chatUpdateComposer .composer-date-display.is-open {
+      background: #f9fbfd !important;
+      border-color: #c5d2df !important;
+      color: #223247 !important;
+      box-shadow: inset 0 1px 0 #fff, 0 2px 6px rgba(35, 52, 72, .05) !important;
+    }
+
+    html[data-theme="light"] #chatUpdateComposer .composer-date-display svg {
+      color: #2563eb !important;
+    }
+
+    html[data-theme="light"] #chatUpdateComposer .composer-range-labels span {
+      background: #eef3f8 !important;
+      border: 1px solid #d1dbe6;
+      color: #40536a !important;
+      box-shadow: none !important;
+    }
+
+    /* v324: desktop-density pass for the subject chooser.
+       The mobile 3-column reading order remains unchanged. */
+    @media (min-width: 861px) {
+      #chatUpdateComposer {
+        width: min(1080px, 100%) !important;
+        max-width: 1080px;
+        justify-self: center;
+      }
+
+      #chatUpdateComposer .composer-wizard-body {
+        padding: 16px 18px;
+      }
+
+      #chatUpdateComposer .accordion-content {
+        padding: 15px 16px 16px;
+      }
+
+      #chatUpdateComposer .composer-auto-continue-row {
+        margin-bottom: 9px;
+        padding: 9px 11px;
+      }
+
+      #chatUpdateComposer .composer-subject-grid {
+        grid-template-columns: repeat(20, minmax(0, 1fr));
+        gap: 8px;
+      }
+
+      #chatUpdateComposer .composer-subject-grid .composer-subject-card {
+        grid-column: span 5;
+        min-height: 82px;
+        order: 20;
+        gap: 5px;
+        padding: 7px 5px;
+      }
+
+      /* First row: En1, En2, Bn1, Bn2, ICT. */
+      #chatUpdateComposer .composer-subject-grid .composer-subject-card:nth-child(3) { order: 1; }
+      #chatUpdateComposer .composer-subject-grid .composer-subject-card:nth-child(4) { order: 2; }
+      #chatUpdateComposer .composer-subject-grid .composer-subject-card:nth-child(1) { order: 3; }
+      #chatUpdateComposer .composer-subject-grid .composer-subject-card:nth-child(2) { order: 4; }
+      #chatUpdateComposer .composer-subject-grid .composer-subject-card:nth-child(13) { order: 5; }
+
+      #chatUpdateComposer .composer-subject-grid .composer-subject-card:nth-child(5) { order: 6; }
+      #chatUpdateComposer .composer-subject-grid .composer-subject-card:nth-child(6) { order: 7; }
+      #chatUpdateComposer .composer-subject-grid .composer-subject-card:nth-child(7) { order: 8; }
+      #chatUpdateComposer .composer-subject-grid .composer-subject-card:nth-child(8) { order: 9; }
+      #chatUpdateComposer .composer-subject-grid .composer-subject-card:nth-child(9) { order: 10; }
+      #chatUpdateComposer .composer-subject-grid .composer-subject-card:nth-child(10) { order: 11; }
+      #chatUpdateComposer .composer-subject-grid .composer-subject-card:nth-child(11) { order: 12; }
+      #chatUpdateComposer .composer-subject-grid .composer-subject-card:nth-child(12) { order: 13; }
+
+      #chatUpdateComposer .composer-subject-grid .composer-subject-card:nth-child(1),
+      #chatUpdateComposer .composer-subject-grid .composer-subject-card:nth-child(2),
+      #chatUpdateComposer .composer-subject-grid .composer-subject-card:nth-child(3),
+      #chatUpdateComposer .composer-subject-grid .composer-subject-card:nth-child(4),
+      #chatUpdateComposer .composer-subject-grid .composer-subject-card:nth-child(13) {
+        grid-column: span 4;
+        min-height: 72px;
+        padding: 6px 3px;
+      }
+
+      #chatUpdateComposer .composer-subject-grid .composer-subject-card:nth-child(1) .composer-subject-card__media,
+      #chatUpdateComposer .composer-subject-grid .composer-subject-card:nth-child(2) .composer-subject-card__media,
+      #chatUpdateComposer .composer-subject-grid .composer-subject-card:nth-child(3) .composer-subject-card__media,
+      #chatUpdateComposer .composer-subject-grid .composer-subject-card:nth-child(4) .composer-subject-card__media,
+      #chatUpdateComposer .composer-subject-grid .composer-subject-card:nth-child(13) .composer-subject-card__media {
+        width: 34px;
+        height: 34px;
+        border-radius: 8px;
+      }
+
+      #chatUpdateComposer .composer-subject-grid .composer-subject-card:nth-child(1) .composer-subject-card__text,
+      #chatUpdateComposer .composer-subject-grid .composer-subject-card:nth-child(2) .composer-subject-card__text,
+      #chatUpdateComposer .composer-subject-grid .composer-subject-card:nth-child(3) .composer-subject-card__text,
+      #chatUpdateComposer .composer-subject-grid .composer-subject-card:nth-child(4) .composer-subject-card__text,
+      #chatUpdateComposer .composer-subject-grid .composer-subject-card:nth-child(13) .composer-subject-card__text {
+        font-size: .67rem;
+        line-height: 1.12;
+      }
+    }
+
+    /* v324 follow-up: every modal gets one predictable scroll region.
+       This prevents nested card/body scrollbars on compact displays. */
+    .settings-dialog__card {
+      display: flex !important;
+      flex-direction: column;
+      overflow: hidden !important;
+      min-height: 0;
+    }
+
+    .settings-dialog__card .settings-modal-shell,
+    .settings-dialog__card .settings-modal-card {
+      min-height: 0;
+      min-width: 0;
+    }
+
+    .settings-dialog__card .settings-modal-shell {
+      display: flex;
+      flex: 1 1 auto;
+      overflow: hidden;
+    }
+
+    .settings-dialog__card .settings-modal-card {
+      display: flex;
+      flex: 1 1 auto;
+      flex-direction: column;
+      overflow: hidden !important;
+    }
+
+    .settings-dialog__card .settings-body {
+      flex: 1 1 auto;
+      min-height: 0;
+      max-height: none;
+      overflow-y: auto !important;
+      overscroll-behavior: contain;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .drive-explorer-dialog__card {
+      overflow: hidden !important;
+    }
+
+    .drive-explorer__surface {
+      overscroll-behavior: contain;
+      scrollbar-gutter: stable;
+    }
+
+    .chapter-quick-dialog__card,
+    .chapter-quick-dialog__body,
+    .chapter-quick-dialog__nav-track {
+      overscroll-behavior: contain;
+    }
+
+    @media (max-width: 640px) {
+      .settings-dialog {
+        padding: 8px !important;
+        overflow: hidden !important;
+      }
+
+      .settings-dialog__card {
+        width: calc(100vw - 16px) !important;
+        max-height: calc(100dvh - 16px) !important;
+      }
+    }
+
+    /* v325: automatic low-power visual profile.
+       Interaction and state colors remain intact; only expensive decoration is reduced. */
+    html.performance-lite {
+      scroll-behavior: auto;
+    }
+
+    html.performance-lite *,
+    html.performance-lite *::before,
+    html.performance-lite *::after {
+      animation-duration: .01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: .01ms !important;
+      scroll-behavior: auto !important;
+    }
+
+    html.performance-lite .hero-strip::before,
+    html.performance-lite .hero-strip::after,
+    html.performance-lite .ambient-orb,
+    html.performance-lite .aurora-background,
+    html.performance-lite .scaffold-strands,
+    html.performance-lite .project-banner__glow,
+    html.performance-lite .subject-card::before,
+    html.performance-lite .subject-card::after {
+      animation: none !important;
+      filter: none !important;
+    }
+
+    html.performance-lite .study-shell *,
+    html.performance-lite .account-dialog__card,
+    html.performance-lite .settings-modal-card,
+    html.performance-lite .quick-action-track {
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+    }
+
+    html.performance-lite .unit-section {
+      content-visibility: auto;
+      contain-intrinsic-size: auto 640px;
+    }
+
+    html.performance-lite .interactive-card,
+    html.performance-lite .subject-card,
+    html.performance-lite .hero-strip__content,
+    html.performance-lite .reveal-ready {
+      transform: none !important;
+      box-shadow: none;
+    }
+
+    @media (max-width: 640px) {
+      html.performance-lite .unit-section {
+        contain-intrinsic-size: auto 520px;
+      }
+    }
+    /* v326: composer density, durable preferences, and decisive action states. */
+    #chatUpdateComposer .composer-tasks-review-toggle {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin: 16px 0 0;
+      padding: 10px 12px;
+      border: 1px solid var(--border, #36516f);
+      border-radius: 10px;
+      background: color-mix(in srgb, var(--surface-2, #17263b) 82%, transparent);
+      color: var(--text, #edf5ff);
+      cursor: pointer;
+      text-align: left;
+    }
+    #chatUpdateComposer .composer-tasks-review-toggle:hover { border-color: #38bdf8; }
+    #chatUpdateComposer .composer-tasks-review-toggle svg { width: 16px; height: 16px; flex: 0 0 auto; }
+    #chatUpdateComposer .composer-tasks-review-panel[hidden] { display: none !important; }
+    #chatUpdateComposer .composer-tasks-review-panel:not([hidden]) { padding-top: 8px; }
+
+    /* Primary actions remain visibly alive even before a hover state. */
+    #chatUpdateComposer :is(
+      [data-action="composer-step-next"],
+      [data-action="composer-add-custom-suffix"],
+      [data-action="composer-confirm-and-review"],
+      [data-action="composer-confirm-and-add-another"],
+      [data-action="composer-send-message"]
+    ):not(:disabled)::before {
+      animation: composer-spark-rise 1.8s ease-in-out infinite;
+    }
+    #chatUpdateComposer .composer-discard-close {
+      color: #fff !important;
+      border-color: #fb7185 !important;
+      background: linear-gradient(135deg, #b91c1c, #7f1d1d) !important;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.22), 0 7px 18px rgba(127,29,29,.28) !important;
+    }
+    #chatUpdateComposer .composer-discard-close:hover {
+      background: linear-gradient(135deg, #dc2626, #991b1b) !important;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.3), 0 10px 22px rgba(127,29,29,.4) !important;
+    }
+
+    /* Desktop chooser uses compact square study tiles and leaves the remaining rail calm. */
+    @media (min-width: 861px) {
+      #chatUpdateComposer .composer-subject-grid {
+        grid-template-columns: repeat(5, 128px) !important;
+        justify-content: start;
+        align-content: start;
+        gap: 10px;
+      }
+      #chatUpdateComposer .composer-subject-grid .composer-subject-card,
+      #chatUpdateComposer .composer-subject-grid .composer-subject-card:nth-child(n) {
+        grid-column: auto !important;
+        width: 128px;
+        min-height: 96px !important;
+        aspect-ratio: 1 / 1;
+        padding: 8px 6px;
+      }
+      #chatUpdateComposer .composer-subject-grid .composer-subject-card__media {
+        width: 42px !important;
+        height: 42px !important;
+      }
+      #chatUpdateComposer .composer-subject-grid .composer-subject-card__text {
+        font-size: .72rem !important;
+        line-height: 1.15;
+      }
+    }
+
+    /* A narrow phone cannot carry three independent adjustment panels without clipping. */
+    @media (max-width: 420px) {
+      #chatUpdateComposer .composer-time-card-row {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 8px !important;
+      }
+      #chatUpdateComposer .composer-time-card:last-child {
+        grid-column: 1 / -1;
+      }
+      #chatUpdateComposer .composer-time-card {
+        min-width: 0;
+        padding: 10px 8px !important;
+      }
+      #chatUpdateComposer .composer-time-card__head {
+        min-width: 0;
+        justify-content: center;
+      }
+      #chatUpdateComposer .composer-time-card .adjuster-label {
+        min-width: 0;
+        overflow-wrap: anywhere;
+        font-size: .72rem;
+        line-height: 1.12;
+      }
+      #chatUpdateComposer .composer-time-card__actions {
+        gap: 6px !important;
+      }
+      #chatUpdateComposer .composer-time-card__actions button {
+        min-width: 0 !important;
+        min-height: 34px !important;
+        padding: 0 6px !important;
+        font-size: .74rem !important;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      #chatUpdateComposer :is(
+        [data-action="composer-step-next"],
+        [data-action="composer-add-custom-suffix"],
+        [data-action="composer-confirm-and-review"],
+        [data-action="composer-confirm-and-add-another"],
+        [data-action="composer-send-message"]
+      )::before { animation: none !important; }
+    }
+
+    /* v327: deliberately light scroll motion. It never activates for the
+       low-power profile, reduced-motion preference, or a disabled setting. */
+    html.paradox-motion .paradox-ready {
+      opacity: .72;
+      transform: translateY(10px) scale(.992);
+      filter: saturate(.9);
+      transition: opacity .42s ease, transform .52s cubic-bezier(.2,.8,.2,1), filter .42s ease;
+      will-change: transform, opacity;
+    }
+    html.paradox-motion .paradox-ready.is-paradox-visible {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      filter: none;
+    }
+    html.paradox-motion .paradox-gauge {
+      transition: stroke-dashoffset .86s cubic-bezier(.16,1,.3,1), stroke .28s ease;
+    }
+    html.performance-lite .paradox-ready,
+    html:not(.paradox-motion) .paradox-ready {
+      opacity: 1;
+      transform: none;
+      filter: none;
+      transition: none;
+      will-change: auto;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html.paradox-motion .paradox-ready { opacity: 1; transform: none; filter: none; transition: none; }
+      html.paradox-motion .paradox-gauge { transition: none; }
+    }
+    /* v334: final chooser order and balanced card proportions. */
+    #chatUpdateComposer .composer-subject-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+      grid-auto-flow: row;
+      gap: 10px !important;
+      align-items: stretch;
+    }
+
+    #chatUpdateComposer .composer-subject-grid .composer-subject-card {
+      grid-column: auto !important;
+      grid-row: auto;
+      order: 20;
+      min-width: 0;
+      min-height: 92px;
+      display: grid;
+      grid-template-columns: 1fr;
+      justify-items: center;
+      align-content: center;
+      gap: 8px;
+      padding: 10px 8px !important;
+      text-align: center;
+    }
+
+    /* En1, En2, Bn1, Bn2 / Ph1, Ph2, Chem1, Chem2 /
+       Bio1, Bio2, Math1, Math2 / ICT. */
+    #chatUpdateComposer .composer-subject-grid .composer-subject-card:nth-child(3) { order: 1; }
+    #chatUpdateComposer .composer-subject-grid .composer-subject-card:nth-child(4) { order: 2; }
+    #chatUpdateComposer .composer-subject-grid .composer-subject-card:nth-child(1) { order: 3; }
+    #chatUpdateComposer .composer-subject-grid .composer-subject-card:nth-child(2) { order: 4; }
+    #chatUpdateComposer .composer-subject-grid .composer-subject-card:nth-child(5) { order: 5; }
+    #chatUpdateComposer .composer-subject-grid .composer-subject-card:nth-child(6) { order: 6; }
+    #chatUpdateComposer .composer-subject-grid .composer-subject-card:nth-child(7) { order: 7; }
+    #chatUpdateComposer .composer-subject-grid .composer-subject-card:nth-child(8) { order: 8; }
+    #chatUpdateComposer .composer-subject-grid .composer-subject-card:nth-child(9) { order: 9; }
+    #chatUpdateComposer .composer-subject-grid .composer-subject-card:nth-child(10) { order: 10; }
+    #chatUpdateComposer .composer-subject-grid .composer-subject-card:nth-child(11) { order: 11; }
+    #chatUpdateComposer .composer-subject-grid .composer-subject-card:nth-child(12) { order: 12; }
+    #chatUpdateComposer .composer-subject-grid .composer-subject-card:nth-child(13) {
+      order: 13;
+      grid-column: 1 / -1 !important;
+      min-height: 70px;
+      grid-template-columns: 46px minmax(0, 1fr) 46px;
+      justify-items: start;
+      text-align: left;
+      padding-inline: 18px !important;
+    }
+
+    #chatUpdateComposer .composer-subject-grid .composer-subject-card__media {
+      width: 46px !important;
+      height: 46px !important;
+      border-radius: 10px;
+    }
+
+    #chatUpdateComposer .composer-subject-grid .composer-subject-card__text {
+      max-width: 100%;
+      font-size: .76rem;
+      line-height: 1.18;
+      text-align: center;
+    }
+
+    #chatUpdateComposer .composer-subject-grid .composer-subject-card:nth-child(13) .composer-subject-card__text {
+      justify-self: center;
+      text-align: center;
+    }
+
+    @media (max-width: 640px) {
+      #chatUpdateComposer .composer-subject-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+        gap: 7px !important;
+      }
+
+      #chatUpdateComposer .composer-subject-grid .composer-subject-card {
+        min-height: 84px;
+        gap: 6px;
+        padding: 8px 4px !important;
+      }
+
+      #chatUpdateComposer .composer-subject-grid .composer-subject-card__media {
+        width: 38px !important;
+        height: 38px !important;
+      }
+
+      #chatUpdateComposer .composer-subject-grid .composer-subject-card__text {
+        font-size: .66rem;
+      }
+
+      #chatUpdateComposer .composer-subject-grid .composer-subject-card:nth-child(13) {
+        min-height: 58px;
+        grid-template-columns: 38px minmax(0, 1fr) 38px;
+        padding-inline: 12px !important;
+      }
+    }
+
+    /* v336: keep the subject chooser dense at every viewport.
+       Four compact cards per row mirror the proven mobile layout; the grid is
+       capped on wide screens so cards never stretch into oversized panels. */
+    #chatUpdateComposer .composer-active-panel .composer-auto-continue-row {
+      width: min(100%, 580px) !important;
+      margin-inline: auto !important;
+      box-sizing: border-box;
+    }
+
+    #chatUpdateComposer .composer-grid.composer-subject-grid {
+      display: grid !important;
+      width: min(100%, 580px) !important;
+      max-width: 580px !important;
+      min-width: 0;
+      margin-inline: auto !important;
+      grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+      grid-auto-columns: minmax(0, 1fr);
+      grid-auto-flow: row;
+      justify-content: stretch !important;
+      justify-items: stretch !important;
+      align-items: stretch !important;
+      align-content: start;
+      column-gap: 7px !important;
+      row-gap: 7px !important;
+    }
+
+    #chatUpdateComposer .composer-grid.composer-subject-grid > .composer-subject-card {
+      width: 100% !important;
+      max-width: none !important;
+      min-width: 0 !important;
+      justify-self: stretch !important;
+      align-self: stretch !important;
+      margin: 0 !important;
+      box-sizing: border-box;
+      min-height: 84px !important;
+      padding: 7px 4px !important;
+      display: grid !important;
+      grid-template-columns: 1fr !important;
+      justify-items: center !important;
+      align-content: center !important;
+      gap: 5px !important;
+    }
+
+    #chatUpdateComposer .composer-grid.composer-subject-grid > .composer-subject-card__media,
+    #chatUpdateComposer .composer-grid.composer-subject-grid > .composer-subject-card .composer-subject-card__media {
+      width: 42px !important;
+      height: 42px !important;
+      border-radius: 9px !important;
+    }
+
+    #chatUpdateComposer .composer-grid.composer-subject-grid > .composer-subject-card .composer-subject-card__text {
+      max-width: 100% !important;
+      font-size: .7rem !important;
+      line-height: 1.12 !important;
+      text-align: center !important;
+    }
+
+    #chatUpdateComposer .composer-grid.composer-subject-grid > .composer-subject-card:nth-child(13) {
+      grid-column: 1 / -1 !important;
+      min-height: 56px !important;
+      padding: 7px 12px !important;
+      grid-template-columns: 42px minmax(0, 1fr) 42px !important;
+      align-items: center !important;
+    }
+
+    @media (max-width: 640px) {
+      #chatUpdateComposer .composer-active-panel .composer-auto-continue-row,
+      #chatUpdateComposer .composer-grid.composer-subject-grid {
+        width: 100% !important;
+        max-width: none !important;
+      }
+
+      #chatUpdateComposer .composer-grid.composer-subject-grid {
+        column-gap: 6px !important;
+        row-gap: 6px !important;
+      }
+
+      #chatUpdateComposer .composer-grid.composer-subject-grid > .composer-subject-card {
+        min-height: 80px !important;
+        padding: 6px 3px !important;
+      }
+
+      #chatUpdateComposer .composer-grid.composer-subject-grid > .composer-subject-card .composer-subject-card__media {
+        width: 38px !important;
+        height: 38px !important;
+      }
+
+      #chatUpdateComposer .composer-grid.composer-subject-grid > .composer-subject-card:nth-child(13) {
+        min-height: 54px !important;
+        grid-template-columns: 38px minmax(0, 1fr) 38px !important;
+      }
+    }
+
+    /* v337: desktop must use the compact mobile-height tiles too.
+       The legacy 1:1 aspect ratio made every wide card tall and turned ICT
+       into a giant square when it spans all four columns. */
+    @media (min-width: 641px) {
+      #chatUpdateComposer .composer-grid.composer-subject-grid {
+        grid-auto-rows: 84px !important;
+      }
+
+      #chatUpdateComposer .composer-grid.composer-subject-grid > .composer-subject-card {
+        height: 84px !important;
+        min-height: 84px !important;
+        max-height: 84px !important;
+        aspect-ratio: auto !important;
+      }
+
+      #chatUpdateComposer .composer-grid.composer-subject-grid > .composer-subject-card:nth-child(13) {
+        height: 56px !important;
+        min-height: 56px !important;
+        max-height: 56px !important;
+        aspect-ratio: auto !important;
+        align-self: center !important;
+      }
+    }
+
+    /* v338: chapter numbers are compact controls, not full-width cards. */
+    @media (min-width: 641px) {
+      #chatUpdateComposer .composer-chapter-grid {
+        width: fit-content !important;
+        max-width: 100% !important;
+        grid-template-columns: repeat(auto-fit, 62px) !important;
+        grid-auto-rows: 62px !important;
+        gap: 8px !important;
+        justify-content: start !important;
+      }
+
+      #chatUpdateComposer .composer-chapter-card {
+        width: 62px !important;
+        min-width: 62px !important;
+        height: 62px !important;
+        min-height: 62px !important;
+        padding: 5px !important;
+        border-radius: 13px !important;
+        aspect-ratio: 1 / 1 !important;
+      }
+
+      #chatUpdateComposer .composer-chapter-code {
+        width: 44px !important;
+        height: 44px !important;
+        font-size: .88rem !important;
+      }
+    }
+
+    /* Keep the selected lecture type decisive; collapsed secondary choices may
+       be muted, but the active choice must never read as disabled. */
+    #chatUpdateComposer .composer-class-type-row:has(.composer-type-expand[aria-expanded="false"]) .composer-type-chip.is-selected,
+    #chatUpdateComposer .composer-type-chip.is-selected {
+      filter: none !important;
+      opacity: 1 !important;
+      color: #fffaf4 !important;
+      background: linear-gradient(135deg, #ea580c, #fb923c) !important;
+      border-color: #fdba74 !important;
+      box-shadow: 0 6px 15px rgba(234, 88, 12, .28), inset 0 1px 0 rgba(255, 255, 255, .28) !important;
+    }
+
+    /* v338: lightweight, stackable notices with room for only the two newest. */
+    .system-toast-stack {
+      gap: 7px !important;
+    }
+
+    .system-toast {
+      position: relative;
+      overflow: hidden;
+      min-height: 52px;
+      padding: 9px 11px !important;
+      border-radius: 14px !important;
+      border-color: rgba(104, 157, 210, .58) !important;
+      background: linear-gradient(135deg, #10243e, #183653) !important;
+      box-shadow: 0 12px 26px rgba(2, 8, 23, .32), inset 0 1px 0 rgba(255, 255, 255, .08) !important;
+    }
+
+    .system-toast::before {
+      content: "";
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: 3px;
+      background: #38bdf8;
+    }
+
+    .system-toast.is-error::before { background: #fb7185; }
+    .system-toast:not(.is-error):not(.is-info)::before { background: #34d399; }
+
+    html[data-theme="light"] .system-toast {
+      background: linear-gradient(135deg, #ffffff, #eef6ff) !important;
+      border-color: rgba(51, 112, 175, .36) !important;
+      color: #172b45 !important;
+      box-shadow: 0 12px 24px rgba(51, 83, 120, .14), inset 0 1px 0 #ffffff !important;
+    }
   </style>
 </head>
 
@@ -21180,7 +22218,7 @@
         <form class="login-form" id="localLoginForm">
           <label class="login-field">
             <i data-lucide="mail" aria-hidden="true"></i>
-            <input id="loginEmail" type="email" autocomplete="email" placeholder="Email" />
+            <input id="loginEmail" type="text" autocomplete="username" placeholder="Email or Username" />
           </label>
           <label class="login-field">
             <i data-lucide="lock-keyhole" aria-hidden="true"></i>
@@ -21196,7 +22234,7 @@
           <div class="login-actions">
             <div class="login-primary-row">
               <button class="login-submit" type="submit">
-                <span>Login with email</span>
+                <span>Login</span>
                 <i data-lucide="send-horizontal" aria-hidden="true"></i>
               </button>
               <button class="login-google" type="button" data-action="login-google" aria-label="Login with Google">
@@ -21316,6 +22354,19 @@
     };
 
     // ── data/user-settings.js ────────────────────────────────────────────────────
+    // Motion is useful feedback on capable devices, but never a cost paid by a
+    // low-end, data-saver, or reduced-motion device on first launch.
+    const defaultParadoxMotion = (() => {
+      try {
+        const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+        return !(
+          window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
+          Number(navigator.hardwareConcurrency || 8) <= 4 ||
+          Number(navigator.deviceMemory || 8) <= 4 ||
+          (connection && (connection.saveData || ["slow-2g", "2g", "3g"].includes(connection.effectiveType)))
+        );
+      } catch (_) { return false; }
+    })();
     const defaultUserSettings = {
       customName: "",
       collegeName: "",
@@ -21338,6 +22389,7 @@
       uiConfigs: {
         showOrbs: true,
         showVibes: true,
+        paradoxMotion: defaultParadoxMotion,
         barStyleMode: "classic",
         navBlur: false,
         cardGlass: false,
@@ -21801,6 +22853,12 @@
         <span class="system-toast__icon">${icon(type === "error" ? "triangle-alert" : type === "info" ? "info" : "check", type === "error" ? "Error" : type === "info" ? "Information" : "Saved")}</span>
         <span><strong>${escapeHtml(title)}</strong><span>${escapeHtml(detail)}</span></span>
       `;
+      // Keep guidance useful without allowing repeated clicks to cover the UI.
+      // Preserve the newest existing notice, then append the new one.
+      const activeToasts = [...stack.querySelectorAll(".system-toast")];
+      if (activeToasts.length >= 2) {
+        activeToasts.slice(0, activeToasts.length - 1).forEach((oldToast) => oldToast.remove());
+      }
       stack.appendChild(toast);
       if (window.lucide) window.lucide.createIcons({ attrs: { "stroke-width": 2.2 } });
       window.setTimeout(() => {
@@ -22315,6 +23373,96 @@
       }
     };
 
+    const closeChatCustomSelects = (except = null) => {
+      document.querySelectorAll(".chat-select-ui.is-open").forEach((picker) => {
+        if (picker !== except) {
+          picker.classList.remove("is-open");
+          const trigger = picker.querySelector(".chat-select-ui__trigger");
+          if (trigger) trigger.setAttribute("aria-expanded", "false");
+        }
+      });
+    };
+
+    const enhanceChatSettingsSelects = () => {
+      const selectIds = ["chatSortOrder", "chatDefaultVisibility", "chatMessagesPerPage"];
+      selectIds.forEach((id) => {
+        const select = document.getElementById(id);
+        if (!(select instanceof HTMLSelectElement)) return;
+        select.dataset.customized = "true";
+        // Keep the native control in the DOM for form/state semantics, but
+        // never allow it to open a platform dropdown over the custom UI.
+        select.hidden = true;
+        select.setAttribute("aria-hidden", "true");
+        select.tabIndex = -1;
+
+        let picker = select.nextElementSibling;
+        if (!(picker instanceof HTMLElement) || !picker.classList.contains("chat-select-ui")) {
+          picker = document.createElement("div");
+          picker.className = "chat-select-ui";
+          select.insertAdjacentElement("afterend", picker);
+        }
+
+        const activeOption = select.options[select.selectedIndex] || select.options[0];
+        picker.innerHTML = "";
+
+        const trigger = document.createElement("button");
+        trigger.type = "button";
+        trigger.className = "chat-select-ui__trigger";
+        trigger.setAttribute("aria-haspopup", "listbox");
+        trigger.setAttribute("aria-expanded", "false");
+        trigger.innerHTML = `<span class="chat-select-ui__value"></span><span class="chat-select-ui__chevron" aria-hidden="true">${icon("chevron-down", "Open")}</span>`;
+        const valueSpan = trigger.querySelector(".chat-select-ui__value");
+        if (valueSpan) valueSpan.textContent = activeOption ? activeOption.textContent : "";
+
+        const menu = document.createElement("div");
+        menu.className = "chat-select-ui__menu";
+        menu.setAttribute("role", "listbox");
+        Array.from(select.options).forEach((option) => {
+          const item = document.createElement("button");
+          item.type = "button";
+          item.className = `chat-select-ui__option${option.value === select.value ? " is-active" : ""}`;
+          item.setAttribute("role", "option");
+          item.setAttribute("aria-selected", option.value === select.value ? "true" : "false");
+          item.dataset.value = option.value;
+          item.textContent = option.textContent || option.value;
+          item.addEventListener("click", () => {
+            select.value = option.value;
+            closeChatCustomSelects();
+            select.dispatchEvent(new Event("change", { bubbles: true }));
+            enhanceChatSettingsSelects();
+          });
+          menu.appendChild(item);
+        });
+
+        trigger.addEventListener("click", (event) => {
+          event.preventDefault();
+          event.stopPropagation();
+          const willOpen = !picker.classList.contains("is-open");
+          closeChatCustomSelects(picker);
+          picker.classList.toggle("is-open", willOpen);
+          trigger.setAttribute("aria-expanded", willOpen ? "true" : "false");
+        });
+
+        trigger.addEventListener("keydown", (event) => {
+          if (event.key === "Escape") {
+            closeChatCustomSelects();
+            trigger.setAttribute("aria-expanded", "false");
+          }
+        });
+
+        picker.appendChild(trigger);
+        picker.appendChild(menu);
+      });
+
+      if (!document.body.dataset.chatCustomSelectBound) {
+        document.body.dataset.chatCustomSelectBound = "true";
+        document.addEventListener("click", () => closeChatCustomSelects());
+        document.addEventListener("keydown", (event) => {
+          if (event.key === "Escape") closeChatCustomSelects();
+        });
+      }
+    };
+
     const syncChatUi = () => {
       const settingsPanel = document.getElementById("chatSettingsPanel");
       const feedShell = document.getElementById("chatFeedShell");
@@ -22345,6 +23493,7 @@
       syncAiSmartSyncPanel();
       renderChatMessages();
       renderChatPalette();
+      enhanceChatSettingsSelects();
     };
 
     const syncChatListLockState = () => {
@@ -23376,6 +24525,19 @@
     };
 
     /* Smart Update Composer Wizard Logic */
+    const COMPOSER_AUTO_CONTINUE_KEY = "tonustudy-composer-auto-continue-v1";
+    const getComposerAutoContinuePreference = () => {
+      try { return localStorage.getItem(COMPOSER_AUTO_CONTINUE_KEY) === "true"; }
+      catch (_) { return false; }
+    };
+    const hasComposerAutoContinuePreference = () => {
+      try { return localStorage.getItem(COMPOSER_AUTO_CONTINUE_KEY) !== null; }
+      catch (_) { return false; }
+    };
+    const persistComposerAutoContinuePreference = (value) => {
+      try { localStorage.setItem(COMPOSER_AUTO_CONTINUE_KEY, value ? "true" : "false"); }
+      catch (_) { }
+    };
     const composerState = {
       active: false,
       step: 1,
@@ -23389,7 +24551,8 @@
       addedItems: [],
       currentItem: null,
       cumulativeText: "",
-      autoContinue: false,
+      autoContinue: getComposerAutoContinuePreference(),
+      reviewTasksExpanded: false,
       durationExpanded: true,
       lectureTypesExpanded: false,
       completionExpanded: false,
@@ -23845,7 +25008,10 @@
           composerState.selfStudyTime = 0;
           composerState.classDuration = 0;
           composerState.totalStudyDuration = 0;
-          composerState.autoContinue = draft.autoContinue === true;
+          composerState.autoContinue = hasComposerAutoContinuePreference()
+            ? getComposerAutoContinuePreference()
+            : draft.autoContinue === true;
+          composerState.reviewTasksExpanded = false;
           // Duration controls are deliberately always available: a collapsed
           // state hid essential controls and made the flow harder to scan.
           composerState.durationExpanded = true;
@@ -23884,7 +25050,8 @@
               composerState.selfStudyTime = 0;
               composerState.classDuration = 0;
               composerState.totalStudyDuration = 0;
-              composerState.autoContinue = false;
+              composerState.autoContinue = getComposerAutoContinuePreference();
+              composerState.reviewTasksExpanded = false;
               composerState.durationExpanded = true;
               composerState.lectureTypesExpanded = false;
               composerState.completionExpanded = false;
@@ -24199,12 +25366,12 @@
             <strong>Auto continue</strong>
             <span>Move to the next step after a subject is selected.</span>
           </div>
-          <label class="composer-switch" title="Auto continue for this draft only">
+          <label class="composer-switch" title="Remember auto-continue preference">
             <input type="checkbox" id="composerAutoContinue" ${composerState.autoContinue ? "checked" : ""}>
             <span aria-hidden="true"></span>
           </label>
         </div>
-        <div class="composer-grid">
+        <div class="composer-grid composer-subject-grid">
           ${subjectOptions.map(opt => {
             const isSel = (item?.subjectIndex === opt.subjectIndex) && (item?.paperIndex === opt.paperIndex);
             const iconPath = getSubjectIconPath(opt.subjectTitle, opt.paperIndex);
@@ -24219,7 +25386,7 @@
             `;
           }).join('')}
         </div>
-        
+
         ${item?.subjectIndex !== null && item?.subjectIndex !== undefined ? renderComposerCustomSuffixPanel() : ""}
       `;
         }
@@ -24242,7 +25409,7 @@
             `;
           }).join('')}
         </div>
-        
+
         ${item.chapterIndex !== null && item.chapterIndex !== undefined ? renderComposerCustomSuffixPanel() : ""}
       `;
         }
@@ -24350,7 +25517,7 @@
           <label class="adjuster-label" style="display:block; margin-bottom: 6px;">Line Text Editor</label>
           <input type="text" id="composerLineText" class="composer-input-field" value="${escapeHtml(currentLineText)}">
         </div>
-        
+
         <div class="composer-preview-pane">
           <div class="preview-pane-label">Live Entire Message Preview</div>
           <pre class="preview-pane-text" id="composerLinePreview" style="font-family: monospace; white-space: pre-wrap; font-size: 0.85rem; line-height: 1.4; background: rgba(0,0,0,0.25); padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05); margin: 0; color: #fff;">${escapeHtml(liveText)}</pre>
@@ -24361,8 +25528,13 @@
           <button class="btn-small" type="button" data-action="composer-step-prev">${icon("arrow-left", "Back")}<span>Back</span></button>
         </div>
         ${renderComposerCustomSuffixPanel()}
-        <div class="composer-tasks-review-heading">Completed tasks</div>
-        ${renderComposerReviewList()}
+        <button class="composer-tasks-review-heading composer-tasks-review-toggle" type="button" data-action="composer-toggle-review-tasks" aria-expanded="${composerState.reviewTasksExpanded ? "true" : "false"}">
+          <span>Completed tasks${composerState.addedLines.length ? ` (${composerState.addedLines.length})` : ""}</span>
+          ${icon(composerState.reviewTasksExpanded ? "chevron-up" : "chevron-down", composerState.reviewTasksExpanded ? "Collapse completed tasks" : "Expand completed tasks")}
+        </button>
+        <div class="composer-tasks-review-panel" ${composerState.reviewTasksExpanded ? "" : "hidden"}>
+          ${renderComposerReviewList()}
+        </div>
       `;
         }
         default:
@@ -24454,7 +25626,11 @@
       // This essential section must never disappear behind a collapse state.
       composerState.durationExpanded = true;
       const shouldReposition = options.reposition !== false;
-      const preservedScrollY = options.preserveScroll ? window.scrollY : null;
+      const preservedScrollY = Number.isFinite(options.preservedScrollY)
+        ? options.preservedScrollY
+        : options.preserveScroll
+          ? window.scrollY
+          : null;
       const wizardNode = document.getElementById("chatUpdateComposer");
       if (!wizardNode) return;
 
@@ -24503,7 +25679,7 @@
         <div class="preview-pane-label">Final Update Message (Editable)</div>
         <textarea id="composerFinalTextArea" style="font-family: monospace; white-space: pre-wrap; font-size: 0.88rem; line-height: 1.4; background: rgba(0,0,0,0.25); padding: 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.15); margin: 0; color: #fff; width: 100%; min-height: 180px; resize: vertical; outline: none; box-sizing: border-box;">${escapeHtml(finalText)}</textarea>
       </div>
-      
+
       <div class="composer-final-actions">
         <div class="composer-final-actions__left">
           <button class="btn-small composer-add-action" type="button" data-action="composer-add-more" title="Add another update line">
@@ -24551,10 +25727,18 @@
       hydrateComposerSubjectImages(wizardNode);
 
       if (preservedScrollY !== null) {
-        window.scrollTo({ top: preservedScrollY, behavior: "auto" });
-        requestAnimationFrame(() => {
+        const restoreComposerScroll = () => {
           window.scrollTo({ top: preservedScrollY, behavior: "auto" });
+        };
+        restoreComposerScroll();
+        requestAnimationFrame(() => {
+          restoreComposerScroll();
+          requestAnimationFrame(restoreComposerScroll);
         });
+        // Some mobile browsers restore focus after the replacement control
+        // paints. Counter that one late focus pass without changing normal
+        // step navigation or its intentional scroll positioning.
+        window.setTimeout(restoreComposerScroll, 220);
       }
 
       setTimeout(() => {
@@ -24599,6 +25783,7 @@
       composerState.addedLines = [];
       composerState.addedItems = [];
       composerState.cumulativeText = "";
+      composerState.reviewTasksExpanded = false;
       resetComposerCurrentItem();
 
       // Load local draft
@@ -24638,7 +25823,8 @@
       composerState.addedLines = [];
       composerState.addedItems = [];
       composerState.cumulativeText = "";
-      composerState.autoContinue = false;
+      composerState.autoContinue = getComposerAutoContinuePreference();
+      composerState.reviewTasksExpanded = false;
       composerState.durationExpanded = true;
       composerState.lectureTypesExpanded = false;
       composerState.completionExpanded = false;
@@ -24912,7 +26098,8 @@
         composerState.selfStudyTime = 0;
         composerState.classDuration = 0;
         composerState.totalStudyDuration = 0;
-        composerState.autoContinue = false;
+        composerState.autoContinue = getComposerAutoContinuePreference();
+        composerState.reviewTasksExpanded = false;
         composerState.durationExpanded = true;
         resetComposerCurrentItem();
         clearComposerDraft();
@@ -24927,7 +26114,9 @@
         const val = (composerState.currentItem.totalLectures || 10) + delta;
         composerState.currentItem.totalLectures = Math.max(1, val);
         composerState.currentItem.selectedLectures = composerState.currentItem.selectedLectures.filter(l => l <= composerState.currentItem.totalLectures);
-        renderComposerWizard();
+        const preservedScrollY = composerControlScrollY;
+        composerControlScrollY = null;
+        renderComposerWizard({ reposition: false, preserveScroll: true, preservedScrollY });
         return;
       }
 
@@ -24937,7 +26126,9 @@
         composerState[key] = Math.max(0, composerState[key] + delta);
         // Value-only changes must not move the page. Re-render in place so the
         // pressed +/- control stays under the user's finger.
-        renderComposerWizard({ reposition: false, preserveScroll: true });
+        const preservedScrollY = composerControlScrollY;
+        composerControlScrollY = null;
+        renderComposerWizard({ reposition: false, preserveScroll: true, preservedScrollY });
         return;
       }
 
@@ -24962,6 +26153,12 @@
       if (action === "composer-toggle-custom-suffix") {
         composerState.customSuffixExpanded = !composerState.customSuffixExpanded;
         renderComposerWizard();
+        return;
+      }
+
+      if (action === "composer-toggle-review-tasks") {
+        composerState.reviewTasksExpanded = !composerState.reviewTasksExpanded;
+        renderComposerWizard({ reposition: false, preserveScroll: true });
         return;
       }
 
@@ -25363,7 +26560,8 @@
         resetComposerCurrentItem();
         composerState.step = 1;
         composerState.furthestStep = 1;
-        composerState.autoContinue = false;
+        composerState.autoContinue = getComposerAutoContinuePreference();
+        composerState.reviewTasksExpanded = false;
         composerState.durationExpanded = true;
         composerState.studyQuality = 70;
         composerState.selfStudyTime = 0;
@@ -25434,6 +26632,7 @@
         needsSave = true;
       } else if (e.target.id === "composerAutoContinue") {
         composerState.autoContinue = e.target.checked;
+        persistComposerAutoContinuePreference(composerState.autoContinue);
         needsSave = true;
       }
 
@@ -25730,7 +26929,7 @@
            <!--  <h2>Dashboard</h2> -->
         </div>
       </div>
-      
+
       <div class="dashboard-modern dark" id="dashboardModern">
         <div class="dash-mode-toggle">
           <span class="toggle-label toggle-label--dark">DARK</span>
@@ -25752,7 +26951,7 @@
               ETA &nbsp;${escapeHtml(typeof eta === "string" ? eta : eta + " days")}
             </div>
           </div>
-          
+
           <div class="dash-body">
             <div class="stats-col">
               <div class="stat-card">
@@ -25768,7 +26967,7 @@
                 <div class="stat-detail" id="dashHoursLeftDetail">${pcmbiStats.remainingClasses} classes remaining</div>
               </div>
             </div>
-            
+
             <div class="gauge-col">
               <div class="gauge-wrap">
                 <svg viewBox="0 0 180 180" width="180" height="180">
@@ -25795,7 +26994,7 @@
                 <div class="gleg"><span class="gleg-dot" style="background:#d97706"></span>Time</div>
               </div>
             </div>
-            
+
             <div class="stats-col">
               <div class="count-card">
                 <div class="count-label"><span class="sc-dot" style="background:#16a34a"></span>Classes Completed</div>
@@ -25815,7 +27014,7 @@
               </div>
             </div>
           </div>
-          
+
           <div class="dash-foot">
             <div class="foot-item">
               <span class="foot-label">Syllabus</span>
@@ -26409,7 +27608,7 @@
       <div class="analytics-panel chronos-panel is-preview">
         <div class="chart-shell__head">
           <div>
-            
+
              <!-- <p>Online Class and Total Study across the last <span id="chronosDaysLabel">${escapeHtml(state.graphConfig.daysToLoad)}</span> days.</p> -->
           </div>
           <div class="chronos-tools">
@@ -26438,7 +27637,7 @@
                 ${icon("x", "Close")}
               </button>
             </div>
-            
+
             <div class="chronos-config-dialog__body" style="display: flex; flex-direction: column; gap: 14px; margin-top: 20px;">
               <div class="chronos-presets" aria-label="Chronos view presets" style="display: flex; flex-direction: column; gap: 8px;">
                 <span class="chronos-presets__label" style="font-size: 11px; font-weight: 600; color: var(--text-sub);">View presets</span>
@@ -26448,27 +27647,27 @@
                   <button class="chronos-preset" type="button" data-action="chronos-apply-preset" data-days="30" data-pc="30" data-mob="30" style="padding: 6px 12px; border-radius: 8px; font-size: 12px;">30 / 30 / 30</button>
                 </div>
               </div>
-              
+
               <label class="chronos-field" style="display: flex; align-items: center; justify-content: space-between; gap: 12px;">
                 <span style="font-size: 12px; font-weight: 600; color: var(--text-sub);">Max hours</span>
                 <input id="chronosMaxLimit" type="number" min="1" max="24" value="${escapeHtml(state.graphConfig.maxLimit)}" style="background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); border-radius: 6px; padding: 6px 10px; color: #f1f5f9; outline: none; width: 80px; text-align: center;">
               </label>
-              
+
               <label class="chronos-field" style="display: flex; align-items: center; justify-content: space-between; gap: 12px;">
                 <span style="font-size: 12px; font-weight: 600; color: var(--text-sub);">Days loaded</span>
                 <input id="chronosDaysToLoad" type="number" min="3" max="120" value="${escapeHtml(state.graphConfig.daysToLoad)}" style="background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); border-radius: 6px; padding: 6px 10px; color: #f1f5f9; outline: none; width: 80px; text-align: center;">
               </label>
-              
+
               <label class="chronos-field" style="display: flex; align-items: center; justify-content: space-between; gap: 12px;">
                 <span style="font-size: 12px; font-weight: 600; color: var(--text-sub);">Desktop view</span>
                 <input id="chronosPcView" type="number" min="3" max="60" value="${escapeHtml(state.graphConfig.pcDaysView)}" style="background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); border-radius: 6px; padding: 6px 10px; color: #f1f5f9; outline: none; width: 80px; text-align: center;">
               </label>
-              
+
               <label class="chronos-field" style="display: flex; align-items: center; justify-content: space-between; gap: 12px;">
                 <span style="font-size: 12px; font-weight: 600; color: var(--text-sub);">Mobile view</span>
                 <input id="chronosMobView" type="number" min="3" max="40" value="${escapeHtml(state.graphConfig.mobDaysView)}" style="background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); border-radius: 6px; padding: 6px 10px; color: #f1f5f9; outline: none; width: 80px; text-align: center;">
               </label>
-              
+
               <button class="btn-small btn-small--primary" type="button" data-action="chronos-apply-config" style="width: 100%; justify-content: center; padding: 8px;">Apply Changes</button>
             </div>
           </section>
@@ -26635,6 +27834,7 @@
               ${group("UI Elements", `
                 ${row("Ambient Hero Orbs", checkbox("tgl_orbs", userSettings.uiConfigs.showOrbs))}
                 ${row("Subject Vibe Animations", checkbox("tgl_vibes", userSettings.uiConfigs.showVibes), "Plays an effect when expanding subjects")}
+                ${row("Paradox Motion", checkbox("tgl_paradox_motion", userSettings.uiConfigs.paradoxMotion === true), "Subtle scroll entry and progress-gauge animation. Starts off on low-power devices")}
                 ${row("Scaffold Strands BG", checkbox("tgl_scaffold_strands", userSettings.uiConfigs.showScaffoldStrands === true, false), "Dark-mode lightweight gradient inside Scaffold shell")}
                 ${row("Aurora Background", selectInput("tgl_aurora_mode", [
         { value: "off", label: "Off" },
@@ -26753,7 +27953,7 @@
         <div class="floating-badge fb-2">${icon("graduation-cap", "Science")} Science '25</div>
         <div class="floating-badge fb-3">${icon("code-2", "Coder")} Coder</div>
         <div class="floating-badge fb-4">${icon("sparkles", "Designer")} Designer</div>
-            
+
             <p class="eyebrow" style="color: var(--accent-blue); letter-spacing: 0.1em; font-weight: 700; margin-bottom: 6px;">CREATOR PORTFOLIO</p>
             <h1 id="developerDialogTitle">Tanmoy Sarker</h1>
             <p class="dev-subtitle">Full-Stack Architect & Digital Creator</p>
@@ -26921,27 +28121,27 @@
                 ${icon("x", "Close")}
               </button>
             </div>
-            
+
             <div class="chat-settings-card__body" style="display: flex; flex-direction: column; gap: 14px; margin-top: 20px;">
-              <label style="display: flex; flex-direction: column; gap: 6px;">
-                <span style="font-size: 12px; font-weight: 600; color: var(--text-sub);">Sort by time</span>
-                <select id="chatSortOrder" style="background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); border-radius: 8px; padding: 8px 12px; color: #f1f5f9; outline: none; width: 100%;">
+              <label class="chat-settings-panel__field">
+                <span class="chat-settings-panel__field-label">Sort by time</span>
+                <select id="chatSortOrder">
                   <option value="desc">Descending</option>
                   <option value="asc">Ascending</option>
                 </select>
               </label>
-              
-              <label style="display: flex; flex-direction: column; gap: 6px;">
-                <span style="font-size: 12px; font-weight: 600; color: var(--text-sub);">Default upload visibility</span>
-                <select id="chatDefaultVisibility" style="background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); border-radius: 8px; padding: 8px 12px; color: #f1f5f9; outline: none; width: 100%;">
+
+              <label class="chat-settings-panel__field">
+                <span class="chat-settings-panel__field-label">Default upload visibility</span>
+                <select id="chatDefaultVisibility">
                   <option value="public">Public</option>
                   <option value="private">Private</option>
                 </select>
               </label>
 
-              <label style="display: flex; flex-direction: column; gap: 6px;">
-                <span style="font-size: 12px; font-weight: 600; color: var(--text-sub);">Messages per page (Show all history)</span>
-                <select id="chatMessagesPerPage" style="background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); border-radius: 8px; padding: 8px 12px; color: #f1f5f9; outline: none; width: 100%;">
+              <label class="chat-settings-panel__field">
+                <span class="chat-settings-panel__field-label">Messages per page (Show all history)</span>
+                <select id="chatMessagesPerPage">
                   <option value="10">10 messages</option>
                   <option value="25">25 messages</option>
                   <option value="50">50 messages</option>
@@ -26949,10 +28149,10 @@
                   <option value="200">200 messages</option>
                 </select>
               </label>
-              
+
               <div id="chatPaletteContainer"></div>
 
-              <div class="chat-settings-panel__note" style="margin-top: 8px; font-size: 11px; color: var(--text-sub); background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); padding: 8px 12px; border-radius: 8px;">
+              <div class="chat-settings-panel__note">
                 Private posts are filtered to this device profile only until full account auth is added.
               </div>
             </div>
@@ -27360,7 +28560,7 @@
                 </label>
                 <button class="btn-small btn-small--primary btn-small--wide" type="button" data-action="security-phone-confirm">${icon("shield-check", "Confirm")} <span>Confirm phone link</span></button>
                 <button class="btn-small btn-small--wide" type="button" data-action="security-send-reset">${icon("mail-check", "Reset")} <span>Send password reset</span></button>
-                
+
                 <p class="security-feedback" id="securityFeedback" role="status"></p>
               </div>
             </div>
@@ -28722,9 +29922,35 @@
     const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
     const prefersReducedMotion = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const canUseHoverTilt = () => window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+    const shouldUsePerformanceMode = () => {
+      const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+      const lowCoreDevice = Number(navigator.hardwareConcurrency || 8) <= 4;
+      const lowMemoryDevice = Number(navigator.deviceMemory || 8) <= 4;
+      const slowConnection = !!connection && (connection.saveData || ["slow-2g", "2g", "3g"].includes(connection.effectiveType));
+      return prefersReducedMotion() || lowCoreDevice || lowMemoryDevice || slowConnection;
+    };
+    const applyPerformanceMode = () => {
+      document.documentElement.classList.toggle("performance-lite", shouldUsePerformanceMode());
+    };
+    const isPerformanceLite = () => document.documentElement.classList.contains("performance-lite");
+    const isParadoxMotionEnabled = () => (
+      !prefersReducedMotion() &&
+      !isPerformanceLite() &&
+      scaffoldState?.userSettings?.uiConfigs?.paradoxMotion === true
+    );
+    const applyParadoxMotionState = () => {
+      document.documentElement.classList.toggle("paradox-motion", isParadoxMotionEnabled());
+    };
+    const scheduleNonCriticalWork = (task) => {
+      if (isPerformanceLite() && typeof window.requestIdleCallback === "function") {
+        window.requestIdleCallback(task, { timeout: 500 });
+        return;
+      }
+      window.setTimeout(task, 0);
+    };
 
     const attachCardTilt = () => {
-      if (prefersReducedMotion() || !canUseHoverTilt()) return;
+      if (prefersReducedMotion() || isPerformanceLite() || !canUseHoverTilt()) return;
       const cards = document.querySelectorAll(".interactive-card");
       cards.forEach((card) => {
         let frame = 0;
@@ -28757,6 +29983,39 @@
       });
     };
 
+    const attachParadoxMotion = () => {
+      applyParadoxMotionState();
+      const nodes = [...document.querySelectorAll(
+        ".dashboard-panel, .dash-card, .subject-card, .chat-shell, .analytics-panel, .backup-timeline > div"
+      )];
+      nodes.forEach((node) => node.classList.add("paradox-ready"));
+
+      if (!isParadoxMotionEnabled()) {
+        nodes.forEach((node) => node.classList.add("is-paradox-visible"));
+        return;
+      }
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add("is-paradox-visible");
+          observer.unobserve(entry.target);
+        });
+      }, { rootMargin: "0px 0px -7% 0px", threshold: 0.1 });
+      nodes.forEach((node) => observer.observe(node));
+
+      // Begin circular gauges at zero only once per mounted page, then let the
+      // existing calculated state settle into its actual percentage.
+      document.querySelectorAll("[stroke-dasharray='452'], [id^='subj-ring-']").forEach((ring) => {
+        const finalOffset = ring.getAttribute("stroke-dashoffset");
+        const dash = Number.parseFloat(ring.getAttribute("stroke-dasharray"));
+        if (!Number.isFinite(dash) || finalOffset === null) return;
+        ring.classList.add("paradox-gauge");
+        ring.setAttribute("stroke-dashoffset", String(dash));
+        requestAnimationFrame(() => requestAnimationFrame(() => ring.setAttribute("stroke-dashoffset", finalOffset)));
+      });
+    };
+
     const attachScrollReveal = () => {
       const revealNodes = document.querySelectorAll(
         ".hero-strip__content, .unit-section__header, .dashboard-panel, .status-strip, .plain-panel, .analytics-panel, .subject-card, .settings-group, .chat-shell, .account-card, .backup-timeline > div"
@@ -28765,7 +30024,7 @@
         node.classList.add("reveal-ready");
         node.style.setProperty("--reveal-delay", `${Math.min(index * 28, 220)}ms`);
       });
-      if (prefersReducedMotion()) {
+      if (prefersReducedMotion() || isPerformanceLite()) {
         revealNodes.forEach((node) => node.classList.add("is-visible"));
         return;
       }
@@ -28801,7 +30060,12 @@
         const shouldHide = scrollingDown && currentY > 360 && currentY - lastY > 4;
         nav.classList.toggle("nav-scrolled", currentY > 16);
         nav.classList.toggle("nav-hidden", shouldHide);
-        document.documentElement.style.setProperty("--scroll-drift", Math.round(currentY * -0.035) + "px");
+        document.documentElement.style.setProperty("--scroll-drift", isPerformanceLite() ? "0px" : Math.round(currentY * -0.035) + "px");
+        if (isPerformanceLite()) {
+          lastY = currentY;
+          ticking = false;
+          return;
+        }
         let activeId = sections[0]?.id;
         for (const section of sections) {
           const rect = section.getBoundingClientRect();
@@ -28854,6 +30118,8 @@
     };
 
     const attachVisualEffects = () => {
+      applyPerformanceMode();
+      attachParadoxMotion();
       attachScrollReveal();
       attachScrollNav();
       attachSmoothAnchorOffset();
@@ -28898,7 +30164,7 @@
       if (media.dataset.parallaxBound) return;
       media.dataset.parallaxBound = "true";
       media.addEventListener("pointermove", (event) => {
-        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches || isPerformanceLite()) return;
         const rect = media.getBoundingClientRect();
         const x = ((event.clientX - rect.left) / rect.width - 0.5) * -12;
         const y = ((event.clientY - rect.top) / rect.height - 0.5) * -14;
@@ -29007,8 +30273,30 @@
       }, remember);
     };
 
+    window.__tonuNativeGoogleResult = async (payload = {}) => {
+      if (!payload.ok || !payload.idToken) {
+        showLoginFeedback(payload.error || "Google sign-in was cancelled.");
+        return;
+      }
+      try {
+        ensureFirebaseInitialized();
+        showLoginFeedback("Signing in securely...");
+        const credential = window.firebase.auth.GoogleAuthProvider.credential(payload.idToken);
+        const result = await window.firebase.auth().signInWithCredential(credential);
+        completeFirebaseUserLogin(result.user, true, "google");
+        showLoginFeedback("");
+      } catch (error) {
+        showLoginFeedback(`Google login failed: ${error.message}`);
+      }
+    };
+
     const loginWithGoogle = () => {
       try {
+        if (window.TonuAndroid?.signInWithGoogle) {
+          showLoginFeedback("Choose a Google account...");
+          window.TonuAndroid.signInWithGoogle();
+          return;
+        }
         ensureFirebaseInitialized();
         const provider = new window.firebase.auth.GoogleAuthProvider();
         showLoginFeedback("Connecting to Google...");
@@ -29536,6 +30824,7 @@
       const email = document.getElementById("loginEmail")?.value.trim();
       const password = document.getElementById("loginPassword")?.value || "";
       const remember = document.getElementById("loginRemember")?.checked !== false;
+      const isEmailLike = email.includes("@");
 
       const isLocalAdmin = (email === "admin" && password === "admin") ||
         (email === "admin@test.com" && password === "admin123");
@@ -29554,12 +30843,27 @@
         return;
       }
 
-      if (!email || !email.includes("@")) {
-        showLoginFeedback("Enter a valid email to continue.");
+      if (!email) {
+        showLoginFeedback("Enter an email or username to continue.");
         return;
       }
       if (password.length < 6) {
         showLoginFeedback("Password must be at least 6 characters.");
+        return;
+      }
+
+      if (currentLoginMode === "login" && !isEmailLike) {
+        showLoginFeedback("Logging in locally...");
+        setTimeout(() => {
+          completeLocalLogin({
+            mode: "skip",
+            email,
+            uid: `local-${String(email).toLowerCase().replace(/[^a-z0-9]+/g, "-").slice(0, 32) || "user"}`,
+            createdAt: Date.now(),
+            noCloud: true
+          }, remember);
+          showLoginFeedback("");
+        }, 180);
         return;
       }
 
@@ -29577,6 +30881,10 @@
               showLoginFeedback(error.message);
             });
         } else {
+          if (!isEmailLike) {
+            showLoginFeedback("Registration needs a real email address.");
+            return;
+          }
           window.firebase.auth().createUserWithEmailAndPassword(email, password)
             .then((result) => {
               completeFirebaseUserLogin(result.user, remember, "email");
@@ -29656,7 +30964,7 @@
         } else {
           currentLoginMode = "login";
           if (titleEl) titleEl.textContent = "Welcome back";
-          if (submitTextEl) submitTextEl.textContent = "Login with email";
+          if (submitTextEl) submitTextEl.textContent = "Login";
           if (labelRow) {
             labelRow.childNodes[0].textContent = "Don't have an account? ";
           }
@@ -29692,6 +31000,9 @@
     ];
 
     const initProjectBannerImages = () => {
+      // Keep the already-present lightweight image on constrained devices;
+      // the high-resolution swap is only a visual enhancement.
+      if (isPerformanceLite()) return;
       document.querySelectorAll(".project-banner__img[data-hires-src]").forEach((img) => {
         const hiresSrc = img.dataset.hiresSrc;
         if (!hiresSrc || img.dataset.hiresLoaded === "true") return;
@@ -29740,6 +31051,7 @@
     };
 
     const mountApp = () => {
+      applyPerformanceMode();
       clearFloatingPanelPortals();
       document.querySelector("#app").innerHTML = renderAppShell(scaffoldState, buildUnits());
       applyUserThemeSettings();
@@ -29749,12 +31061,13 @@
       initNavBrandLogo();
       attachVisualEffects();
       initGroupChat();
-      setTimeout(() => {
+      scheduleNonCriticalWork(() => {
         renderChronosChart?.();
         setChronosEditMode?.(false);
-      }, 0);
+      });
     };
 
+    applyPerformanceMode();
     document.querySelector("#app").innerHTML = renderAppShell(scaffoldState, buildUnits());
     applyUserThemeSettings();
     portalFloatingPanels();
@@ -30468,6 +31781,12 @@
       display?.classList.add("is-open");
       display?.setAttribute("aria-expanded", "true");
     };
+
+    let composerControlScrollY = null;
+    document.addEventListener("pointerdown", (e) => {
+      const control = e.target.closest('[data-action="adjust-time"], [data-action="composer-adjust-total-classes"]');
+      if (control) composerControlScrollY = window.scrollY;
+    }, true);
 
     document.addEventListener("click", (e) => {
       const btn = e.target.closest("[data-action]");
@@ -32522,12 +33841,13 @@
         updateBackupSettings({ autoBackupNotif: !!target.checked });
         return;
       }
-      if (target.id === "tgl_project_banner" || target.id === "tgl_orbs" || target.id === "tgl_vibes" || target.id === "tgl_aurora_mode" || target.id === "etaSettingToggle" || target.id === "tgl_composer_fs" || target.id === "tgl_compact_mode") {
+      if (target.id === "tgl_project_banner" || target.id === "tgl_orbs" || target.id === "tgl_vibes" || target.id === "tgl_paradox_motion" || target.id === "tgl_aurora_mode" || target.id === "etaSettingToggle" || target.id === "tgl_composer_fs" || target.id === "tgl_compact_mode") {
         scaffoldState.userSettings.uiConfigs = {
           ...(scaffoldState.userSettings.uiConfigs || {}),
           showProjectBanner: document.getElementById("tgl_project_banner")?.checked !== false,
           showOrbs: document.getElementById("tgl_orbs")?.checked || false,
           showVibes: document.getElementById("tgl_vibes")?.checked || false,
+          paradoxMotion: document.getElementById("tgl_paradox_motion")?.checked || false,
           auroraMode: document.getElementById("tgl_aurora_mode")?.value || "off",
           etaOn: document.getElementById("etaSettingToggle")?.checked || false,
           composerFullscreen: document.getElementById("tgl_composer_fs")?.checked || false,
