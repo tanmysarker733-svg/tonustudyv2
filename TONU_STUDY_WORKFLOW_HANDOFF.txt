@@ -1,0 +1,45 @@
+TONU STUDY - PROJECT WORKFLOW AND HANDOFF
+Updated: 2026-07-26
+
+This repository copy is a concise operational guide. The complete local handoff file
+is kept in the Version 2 source folder:
+E:\! Entertainment\! Editing Partition\Passive Farhan and Blog\Study Web\Version 2\TONU_STUDY_WORKFLOW_HANDOFF.txt
+
+CORE RULE
+Use the n+1 rule for numbered web files: copy the latest hsc-study-os__NNN_.html to
+the next number, then edit the new file only. Never overwrite prior versions.
+
+WEB SOURCE / DEPLOYMENT
+- Local versioned source folder:
+  E:\! Entertainment\! Editing Partition\Passive Farhan and Blog\Study Web\Version 2
+- Current latest numbered source at this handoff: hsc-study-os__348_.html
+- Production source: this repository root index.html on branch main.
+- Before deployment, copy the validated newest numbered HTML to this index.html.
+- Copy any changed Assets into this repository Assets\ folder too.
+
+ANDROID
+- Android wrapper source: app\
+- Online launch loads production with no-cache behavior.
+- Offline launch falls back to packaged index.html.
+- android.yml copies this repository index.html and Assets into Android assets before
+  building, so keep root index.html current.
+- Increase versionCode and versionName in app\build.gradle.kts for every release.
+
+RELEASE
+- GitHub Actions workflow: .github\workflows\android.yml
+- Release tag: android
+- Download URL:
+  https://github.com/tanmysarker733-svg/tonustudyv2/releases/download/android/Tonu.Study.apk
+- Latest release at this handoff: Tonu Study Android v2.1.4
+
+SYNC LIMITATION
+Browser local storage and Android WebView local storage are separate. Real cross-device
+sync requires a configured authenticated cloud backend/API. Never claim sync works
+unless remote save and restore are tested.
+
+FINAL CHECKLIST
+1. n+1 file created.
+2. Validate scripts and responsive dark/light layouts.
+3. Replace root index.html with the final numbered HTML.
+4. Commit/push to main and verify production.
+5. For APK changes, run successful GitHub build, upload release, and test install.
