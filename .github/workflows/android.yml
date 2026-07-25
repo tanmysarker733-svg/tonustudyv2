@@ -46,6 +46,15 @@ jobs:
 
       - uses: gradle/actions/setup-gradle@v4
 
+      # The app uses the live site whenever it is online.  Keep this packaged
+      # copy aligned too, so the same current shell is available offline.
+      - name: Sync offline web shell
+        shell: bash
+        run: |
+          cp index.html app/src/main/assets/index.html
+          rm -rf app/src/main/assets/Assets
+          cp -R Assets app/src/main/assets/Assets
+
       - name: Decode release keystore
         if: env.HAS_SIGNING == 'true'
         shell: bash

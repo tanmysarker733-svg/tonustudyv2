@@ -3,6 +3,9 @@ package app.tonustudy.vercel.app
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.Color
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.net.Uri
 import android.os.Bundle
 import android.webkit.CookieManager
@@ -11,10 +14,12 @@ import android.webkit.ValueCallback
 import android.webkit.WebChromeClient
 import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
+import android.webkit.WebResourceResponse
 import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.FrameLayout
+import android.widget.ImageView
 import android.widget.ProgressBar
 import androidx.activity.ComponentActivity
 import androidx.activity.OnBackPressedCallback
@@ -39,6 +44,7 @@ class MainActivity : ComponentActivity() {
     private lateinit var webView: WebView
     private lateinit var refreshLayout: SwipeRefreshLayout
     private lateinit var progressBar: ProgressBar
+    private lateinit var launchBrand: ImageView
     private lateinit var credentialManager: CredentialManager
     private var fileCallback: ValueCallback<Array<Uri>>? = null
     private var lastTrustedUrl = BuildConfig.APP_URL
@@ -61,6 +67,18 @@ class MainActivity : ComponentActivity() {
         val root = FrameLayout(this)
         refreshLayout = SwipeRefreshLayout(this)
         webView = WebView(this)
+        launchBrand = ImageView(this).apply {
+            setImageResource(R.drawable.tonu_study_brand)
+            scaleType = ImageView.ScaleType.FIT_CENTER
+            setBackgroundColor(Color.rgb(7, 19, 27))
+            contentDescription = getString(R.string.app_name)
+            setPadding(
+                resources.displayMetrics.density.times(32).toInt(),
+                resources.displayMetrics.density.times(32).toInt(),
+                resources.displayMetrics.density.times(32).toInt(),
+                resources.displayMetrics.density.times(32).toInt()
+            )
+        }
         progressBar = ProgressBar(this, null, android.R.attr.progressBarStyleHorizontal).apply {
             max = 100
         }
@@ -74,6 +92,13 @@ class MainActivity : ComponentActivity() {
         )
         root.addView(
             refreshLayout,
+            FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.MATCH_PARENT,
+                FrameLayout.LayoutParams.MATCH_PARENT
+            )
+        )
+        root.addView(
+            launchBrand,
             FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.MATCH_PARENT,
                 FrameLayout.LayoutParams.MATCH_PARENT
@@ -98,7 +123,10 @@ class MainActivity : ComponentActivity() {
             javaScriptEnabled = true
             domStorageEnabled = true
             databaseEnabled = true
-            cacheMode = WebSettings.LOAD_DEFAULT
+            // The online shell is the source of truth.  Avoid presenting an old
+            // WebView cache after a web release; the bundled asset remains the
+            // offline fallback through shouldInterceptRequest/onReceivedError.
+            cacheMode = WebSettings.LOAD_NO_CACHE
             mixedContentMode = WebSettings.MIXED_CONTENT_NEVER_ALLOW
             allowFileAccess = false
             allowContentAccess = false
@@ -117,7 +145,12 @@ class MainActivity : ComponentActivity() {
             override fun onProgressChanged(view: WebView?, progress: Int) {
                 progressBar.progress = progress
                 progressBar.visibility = if (progress >= 100) android.view.View.GONE else android.view.View.VISIBLE
-                if (progress >= 100) refreshLayout.isRefreshing = false
+                if (progress >= 100) {
+                    refreshLayout.isRefreshing = false
+                    launchBrand.animate().alpha(0f).setDuration(180).withEndAction {
+                        launchBrand.visibility = android.view.View.GONE
+                    }.start()
+                }
             }
 
             override fun onShowFileChooser(
@@ -157,7 +190,16 @@ class MainActivity : ComponentActivity() {
         })
 
         val initialUrl = intent?.data?.takeIf(::isTrustedUri)?.toString() ?: BuildConfig.APP_URL
-        webView.loadUrl(initialUrl)
+        if (hasInternetConnection()) {
+            webView.clearCache(false)
+            webView.loadUrl(
+                initialUrl,
+                mapOf("Cache-Control" to "no-cache, no-store", "Pragma" to "no-cache")
+            )
+        } else {
+            // Start from the packaged HTML immediately when the device is offline.
+            webView.loadUrl(OFFLINE_URL)
+        }
     }
 
     override fun onDestroy() {
@@ -179,13 +221,38 @@ class MainActivity : ComponentActivity() {
                 deliverGoogleResult(false, error = "Google sign-in is only available on Tonu Study.")
                 return
             }
-            runOnUiThread { startGoogleSignIn() }
+            if (!hasInternetConnection()) {
+                deliverGoogleResult(
+                    false,
+                    error = "No internet connection. Please connect to the internet and try again."
+                )
+                return
+            }
+            try {
+                runOnUiThread {
+                    runCatching { startGoogleSignIn() }
+                        .onFailure {
+                            deliverGoogleResult(
+                                false,
+                                error = "Google sign-in could not start in this app build. Please update the app and try again."
+                            )
+                        }
+                }
+            } catch (_: Exception) {
+                deliverGoogleResult(
+                    false,
+                    error = "Google sign-in could not start in this app build. Please update the app and try again."
+                )
+            }
         }
 
         @JavascriptInterface
         fun retry() {
             runOnUiThread { webView.loadUrl(lastTrustedUrl) }
         }
+
+        @JavascriptInterface
+        fun isOnline(): Boolean = hasInternetConnection()
 
         @JavascriptInterface
         fun openExternal(url: String) {
@@ -217,10 +284,16 @@ class MainActivity : ComponentActivity() {
                 }
             } catch (_: GetCredentialCancellationException) {
                 deliverGoogleResult(false, error = "Google sign-in was cancelled.")
-            } catch (error: GetCredentialException) {
-                deliverGoogleResult(false, error = error.message ?: "No Google account is available.")
-            } catch (error: Exception) {
-                deliverGoogleResult(false, error = error.message ?: "Google sign-in failed.")
+            } catch (_: GetCredentialException) {
+                deliverGoogleResult(
+                    false,
+                    error = "Google sign-in could not continue. Check your Google Play services and app configuration, then try again."
+                )
+            } catch (_: Exception) {
+                deliverGoogleResult(
+                    false,
+                    error = "Google sign-in could not continue. Please update the app and try again."
+                )
             }
         }
     }
@@ -256,6 +329,29 @@ class MainActivity : ComponentActivity() {
             }
         }
 
+        override fun shouldInterceptRequest(
+            view: WebView?,
+            request: WebResourceRequest
+        ): WebResourceResponse? {
+            val uri = request.url
+            val isAppShell = isTrustedUri(uri) && (uri.path.isNullOrBlank() || uri.path == "/" || uri.path == "/index.html")
+            if (!hasInternetConnection() && isAppShell) {
+                return runCatching {
+                    WebResourceResponse(
+                        "text/html",
+                        "UTF-8",
+                        assets.open("index.html")
+                    ).apply {
+                        responseHeaders = mapOf(
+                            "Cache-Control" to "no-store",
+                            "X-Tonu-Offline" to "1"
+                        )
+                    }
+                }.getOrNull()
+            }
+            return super.shouldInterceptRequest(view, request)
+        }
+
         override fun onReceivedError(
             view: WebView,
             request: WebResourceRequest,
@@ -263,9 +359,24 @@ class MainActivity : ComponentActivity() {
         ) {
             if (request.isForMainFrame) {
                 refreshLayout.isRefreshing = false
-                view.loadUrl(OFFLINE_URL)
+                if (!hasInternetConnection()) {
+                    view.settings.cacheMode = WebSettings.LOAD_CACHE_ELSE_NETWORK
+                    // The packaged shell remains usable offline. Its web bridge reports
+                    // offline status, so remote uploads and Google sign-in stay disabled.
+                    view.loadUrl("file:///android_asset/index.html")
+                } else {
+                    view.loadUrl(OFFLINE_URL)
+                }
             }
         }
+    }
+
+    private fun hasInternetConnection(): Boolean {
+        val manager = getSystemService(ConnectivityManager::class.java) ?: return false
+        val network = manager.activeNetwork ?: return false
+        val capabilities = manager.getNetworkCapabilities(network) ?: return false
+        return capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) &&
+            capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED)
     }
 
     private fun isTrustedUri(uri: Uri): Boolean =

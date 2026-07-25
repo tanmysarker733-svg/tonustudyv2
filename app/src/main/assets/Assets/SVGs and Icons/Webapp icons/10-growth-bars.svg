@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024" role="img" aria-label="TONU STUDY growth bars logo">
+  
+      <g transform="translate(512 403)">
+        <rect x="-176" y="42" width="72" height="122" rx="20" fill="#CFECE1"/>
+        <rect x="-70" y="-24" width="72" height="188" rx="20" fill="#6AC5A4"/>
+        <rect x="36" y="-103" width="72" height="267" rx="20" fill="#1C795B"/>
+        <path d="M-161-20 4-149l88 56 101-111" fill="none" stroke="#173F34" stroke-width="24" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="m151-204 42 0 0 42" fill="none" stroke="#173F34" stroke-width="24" stroke-linecap="round"/>
+      </g>
+      <text x="512" y="691" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="82" font-weight="800" letter-spacing="6" fill="#173F34">TONU STUDY</text>
+      <text x="512" y="748" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="22" font-weight="700" letter-spacing="9" fill="#4E766A">SMALL STEPS, REAL GROWTH</text>
+    
+</svg>

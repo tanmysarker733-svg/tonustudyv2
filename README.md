@@ -8,3 +8,15 @@ phases, with a focus on online-class and syllabus progress tracking.
 The deployed web app is the shared source of truth for browsers and the Android
 client. Android source, native Google account sign-in setup, and release
 instructions are documented in [ANDROID_SETUP.md](ANDROID_SETUP.md).
+
+## Offline and low-end device support
+
+- The web app caches its same-origin shell after the first successful online
+  visit. Study data continues to save in browser storage while offline.
+- Chat, authentication, cloud restore, and cloud upload are paused offline and
+  resume after connectivity returns.
+- Android v2.1 bundles the web shell, so the dashboard and local study tools can
+  open without a connection.
+- **Look > Performance** includes a single-layer subject glow and a static
+  **Blue Vibe Lite** profile. Low-power devices automatically reduce expensive
+  filters and motion.

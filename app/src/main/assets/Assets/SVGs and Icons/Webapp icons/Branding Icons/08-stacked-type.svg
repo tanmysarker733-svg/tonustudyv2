@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024" role="img" aria-label="TONU STUDY bold stacked typography logo">
+  
+      <text x="270" y="405" font-family="'Segoe UI', Arial, sans-serif" font-size="152" font-weight="850" letter-spacing="-5" fill="#17191D">TONU</text>
+      <text x="270" y="547" font-family="'Segoe UI', Arial, sans-serif" font-size="152" font-weight="850" letter-spacing="-5" fill="#17191D">STUDY</text>
+      <rect x="270" y="587" width="484" height="24" rx="12" fill="#FFE08A"/>
+      <rect x="270" y="587" width="362" height="24" rx="12" fill="#F1B93F"/>
+      <path d="m686 324 34 34 70-82" fill="none" stroke="#F1B93F" stroke-width="27" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="274" y="665" font-family="'Segoe UI', Arial, sans-serif" font-size="24" font-weight="700" letter-spacing="8" fill="#676A70">DAILY PROGRESS</text>
+    
+</svg>

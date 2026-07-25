@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024" role="img" aria-label="TONU STUDY TS monogram logo">
+  
+      <rect x="331" y="225" width="362" height="362" rx="96" fill="#E9F0FF"/>
+      <path d="M400 333h176M488 333v151" fill="none" stroke="#264A9B" stroke-width="38" stroke-linecap="round"/>
+      <path d="M598 349c-18-21-83-27-91 11-10 46 116 26 103 88-9 44-82 42-118 12" fill="none" stroke="#537FF1" stroke-width="31" stroke-linecap="round"/>
+      <path d="m434 518 43 43 109-122" fill="none" stroke="#27A77A" stroke-width="28" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="512" y="717" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="79" font-weight="800" letter-spacing="5" fill="#1A3470">TONU STUDY</text>
+      <text x="512" y="768" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="20" font-weight="700" letter-spacing="8" fill="#66738B">TRACK • FOCUS • GROW</text>
+    
+</svg>

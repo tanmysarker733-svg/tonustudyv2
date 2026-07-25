@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024" role="img" aria-label="TONU STUDY open book logo">
+  
+      <g transform="translate(512 408)" fill="none" stroke="#183C87" stroke-width="22" stroke-linejoin="round">
+        <path d="M-190-94c72-28 137-18 190 25v215c-53-43-118-53-190-25z"/>
+        <path d="M190-94C118-122 53-112 0-69v215c53-43 118-53 190-25z"/>
+        <path d="M0-69v215"/>
+        <path d="m92 13 36 36 69-79" stroke="#5B8CFF" stroke-width="25" stroke-linecap="round"/>
+      </g>
+      <text x="512" y="680" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="76" font-weight="800" letter-spacing="6" fill="#183C87">TONU STUDY</text>
+      <rect x="367" y="718" width="290" height="9" rx="4.5" fill="#5B8CFF"/>
+    
+</svg>

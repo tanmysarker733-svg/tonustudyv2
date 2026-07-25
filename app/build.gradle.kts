@@ -9,10 +9,10 @@ android {
 
     defaultConfig {
         applicationId = "app.tonustudy.vercel.app"
-        minSdk = 24
+        minSdk = 23
         targetSdk = 36
-        versionCode = 2
-        versionName = "2.0.0"
+        versionCode = 21004
+        versionName = "2.1.4"
 
         buildConfigField(
             "String",
