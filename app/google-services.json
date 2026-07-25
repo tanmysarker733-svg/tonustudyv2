@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "663585592404",
+    "firebase_url": "https://tonustudy-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "tonustudy",
+    "storage_bucket": "tonustudy.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:663585592404:android:2a60d0b63ac30ca93dc9c1",
+        "android_client_info": {
+          "package_name": "app.tonustudy.vercel.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "663585592404-j277r3es9r4vcsj1227pmqkusu7pr7en.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCGPbOJ8CEG2yhsbMCaZp39yeSaQhJSUEE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "663585592404-d3r5c8mgq7bagcoa6vch9pftamuvpeet.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
