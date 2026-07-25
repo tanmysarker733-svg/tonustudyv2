@@ -13,7 +13,7 @@ new APK.
 - Only HTTPS is allowed. The WebView bridge is usable only on
   `tonustudy.vercel.app`.
 - Browser storage, cookies, file selection, pull-to-refresh, Android back
-  navigation, external links, and an offline recovery screen are supported.
+  navigation, external links, and a bundled offline app shell are supported.
 - No legacy external-storage permission and no third-party wrapper branding or
   test-mode page.
 
@@ -39,6 +39,35 @@ The old APK was signed by the previous wrapper service. Without that provider's
 private key, Android will require users to uninstall the old APK once before
 installing this first-party build. Future builds signed by the new permanent
 key will update normally.
+
+## Compatibility and installation
+
+The project produces one universal APK (no ABI split or native-library
+restriction) and supports Android 6.0 / API 23 and newer, including 32-bit
+emulators. If BlueStacks reports only “Installation error,” the most common
+cause is an installed APK with the same package but a different signature:
+
+1. Export/backup any data from the old wrapper.
+2. Uninstall the old Tonu Study app.
+3. Install the new signed universal APK.
+4. Keep using the same permanent keystore for every later release.
+
+For an exact emulator error, run:
+
+```powershell
+adb install -r .\Tonu-Study-v2.1-universal.apk
+```
+
+An `INSTALL_FAILED_UPDATE_INCOMPATIBLE` result confirms a signing-key conflict,
+not a 32-bit compatibility problem.
+
+## Offline behavior
+
+- The Android client tries the live HTTPS app first.
+- Without validated internet, the same app shell is served from bundled assets.
+- Local study edits remain available and save locally.
+- Chat, Google sign-in, cloud upload, and cloud restore show a connection notice
+  instead of discarding input or pretending a sync succeeded.
 
 ## GitHub Actions secrets
 

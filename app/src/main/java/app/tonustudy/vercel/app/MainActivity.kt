@@ -3,6 +3,8 @@ package app.tonustudy.vercel.app
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Bitmap
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.net.Uri
 import android.os.Bundle
 import android.webkit.CookieManager
@@ -11,6 +13,7 @@ import android.webkit.ValueCallback
 import android.webkit.WebChromeClient
 import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
+import android.webkit.WebResourceResponse
 import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
@@ -179,6 +182,13 @@ class MainActivity : ComponentActivity() {
                 deliverGoogleResult(false, error = "Google sign-in is only available on Tonu Study.")
                 return
             }
+            if (!hasInternetConnection()) {
+                deliverGoogleResult(
+                    false,
+                    error = "No internet connection. Please connect to the internet and try again."
+                )
+                return
+            }
             runOnUiThread { startGoogleSignIn() }
         }
 
@@ -186,6 +196,9 @@ class MainActivity : ComponentActivity() {
         fun retry() {
             runOnUiThread { webView.loadUrl(lastTrustedUrl) }
         }
+
+        @JavascriptInterface
+        fun isOnline(): Boolean = hasInternetConnection()
 
         @JavascriptInterface
         fun openExternal(url: String) {
@@ -256,6 +269,29 @@ class MainActivity : ComponentActivity() {
             }
         }
 
+        override fun shouldInterceptRequest(
+            view: WebView?,
+            request: WebResourceRequest
+        ): WebResourceResponse? {
+            val uri = request.url
+            val isAppShell = isTrustedUri(uri) && (uri.path.isNullOrBlank() || uri.path == "/" || uri.path == "/index.html")
+            if (!hasInternetConnection() && isAppShell) {
+                return runCatching {
+                    WebResourceResponse(
+                        "text/html",
+                        "UTF-8",
+                        assets.open("index.html")
+                    ).apply {
+                        responseHeaders = mapOf(
+                            "Cache-Control" to "no-store",
+                            "X-Tonu-Offline" to "1"
+                        )
+                    }
+                }.getOrNull()
+            }
+            return super.shouldInterceptRequest(view, request)
+        }
+
         override fun onReceivedError(
             view: WebView,
             request: WebResourceRequest,
@@ -263,9 +299,22 @@ class MainActivity : ComponentActivity() {
         ) {
             if (request.isForMainFrame) {
                 refreshLayout.isRefreshing = false
-                view.loadUrl(OFFLINE_URL)
+                if (!hasInternetConnection()) {
+                    view.settings.cacheMode = WebSettings.LOAD_CACHE_ELSE_NETWORK
+                    view.loadUrl(BuildConfig.APP_URL)
+                } else {
+                    view.loadUrl(OFFLINE_URL)
+                }
             }
         }
+    }
+
+    private fun hasInternetConnection(): Boolean {
+        val manager = getSystemService(ConnectivityManager::class.java) ?: return false
+        val network = manager.activeNetwork ?: return false
+        val capabilities = manager.getNetworkCapabilities(network) ?: return false
+        return capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) &&
+            capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED)
     }
 
     private fun isTrustedUri(uri: Uri): Boolean =
