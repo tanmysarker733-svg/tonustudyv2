@@ -4,9 +4,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>HSC Study OS</title>
+  <title>TONU STUDY | HSC Study OS</title>
   <meta name="description" content="Non-functional modular scaffold for the HSC Study OS remake." />
-  <link rel="icon" type="image/svg+xml" href="Assets/SVGs%20and%20Icons/Webapp%20icons/4-clean.svg" />
+  <link rel="icon" type="image/png" href="Assets/brand/tonu-study-logo-512.png" />
+  <link rel="preload" as="image" href="Assets/brand/tonu-study-logo-512.png" fetchpriority="high" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -6665,7 +6666,7 @@
       .dash-stats-col {
         padding: 16px;
       }
-
+      
       .analytics-panel {
         padding: 0;
       }
@@ -14889,7 +14890,7 @@
       border-radius: 0 !important;
       color: inherit !important;
     }
-
+    
     #settingsDialog .settings-tabs {
       display: flex !important;
       gap: 6px !important;
@@ -14900,7 +14901,7 @@
       margin-bottom: 16px !important;
       overflow: hidden !important;
     }
-
+    
     html[data-theme="light"] #settingsDialog .settings-tabs {
       background: rgba(0, 0, 0, 0.05) !important;
     }
@@ -14920,12 +14921,12 @@
       font-weight: 700 !important;
       transition: all 0.2s ease !important;
     }
-
+    
     #settingsDialog .settings-tab:hover {
       background: rgba(255, 255, 255, 0.06) !important;
       color: var(--text-main) !important;
     }
-
+    
     html[data-theme="light"] #settingsDialog .settings-tab:hover {
       background: rgba(0, 0, 0, 0.04) !important;
       color: var(--text-main) !important;
@@ -14936,7 +14937,7 @@
       color: var(--text-main) !important;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
     }
-
+    
     html[data-theme="light"] #settingsDialog .settings-tab--active {
       background: #ffffff !important;
       box-shadow: 0 4px 12px rgba(37, 99, 235, 0.08) !important;
@@ -20499,7 +20500,7 @@
     }
 
     /* v315 final handoff pass:
-       high-density controls use explicit light-on-dark / dark-on-ligh
+       high-density controls use explicit light-on-dark / dark-on-light
        contrast, one scroll owner per dialog, and state-only motion. */
     .nav-brand__text {
       display: inline-block;
@@ -21035,13 +21036,13 @@
       }
     }
 
-    /* v319: local Tonu Study identity assets. The horizontal mark waits behind
-       the accessible text label until its SVG has fully loaded. */
+    /* v343: one lightweight brand asset is reused as the title mark and
+       image-loader fallback. Text remains visible until the image is decoded. */
     .nav-brand {
       position: relative;
       overflow: hidden;
       isolation: isolate;
-      min-width: 124px !important;
+      min-width: 132px !important;
       background: #f6f2fa !important;
       border-color: #d5c4dd !important;
       box-shadow: 0 1px 3px rgba(31, 21, 41, .14), inset 0 1px 0 rgba(255, 255, 255, .92) !important;
@@ -21073,6 +21074,36 @@
       transform: translateY(2px) scale(.96);
       transition: opacity .2s ease, transform .2s ease;
       pointer-events: none;
+    }
+
+    .brand-image-buffer {
+      position: fixed;
+      z-index: 10000;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      background: var(--bg, #07131b);
+      opacity: 1;
+      visibility: visible;
+      transition: opacity .2s ease, visibility .2s step-end;
+      pointer-events: all;
+    }
+
+    .brand-image-buffer.is-ready {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .brand-image-buffer img {
+      width: min(180px, 52vw);
+      height: auto;
+      border-radius: 18px;
+      box-shadow: 0 14px 38px rgba(0, 0, 0, .18);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .brand-image-buffer { transition: none; }
     }
 
     .nav-brand.is-logo-loaded .nav-brand__text {
@@ -22289,10 +22320,269 @@
         max-width: calc(100vw - 20px);
       }
     }
+    /* v341: settings dialog has one deliberate scroll surface.
+       A fixed card height gives the flex chain a real constraint on Android/BlueStacks,
+       so the body scrolls instead of being clipped below the viewport. */
+    #settingsDialog {
+      overflow: hidden !important;
+    }
+
+    #settingsDialog .settings-dialog__card {
+      height: min(780px, calc(100dvh - 24px)) !important;
+      max-height: calc(100dvh - 24px) !important;
+      min-height: 0 !important;
+      padding: clamp(10px, 2vw, 18px) !important;
+      overflow: hidden !important;
+    }
+
+    #settingsDialog .settings-modal-shell,
+    #settingsDialog .settings-modal-card {
+      display: flex !important;
+      flex: 1 1 auto !important;
+      min-height: 0 !important;
+      min-width: 0 !important;
+      overflow: hidden !important;
+    }
+
+    #settingsDialog .settings-modal-card {
+      flex-direction: column !important;
+    }
+
+    #settingsDialog .settings-tabs {
+      flex: 0 0 auto !important;
+      position: relative;
+      z-index: 1;
+      padding-bottom: 2px;
+    }
+
+    #settingsDialog .settings-body {
+      flex: 1 1 0 !important;
+      min-height: 0 !important;
+      max-height: none !important;
+      overflow-x: hidden !important;
+      overflow-y: auto !important;
+      overscroll-behavior: contain;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: max(16px, env(safe-area-inset-bottom)) !important;
+    }
+
+    @media (max-width: 640px), (max-height: 720px) {
+      #settingsDialog {
+        place-items: center !important;
+        padding: 8px !important;
+      }
+
+      #settingsDialog .settings-dialog__card {
+        width: calc(100vw - 16px) !important;
+        height: calc(100dvh - 16px) !important;
+        max-height: calc(100dvh - 16px) !important;
+        border-radius: 16px !important;
+      }
+
+      #settingsDialog .settings-tabs {
+        padding: 5px 5px 7px !important;
+      }
+
+      #settingsDialog .settings-tab {
+        min-height: 38px !important;
+      }
+    }
+    /* v342: connected-first safeguards and balanced mobile subject glow. */
+    .settings-update-card {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 10px;
+      margin: 12px 0 4px;
+      padding: 12px;
+      border: 1px solid color-mix(in srgb, #38bdf8 48%, var(--line, #334155));
+      border-radius: 14px;
+      background: linear-gradient(135deg, rgba(14, 165, 233, .18), rgba(37, 99, 235, .1));
+      color: inherit;
+      text-decoration: none;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, .1), 0 10px 22px rgba(2, 6, 23, .12);
+      transition: transform .18s ease, border-color .18s ease, background .18s ease;
+    }
+
+    .settings-update-card:hover,
+    .settings-update-card:focus-visible {
+      transform: translateY(-1px);
+      border-color: #38bdf8;
+      background: linear-gradient(135deg, rgba(14, 165, 233, .28), rgba(37, 99, 235, .16));
+    }
+
+    .settings-update-card > svg:first-child {
+      width: 18px;
+      height: 18px;
+      color: #7dd3fc;
+    }
+
+    .settings-update-card > svg:last-child {
+      width: 15px;
+      height: 15px;
+      color: var(--text-sub, #cbd5e1);
+    }
+
+    .settings-update-card span { min-width: 0; }
+    .settings-update-card strong,
+    .settings-update-card small { display: block; }
+    .settings-update-card strong { font-size: .84rem; }
+    .settings-update-card small { margin-top: 2px; color: var(--text-sub, #cbd5e1); font-size: .7rem; line-height: 1.35; }
+    .settings-update-card em {
+      margin-left: 5px;
+      padding: 2px 6px;
+      border-radius: 999px;
+      background: rgba(56, 189, 248, .16);
+      color: #7dd3fc;
+      font-size: .67rem;
+      font-style: normal;
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* The quick editor should read as a calm, layered dark surface—not an
+       inverted white control panel.  Semantic actions keep their own colors. */
+    html[data-theme="dark"] .chapter-quick-dialog :is(.ch-btn, .track-chk, .ch-style-option:not(.is-active)) {
+      border-color: rgba(148, 163, 184, .43) !important;
+      background: rgba(30, 41, 59, .92) !important;
+      color: #dbeafe !important;
+    }
+
+    html[data-theme="light"] .chapter-quick-dialog :is(.ch-btn, .track-chk, .ch-style-option:not(.is-active)) {
+      border-color: #b9c9dc !important;
+      background: #edf3fa !important;
+      color: #19324d !important;
+    }
+
+    .chapter-quick-dialog :is(.ch-btn, .track-chk, .ch-style-option):hover {
+      border-color: color-mix(in srgb, var(--accent, #38bdf8) 68%, #94a3b8) !important;
+      filter: brightness(1.05);
+    }
+
+    /* Preserve a visible neon identity in the one-layer performance mode.
+       The second pseudo layer remains disabled; this boosts the surviving layer only. */
+    html.subject-neon-single #syllabus .subject-card {
+      border-color: color-mix(in srgb, var(--subject-accent) 58%, #35506d) !important;
+      box-shadow:
+        inset 0 1px 0 color-mix(in srgb, var(--subject-accent) 26%, transparent),
+        0 0 12px color-mix(in srgb, var(--subject-accent) 22%, transparent),
+        0 10px 24px rgba(2, 6, 23, .18) !important;
+    }
+
+    html.subject-neon-single #syllabus .subject-card::before {
+      opacity: .9 !important;
+      filter: drop-shadow(0 0 7px color-mix(in srgb, var(--subject-accent) 45%, transparent)) !important;
+    }
+
+    html.performance-lite.subject-neon-single #syllabus .subject-card {
+      box-shadow:
+        inset 0 1px 0 color-mix(in srgb, var(--subject-accent) 24%, transparent),
+        0 0 9px color-mix(in srgb, var(--subject-accent) 20%, transparent) !important;
+    }
+
+    @media (max-width: 640px) {
+      .settings-update-card { padding: 10px; }
+      .settings-update-card small { font-size: .67rem; }
+    }
+    /* v344: calm mobile/app surfaces, compact footer, and safe subject edits. */
+    #settingsDialog .settings-tabs {
+      overflow: visible !important;
+      min-height: 46px;
+      padding: 5px 5px 8px !important;
+      align-items: stretch;
+    }
+
+    #settingsDialog .settings-tab {
+      min-height: 36px !important;
+      margin: 0 !important;
+      border-radius: 10px !important;
+      line-height: 1.1;
+    }
+
+    #settingsDialog .settings-body {
+      scrollbar-gutter: stable;
+      padding: 4px 8px max(20px, env(safe-area-inset-bottom)) !important;
+    }
+
+    /* The footer is content-sized: no artificial runway below the portfolio. */
+    .study-shell { min-height: 0 !important; padding-bottom: 18px !important; }
+    .app-footer { min-height: 0 !important; margin: 12px 0 0 !important; padding: 14px 16px 18px !important; }
+    .app-footer::after { content: none !important; display: none !important; }
+    .developer-footer-preview { margin-bottom: 0 !important; }
+
+    /* Chapter quick editor: a medium-contrast surface rather than a black/white clash. */
+    .chapter-quick-dialog .chapter-quick-dialog__card,
+    .chapter-quick-dialog .ch-plate__inner {
+      background: linear-gradient(180deg, #11253b, #0d1e31) !important;
+      border-color: rgba(102, 154, 204, .52) !important;
+      color: #e8f1fb !important;
+    }
+
+    .chapter-quick-dialog :is(.ch-btn, .track-chk, .ch-style-option:not(.is-active), .ch-pill:not(.ch-pill--reset):not(.ch-pill--close):not(.ch-pill--done)) {
+      background: #1a314a !important;
+      border-color: rgba(125, 164, 202, .42) !important;
+      color: #dceafa !important;
+    }
+
+    .chapter-quick-dialog .ch-pill--close {
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(135deg, #2563eb, #0ea5e9) !important;
+      border-color: #5cc8ff !important;
+      color: #f8fcff !important;
+      box-shadow: 0 7px 16px rgba(14, 116, 210, .28), inset 0 1px 0 rgba(255,255,255,.28) !important;
+    }
+
+    .chapter-quick-dialog .ch-pill--reset {
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(135deg, #b91c35, #e11d48) !important;
+      border-color: #ff92a6 !important;
+      color: #fff6f8 !important;
+      box-shadow: 0 7px 16px rgba(190, 24, 63, .28), inset 0 1px 0 rgba(255,255,255,.2) !important;
+    }
+
+    .chapter-quick-dialog .ch-pill--reset::after {
+      content: "✦";
+      position: absolute;
+      left: 50%; bottom: 3px;
+      font-size: .72rem;
+      color: #ffe1e7;
+      opacity: .85;
+      animation: chapterResetSpark 1.8s ease-in infinite;
+      pointer-events: none;
+    }
+
+    @keyframes chapterResetSpark {
+      0%, 100% { transform: translate(-50%, 5px) scale(.7); opacity: 0; }
+      30% { opacity: .92; }
+      70% { transform: translate(-50%, -13px) scale(1.14); opacity: 0; }
+    }
+
+    /* Subject settings now visibly communicate the deliberate three-click guard. */
+    #syllabus .subj-settings button[data-confirm-step="1"],
+    #syllabus .subj-settings button[data-confirm-step="2"] {
+      background: linear-gradient(135deg, #8f2435, #c24154) !important;
+      border-color: #ff9dad !important;
+      color: #fff8fa !important;
+    }
+
+    #syllabus .subj-settings .ss-track-chk.is-triple-warning {
+      background: rgba(190, 24, 63, .22) !important;
+      border-color: #ff9dad !important;
+      color: #fff3f6 !important;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .chapter-quick-dialog .ch-pill--reset::after { animation: none; display: none; }
+    }
+
   </style>
 </head>
 
 <body class="login-locked">
+  <div class="brand-image-buffer" id="brandImageBuffer" role="status" aria-label="Loading Tonu Study">
+    <img src="Assets/brand/tonu-study-logo-512.png" alt="TONU STUDY" decoding="async" />
+  </div>
   <section class="login-gate" id="loginGate" aria-label="Study OS login">
     <span class="login-cloud login-cloud--one" aria-hidden="true"></span>
     <span class="login-cloud login-cloud--two" aria-hidden="true"></span>
@@ -22433,10 +22723,10 @@
     const defaultGraphConfig = {
       visClass: true,
       visTotal: true,
-      maxLimit: 15,
-      daysToLoad: 15,
-      pcDaysView: 15,
-      mobDaysView: 15,
+      maxLimit: 7,
+      daysToLoad: 7,
+      pcDaysView: 7,
+      mobDaysView: 7,
       timelineZoom: false,
     };
 
@@ -22893,7 +23183,7 @@
       const tipWidth = Math.min(320, Math.max(210, rect.width + 72));
       const tipLeft = Math.max(12, Math.min(window.innerWidth - tipWidth - 12, rect.left + (rect.width - tipWidth) / 2));
       const preferredTop = rect.bottom + 10;
-      const tipTop = preferredTop + 58 < window.innerHeigh
+      const tipTop = preferredTop + 58 < window.innerHeight
         ? preferredTop
         : Math.max(12, rect.top - 62);
       tip.style.width = `${tipWidth}px`;
@@ -23515,7 +23805,7 @@
     </button>
   `;
 
-      // Update dialog title with coun
+      // Update dialog title with count
       const titleEl = document.getElementById("chatShowAllTitle");
       if (titleEl) {
         const titleSpan = titleEl.querySelector("span");
@@ -23546,7 +23836,7 @@
         const select = document.getElementById(id);
         if (!(select instanceof HTMLSelectElement)) return;
         select.dataset.customized = "true";
-        // Keep the native control in the DOM for form/state semantics, bu
+        // Keep the native control in the DOM for form/state semantics, but
         // never allow it to open a platform dropdown over the custom UI.
         select.hidden = true;
         select.setAttribute("aria-hidden", "true");
@@ -23897,7 +24187,7 @@
               classType = "Detailed";
             }
             const hasExplicitPercent = /(\d{1,3}\s*%|last\s*\d{1,3}|partial|half)/i.test(String(item.rawLine || ""));
-            const completionPercent = totalLectures && (lectures.length || safeRange) && !hasExplicitPercen
+            const completionPercent = totalLectures && (lectures.length || safeRange) && !hasExplicitPercent
               ? 100
               : clampAiPercent(item.completionPercent);
             return {
@@ -25561,7 +25851,7 @@
             `;
           }).join('')}
         </div>
-
+        
         ${item?.subjectIndex !== null && item?.subjectIndex !== undefined ? renderComposerCustomSuffixPanel() : ""}
       `;
         }
@@ -25584,7 +25874,7 @@
             `;
           }).join('')}
         </div>
-
+        
         ${item.chapterIndex !== null && item.chapterIndex !== undefined ? renderComposerCustomSuffixPanel() : ""}
       `;
         }
@@ -25692,7 +25982,7 @@
           <label class="adjuster-label" style="display:block; margin-bottom: 6px;">Line Text Editor</label>
           <input type="text" id="composerLineText" class="composer-input-field" value="${escapeHtml(currentLineText)}">
         </div>
-
+        
         <div class="composer-preview-pane">
           <div class="preview-pane-label">Live Entire Message Preview</div>
           <pre class="preview-pane-text" id="composerLinePreview" style="font-family: monospace; white-space: pre-wrap; font-size: 0.85rem; line-height: 1.4; background: rgba(0,0,0,0.25); padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05); margin: 0; color: #fff;">${escapeHtml(liveText)}</pre>
@@ -25854,7 +26144,7 @@
         <div class="preview-pane-label">Final Update Message (Editable)</div>
         <textarea id="composerFinalTextArea" style="font-family: monospace; white-space: pre-wrap; font-size: 0.88rem; line-height: 1.4; background: rgba(0,0,0,0.25); padding: 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.15); margin: 0; color: #fff; width: 100%; min-height: 180px; resize: vertical; outline: none; box-sizing: border-box;">${escapeHtml(finalText)}</textarea>
       </div>
-
+      
       <div class="composer-final-actions">
         <div class="composer-final-actions__left">
           <button class="btn-small composer-add-action" type="button" data-action="composer-add-more" title="Add another update line">
@@ -25961,7 +26251,7 @@
       composerState.reviewTasksExpanded = false;
       resetComposerCurrentItem();
 
-      // Load local draf
+      // Load local draft
       loadComposerDraft();
 
       const composeNode = document.querySelector(".chat-compose");
@@ -27109,7 +27399,7 @@
            <!--  <h2>Dashboard</h2> -->
         </div>
       </div>
-
+      
       <div class="dashboard-modern dark" id="dashboardModern">
         <div class="dash-mode-toggle">
           <span class="toggle-label toggle-label--dark">DARK</span>
@@ -27131,7 +27421,7 @@
               ETA &nbsp;${escapeHtml(typeof eta === "string" ? eta : eta + " days")}
             </div>
           </div>
-
+          
           <div class="dash-body">
             <div class="stats-col">
               <div class="stat-card">
@@ -27147,7 +27437,7 @@
                 <div class="stat-detail" id="dashHoursLeftDetail">${pcmbiStats.remainingClasses} classes remaining</div>
               </div>
             </div>
-
+            
             <div class="gauge-col">
               <div class="gauge-wrap">
                 <svg viewBox="0 0 180 180" width="180" height="180">
@@ -27174,7 +27464,7 @@
                 <div class="gleg"><span class="gleg-dot" style="background:#d97706"></span>Time</div>
               </div>
             </div>
-
+            
             <div class="stats-col">
               <div class="count-card">
                 <div class="count-label"><span class="sc-dot" style="background:#16a34a"></span>Classes Completed</div>
@@ -27194,7 +27484,7 @@
               </div>
             </div>
           </div>
-
+          
           <div class="dash-foot">
             <div class="foot-item">
               <span class="foot-label">Syllabus</span>
@@ -27690,7 +27980,7 @@
               + Add chapter
             </button>
             <button class="ss-apply-btn ss-apply-btn--danger" data-action="subj-remove-last-chapter" data-si="${si}" data-pi="${pi}" data-confirm-step="0">
-              Remove las
+              Remove last
             </button>
             <button class="ss-apply-btn" data-action="subj-apply-defaults" data-si="${si}" data-pi="${pi}">
               Apply defaults
@@ -27788,7 +28078,7 @@
       <div class="analytics-panel chronos-panel is-preview">
         <div class="chart-shell__head">
           <div>
-
+            
              <!-- <p>Online Class and Total Study across the last <span id="chronosDaysLabel">${escapeHtml(state.graphConfig.daysToLoad)}</span> days.</p> -->
           </div>
           <div class="chronos-tools">
@@ -27817,7 +28107,7 @@
                 ${icon("x", "Close")}
               </button>
             </div>
-
+            
             <div class="chronos-config-dialog__body" style="display: flex; flex-direction: column; gap: 14px; margin-top: 20px;">
               <div class="chronos-presets" aria-label="Chronos view presets" style="display: flex; flex-direction: column; gap: 8px;">
                 <span class="chronos-presets__label" style="font-size: 11px; font-weight: 600; color: var(--text-sub);">View presets</span>
@@ -27827,27 +28117,27 @@
                   <button class="chronos-preset" type="button" data-action="chronos-apply-preset" data-days="30" data-pc="30" data-mob="30" style="padding: 6px 12px; border-radius: 8px; font-size: 12px;">30 / 30 / 30</button>
                 </div>
               </div>
-
+              
               <label class="chronos-field" style="display: flex; align-items: center; justify-content: space-between; gap: 12px;">
                 <span style="font-size: 12px; font-weight: 600; color: var(--text-sub);">Max hours</span>
                 <input id="chronosMaxLimit" type="number" min="1" max="24" value="${escapeHtml(state.graphConfig.maxLimit)}" style="background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); border-radius: 6px; padding: 6px 10px; color: #f1f5f9; outline: none; width: 80px; text-align: center;">
               </label>
-
+              
               <label class="chronos-field" style="display: flex; align-items: center; justify-content: space-between; gap: 12px;">
                 <span style="font-size: 12px; font-weight: 600; color: var(--text-sub);">Days loaded</span>
                 <input id="chronosDaysToLoad" type="number" min="3" max="120" value="${escapeHtml(state.graphConfig.daysToLoad)}" style="background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); border-radius: 6px; padding: 6px 10px; color: #f1f5f9; outline: none; width: 80px; text-align: center;">
               </label>
-
+              
               <label class="chronos-field" style="display: flex; align-items: center; justify-content: space-between; gap: 12px;">
                 <span style="font-size: 12px; font-weight: 600; color: var(--text-sub);">Desktop view</span>
                 <input id="chronosPcView" type="number" min="3" max="60" value="${escapeHtml(state.graphConfig.pcDaysView)}" style="background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); border-radius: 6px; padding: 6px 10px; color: #f1f5f9; outline: none; width: 80px; text-align: center;">
               </label>
-
+              
               <label class="chronos-field" style="display: flex; align-items: center; justify-content: space-between; gap: 12px;">
                 <span style="font-size: 12px; font-weight: 600; color: var(--text-sub);">Mobile view</span>
                 <input id="chronosMobView" type="number" min="3" max="40" value="${escapeHtml(state.graphConfig.mobDaysView)}" style="background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); border-radius: 6px; padding: 6px 10px; color: #f1f5f9; outline: none; width: 80px; text-align: center;">
               </label>
-
+              
               <button class="btn-small btn-small--primary" type="button" data-action="chronos-apply-config" style="width: 100%; justify-content: center; padding: 8px;">Apply Changes</button>
             </div>
           </section>
@@ -28025,7 +28315,7 @@
                 ${row("Compact Mode", checkbox("tgl_compact_mode", userSettings.uiConfigs.compactMode), "Reduces padding and sizes to fit more content")}
                 ${row("Fullscreen Composer", checkbox("tgl_composer_fs", userSettings.uiConfigs.composerFullscreen), "Show composer as full screen overlay")}
                 ${row("Show ETA Badge", checkbox("etaSettingToggle", userSettings.uiConfigs.etaOn))}
-                ${row("Font Scale", `<input type="range" id="fontScaleRange" min="80" max="120" step="5" value="${userSettings.fontScale || 100}" oninput="document.getElementById('fontScaleVal').textContent=this.value+'%';document.documentElement.style.setProperty('--master-font-scale', this.value/100)"><span id="fontScaleVal" style="margin-left: 8px; font-size: 0.8rem; min-width: 3ch; display: inline-block;">${userSettings.fontScale || 100}%</span>`, "Adjust overall text size")}
+                ${row("Font Scale", `<input type="range" id="fontScaleRange" min="80" max="165" step="5" value="${userSettings.fontScale || 100}" oninput="document.getElementById('fontScaleVal').textContent=this.value+'%';document.documentElement.style.setProperty('--master-font-scale', this.value/100)"><span id="fontScaleVal" style="margin-left: 8px; font-size: 0.8rem; min-width: 3ch; display: inline-block;">${userSettings.fontScale || 100}%</span>`, "Adjust overall text size up to 165%")}
               `)}
               ${group("Performance", `
                 ${row("Single-layer Subject Glow", checkbox("tgl_single_layer_neon", userSettings.uiConfigs.singleLayerNeon === true), "Keeps the neon outline while rendering only one lightweight glow layer")}
@@ -28106,8 +28396,13 @@
             ${pane("about", `
               <div class="settings-about-card">
                 <div class="settings-about-mark">OS</div>
-                <h3>HSC Study OS</h3>
+                <h3>TONU STUDY</h3>
                 <p>Premium Edition preview shell</p>
+                <a class="settings-update-card" href="https://github.com/tanmysarker733-svg/tonustudyv2/releases/download/android/Tonu.Study.apk" target="_blank" rel="noopener noreferrer" aria-label="Download the latest Android app">
+                  ${icon("download", "Update")}
+                  <span><strong>Update to latest version <em>Android v2.1.1 · Web 344</em></strong><small>Android release channel · checks the current GitHub release when you are online</small></span>
+                  ${icon("external-link", "Open")}
+                </a>
                 <p>Built by Tanmoy Sarker for HSC students who want to track smarter.</p>
                 <button class="btn-small btn-small--primary btn-small--wide" type="button" data-action="open-developer-dialog" style="margin-top: 14px; margin-bottom: 6px; border-radius: 999px; display: inline-flex; align-items: center; justify-content: center; gap: 8px;">
                   ${icon("user-round", "Developer")}
@@ -28137,7 +28432,7 @@
         <div class="floating-badge fb-2">${icon("graduation-cap", "Science")} Science '25</div>
         <div class="floating-badge fb-3">${icon("code-2", "Coder")} Coder</div>
         <div class="floating-badge fb-4">${icon("sparkles", "Designer")} Designer</div>
-
+            
             <p class="eyebrow" style="color: var(--accent-blue); letter-spacing: 0.1em; font-weight: 700; margin-bottom: 6px;">CREATOR PORTFOLIO</p>
             <h1 id="developerDialogTitle">Tanmoy Sarker</h1>
             <p class="dev-subtitle">Full-Stack Architect & Digital Creator</p>
@@ -28305,7 +28600,7 @@
                 ${icon("x", "Close")}
               </button>
             </div>
-
+            
             <div class="chat-settings-card__body" style="display: flex; flex-direction: column; gap: 14px; margin-top: 20px;">
               <label class="chat-settings-panel__field">
                 <span class="chat-settings-panel__field-label">Sort by time</span>
@@ -28314,7 +28609,7 @@
                   <option value="asc">Ascending</option>
                 </select>
               </label>
-
+              
               <label class="chat-settings-panel__field">
                 <span class="chat-settings-panel__field-label">Default upload visibility</span>
                 <select id="chatDefaultVisibility">
@@ -28333,7 +28628,7 @@
                   <option value="200">200 messages</option>
                 </select>
               </label>
-
+              
               <div id="chatPaletteContainer"></div>
 
               <div class="chat-settings-panel__note">
@@ -28744,7 +29039,7 @@
                 </label>
                 <button class="btn-small btn-small--primary btn-small--wide" type="button" data-action="security-phone-confirm">${icon("shield-check", "Confirm")} <span>Confirm phone link</span></button>
                 <button class="btn-small btn-small--wide" type="button" data-action="security-send-reset">${icon("mail-check", "Reset")} <span>Send password reset</span></button>
-
+                
                 <p class="security-feedback" id="securityFeedback" role="status"></p>
               </div>
             </div>
@@ -29039,7 +29334,7 @@
 
     const cloudSyncState = {
       status: "idle", // 'idle', 'syncing', 'success', 'error'
-      lastSynced: null, // Date objec
+      lastSynced: null, // Date object
       lastError: null,
     };
 
@@ -29817,7 +30112,7 @@
       <nav class="nav-left" aria-label="Feature units">
         <a class="nav-brand" href="#dashboard" aria-label="${escapeHtml(state.meta.name)} home">
           <span class="nav-brand__text">${escapeHtml(state.meta.name)}</span>
-          <img class="nav-brand__logo" src="Assets/Images/SVGs%20and%20Icons/4h.svg" alt="" aria-hidden="true" />
+          <img class="nav-brand__logo" src="Assets/Images/SVGs%20and%20Icons/4h.svg" alt="" aria-hidden="true" decoding="async" />
         </a>
         ${state.nav.map((item) => `
           <a class="nav-btn" href="#${escapeHtml(item.id)}" data-nav-target="${escapeHtml(item.id)}">
@@ -30494,8 +30789,14 @@
         }
         if (window.TonuAndroid?.signInWithGoogle) {
           showLoginFeedback("Choose a Google account...");
-          window.TonuAndroid.signInWithGoogle();
-          return;
+          try {
+            window.TonuAndroid.signInWithGoogle();
+            return;
+          } catch (nativeError) {
+            console.warn("Native Google sign-in unavailable", nativeError);
+            showLoginFeedback("Google sign-in is not configured in this Android build. Update the app or use Login / SKIP for now.");
+            return;
+          }
         }
         ensureFirebaseInitialized();
         const provider = new window.firebase.auth.GoogleAuthProvider();
@@ -30514,7 +30815,8 @@
             }
           });
       } catch (error) {
-        showLoginFeedback(error.message);
+        console.warn("Google sign-in could not start", error);
+        showLoginFeedback("Google sign-in could not start. Check your connection, then try again.");
       }
     };
 
@@ -31134,7 +31436,7 @@
         }
       } catch (_) { }
 
-      // Handle redirect login result if user returns from provider Sign-In redirec
+      // Handle redirect login result if user returns from provider Sign-In redirect
       try {
         if (window.firebase) {
           ensureFirebaseInitialized();
@@ -31236,6 +31538,22 @@
       });
     };
 
+    const initBrandImageBuffer = () => {
+      const buffer = document.getElementById("brandImageBuffer");
+      if (!buffer || buffer.dataset.ready === "true") return;
+      const image = buffer.querySelector("img");
+      const finish = () => {
+        buffer.dataset.ready = "true";
+        buffer.classList.add("is-ready");
+        window.setTimeout(() => buffer.remove(), 260);
+      };
+      window.setTimeout(finish, 1400);
+      if (!image) return finish();
+      image.addEventListener("load", finish, { once: true });
+      image.addEventListener("error", finish, { once: true });
+      if (image.complete) finish();
+    };
+
     const FLOATING_PANEL_PORTAL_IDS = ["chronosConfigPanel", "chatSettingsPanel"];
 
     const clearFloatingPanelPortals = () => {
@@ -31264,6 +31582,7 @@
       if (window.lucide) window.lucide.createIcons({ attrs: { "stroke-width": 1.8 } });
       initProjectBannerImages();
       initNavBrandLogo();
+      initBrandImageBuffer();
       attachVisualEffects();
       initGroupChat();
       scheduleNonCriticalWork(() => {
@@ -31279,6 +31598,7 @@
     portalFloatingPanels();
     initProjectBannerImages();
     initNavBrandLogo();
+    initBrandImageBuffer();
 
     document.addEventListener("DOMContentLoaded", () => {
       updateNetworkStatus(hasInternetConnection(), false);
@@ -31309,11 +31629,11 @@
       window.addEventListener("resize", syncLoginMediaVideo, { passive: true });
       initGroupChat();
 
-      // Periodically check for composer draft timeou
+      // Periodically check for composer draft timeout
       checkComposerDraftTimeout();
       setInterval(checkComposerDraftTimeout, 15000);
 
-      // Chat compose scroll redirec
+      // Chat compose scroll redirect
       document.addEventListener("focusin", (e) => {
         if (e.target && (e.target.id === "chatMessageInput" || e.target.closest(".chat-compose"))) {
           scrollChatToBottom("smooth");
@@ -31325,7 +31645,7 @@
         }
       });
 
-      // Ctrl+Enter send shortcu
+      // Ctrl+Enter send shortcut
       document.addEventListener("keydown", (e) => {
         if ((e.ctrlKey || e.metaKey) && e.key === "Enter" && e.target?.id === "chatMessageInput") {
           e.preventDefault();
@@ -31824,7 +32144,7 @@
         plate,
         placeholder,
         wasHidden,
-        returnFocus: previousReturnFocus instanceof HTMLElemen
+        returnFocus: previousReturnFocus instanceof HTMLElement
           ? previousReturnFocus
           : trigger instanceof HTMLElement ? trigger : document.activeElement,
       };
@@ -32254,6 +32574,7 @@
       if (action === "subj-apply-defaults") {
         const si = parseInt(btn.dataset.si), pi = parseInt(btn.dataset.pi);
         const subj = scaffoldState.syllabus[si];
+        if (!subj || !requireTripleWarning(btn, "Apply defaults", "Apply defaults to paper")) return;
         const def = subj.defaultTracks || { dl: true, adv: false, adm: false, frb: false, os: false };
         const papers = subj.hasPapers ? subj.papers : [{ chapters: subj.chapters }];
         const chs = papers[pi]?.chapters || [];
@@ -32272,6 +32593,7 @@
         const subj = scaffoldState.syllabus[si];
         const paper = getPaper(si, pi);
         if (!subj || !paper) return;
+        if (!requireTripleWarning(btn, "+ Add chapter", "Add chapter")) return;
         const next = (paper.chapters?.length || 0) + 1;
         const newChapter = makeChapterLike(paper, `Chapter ${next}`);
         if (!newChapter.isPerc) newChapter.tracks = { ...(subj.defaultTracks || newChapter.tracks) };
@@ -32431,13 +32753,14 @@
       if (action === "set-view-class") mutateStruct(s, p, c, ch => { ensureChapterShape(ch); ch.viewStyle = "class"; ch.isPerc = false; });
 
       // Track checkboxes — handled in change event below
-      // Complete / Rese
+      // Complete / Reset
       if (action === "ch-complete") mutateFull(s, p, c, ch => {
         ch.doneDL = ch.totalDL; ch.doneAdv = ch.totalAdv; ch.doneAdm = ch.totalAdm;
         ch.doneFRB = ch.totalFRB; ch.doneOS = ch.totalOS; ch.donePerc = 100;
       });
       if (action === "ch-reset") {
-        if (btn.dataset.confirm !== "1") {
+        if (!requireTripleWarning(btn, "Reset", "Reset chapter progress")) return;
+        if (false) {
           btn.dataset.confirm = "1"; btn.textContent = "? Sure? Click again"; btn.style.background = "rgba(239,68,68,.3)";
           setTimeout(() => { if (btn.dataset.confirm === "1") { btn.dataset.confirm = "0"; btn.textContent = "↺ Reset"; btn.style.background = ""; } }, 2500);
         } else {
@@ -33208,7 +33531,7 @@
       );
       if (!c3) return;
 
-      // 1. Download current backup payload firs
+      // 1. Download current backup payload first
       try {
         const currentPayload = createBackupPayload("pre-restore-auto-save");
         downloadJsonFile(currentPayload, "study-os-backup-pre-restore");
@@ -34129,6 +34452,56 @@
       maybeRunAutoBackup();
     });
   </script>
+  <script>
+    /* v344: default-track edits are intentionally guarded just like the subject action buttons.
+       The checked state changes only after the third deliberate tap/click. */
+    (() => {
+      const resetTrackGuard = (input) => {
+        delete input.dataset.triplePass;
+        delete input.dataset.tripleStep;
+        const label = input.closest('.ss-track-chk');
+        label?.classList.remove('is-triple-warning');
+      };
+
+      document.addEventListener('click', (event) => {
+        const label = event.target.closest('#syllabus .subj-settings .ss-track-chk');
+        if (!label) return;
+        const input = label.querySelector('input[data-action="subj-def-track"]');
+        if (!input) return;
+        if (input.dataset.triplePass === '1') {
+          resetTrackGuard(input);
+          return;
+        }
+        event.preventDefault();
+        event.stopPropagation();
+        const step = Math.min(3, Number(input.dataset.tripleStep || 0) + 1);
+        input.dataset.tripleStep = String(step);
+        label.classList.add('is-triple-warning');
+        const original = label.dataset.originalLabel || label.textContent.trim();
+        label.dataset.originalLabel = original;
+        label.lastChild.textContent = ` Warning ${step}/3`;
+        clearTimeout(input._tripleGuardTimer);
+        input._tripleGuardTimer = setTimeout(() => {
+          label.lastChild.textContent = ` ${label.dataset.originalLabel}`;
+          resetTrackGuard(input);
+        }, 3200);
+        if (step === 3) {
+          clearTimeout(input._tripleGuardTimer);
+          label.lastChild.textContent = ` Applying…`;
+          input.dataset.triplePass = '1';
+          window.setTimeout(() => input.click(), 0);
+        }
+      }, true);
+    })();
+  </script>
 </body>
 
 </html>
+
+
+
+
+
+
+
+

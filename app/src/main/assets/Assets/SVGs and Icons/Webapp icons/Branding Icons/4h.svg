@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="280" viewBox="0 0 1200 280" role="img" aria-label="TONU STUDY horizontal progress ring logo">
+  <g transform="translate(148 140) rotate(-44)" fill="none" stroke-linecap="round">
+    <circle r="98" stroke="#E8DDF0" stroke-width="22"/>
+    <circle r="98" stroke="#70427E" stroke-width="22" stroke-dasharray="458 158"/>
+    <circle cx="0" cy="-98" r="11" fill="#A87DB5" stroke="none"/>
+  </g>
+  <path d="m106 140 29 29 62-72" fill="none" stroke="#70427E" stroke-width="19" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="292" y="178" font-family="'Segoe UI', Arial, sans-serif" font-size="116" font-weight="800" letter-spacing="7" fill="#43264C">TONU</text>
+  <text x="660" y="178" font-family="'Segoe UI', Arial, sans-serif" font-size="116" font-weight="680" letter-spacing="7" fill="#8E629A">STUDY</text>
+</svg>

@@ -3,6 +3,7 @@ package app.tonustudy.vercel.app
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.Color
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.net.Uri
@@ -18,6 +19,7 @@ import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.FrameLayout
+import android.widget.ImageView
 import android.widget.ProgressBar
 import androidx.activity.ComponentActivity
 import androidx.activity.OnBackPressedCallback
@@ -42,6 +44,7 @@ class MainActivity : ComponentActivity() {
     private lateinit var webView: WebView
     private lateinit var refreshLayout: SwipeRefreshLayout
     private lateinit var progressBar: ProgressBar
+    private lateinit var launchBrand: ImageView
     private lateinit var credentialManager: CredentialManager
     private var fileCallback: ValueCallback<Array<Uri>>? = null
     private var lastTrustedUrl = BuildConfig.APP_URL
@@ -64,6 +67,18 @@ class MainActivity : ComponentActivity() {
         val root = FrameLayout(this)
         refreshLayout = SwipeRefreshLayout(this)
         webView = WebView(this)
+        launchBrand = ImageView(this).apply {
+            setImageResource(R.drawable.tonu_study_brand)
+            scaleType = ImageView.ScaleType.FIT_CENTER
+            setBackgroundColor(Color.rgb(7, 19, 27))
+            contentDescription = getString(R.string.app_name)
+            setPadding(
+                resources.displayMetrics.density.times(32).toInt(),
+                resources.displayMetrics.density.times(32).toInt(),
+                resources.displayMetrics.density.times(32).toInt(),
+                resources.displayMetrics.density.times(32).toInt()
+            )
+        }
         progressBar = ProgressBar(this, null, android.R.attr.progressBarStyleHorizontal).apply {
             max = 100
         }
@@ -77,6 +92,13 @@ class MainActivity : ComponentActivity() {
         )
         root.addView(
             refreshLayout,
+            FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.MATCH_PARENT,
+                FrameLayout.LayoutParams.MATCH_PARENT
+            )
+        )
+        root.addView(
+            launchBrand,
             FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.MATCH_PARENT,
                 FrameLayout.LayoutParams.MATCH_PARENT
@@ -120,7 +142,12 @@ class MainActivity : ComponentActivity() {
             override fun onProgressChanged(view: WebView?, progress: Int) {
                 progressBar.progress = progress
                 progressBar.visibility = if (progress >= 100) android.view.View.GONE else android.view.View.VISIBLE
-                if (progress >= 100) refreshLayout.isRefreshing = false
+                if (progress >= 100) {
+                    refreshLayout.isRefreshing = false
+                    launchBrand.animate().alpha(0f).setDuration(180).withEndAction {
+                        launchBrand.visibility = android.view.View.GONE
+                    }.start()
+                }
             }
 
             override fun onShowFileChooser(
@@ -189,7 +216,22 @@ class MainActivity : ComponentActivity() {
                 )
                 return
             }
-            runOnUiThread { startGoogleSignIn() }
+            try {
+                runOnUiThread {
+                    runCatching { startGoogleSignIn() }
+                        .onFailure {
+                            deliverGoogleResult(
+                                false,
+                                error = "Google sign-in could not start in this app build. Please update the app and try again."
+                            )
+                        }
+                }
+            } catch (_: Exception) {
+                deliverGoogleResult(
+                    false,
+                    error = "Google sign-in could not start in this app build. Please update the app and try again."
+                )
+            }
         }
 
         @JavascriptInterface
@@ -230,10 +272,16 @@ class MainActivity : ComponentActivity() {
                 }
             } catch (_: GetCredentialCancellationException) {
                 deliverGoogleResult(false, error = "Google sign-in was cancelled.")
-            } catch (error: GetCredentialException) {
-                deliverGoogleResult(false, error = error.message ?: "No Google account is available.")
-            } catch (error: Exception) {
-                deliverGoogleResult(false, error = error.message ?: "Google sign-in failed.")
+            } catch (_: GetCredentialException) {
+                deliverGoogleResult(
+                    false,
+                    error = "Google sign-in could not continue. Check your Google Play services and app configuration, then try again."
+                )
+            } catch (_: Exception) {
+                deliverGoogleResult(
+                    false,
+                    error = "Google sign-in could not continue. Please update the app and try again."
+                )
             }
         }
     }
@@ -301,7 +349,9 @@ class MainActivity : ComponentActivity() {
                 refreshLayout.isRefreshing = false
                 if (!hasInternetConnection()) {
                     view.settings.cacheMode = WebSettings.LOAD_CACHE_ELSE_NETWORK
-                    view.loadUrl(BuildConfig.APP_URL)
+                    // The packaged shell remains usable offline. Its web bridge reports
+                    // offline status, so remote uploads and Google sign-in stay disabled.
+                    view.loadUrl("file:///android_asset/index.html")
                 } else {
                     view.loadUrl(OFFLINE_URL)
                 }

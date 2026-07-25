@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024" role="img" aria-label="TONU STUDY orbit check logo">
+  
+      <g transform="translate(512 420)" fill="none" stroke="#15171A" stroke-width="26" stroke-linecap="round">
+        <path d="M118-81a148 148 0 1 0 30 131"/>
+        <path d="m-60 8 55 55 134-149" stroke="#4F7CFF" stroke-width="32" stroke-linejoin="round"/>
+        <circle cx="143" cy="-112" r="13" fill="#4F7CFF" stroke="none"/>
+      </g>
+      <text x="512" y="675" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="92" font-weight="750" letter-spacing="9" fill="#15171A">TONU</text>
+      <text x="512" y="750" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="34" font-weight="700" letter-spacing="18" fill="#5B626C">STUDY</text>
+    
+</svg>

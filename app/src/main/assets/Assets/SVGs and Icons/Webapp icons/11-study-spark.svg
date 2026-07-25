@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024" role="img" aria-label="TONU STUDY study spark logo">
+  
+      <g transform="translate(512 395)">
+        <path d="M-170 82V-91c65-27 122-17 170 23V117C-48 77-105 67-170 82z" fill="none" stroke="#4E3A86" stroke-width="22" stroke-linejoin="round"/>
+        <path d="M170 82V-91C105-118 48-108 0-68V117c48-40 105-50 170-35z" fill="none" stroke="#4E3A86" stroke-width="22" stroke-linejoin="round"/>
+        <path d="M0-68v185" stroke="#4E3A86" stroke-width="22"/>
+        <path d="M121-186v74M84-149h74" stroke="#A47BE5" stroke-width="22" stroke-linecap="round"/>
+        <path d="M-100-155v42M-121-134h42" stroke="#C5AEF1" stroke-width="16" stroke-linecap="round"/>
+      </g>
+      <text x="512" y="681" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="90" font-weight="800" letter-spacing="8" fill="#352760">TONU</text>
+      <text x="512" y="754" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="34" font-weight="700" letter-spacing="18" fill="#8B69C2">STUDY</text>
+    
+</svg>
