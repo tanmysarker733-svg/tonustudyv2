@@ -1,0 +1,83 @@
+name: Android APK
+
+on:
+  workflow_dispatch:
+    inputs:
+      publish_android_release:
+        description: Replace the APK/AAB assets on the existing android release
+        required: true
+        default: false
+        type: boolean
+  pull_request:
+    paths:
+      - "app/**"
+      - "build.gradle.kts"
+      - "settings.gradle.kts"
+      - "gradle.properties"
+      - "gradle/wrapper/**"
+      - "gradlew"
+      - "gradlew.bat"
+  push:
+    branches: [main]
+    paths:
+      - "app/**"
+      - "build.gradle.kts"
+      - "settings.gradle.kts"
+      - "gradle.properties"
+      - "gradle/wrapper/**"
+      - "gradlew"
+      - "gradlew.bat"
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      HAS_SIGNING: ${{ secrets.ANDROID_KEYSTORE_BASE64 != '' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - uses: gradle/actions/setup-gradle@v4
+
+      - name: Decode release keystore
+        if: env.HAS_SIGNING == 'true'
+        shell: bash
+        run: |
+          echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 --decode > "$RUNNER_TEMP/tonu-study-release.jks"
+          echo "TONU_KEYSTORE_PATH=$RUNNER_TEMP/tonu-study-release.jks" >> "$GITHUB_ENV"
+          echo "TONU_KEYSTORE_PASSWORD=${{ secrets.ANDROID_KEYSTORE_PASSWORD }}" >> "$GITHUB_ENV"
+          echo "TONU_KEY_ALIAS=${{ secrets.ANDROID_KEY_ALIAS }}" >> "$GITHUB_ENV"
+          echo "TONU_KEY_PASSWORD=${{ secrets.ANDROID_KEY_PASSWORD }}" >> "$GITHUB_ENV"
+
+      - name: Build debug APK
+        run: ./gradlew --no-daemon --stacktrace assembleDebug
+
+      - name: Build signed release APK and bundle
+        if: env.HAS_SIGNING == 'true'
+        run: ./gradlew --no-daemon --stacktrace assembleRelease bundleRelease
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: tonu-study-android
+          if-no-files-found: error
+          path: |
+            app/build/outputs/apk/debug/*.apk
+            app/build/outputs/apk/release/*.apk
+            app/build/outputs/bundle/release/*.aab
+
+      - name: Replace assets on android release
+        if: github.event_name == 'workflow_dispatch' && inputs.publish_android_release && env.HAS_SIGNING == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          cp app/build/outputs/apk/release/app-release.apk "Tonu Study.apk"
+          cp app/build/outputs/bundle/release/app-release.aab "app-bundle.aab"
+          gh release upload android "Tonu Study.apk" "app-bundle.aab" --clobber
