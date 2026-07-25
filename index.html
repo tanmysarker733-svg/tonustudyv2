@@ -22728,6 +22728,90 @@
       }
     }
   </style>
+  <style>
+    /* v349: Android/BlueStacks settings dialog repair.
+       Keep a real card height and exactly one scrollable content surface. */
+    #settingsDialog {
+      position: fixed !important;
+      inset: 0 !important;
+      display: grid !important;
+      place-items: center !important;
+      padding: max(8px, env(safe-area-inset-top, 0px)) 8px max(8px, env(safe-area-inset-bottom, 0px)) !important;
+      overflow: hidden !important;
+      z-index: 10050 !important;
+    }
+
+    #settingsDialog[hidden] { display: none !important; }
+
+    #settingsDialog .settings-dialog__card {
+      box-sizing: border-box !important;
+      display: flex !important;
+      flex-direction: column !important;
+      width: min(560px, calc(100vw - 16px)) !important;
+      height: min(780px, calc(100vh - 16px)) !important;
+      height: min(780px, calc(100svh - 16px)) !important;
+      max-height: calc(100vh - 16px) !important;
+      max-height: calc(100svh - 16px) !important;
+      min-height: min(420px, calc(100svh - 16px)) !important;
+      overflow: hidden !important;
+      isolation: isolate;
+    }
+
+    #settingsDialog .settings-dialog__head {
+      flex: 0 0 auto !important;
+    }
+
+    #settingsDialog .settings-modal-shell,
+    #settingsDialog .settings-modal-card {
+      display: flex !important;
+      flex: 1 1 auto !important;
+      flex-direction: column !important;
+      min-width: 0 !important;
+      min-height: 0 !important;
+      overflow: hidden !important;
+    }
+
+    #settingsDialog .settings-tabs {
+      flex: 0 0 auto !important;
+      display: grid !important;
+      grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+      min-height: 44px !important;
+      overflow: visible !important;
+    }
+
+    #settingsDialog .settings-body {
+      display: block !important;
+      flex: 1 1 auto !important;
+      min-height: 0 !important;
+      height: auto !important;
+      max-height: none !important;
+      overflow-x: hidden !important;
+      overflow-y: auto !important;
+      overscroll-behavior: contain;
+      -webkit-overflow-scrolling: touch;
+      touch-action: pan-y !important;
+      padding-bottom: max(20px, env(safe-area-inset-bottom, 0px)) !important;
+    }
+
+    @media (max-width: 640px), (max-height: 720px) {
+      #settingsDialog .settings-dialog__card {
+        width: calc(100vw - 16px) !important;
+        height: calc(100svh - 16px) !important;
+        min-height: 0 !important;
+        border-radius: 16px !important;
+      }
+
+      #settingsDialog .settings-dialog__head {
+        padding-block: 10px !important;
+      }
+
+      #settingsDialog .settings-tab {
+        min-height: 36px !important;
+        height: 36px !important;
+        padding: 4px !important;
+      }
+    }
+  </style>
 </head>
 
 <body class="login-locked">
