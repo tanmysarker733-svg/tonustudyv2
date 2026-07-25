@@ -11,8 +11,8 @@ android {
         applicationId = "app.tonustudy.vercel.app"
         minSdk = 23
         targetSdk = 36
-        versionCode = 21002
-        versionName = "2.1.2"
+        versionCode = 21003
+        versionName = "2.1.3"
 
         buildConfigField(
             "String",
