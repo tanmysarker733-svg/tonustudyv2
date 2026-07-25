@@ -123,7 +123,10 @@ class MainActivity : ComponentActivity() {
             javaScriptEnabled = true
             domStorageEnabled = true
             databaseEnabled = true
-            cacheMode = WebSettings.LOAD_DEFAULT
+            // The online shell is the source of truth.  Avoid presenting an old
+            // WebView cache after a web release; the bundled asset remains the
+            // offline fallback through shouldInterceptRequest/onReceivedError.
+            cacheMode = WebSettings.LOAD_NO_CACHE
             mixedContentMode = WebSettings.MIXED_CONTENT_NEVER_ALLOW
             allowFileAccess = false
             allowContentAccess = false
@@ -187,7 +190,16 @@ class MainActivity : ComponentActivity() {
         })
 
         val initialUrl = intent?.data?.takeIf(::isTrustedUri)?.toString() ?: BuildConfig.APP_URL
-        webView.loadUrl(initialUrl)
+        if (hasInternetConnection()) {
+            webView.clearCache(false)
+            webView.loadUrl(
+                initialUrl,
+                mapOf("Cache-Control" to "no-cache, no-store", "Pragma" to "no-cache")
+            )
+        } else {
+            // Start from the packaged HTML immediately when the device is offline.
+            webView.loadUrl(OFFLINE_URL)
+        }
     }
 
     override fun onDestroy() {
