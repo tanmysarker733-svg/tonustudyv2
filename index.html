@@ -22576,6 +22576,41 @@
       .chapter-quick-dialog .ch-pill--reset::after { animation: none; display: none; }
     }
 
+    /* v345: the auth gate is a self-contained night-on-violet surface.
+       App/theme switching must never turn its copy into a black light-mode form. */
+    #loginGate,
+    #loginGate :is(.login-title, .login-subtitle, .login-form-row, .login-register,
+      .login-link, .login-error, .login-feedback, .login-remember, .login-brand,
+      .login-provider-divider, .login-actions, label, p, small, strong) {
+      color: #f8fbff !important;
+    }
+
+    #loginGate .login-field input {
+      color: #ffffff !important;
+      caret-color: #ffffff;
+      background: rgba(255, 255, 255, .13) !important;
+      border-color: rgba(255, 255, 255, .56) !important;
+    }
+
+    #loginGate .login-field input::placeholder {
+      color: rgba(241, 245, 249, .86) !important;
+      opacity: 1;
+    }
+
+    #loginGate .login-google,
+    #loginGate .login-guest {
+      color: #ffffff !important;
+      background: linear-gradient(135deg, rgba(255,255,255,.19), rgba(210,193,255,.28)) !important;
+      border: 1px solid rgba(255,255,255,.46) !important;
+      box-shadow: 0 12px 26px rgba(41, 25, 100, .24), inset 0 1px 0 rgba(255,255,255,.22) !important;
+    }
+
+    #loginGate .login-register a,
+    #loginGate .login-link {
+      color: #dbeafe !important;
+      text-decoration-color: rgba(219, 234, 254, .8);
+    }
+
   </style>
 </head>
 
