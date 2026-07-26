@@ -12550,51 +12550,25 @@
     .project-banner {
       position: relative;
       width: min(1180px, calc(100% - 32px));
-      aspect-ratio: 16 / 9;
       margin: 20px auto 0;
       border-radius: 24px;
       overflow: hidden;
       border: 1px solid rgba(148, 163, 184, 0.24);
       box-shadow: 0 18px 50px rgba(2, 6, 23, 0.24);
-      background:
-        linear-gradient(135deg, rgba(14, 116, 144, .2), rgba(15, 23, 42, .72)),
-        #0f172a;
-      isolation: isolate;
+      background: rgba(15, 23, 42, 0.34);
     }
 
     .project-banner__img {
-      position: relative;
-      z-index: 1;
       display: block;
       width: 100%;
-      height: 100%;
+      height: auto;
       max-height: none;
-      object-fit: cover;
+      object-fit: contain;
       object-position: center;
-      opacity: 1;
-      transition: opacity .22s ease;
-    }
-
-    .project-banner.is-image-pending .project-banner__img {
-      opacity: .001;
-    }
-
-.project-banner.is-image-pending::before,
-.project-banner.is-image-fallback::before {
-      content: "TONU STUDY";
-      position: absolute;
-      inset: 0;
-      display: grid;
-      place-items: center;
-      color: rgba(226, 232, 240, .74);
-      font: 800 clamp(1.25rem, 4vw, 2.4rem)/1 Georgia, "Times New Roman", serif;
-      letter-spacing: .08em;
-      z-index: 0;
     }
 
     .project-banner__install {
       position: absolute;
-      z-index: 2;
       right: 18px;
       bottom: 18px;
       border-radius: 999px !important;
@@ -12840,7 +12814,6 @@
 
       .project-banner__img {
         max-height: none;
-        object-fit: cover;
       }
 
       .project-banner__install {
@@ -23404,7 +23377,7 @@
         visualProfile: "balanced",
         displayResolution: "device",
         subjectNeonEnabled: true,
-        singleLayerNeon: false,
+        singleLayerNeon: true,
         blueVibeLite: false,
       },
       autoBackupEnabled: true,
@@ -23429,14 +23402,12 @@
           graphColors: { ...defaultUserSettings.graphColors, ...(parsed.graphColors || {}) },
           uiConfigs: { ...defaultUserSettings.uiConfigs, ...(parsed.uiConfigs || {}) },
         };
-        const isAndroidShell = Boolean(window.TonuAndroid);
-        const neonMigrationKey = "tonu-android-full-web-visual-v355";
-        const visualExplicitKey = "tonu-visual-effects-explicit";
-        if (isAndroidShell && localStorage.getItem(neonMigrationKey) !== "done" && localStorage.getItem(visualExplicitKey) !== "1") {
+        const isAndroidShell = Boolean(window.TonuAndroid) || /Android|TonuStudy/i.test(navigator.userAgent || "");
+        const neonMigrationKey = "tonu-android-neon-default-v354";
+        const neonExplicitKey = "tonu-subject-neon-explicit-v354";
+        if (isAndroidShell && localStorage.getItem(neonMigrationKey) !== "done" && localStorage.getItem(neonExplicitKey) !== "1") {
           merged.uiConfigs.subjectNeonEnabled = true;
-          merged.uiConfigs.singleLayerNeon = false;
-          merged.uiConfigs.blueVibeLite = false;
-          merged.uiConfigs.visualProfile = "balanced";
+          merged.uiConfigs.singleLayerNeon = true;
           localStorage.setItem(neonMigrationKey, "done");
           localStorage.setItem(USER_SETTINGS_KEY, JSON.stringify(merged));
         }
@@ -29099,7 +29070,7 @@
                 <p>Premium Edition preview shell</p>
                 <a class="settings-update-card" href="https://github.com/tanmysarker733-svg/tonustudyv2/releases/download/android/Tonu.Study.apk" target="_blank" rel="noopener noreferrer" aria-label="Download the latest Android app">
                   ${icon("download", "Update")}
-                  <span><strong>Update to latest version <em>Android v2.1.10 · Web 355</em></strong><small>Android release channel · checks the current GitHub release when you are online</small></span>
+                  <span><strong>Update to latest version <em>Android v2.1.10 · Web 354</em></strong><small>Android release channel · checks the current GitHub release when you are online</small></span>
                   ${icon("external-link", "Open")}
                 </a>
                 <p>Built by Tanmoy Sarker for HSC students who want to track smarter.</p>
@@ -30841,7 +30812,7 @@
 
     ${state.userSettings.uiConfigs?.showProjectBanner !== false ? `
       <section class="project-banner" aria-label="Project banner">
-        <img class="project-banner__img" src="Assets/Images/A%20project%20by.jpg" data-hires-src="Assets/Images/A%20project%20by.png" data-remote-fallback="https://raw.githubusercontent.com/tanmysarker733-svg/tonustudyv2/main/Assets/Images/A%20project%20by.jpg" alt="A project by Tanmoy Sarker" loading="eager" decoding="async" fetchpriority="high" width="1920" height="1080">
+        <img class="project-banner__img" src="https://raw.githubusercontent.com/tanmysarker733-svg/tonustudyv2/main/Assets/Images/A%20project%20by.jpg" data-hires-src="https://raw.githubusercontent.com/tanmysarker733-svg/tonustudyv2/main/Assets/Images/A%20project%20by.png" alt="A project by Tanmoy Sarker" loading="eager">
         <button class="btn-small btn-small--primary project-banner__install" type="button" data-action="install-app">
           ${icon("download", "Install")}
           <span>Install as app</span>
@@ -32216,42 +32187,14 @@
     ];
 
     const initProjectBannerImages = () => {
-      document.querySelectorAll(".project-banner__img").forEach((img) => {
-        const banner = img.closest(".project-banner");
-        if (!banner || img.dataset.bannerReady === "true") return;
-        img.dataset.bannerReady = "true";
-        banner.classList.add("is-image-pending");
-
-        const reveal = () => {
-          banner.classList.remove("is-image-pending", "is-image-fallback");
-        };
-        const useRemoteFallback = () => {
-          const remote = img.dataset.remoteFallback;
-          if (!remote || img.dataset.remoteTried === "true") {
-            banner.classList.remove("is-image-pending");
-            banner.classList.add("is-image-fallback");
-            return;
-          }
-          img.dataset.remoteTried = "true";
-          img.src = remote;
-        };
-
-        img.addEventListener("load", reveal);
-        img.addEventListener("error", useRemoteFallback);
-        if (img.complete) {
-          if (img.naturalWidth > 0) reveal();
-          else useRemoteFallback();
-        }
-
-        // The local JPG is the dependable first paint. High resolution is an
-        // enhancement only and never controls whether the banner is visible.
-        if (isPerformanceLite()) return;
+      // Keep the already-present lightweight image on constrained devices;
+      // the high-resolution swap is only a visual enhancement.
+      if (isPerformanceLite()) return;
+      document.querySelectorAll(".project-banner__img[data-hires-src]").forEach((img) => {
         const hiresSrc = img.dataset.hiresSrc;
         if (!hiresSrc || img.dataset.hiresLoaded === "true") return;
         const hi = new Image();
-        hi.decoding = "async";
-        hi.onload = async () => {
-          try { await hi.decode?.(); } catch (_) { }
+        hi.onload = () => {
           img.src = hiresSrc;
           img.dataset.hiresLoaded = "true";
         };
@@ -34711,7 +34654,6 @@
       if (action === "set-visual-profile") {
         const profile = normalizeVisualProfile(target?.dataset?.profile);
         const ui = scaffoldState.userSettings.uiConfigs || {};
-        localStorage.setItem("tonu-visual-effects-explicit", "1");
         ui.visualProfile = profile;
         if (profile === "performance") {
           ui.singleLayerNeon = true;
@@ -34724,7 +34666,7 @@
           ui.showOrbs = true;
           ui.showVibes = true;
         } else {
-          ui.singleLayerNeon = false;
+          ui.singleLayerNeon = true;
           ui.blueVibeLite = false;
         }
         scaffoldState.userSettings.uiConfigs = ui;
@@ -35224,8 +35166,8 @@
         return;
       }
       if (target.id === "tgl_project_banner" || target.id === "tgl_orbs" || target.id === "tgl_vibes" || target.id === "tgl_paradox_motion" || target.id === "tgl_aurora_mode" || target.id === "etaSettingToggle" || target.id === "tgl_composer_fs" || target.id === "tgl_compact_mode" || target.id === "tgl_subject_neon" || target.id === "tgl_single_layer_neon" || target.id === "tgl_blue_vibe_lite") {
-        if (target.id === "tgl_subject_neon" || target.id === "tgl_single_layer_neon" || target.id === "tgl_blue_vibe_lite") {
-          localStorage.setItem("tonu-visual-effects-explicit", "1");
+        if (target.id === "tgl_subject_neon") {
+          localStorage.setItem("tonu-subject-neon-explicit-v353", "1");
         }
         scaffoldState.userSettings.uiConfigs = {
           ...(scaffoldState.userSettings.uiConfigs || {}),

@@ -1,5 +1,9 @@
-const CACHE_NAME = "tonu-study-offline-v340";
-const APP_SHELL = ["./", "./index.html"];
+const CACHE_NAME = "tonu-study-offline-v355";
+const APP_SHELL = [
+  "./",
+  "./index.html",
+  "./Assets/Images/A%20project%20by.jpg"
+];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
