@@ -212,32 +212,34 @@ class MainActivity : ComponentActivity() {
     private inner class AndroidBridge {
         @JavascriptInterface
         fun signInWithGoogle() {
-            if (!isTrustedUri(Uri.parse(webView.url ?: ""))) {
-                deliverGoogleResult(false, error = "Google sign-in is only available on Tonu Study.")
-                return
-            }
-            if (!hasInternetConnection()) {
-                deliverGoogleResult(
-                    false,
-                    error = "No internet connection. Please connect to the internet and try again."
-                )
-                return
-            }
-            try {
-                runOnUiThread {
-                    runCatching { startGoogleSignIn() }
-                        .onFailure {
-                            deliverGoogleResult(
-                                false,
-                                error = "Google sign-in could not start in this app build. Please update the app and try again."
-                            )
-                        }
+            // JavascriptInterface methods run on WebView's JavaBridge thread.
+            // Reading WebView state from that thread throws before Credential
+            // Manager can open the Android account picker, so keep the entire
+            // native entry point on the UI thread.
+            runOnUiThread {
+                try {
+                    val currentUri = Uri.parse(webView.url.orEmpty())
+                    if (!isTrustedUri(currentUri)) {
+                        deliverGoogleResult(
+                            false,
+                            error = "Google sign-in is only available on Tonu Study."
+                        )
+                        return@runOnUiThread
+                    }
+                    if (!hasInternetConnection()) {
+                        deliverGoogleResult(
+                            false,
+                            error = "No internet connection. Please connect to the internet and try again."
+                        )
+                        return@runOnUiThread
+                    }
+                    startGoogleSignIn()
+                } catch (_: Exception) {
+                    deliverGoogleResult(
+                        false,
+                        error = "Google sign-in could not start in this app build. Please update the app and try again."
+                    )
                 }
-            } catch (_: Exception) {
-                deliverGoogleResult(
-                    false,
-                    error = "Google sign-in could not start in this app build. Please update the app and try again."
-                )
             }
         }
 
