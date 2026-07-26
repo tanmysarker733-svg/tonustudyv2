@@ -12,7 +12,7 @@ the next number, then edit the new file only. Never overwrite prior versions.
 WEB SOURCE / DEPLOYMENT
 - Local versioned source folder:
   E:\! Entertainment\! Editing Partition\Passive Farhan and Blog\Study Web\Version 2
-- Current latest numbered source at this handoff: hsc-study-os__356_.html
+- Current latest numbered source at this handoff: hsc-study-os__357_.html
 - Production source: this repository root index.html on branch main.
 - Before deployment, copy the validated newest numbered HTML to this index.html.
 - Copy any changed Assets into this repository Assets\ folder too.
