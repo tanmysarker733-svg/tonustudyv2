@@ -22479,6 +22479,75 @@
         0 0 9px color-mix(in srgb, var(--subject-accent) 20%, transparent) !important;
     }
 
+    /* v350: visual quality is a user choice, including inside Android. */
+    html.subject-neon-off #syllabus .subject-card::before,
+    html.subject-neon-off #syllabus .subject-card::after {
+      display: none !important;
+    }
+
+    html.subject-neon-off #syllabus .subject-card {
+      box-shadow: 0 10px 24px rgba(2, 6, 23, .16) !important;
+    }
+
+    html[data-visual-profile="beauty"] #syllabus .subject-card {
+      box-shadow:
+        inset 0 1px 0 color-mix(in srgb, var(--subject-accent) 34%, transparent),
+        0 0 18px color-mix(in srgb, var(--subject-accent) 28%, transparent),
+        0 16px 34px rgba(2, 6, 23, .2) !important;
+    }
+
+    html[data-visual-profile="beauty"] #syllabus .subject-card::before {
+      opacity: 1 !important;
+      filter:
+        drop-shadow(0 0 8px color-mix(in srgb, var(--subject-accent) 62%, transparent))
+        drop-shadow(0 0 18px color-mix(in srgb, var(--subject-accent) 28%, transparent)) !important;
+    }
+
+    .visual-profile-picker {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 7px;
+    }
+
+    .visual-profile-picker__option {
+      min-width: 0;
+      min-height: 42px;
+      padding: 8px 6px !important;
+      border: 1px solid var(--border-strong) !important;
+      background: var(--surface-muted) !important;
+      color: var(--text-secondary) !important;
+      box-shadow: none !important;
+    }
+
+    .visual-profile-picker__option.btn-small--active {
+      border-color: #38bdf8 !important;
+      background: linear-gradient(135deg, #0f4c81 0%, #2563eb 58%, #7c3aed 100%) !important;
+      color: #fff !important;
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.24),
+        0 7px 18px rgba(37,99,235,.22) !important;
+    }
+
+    html[data-theme="light"] .visual-profile-picker__option {
+      background: #edf3fa !important;
+      color: #334155 !important;
+      border-color: #c7d5e5 !important;
+    }
+
+    .visual-profile-note {
+      display: block;
+      margin-top: 8px;
+      color: var(--text-muted);
+      font-size: .72rem;
+      line-height: 1.4;
+    }
+
+    @media (max-width: 390px) {
+      .visual-profile-picker {
+        grid-template-columns: 1fr;
+      }
+    }
+
     @media (max-width: 640px) {
       .settings-update-card { padding: 10px; }
       .settings-update-card small { font-size: .67rem; }
@@ -23021,8 +23090,10 @@
         showProjectBanner: true,
         showScaffoldStrands: false,
         composerFullscreen: false,
-        singleLayerNeon: Number(navigator.hardwareConcurrency || 8) <= 4 || Number(navigator.deviceMemory || 8) <= 4,
-        blueVibeLite: Number(navigator.hardwareConcurrency || 8) <= 4 || Number(navigator.deviceMemory || 8) <= 4,
+        visualProfile: "balanced",
+        subjectNeonEnabled: true,
+        singleLayerNeon: true,
+        blueVibeLite: false,
       },
       autoBackupEnabled: true,
       backupTiming: "daily",
@@ -23059,6 +23130,9 @@
     };
 
     const normalizeThemeMode = (theme) => theme === "light" ? "light" : "dark";
+    const normalizeVisualProfile = (profile) => (
+      ["performance", "balanced", "beauty"].includes(profile) ? profile : "balanced"
+    );
 
     const updateThemeToggleControls = (theme) => {
       const currentTheme = normalizeThemeMode(theme);
@@ -23086,6 +23160,13 @@
       root.setAttribute(
         "data-scaffold-strands",
         scaffoldState.userSettings?.uiConfigs?.showScaffoldStrands === true ? "on" : "off"
+      );
+      const visualProfile = normalizeVisualProfile(scaffoldState.userSettings?.uiConfigs?.visualProfile);
+      scaffoldState.userSettings.uiConfigs.visualProfile = visualProfile;
+      root.setAttribute("data-visual-profile", visualProfile);
+      root.classList.toggle(
+        "subject-neon-off",
+        scaffoldState.userSettings?.uiConfigs?.subjectNeonEnabled === false
       );
       root.classList.toggle(
         "subject-neon-single",
@@ -28553,6 +28634,15 @@
                 ${row("Font Scale", `<input type="range" id="fontScaleRange" min="80" max="165" step="5" value="${userSettings.fontScale || 100}" oninput="document.getElementById('fontScaleVal').textContent=this.value+'%';document.documentElement.style.setProperty('--master-font-scale', this.value/100)"><span id="fontScaleVal" style="margin-left: 8px; font-size: 0.8rem; min-width: 3ch; display: inline-block;">${userSettings.fontScale || 100}%</span>`, "Adjust overall text size up to 165%")}
               `)}
               ${group("Performance", `
+                ${row("Visual Quality", `
+                  <div class="visual-profile-picker" role="group" aria-label="Visual quality">
+                    <button class="btn-small visual-profile-picker__option ${normalizeVisualProfile(userSettings.uiConfigs.visualProfile) === "performance" ? "btn-small--active" : ""}" type="button" data-action="set-visual-profile" data-profile="performance" aria-pressed="${normalizeVisualProfile(userSettings.uiConfigs.visualProfile) === "performance"}">Performance</button>
+                    <button class="btn-small visual-profile-picker__option ${normalizeVisualProfile(userSettings.uiConfigs.visualProfile) === "balanced" ? "btn-small--active" : ""}" type="button" data-action="set-visual-profile" data-profile="balanced" aria-pressed="${normalizeVisualProfile(userSettings.uiConfigs.visualProfile) === "balanced"}">Balanced</button>
+                    <button class="btn-small visual-profile-picker__option ${normalizeVisualProfile(userSettings.uiConfigs.visualProfile) === "beauty" ? "btn-small--active" : ""}" type="button" data-action="set-visual-profile" data-profile="beauty" aria-pressed="${normalizeVisualProfile(userSettings.uiConfigs.visualProfile) === "beauty"}">Beauty / Posh</button>
+                  </div>
+                  <span class="visual-profile-note">Works the same in browser and Android. Performance reduces costly motion; Beauty restores the full web glow.</span>
+                `, "Choose speed or richer visual depth")}
+                ${row("Subject Neon", checkbox("tgl_subject_neon", userSettings.uiConfigs.subjectNeonEnabled !== false), "Keep each subject's coloured identity glow on web and Android")}
                 ${row("Single-layer Subject Glow", checkbox("tgl_single_layer_neon", userSettings.uiConfigs.singleLayerNeon === true), "Keeps the neon outline while rendering only one lightweight glow layer")}
                 ${row("Blue Vibe Lite", checkbox("tgl_blue_vibe_lite", userSettings.uiConfigs.blueVibeLite === true), "Uses a close blue static vibe with fewer filters and moving effects")}
               `)}
@@ -29617,6 +29707,7 @@
         "backup-restore-entry",
         "backup-delete-entry",
         "set-study-mode",
+        "set-visual-profile",
         "chronos-apply-config",
         "settings-chronos-apply-config",
         "chronos-apply-preset",
@@ -30649,11 +30740,8 @@
     const prefersReducedMotion = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const canUseHoverTilt = () => window.matchMedia("(hover: hover) and (pointer: fine)").matches;
     const shouldUsePerformanceMode = () => {
-      const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
-      const lowCoreDevice = Number(navigator.hardwareConcurrency || 8) <= 4;
-      const lowMemoryDevice = Number(navigator.deviceMemory || 8) <= 4;
-      const slowConnection = !!connection && (connection.saveData || ["slow-2g", "2g", "3g"].includes(connection.effectiveType));
-      return prefersReducedMotion() || lowCoreDevice || lowMemoryDevice || slowConnection;
+      const profile = normalizeVisualProfile(scaffoldState?.userSettings?.uiConfigs?.visualProfile);
+      return prefersReducedMotion() || profile === "performance";
     };
     const applyPerformanceMode = () => {
       document.documentElement.classList.toggle("performance-lite", shouldUsePerformanceMode());
@@ -34153,6 +34241,33 @@
         mountApp();
         return;
       }
+      if (action === "set-visual-profile") {
+        const profile = normalizeVisualProfile(target?.dataset?.profile);
+        const ui = scaffoldState.userSettings.uiConfigs || {};
+        ui.visualProfile = profile;
+        if (profile === "performance") {
+          ui.singleLayerNeon = true;
+          ui.blueVibeLite = true;
+          ui.paradoxMotion = false;
+        } else if (profile === "beauty") {
+          ui.singleLayerNeon = false;
+          ui.blueVibeLite = false;
+          ui.paradoxMotion = !prefersReducedMotion();
+          ui.showOrbs = true;
+          ui.showVibes = true;
+        } else {
+          ui.singleLayerNeon = true;
+          ui.blueVibeLite = false;
+        }
+        scaffoldState.userSettings.uiConfigs = ui;
+        saveUserSettings();
+        mountApp();
+        showSystemToast(
+          profile === "beauty" ? "Beauty mode on" : profile === "performance" ? "Maximum performance on" : "Balanced mode on",
+          profile === "beauty" ? "Full web-style glow is active in Android too." : profile === "performance" ? "Heavy motion is reduced while subject identity glow remains." : "Smooth motion and lightweight neon are balanced."
+        );
+        return;
+      }
       if (action === "chronos-toggle-edit") {
         showChronosLive();
         setChronosEditMode(!isGraphEditMode);
@@ -34624,7 +34739,7 @@
         updateBackupSettings({ autoBackupNotif: !!target.checked });
         return;
       }
-      if (target.id === "tgl_project_banner" || target.id === "tgl_orbs" || target.id === "tgl_vibes" || target.id === "tgl_paradox_motion" || target.id === "tgl_aurora_mode" || target.id === "etaSettingToggle" || target.id === "tgl_composer_fs" || target.id === "tgl_compact_mode" || target.id === "tgl_single_layer_neon" || target.id === "tgl_blue_vibe_lite") {
+      if (target.id === "tgl_project_banner" || target.id === "tgl_orbs" || target.id === "tgl_vibes" || target.id === "tgl_paradox_motion" || target.id === "tgl_aurora_mode" || target.id === "etaSettingToggle" || target.id === "tgl_composer_fs" || target.id === "tgl_compact_mode" || target.id === "tgl_subject_neon" || target.id === "tgl_single_layer_neon" || target.id === "tgl_blue_vibe_lite") {
         scaffoldState.userSettings.uiConfigs = {
           ...(scaffoldState.userSettings.uiConfigs || {}),
           showProjectBanner: document.getElementById("tgl_project_banner")?.checked !== false,
@@ -34635,6 +34750,7 @@
           etaOn: document.getElementById("etaSettingToggle")?.checked || false,
           composerFullscreen: document.getElementById("tgl_composer_fs")?.checked || false,
           compactMode: document.getElementById("tgl_compact_mode")?.checked || false,
+          subjectNeonEnabled: document.getElementById("tgl_subject_neon")?.checked !== false,
           singleLayerNeon: document.getElementById("tgl_single_layer_neon")?.checked || false,
           blueVibeLite: document.getElementById("tgl_blue_vibe_lite")?.checked || false
         };
