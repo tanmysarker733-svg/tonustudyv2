@@ -14,13 +14,13 @@ import android.webkit.ValueCallback
 import android.webkit.WebChromeClient
 import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
-import android.webkit.WebResourceResponse
 import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.ProgressBar
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
@@ -123,16 +123,14 @@ class MainActivity : ComponentActivity() {
             javaScriptEnabled = true
             domStorageEnabled = true
             databaseEnabled = true
-            // The online shell is the source of truth.  Avoid presenting an old
-            // WebView cache after a web release; the bundled asset remains the
-            // offline fallback through shouldInterceptRequest/onReceivedError.
-            cacheMode = WebSettings.LOAD_NO_CACHE
+            // The deployed site is the single source of truth. Normal HTTP cache
+            // keeps repeat launches light while the server controls freshness.
+            cacheMode = WebSettings.LOAD_DEFAULT
             mixedContentMode = WebSettings.MIXED_CONTENT_NEVER_ALLOW
             allowFileAccess = false
             allowContentAccess = false
             mediaPlaybackRequiresUserGesture = true
             setSupportMultipleWindows(false)
-            userAgentString = "$userAgentString TonuStudyAndroid/${BuildConfig.VERSION_NAME}"
         }
         WebView.setWebContentsDebuggingEnabled(BuildConfig.DEBUG)
         CookieManager.getInstance().apply {
@@ -177,12 +175,11 @@ class MainActivity : ComponentActivity() {
         }
 
         refreshLayout.setOnRefreshListener {
-            if (webView.url == OFFLINE_URL) webView.loadUrl(BuildConfig.APP_URL) else webView.reload()
+            webView.reload()
         }
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 when {
-                    webView.url == OFFLINE_URL -> webView.loadUrl(lastTrustedUrl)
                     webView.canGoBack() -> webView.goBack()
                     else -> finish()
                 }
@@ -190,16 +187,14 @@ class MainActivity : ComponentActivity() {
         })
 
         val initialUrl = intent?.data?.takeIf(::isTrustedUri)?.toString() ?: BuildConfig.APP_URL
-        if (hasInternetConnection()) {
-            webView.clearCache(false)
-            webView.loadUrl(
-                initialUrl,
-                mapOf("Cache-Control" to "no-cache, no-store", "Pragma" to "no-cache")
-            )
-        } else {
-            // Start from the packaged HTML immediately when the device is offline.
-            webView.loadUrl(OFFLINE_URL)
+        if (!hasInternetConnection()) {
+            Toast.makeText(
+                this,
+                "No internet connection. Connect to the internet to open TONU STUDY.",
+                Toast.LENGTH_LONG
+            ).show()
         }
+        webView.loadUrl(initialUrl)
     }
 
     override fun onDestroy() {
@@ -329,29 +324,6 @@ class MainActivity : ComponentActivity() {
             }
         }
 
-        override fun shouldInterceptRequest(
-            view: WebView?,
-            request: WebResourceRequest
-        ): WebResourceResponse? {
-            val uri = request.url
-            val isAppShell = isTrustedUri(uri) && (uri.path.isNullOrBlank() || uri.path == "/" || uri.path == "/index.html")
-            if (!hasInternetConnection() && isAppShell) {
-                return runCatching {
-                    WebResourceResponse(
-                        "text/html",
-                        "UTF-8",
-                        assets.open("index.html")
-                    ).apply {
-                        responseHeaders = mapOf(
-                            "Cache-Control" to "no-store",
-                            "X-Tonu-Offline" to "1"
-                        )
-                    }
-                }.getOrNull()
-            }
-            return super.shouldInterceptRequest(view, request)
-        }
-
         override fun onReceivedError(
             view: WebView,
             request: WebResourceRequest,
@@ -359,14 +331,16 @@ class MainActivity : ComponentActivity() {
         ) {
             if (request.isForMainFrame) {
                 refreshLayout.isRefreshing = false
-                if (!hasInternetConnection()) {
-                    view.settings.cacheMode = WebSettings.LOAD_CACHE_ELSE_NETWORK
-                    // The packaged shell remains usable offline. Its web bridge reports
-                    // offline status, so remote uploads and Google sign-in stay disabled.
-                    view.loadUrl("file:///android_asset/index.html")
-                } else {
-                    view.loadUrl(OFFLINE_URL)
-                }
+                launchBrand.visibility = android.view.View.GONE
+                Toast.makeText(
+                    this@MainActivity,
+                    if (hasInternetConnection()) {
+                        "TONU STUDY could not load. Pull down to retry."
+                    } else {
+                        "No internet connection. Connect and pull down to retry."
+                    },
+                    Toast.LENGTH_LONG
+                ).show()
             }
         }
     }
@@ -389,6 +363,5 @@ class MainActivity : ComponentActivity() {
 
     companion object {
         private const val TRUSTED_HOST = "tonustudy.vercel.app"
-        private const val OFFLINE_URL = "file:///android_asset/offline.html"
     }
 }

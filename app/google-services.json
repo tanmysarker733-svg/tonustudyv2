@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "663585592404-0v0uc5a3s244855ti41p9p1sb6thov50.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "app.tonustudy.vercel.app",
+            "certificate_hash": "7c924c8d4baa1088ab82091f12932bd70b896d97"
+          }
+        },
+        {
           "client_id": "663585592404-j277r3es9r4vcsj1227pmqkusu7pr7en.apps.googleusercontent.com",
           "client_type": 3
         }
