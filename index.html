@@ -21042,7 +21042,11 @@
       position: relative;
       overflow: hidden;
       isolation: isolate;
-      min-width: 132px !important;
+      width: clamp(118px, 10.5vw, 132px);
+      min-width: 118px !important;
+      max-width: 132px;
+      min-height: 36px;
+      padding: 4px 8px !important;
       background: #f6f2fa !important;
       border-color: #d5c4dd !important;
       box-shadow: 0 1px 3px rgba(31, 21, 41, .14), inset 0 1px 0 rgba(255, 255, 255, .92) !important;
@@ -21065,9 +21069,12 @@
     .nav-brand__logo {
       position: absolute;
       z-index: 2;
-      inset: 4px 8px;
-      width: calc(100% - 16px);
+      inset: 4px 7px;
+      width: calc(100% - 14px);
       height: calc(100% - 8px);
+      max-width: 118px;
+      max-height: 27px;
+      margin: auto;
       object-fit: contain;
       object-position: center;
       opacity: 0;
@@ -21096,7 +21103,7 @@
     }
 
     .brand-image-buffer img {
-      width: min(180px, 52vw);
+      width: min(148px, 40vw);
       height: auto;
       border-radius: 18px;
       box-shadow: 0 14px 38px rgba(0, 0, 0, .18);
@@ -21118,13 +21125,19 @@
 
     @media (max-width: 520px) {
       .nav-brand {
-        min-width: 112px !important;
-        padding-inline: 9px !important;
+        width: 116px;
+        min-width: 116px !important;
+        max-width: 116px;
+        min-height: 34px;
+        padding-inline: 7px !important;
       }
 
       .nav-brand__logo {
-        inset-inline: 7px;
+        inset: 5px 7px;
         width: calc(100% - 14px);
+        height: calc(100% - 10px);
+        max-width: 102px;
+        max-height: 24px;
       }
     }
 
@@ -22542,9 +22555,25 @@
       line-height: 1.4;
     }
 
+    .display-profile-picker {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 7px;
+    }
+
+    .display-profile-picker .visual-profile-picker__option {
+      min-height: 38px;
+      font-size: .72rem;
+      line-height: 1.15;
+    }
+
     @media (max-width: 390px) {
       .visual-profile-picker {
         grid-template-columns: 1fr;
+      }
+
+      .display-profile-picker {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
       }
     }
 
@@ -22730,11 +22759,15 @@
       .nav-brand { margin-right: 2px !important; }
 
       .nav-btn svg,
-      .icon-button svg,
-      .nav-brand__logo {
+      .icon-button svg {
         display: block !important;
         flex: 0 0 auto !important;
         max-height: 19px !important;
+      }
+
+      .nav-brand__logo {
+        display: block !important;
+        max-height: 24px !important;
       }
 
       #settingsDialog {
@@ -23091,6 +23124,7 @@
         showScaffoldStrands: false,
         composerFullscreen: false,
         visualProfile: "balanced",
+        displayResolution: "device",
         subjectNeonEnabled: true,
         singleLayerNeon: true,
         blueVibeLite: false,
@@ -23133,6 +23167,31 @@
     const normalizeVisualProfile = (profile) => (
       ["performance", "balanced", "beauty"].includes(profile) ? profile : "balanced"
     );
+    const normalizeDisplayResolution = (profile) => (
+      ["device", "720p", "900p", "1080p"].includes(profile) ? profile : "device"
+    );
+    const DISPLAY_RESOLUTION_WIDTHS = Object.freeze({
+      "720p": 360,
+      "900p": 400,
+      "1080p": 432,
+    });
+
+    const applyDisplayResolutionProfile = (profile) => {
+      const normalized = normalizeDisplayResolution(profile);
+      const root = document.documentElement;
+      const viewport = document.querySelector('meta[name="viewport"]');
+      root.setAttribute("data-display-resolution", normalized);
+      if (!viewport) return normalized;
+
+      const touchLike = window.matchMedia("(pointer: coarse)").matches || /Android|iPhone|iPad|Mobile/i.test(navigator.userAgent);
+      const portrait = window.innerHeight >= window.innerWidth;
+      const logicalWidth = touchLike && portrait ? DISPLAY_RESOLUTION_WIDTHS[normalized] : null;
+      const nextContent = logicalWidth
+        ? `width=${logicalWidth}, initial-scale=1, maximum-scale=1, viewport-fit=cover`
+        : "width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover";
+      if (viewport.getAttribute("content") !== nextContent) viewport.setAttribute("content", nextContent);
+      return normalized;
+    };
 
     const updateThemeToggleControls = (theme) => {
       const currentTheme = normalizeThemeMode(theme);
@@ -23164,6 +23223,10 @@
       const visualProfile = normalizeVisualProfile(scaffoldState.userSettings?.uiConfigs?.visualProfile);
       scaffoldState.userSettings.uiConfigs.visualProfile = visualProfile;
       root.setAttribute("data-visual-profile", visualProfile);
+      const displayResolution = applyDisplayResolutionProfile(
+        scaffoldState.userSettings?.uiConfigs?.displayResolution
+      );
+      scaffoldState.userSettings.uiConfigs.displayResolution = displayResolution;
       root.classList.toggle(
         "subject-neon-off",
         scaffoldState.userSettings?.uiConfigs?.subjectNeonEnabled === false
@@ -28642,6 +28705,16 @@
                   </div>
                   <span class="visual-profile-note">Works the same in browser and Android. Performance reduces costly motion; Beauty restores the full web glow.</span>
                 `, "Choose speed or richer visual depth")}
+                ${row("Mobile Display Resolution", `
+                  <div class="display-profile-picker" role="group" aria-label="Mobile display resolution">
+                    ${["device", "720p", "900p", "1080p"].map((profile) => {
+                      const current = normalizeDisplayResolution(userSettings.uiConfigs.displayResolution);
+                      const label = profile === "device" ? "Default device resolution" : profile;
+                      return `<button class="btn-small visual-profile-picker__option ${current === profile ? "btn-small--active" : ""}" type="button" data-action="set-display-resolution" data-resolution="${profile}" aria-pressed="${current === profile}">${label}</button>`;
+                    }).join("")}
+                  </div>
+                  <span class="visual-profile-note">Uses a stable mobile layout width, so Android DPI changes do not unexpectedly enlarge or shrink the interface. Landscape and desktop keep the device viewport.</span>
+                `, "Device default, 720p, 900p, or 1080p")}
                 ${row("Subject Neon", checkbox("tgl_subject_neon", userSettings.uiConfigs.subjectNeonEnabled !== false), "Keep each subject's coloured identity glow on web and Android")}
                 ${row("Single-layer Subject Glow", checkbox("tgl_single_layer_neon", userSettings.uiConfigs.singleLayerNeon === true), "Keeps the neon outline while rendering only one lightweight glow layer")}
                 ${row("Blue Vibe Lite", checkbox("tgl_blue_vibe_lite", userSettings.uiConfigs.blueVibeLite === true), "Uses a close blue static vibe with fewer filters and moving effects")}
@@ -28725,7 +28798,7 @@
                 <p>Premium Edition preview shell</p>
                 <a class="settings-update-card" href="https://github.com/tanmysarker733-svg/tonustudyv2/releases/download/android/Tonu.Study.apk" target="_blank" rel="noopener noreferrer" aria-label="Download the latest Android app">
                   ${icon("download", "Update")}
-                  <span><strong>Update to latest version <em>Android v2.1.1 · Web 344</em></strong><small>Android release channel · checks the current GitHub release when you are online</small></span>
+                  <span><strong>Update to latest version <em>Android v2.1.9 · Web 351</em></strong><small>Android release channel · checks the current GitHub release when you are online</small></span>
                   ${icon("external-link", "Open")}
                 </a>
                 <p>Built by Tanmoy Sarker for HSC students who want to track smarter.</p>
@@ -29708,6 +29781,7 @@
         "backup-delete-entry",
         "set-study-mode",
         "set-visual-profile",
+        "set-display-resolution",
         "chronos-apply-config",
         "settings-chronos-apply-config",
         "chronos-apply-preset",
@@ -30993,6 +31067,9 @@
 
     // ── main.js ───────────────────────────────────────────────────────────────────
     const initialUserSettings = loadUserSettings();
+    initialUserSettings.uiConfigs.displayResolution = applyDisplayResolutionProfile(
+      initialUserSettings.uiConfigs.displayResolution
+    );
     document.documentElement.style.setProperty('--master-font-scale', (initialUserSettings.fontScale || 100) / 100);
 
     const scaffoldState = {
@@ -31002,6 +31079,13 @@
       graphConfig: defaultGraphConfig,
       syllabus: createDefaultSyllabus(initialUserSettings.studyMode),
     };
+    let displayResolutionResizeTimer = 0;
+    window.addEventListener("resize", () => {
+      window.clearTimeout(displayResolutionResizeTimer);
+      displayResolutionResizeTimer = window.setTimeout(() => {
+        applyDisplayResolutionProfile(scaffoldState.userSettings?.uiConfigs?.displayResolution);
+      }, 120);
+    }, { passive: true });
 
     const LOCAL_LOGIN_KEY = "hsc-local-login-session-v1";
 
@@ -34265,6 +34349,20 @@
         showSystemToast(
           profile === "beauty" ? "Beauty mode on" : profile === "performance" ? "Maximum performance on" : "Balanced mode on",
           profile === "beauty" ? "Full web-style glow is active in Android too." : profile === "performance" ? "Heavy motion is reduced while subject identity glow remains." : "Smooth motion and lightweight neon are balanced."
+        );
+        return;
+      }
+      if (action === "set-display-resolution") {
+        const profile = normalizeDisplayResolution(target?.dataset?.resolution);
+        scaffoldState.userSettings.uiConfigs.displayResolution = profile;
+        applyDisplayResolutionProfile(profile);
+        saveUserSettings();
+        mountApp();
+        showSystemToast(
+          "Display profile updated",
+          profile === "device"
+            ? "The device's natural viewport is active."
+            : `${profile} mobile layout is active and stays stable across DPI changes.`
         );
         return;
       }

@@ -8,6 +8,8 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.net.Uri
 import android.os.Bundle
+import android.os.SystemClock
+import android.view.Gravity
 import android.webkit.CookieManager
 import android.webkit.JavascriptInterface
 import android.webkit.ValueCallback
@@ -44,10 +46,12 @@ class MainActivity : ComponentActivity() {
     private lateinit var webView: WebView
     private lateinit var refreshLayout: SwipeRefreshLayout
     private lateinit var progressBar: ProgressBar
+    private lateinit var launchOverlay: FrameLayout
     private lateinit var launchBrand: ImageView
     private lateinit var credentialManager: CredentialManager
     private var fileCallback: ValueCallback<Array<Uri>>? = null
     private var lastTrustedUrl = BuildConfig.APP_URL
+    private var lastBackPressedAt = 0L
 
     private val filePicker = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
@@ -67,17 +71,14 @@ class MainActivity : ComponentActivity() {
         val root = FrameLayout(this)
         refreshLayout = SwipeRefreshLayout(this)
         webView = WebView(this)
+        launchOverlay = FrameLayout(this).apply {
+            setBackgroundColor(Color.rgb(7, 19, 27))
+            isClickable = true
+        }
         launchBrand = ImageView(this).apply {
             setImageResource(R.drawable.tonu_study_brand)
             scaleType = ImageView.ScaleType.FIT_CENTER
-            setBackgroundColor(Color.rgb(7, 19, 27))
             contentDescription = getString(R.string.app_name)
-            setPadding(
-                resources.displayMetrics.density.times(32).toInt(),
-                resources.displayMetrics.density.times(32).toInt(),
-                resources.displayMetrics.density.times(32).toInt(),
-                resources.displayMetrics.density.times(32).toInt()
-            )
         }
         progressBar = ProgressBar(this, null, android.R.attr.progressBarStyleHorizontal).apply {
             max = 100
@@ -97,8 +98,18 @@ class MainActivity : ComponentActivity() {
                 FrameLayout.LayoutParams.MATCH_PARENT
             )
         )
-        root.addView(
+        val splashSize = resources.displayMetrics.density.times(
+            if (resources.configuration.smallestScreenWidthDp >= 600) 184 else 156
+        ).toInt()
+        launchOverlay.addView(
             launchBrand,
+            FrameLayout.LayoutParams(
+                splashSize,
+                splashSize
+            ).apply { gravity = Gravity.CENTER }
+        )
+        root.addView(
+            launchOverlay,
             FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.MATCH_PARENT,
                 FrameLayout.LayoutParams.MATCH_PARENT
@@ -145,8 +156,8 @@ class MainActivity : ComponentActivity() {
                 progressBar.visibility = if (progress >= 100) android.view.View.GONE else android.view.View.VISIBLE
                 if (progress >= 100) {
                     refreshLayout.isRefreshing = false
-                    launchBrand.animate().alpha(0f).setDuration(180).withEndAction {
-                        launchBrand.visibility = android.view.View.GONE
+                    launchOverlay.animate().alpha(0f).setDuration(180).withEndAction {
+                        launchOverlay.visibility = android.view.View.GONE
                     }.start()
                 }
             }
@@ -181,7 +192,15 @@ class MainActivity : ComponentActivity() {
             override fun handleOnBackPressed() {
                 when {
                     webView.canGoBack() -> webView.goBack()
-                    else -> finish()
+                    SystemClock.elapsedRealtime() - lastBackPressedAt <= 2_000L -> finish()
+                    else -> {
+                        lastBackPressedAt = SystemClock.elapsedRealtime()
+                        Toast.makeText(
+                            this@MainActivity,
+                            "Press back again to exit TONU STUDY.",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
                 }
             }
         })
