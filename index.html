@@ -3381,7 +3381,7 @@
       box-shadow: 0 0 12px rgba(239, 68, 68, 0.25);
     }
 
-    /* ── Smart Update button glow ─────────────────────────────────────────────── */
+    /* â”€â”€ Smart Update button glow â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
     .btn-small--accent {
       background: rgba(124, 58, 237, 0.15);
       border: 1px solid rgba(124, 58, 237, 0.4);
@@ -3831,7 +3831,7 @@
       font-size: 2rem;
     }
 
-    /* ── Unit 06 Pomodoro & Stopwatch ─────────────────────────────────────────── */
+    /* â”€â”€ Unit 06 Pomodoro & Stopwatch â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
     .pomo-sw-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -6013,7 +6013,7 @@
     }
 
     .backup-banner strong::before {
-      content: "✦";
+      content: "âœ¦";
       display: inline-grid;
       place-items: center;
       width: 20px;
@@ -7688,7 +7688,7 @@
       border-radius: 999px;
     }
 
-    /* ── Syllabus Chapter Rows & Plates ── */
+    /* â”€â”€ Syllabus Chapter Rows & Plates â”€â”€ */
     .paper-section {
       margin-bottom: 13px;
       padding: 10px;
@@ -9287,7 +9287,7 @@
       }
     }
 
-    /* ── Developer Portfolio Modal Styles ── */
+    /* â”€â”€ Developer Portfolio Modal Styles â”€â”€ */
     .developer-dialog {
       position: fixed !important;
       inset: 0 !important;
@@ -16806,7 +16806,7 @@
     }
 
     .chat-palette-swatch[aria-pressed="true"]::after {
-      content: "✓";
+      content: "âœ“";
       position: absolute;
       inset: 50% auto auto 50%;
       width: 18px;
@@ -17356,7 +17356,7 @@
     }
 
     #settingsDialog .settings-choice-grid [data-action="set-study-mode"].btn-small--active::after {
-      content: "✓";
+      content: "âœ“";
       display: grid;
       place-items: center;
       border-color: rgba(255, 255, 255, .92);
@@ -17879,7 +17879,7 @@
     }
 
     .chapter-quick-dialog .ch-pill--close::after {
-      content: "✓";
+      content: "âœ“";
       display: grid;
       width: 18px;
       height: 18px;
@@ -19568,13 +19568,13 @@
       line-height: 1;
     }
 
-    #syllabus .subj-settings [data-action="subj-clone"]::before { content: "⧉"; }
-    #syllabus .subj-settings [data-action="subj-reset-subject"]::before { content: "↺"; }
+    #syllabus .subj-settings [data-action="subj-clone"]::before { content: "â§‰"; }
+    #syllabus .subj-settings [data-action="subj-reset-subject"]::before { content: "â†º"; }
     #syllabus .subj-settings [data-action="subj-apply-defaults-all"]::before,
-    #syllabus .subj-settings [data-action="subj-apply-defaults"]::before { content: "✓"; }
-    #syllabus .subj-settings [data-action="subj-delete"]::before { content: "×"; }
+    #syllabus .subj-settings [data-action="subj-apply-defaults"]::before { content: "âœ“"; }
+    #syllabus .subj-settings [data-action="subj-delete"]::before { content: "Ã—"; }
     #syllabus .subj-settings [data-action="subj-add-chapter"]::before { content: "+"; }
-    #syllabus .subj-settings [data-action="subj-remove-last-chapter"]::before { content: "−"; }
+    #syllabus .subj-settings [data-action="subj-remove-last-chapter"]::before { content: "âˆ’"; }
 
     /* v300: repair the compact mobile chat header and keep actions inside their tray. */
     #chat .chat-compose__identity {
@@ -22452,7 +22452,7 @@
       font-variant-numeric: tabular-nums;
     }
 
-    /* The quick editor should read as a calm, layered dark surface—not an
+    /* The quick editor should read as a calm, layered dark surfaceâ€”not an
        inverted white control panel.  Semantic actions keep their own colors. */
     html[data-theme="dark"] .chapter-quick-dialog :is(.ch-btn, .track-chk, .ch-style-option:not(.is-active)) {
       border-color: rgba(148, 163, 184, .43) !important;
@@ -22640,7 +22640,7 @@
     }
 
     .chapter-quick-dialog .ch-pill--reset::after {
-      content: "✦";
+      content: "âœ¦";
       position: absolute;
       left: 50%; bottom: 3px;
       font-size: .72rem;
@@ -22913,6 +22913,28 @@
         padding: 4px !important;
       }
     }
+
+    /* v352: neon remains visibly present in the Android performance profile.
+       This is a static single-layer glow, so it keeps the web identity without
+       paying for a continuous animation on low-end devices. */
+    html:not(.subject-neon-off) #syllabus .subject-card {
+      border-color: color-mix(in srgb, var(--subject-accent, #38bdf8) 68%, #405b78) !important;
+      box-shadow:
+        inset 0 1px 0 color-mix(in srgb, var(--subject-accent, #38bdf8) 30%, transparent),
+        0 0 14px color-mix(in srgb, var(--subject-accent, #38bdf8) 28%, transparent),
+        0 12px 28px rgba(2, 6, 23, .2) !important;
+    }
+
+    html.performance-lite:not(.subject-neon-off) #syllabus .subject-card {
+      box-shadow:
+        inset 0 1px 0 color-mix(in srgb, var(--subject-accent, #38bdf8) 28%, transparent),
+        0 0 11px color-mix(in srgb, var(--subject-accent, #38bdf8) 25%, transparent) !important;
+    }
+
+    html:not(.subject-neon-off) #syllabus .subject-card::before {
+      opacity: .92 !important;
+      filter: drop-shadow(0 0 7px color-mix(in srgb, var(--subject-accent, #38bdf8) 52%, transparent)) !important;
+    }
   </style>
 </head>
 
@@ -22988,8 +23010,8 @@
     <div class="anonymous-warning__card" role="dialog" aria-modal="true" aria-labelledby="anonymousWarningTitle">
       <h3 id="anonymousWarningTitle"><i data-lucide="triangle-alert" aria-hidden="true"></i><span>Anonymous Login
           Warning</span></h3>
-      <p>এটি একটি অস্থায়ী অ্যাকাউন্ট। আগামী ৩ দিনের মধ্যে এই অ্যাকাউন্টটি আপনার স্থায়ী ইমেইল বা গুগল অ্যাকাউন্টের সাথে
-        লিঙ্ক না করলে আপনার সমস্ত স্টাডি ডাটা মুছে (Delete) যাবে।</p>
+      <p>à¦à¦Ÿà¦¿ à¦à¦•à¦Ÿà¦¿ à¦…à¦¸à§à¦¥à¦¾à§Ÿà§€ à¦…à§à¦¯à¦¾à¦•à¦¾à¦‰à¦¨à§à¦Ÿà¥¤ à¦†à¦—à¦¾à¦®à§€ à§© à¦¦à¦¿à¦¨à§‡à¦° à¦®à¦§à§à¦¯à§‡ à¦à¦‡ à¦…à§à¦¯à¦¾à¦•à¦¾à¦‰à¦¨à§à¦Ÿà¦Ÿà¦¿ à¦†à¦ªà¦¨à¦¾à¦° à¦¸à§à¦¥à¦¾à§Ÿà§€ à¦‡à¦®à§‡à¦‡à¦² à¦¬à¦¾ à¦—à§à¦—à¦² à¦…à§à¦¯à¦¾à¦•à¦¾à¦‰à¦¨à§à¦Ÿà§‡à¦° à¦¸à¦¾à¦¥à§‡
+        à¦²à¦¿à¦™à§à¦• à¦¨à¦¾ à¦•à¦°à¦²à§‡ à¦†à¦ªà¦¨à¦¾à¦° à¦¸à¦®à¦¸à§à¦¤ à¦¸à§à¦Ÿà¦¾à¦¡à¦¿ à¦¡à¦¾à¦Ÿà¦¾ à¦®à§à¦›à§‡ (Delete) à¦¯à¦¾à¦¬à§‡à¥¤</p>
       <div class="anonymous-warning__actions">
         <button class="btn-small" type="button" id="anonymousCancel">Cancel</button>
         <button class="btn-small btn-small--primary" type="button" id="anonymousContinue">Continue</button>
@@ -22999,7 +23021,7 @@
   <div id="authRecaptchaContainer" aria-hidden="true"></div>
   <div id="app" class="app-root"></div>
   <script>
-    // ── shared/dom.js ────────────────────────────────────────────────────────────
+    // â”€â”€ shared/dom.js â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     const escapeHtml = (value) =>
       String(value)
         .replaceAll("&", "&amp;")
@@ -23039,7 +23061,7 @@
   </section>
 `;
 
-    // ── config/app-config.js ─────────────────────────────────────────────────────
+    // â”€â”€ config/app-config.js â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     const APP_META = {
       name: "TONU STUDY",
       version: "scaffold-v1",
@@ -23056,7 +23078,7 @@
       { id: "admin", label: "Admin", icon: "shield" },
     ];
 
-    // ── data/graph-config.js ─────────────────────────────────────────────────────
+    // â”€â”€ data/graph-config.js â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     const defaultGraphConfig = {
       visClass: true,
       visTotal: true,
@@ -23067,7 +23089,7 @@
       timelineZoom: false,
     };
 
-    // ── data/user-settings.js ────────────────────────────────────────────────────
+    // â”€â”€ data/user-settings.js â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     // Motion is useful feedback on capable devices, but never a cost paid by a
     // low-end, data-saver, or reduced-motion device on first launch.
     const defaultParadoxMotion = (() => {
@@ -23144,13 +23166,22 @@
         const raw = localStorage.getItem(USER_SETTINGS_KEY);
         if (!raw) return { ...defaultUserSettings };
         const parsed = JSON.parse(raw);
-        return {
+        const merged = {
           ...defaultUserSettings,
           ...parsed,
           barColors: { ...defaultUserSettings.barColors, ...(parsed.barColors || {}) },
           graphColors: { ...defaultUserSettings.graphColors, ...(parsed.graphColors || {}) },
           uiConfigs: { ...defaultUserSettings.uiConfigs, ...(parsed.uiConfigs || {}) },
         };
+        const isAndroidShell = Boolean(window.TonuAndroid) || /Android|TonuStudy/i.test(navigator.userAgent || "");
+        const neonMigrationKey = "tonu-android-neon-default-v352";
+        if (isAndroidShell && localStorage.getItem(neonMigrationKey) !== "done") {
+          merged.uiConfigs.subjectNeonEnabled = true;
+          merged.uiConfigs.singleLayerNeon = true;
+          localStorage.setItem(neonMigrationKey, "done");
+          localStorage.setItem(USER_SETTINGS_KEY, JSON.stringify(merged));
+        }
+        return merged;
       } catch (_) {
         return { ...defaultUserSettings };
       }
@@ -23803,7 +23834,7 @@
         const parsed = parseAiSmartSyncLocally(trimmed);
         const lines = [];
         (parsed.updates || []).forEach((update) => {
-          lines.push(`🚀 Update (${formatChatAiPreviewDate(update.date)})`);
+          lines.push(`ðŸš€ Update (${formatChatAiPreviewDate(update.date)})`);
           (update.items || []).forEach((item) => {
             const paper = item.paper ? ` P${item.paper}` : "";
             const chapter = item.chapterLabel || (item.chapter ? `C${item.chapter}` : "");
@@ -23813,17 +23844,17 @@
               : (item.lectures || []).length
                 ? ` Lec${item.lectures.join("+")}${item.totalLectures ? `/${item.totalLectures}` : ""}`
                 : "";
-            const percent = item.completionPercent < 100 ? ` ${item.completionPercent}%` : " ✅";
-            lines.push(`▶️ ${item.subject}${paper}${chapter}${type}${lecture}${percent}`);
+            const percent = item.completionPercent < 100 ? ` ${item.completionPercent}%` : " âœ…";
+            lines.push(`â–¶ï¸ ${item.subject}${paper}${chapter}${type}${lecture}${percent}`);
           });
-          if (update.studyQuality !== null && update.studyQuality !== undefined) lines.push(`📈 Study Quality - ${update.studyQuality}%`);
-          if (update.classDurationMinutes) lines.push(`⌛ Class Duration - ${formatDurationShort(update.classDurationMinutes)}`);
-          if (update.selfStudyMinutes) lines.push(`👨‍🎓 Self Study - ${formatDurationShort(update.selfStudyMinutes)}`);
-          if (update.studyDurationMinutes) lines.push(`🕒 Study Duration - ${formatDurationShort(update.studyDurationMinutes)}`);
+          if (update.studyQuality !== null && update.studyQuality !== undefined) lines.push(`ðŸ“ˆ Study Quality - ${update.studyQuality}%`);
+          if (update.classDurationMinutes) lines.push(`âŒ› Class Duration - ${formatDurationShort(update.classDurationMinutes)}`);
+          if (update.selfStudyMinutes) lines.push(`ðŸ‘¨â€ðŸŽ“ Self Study - ${formatDurationShort(update.selfStudyMinutes)}`);
+          if (update.studyDurationMinutes) lines.push(`ðŸ•’ Study Duration - ${formatDurationShort(update.studyDurationMinutes)}`);
           if (!(update.items || []).length && !update.classDurationMinutes && !update.studyDurationMinutes && !update.selfStudyMinutes && update.studyQuality === null) {
             lines.push(trimmed);
           }
-          (update.warnings || []).forEach((warning) => lines.push(`⚠️ ${warning}`));
+          (update.warnings || []).forEach((warning) => lines.push(`âš ï¸ ${warning}`));
         });
         return lines.filter(Boolean).join("\n").trim() || trimmed;
       } catch (_) {
@@ -23849,7 +23880,7 @@
       const raw = textarea?.value || "";
       const trimmed = raw.trim();
       const visibility = chatState.prefs.defaultVisibility === "private" ? "Private" : "Public";
-      if (meta) meta.textContent = `${getChatAuthorName()} · ${visibility}`;
+      if (meta) meta.textContent = `${getChatAuthorName()} Â· ${visibility}`;
       const previewText = trimmed ? formatChatAiLivePreviewText(raw) : "";
       body.innerHTML = trimmed
         ? escapeHtml(previewText).replace(/\n/g, "<br>")
@@ -24177,7 +24208,7 @@
       ${icon("chevron-left", "Previous")}
     </button>
     <span style="font-size: 11px; font-weight: 600; color: var(--text-sub); min-width: 90px; text-align: center;">
-      ${startIdx + 1}–${endIdx} of ${visible.length}
+      ${startIdx + 1}â€“${endIdx} of ${visible.length}
     </span>
     <button class="btn-small" type="button" data-action="chat-show-all-next" ${nextDisabled}>
       ${icon("chevron-right", "Next")}
@@ -24361,7 +24392,7 @@
       syncChatUi();
 
       if (!hasInternetConnection()) {
-        chatState.status = "Offline — local study data remains available";
+        chatState.status = "Offline â€” local study data remains available";
         setChatFeedback("No internet connection. Chat and cloud upload are paused; local study tools still work.", "error");
         renderChatMessages();
         renderSyncStatusUI();
@@ -24468,7 +24499,7 @@
       }
     };
 
-    // ── AI Smart Sync parser/preview/apply layer ─────────────────────────────────
+    // â”€â”€ AI Smart Sync parser/preview/apply layer â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     const AI_SYNC_ENDPOINT = "/api/ai-sync";
     const AI_SYNC_ALLOWED_SUBJECTS = ["Higher Math", "Physics", "Chemistry", "Biology", "Bangla", "English", "ICT"];
     const AI_SYNC_ALLOWED_CLASS_TYPES = ["Detailed", "Advanced", "Admission", "FRB", "One Shot", "Revision", "Custom"];
@@ -24759,14 +24790,14 @@
         if (chapterMatch && !chapter) chapter = parseInt(chapterMatch[1], 10);
       }
       const lectureToken = "(?:Lec(?:ture)?|L)";
-      const range = rawLine.match(new RegExp(`\\b${lectureToken}\\s*(\\d{1,3})\\s*[-–]\\s*(\\d{1,3})\\b`, "i"));
+      const range = rawLine.match(new RegExp(`\\b${lectureToken}\\s*(\\d{1,3})\\s*[-â€“]\\s*(\\d{1,3})\\b`, "i"));
       const withTotal = rawLine.match(new RegExp(`\\b${lectureToken}\\s*(\\d{1,3})\\s*\\/\\s*(\\d{1,3})\\b`, "i"));
       const single = rawLine.match(new RegExp(`\\b${lectureToken}\\s*(\\d{1,3})\\b`, "i"));
       const lectureRange = range ? { from: parseInt(range[1], 10), to: parseInt(range[2], 10) } : null;
       const lectures = !lectureRange && single ? [parseInt(single[1], 10)] : [];
       const totalLectures = withTotal ? parseInt(withTotal[2], 10) : null;
       const percentMatch = rawLine.match(/(\d{1,3})\s*%/);
-      const hasProgressSignal = Boolean(lectureRange || lectures.length || percentMatch || /✅|🟩|done|complete/i.test(rawLine));
+      const hasProgressSignal = Boolean(lectureRange || lectures.length || percentMatch || /âœ…|ðŸŸ©|done|complete/i.test(rawLine));
       const completionPercent = percentMatch ? clampAiPercent(percentMatch[1]) : 100;
       const classType = parseAiClassTypeFromLine(rawLine);
       // No paper/chapter/lecture/percent detected: this is likely free-text (methodology notes,
@@ -24774,7 +24805,7 @@
       if (!paper && !chapter && !hasProgressSignal) {
         return {
           item: null,
-          warnings: [`${rawLine} — Which paper/chapter should this update? / কোন paper/chapter এর জন্য এটা ধরবো?`],
+          warnings: [`${rawLine} â€” Which paper/chapter should this update? / à¦•à§‹à¦¨ paper/chapter à¦à¦° à¦œà¦¨à§à¦¯ à¦à¦Ÿà¦¾ à¦§à¦°à¦¬à§‹?`],
         };
       }
       return {
@@ -25016,14 +25047,14 @@
     };
 
     const getAiItemEmoji = (subject = "") => {
-      if (subject === "Higher Math") return "📐";
-      if (subject === "Physics") return "⚛️";
-      if (subject === "Chemistry") return "🧪";
-      if (subject === "Biology") return "🧬";
-      if (subject === "Bangla") return "🔤";
-      if (subject === "English") return "🔠";
-      if (subject === "ICT") return "💻";
-      return "▶️";
+      if (subject === "Higher Math") return "ðŸ“";
+      if (subject === "Physics") return "âš›ï¸";
+      if (subject === "Chemistry") return "ðŸ§ª";
+      if (subject === "Biology") return "ðŸ§¬";
+      if (subject === "Bangla") return "ðŸ”¤";
+      if (subject === "English") return "ðŸ” ";
+      if (subject === "ICT") return "ðŸ’»";
+      return "â–¶ï¸";
     };
 
     const formatAiItemPostLine = (item = {}) => {
@@ -25036,19 +25067,19 @@
         : (item.lectures || []).length
           ? ` Lec${item.lectures.join("+")}${item.totalLectures ? `/${item.totalLectures}` : ""}`
           : "";
-      const done = item.isRevision ? " 🟩" : (item.completionPercent < 100 ? ` ${item.completionPercent}%` : " ✅");
+      const done = item.isRevision ? " ðŸŸ©" : (item.completionPercent < 100 ? ` ${item.completionPercent}%` : " âœ…");
       return `${getAiItemEmoji(item.subject)} ${subject}${paper}${chapter}${type}${lecture}${done}`.replace(/\s+/g, " ").trim();
     };
 
     const buildAiPostTextFromParsed = (parsed) => {
       const blocks = (parsed?.updates || []).map((update) => {
         if (update.postText && update.postText.trim()) return update.postText.trim();
-        const lines = [`🚀 Update (${formatChatAiPreviewDate(update.date)})`];
+        const lines = [`ðŸš€ Update (${formatChatAiPreviewDate(update.date)})`];
         (update.items || []).forEach((item) => lines.push(formatAiItemPostLine(item)));
-        if (update.classDurationMinutes !== null && update.classDurationMinutes !== undefined) lines.push(`⌛ Class Duration - ${formatDurationShort(update.classDurationMinutes)}`);
-        if (update.studyDurationMinutes !== null && update.studyDurationMinutes !== undefined) lines.push(`🕒 Study Duration - ${formatDurationShort(update.studyDurationMinutes)}`);
-        if (update.selfStudyMinutes !== null && update.selfStudyMinutes !== undefined) lines.push(`👨‍🎓 Self Study - ${formatDurationShort(update.selfStudyMinutes)}`);
-        if (update.studyQuality !== null && update.studyQuality !== undefined) lines.push(`📈 Study Quality - ${update.studyQuality}%`);
+        if (update.classDurationMinutes !== null && update.classDurationMinutes !== undefined) lines.push(`âŒ› Class Duration - ${formatDurationShort(update.classDurationMinutes)}`);
+        if (update.studyDurationMinutes !== null && update.studyDurationMinutes !== undefined) lines.push(`ðŸ•’ Study Duration - ${formatDurationShort(update.studyDurationMinutes)}`);
+        if (update.selfStudyMinutes !== null && update.selfStudyMinutes !== undefined) lines.push(`ðŸ‘¨â€ðŸŽ“ Self Study - ${formatDurationShort(update.selfStudyMinutes)}`);
+        if (update.studyQuality !== null && update.studyQuality !== undefined) lines.push(`ðŸ“ˆ Study Quality - ${update.studyQuality}%`);
         return lines.join("\n");
       }).filter(Boolean);
       return blocks.join("\n.\n.\n");
@@ -25124,7 +25155,7 @@
               <div class="ai-sync-item">
                 <div>
                   <strong>${escapeHtml(item.subject)} ${escapeHtml(paper)}${escapeHtml(item.chapterLabel || "")}</strong>
-                  <span>${escapeHtml(item.classType)} • ${escapeHtml(lec)}${escapeHtml(total)} • ${item.completionPercent}%${item.isRevision ? " • Revision" : ""}</span>
+                  <span>${escapeHtml(item.classType)} â€¢ ${escapeHtml(lec)}${escapeHtml(total)} â€¢ ${item.completionPercent}%${item.isRevision ? " â€¢ Revision" : ""}</span>
                 </div>
                 <span>${escapeHtml(item.rawLine || "")}</span>
               </div>
@@ -25142,7 +25173,7 @@
     <div class="ai-sync-clarification">
       <strong>${icon("message-circle-question", "Question")} AI needs a little clarification</strong>
       <div class="ai-sync-clarification__questions">
-        ${questions.length ? questions.map((q) => `<span>${escapeHtml(q)}</span>`).join("") : `<span>Which date, paper, chapter, lecture, class time, and study time should I use? / কোন date, paper, chapter, lecture, class time আর study time ধরবো?</span>`}
+        ${questions.length ? questions.map((q) => `<span>${escapeHtml(q)}</span>`).join("") : `<span>Which date, paper, chapter, lecture, class time, and study time should I use? / à¦•à§‹à¦¨ date, paper, chapter, lecture, class time à¦†à¦° study time à¦§à¦°à¦¬à§‹?</span>`}
       </div>
       <textarea id="aiSyncClarificationInput" class="ai-sync-clarification__reply" spellcheck="true" placeholder="Reply"></textarea>
       <div class="ai-smart-sync-actions">
@@ -25434,7 +25465,7 @@
     function getComposerSuffixSeed(item = composerState.currentItem) {
       if (item?.customText) return item.customText;
       const context = getComposerContextLabel(item);
-      return context ? `▶️ ${context} - ` : "▶️ ";
+      return context ? `â–¶ï¸ ${context} - ` : "â–¶ï¸ ";
     }
 
     function hasComposerTrackerContext(item = composerState.currentItem) {
@@ -25520,13 +25551,13 @@
 
       if (isRange) {
         const parts = [subjName, paperName + chName, typeText, lecText + totalText].filter(Boolean).join(' ');
-        return `📝 ${parts} Revision`;
+        return `ðŸ“ ${parts} Revision`;
       } else {
         const parts = [subjName, paperName + chName, typeText, lecText + totalText].filter(Boolean).join(' ');
         if (item.percent === 100 || item.percent === null) {
-          return `▶️ ${parts} ✅`;
+          return `â–¶ï¸ ${parts} âœ…`;
         } else {
-          return `▶️ ${parts} 🔄 ${item.percent}%`;
+          return `â–¶ï¸ ${parts} ðŸ”„ ${item.percent}%`;
         }
       }
     }
@@ -25547,11 +25578,11 @@
 
       if (isLanguage) {
         const paperStr = item.paperIndex === 0 ? "1st Paper" : "2nd Paper";
-        return `▶️ ${subj.title} ${paperStr} - `;
+        return `â–¶ï¸ ${subj.title} ${paperStr} - `;
       }
       if (isICT && !(item.classType || (item.selectedLectures && item.selectedLectures.length))) {
         const chStr = item.chapterIndex !== null ? `C${item.chapterIndex + 1}` : "";
-        return `▶️ ICT ${chStr} - `;
+        return `â–¶ï¸ ICT ${chStr} - `;
       }
       return generateLineText(item);
     }
@@ -25712,7 +25743,7 @@
         return composerState.cumulativeText;
       }
       const lines = [];
-      lines.push(`🚀 Update (${formatComposerDate(composerState.date)})`);
+      lines.push(`ðŸš€ Update (${formatComposerDate(composerState.date)})`);
 
       const items = [...composerState.addedItems];
       const texts = [...composerState.addedLines];
@@ -25720,7 +25751,7 @@
       if (includeCurrentDraft && composerState.currentItem) {
         const item = composerState.currentItem;
         const draftText = currentDraftText !== null ? currentDraftText : (item.customText || getDefaultLineText(item));
-        if (draftText && draftText.trim() !== "" && draftText.trim() !== "▶️" && draftText.trim() !== "▶️ ") {
+        if (draftText && draftText.trim() !== "" && draftText.trim() !== "â–¶ï¸" && draftText.trim() !== "â–¶ï¸ ") {
           items.push(item);
           texts.push(draftText);
         }
@@ -25735,8 +25766,8 @@
 
           const subj = scaffoldState.syllabus[item.subjectIndex];
           const subjName = subj ? subj.title : "";
-          const prefix1 = "▶️ " + subjName + " ";
-          const prefix2 = "📝 " + subjName + " ";
+          const prefix1 = "â–¶ï¸ " + subjName + " ";
+          const prefix2 = "ðŸ“ " + subjName + " ";
           let displayLine = line;
           if (subjName) {
             if (displayLine.startsWith(prefix1)) {
@@ -25752,16 +25783,16 @@
       }
 
       if (composerState.studyQuality !== null && composerState.studyQuality !== undefined) {
-        lines.push(`📊 Study Quality - ${composerState.studyQuality}%`);
+        lines.push(`ðŸ“Š Study Quality - ${composerState.studyQuality}%`);
       }
       if (composerState.selfStudyTime > 0) {
-        lines.push(`🧠 Self Study - ${formatDurationShort(composerState.selfStudyTime)}`);
+        lines.push(`ðŸ§  Self Study - ${formatDurationShort(composerState.selfStudyTime)}`);
       }
       if (composerState.classDuration > 0) {
-        lines.push(`⌛ Class Duration - ${formatDurationShort(composerState.classDuration)}`);
+        lines.push(`âŒ› Class Duration - ${formatDurationShort(composerState.classDuration)}`);
       }
       if (composerState.totalStudyDuration > 0) {
-        lines.push(`🕒 Study Duration - ${formatDurationShort(composerState.totalStudyDuration)}`);
+        lines.push(`ðŸ•’ Study Duration - ${formatDurationShort(composerState.totalStudyDuration)}`);
       }
 
       const currentBlock = lines.join('\n');
@@ -27151,7 +27182,7 @@
       if (action === "composer-add-custom-suffix") {
         const input = document.getElementById("composerCustomSuffixText");
         const text = input?.value.trim() || "";
-        if (!text || text === "▶️" || text === "▶️ -") {
+        if (!text || text === "â–¶ï¸" || text === "â–¶ï¸ -") {
           input?.focus();
           return;
         }
@@ -27170,7 +27201,7 @@
         const inp = document.getElementById("composerStep2CustomText");
         const suffix = inp ? inp.value.trim() : "";
         if (!suffix) return;
-        const line = `▶️ ${suffix}`;
+        const line = `â–¶ï¸ ${suffix}`;
         composerState.currentItem.isCustomLine = true;
         composerState.currentItem.customText = line;
         composerState.addedLines.push(line);
@@ -27187,7 +27218,7 @@
         if (!subj) return;
         const paperSel = subj.hasPapers ? (composerState.currentItem.paperIndex === 0 ? "P1" : "P2") : "";
         const chSel = composerState.currentItem.chapterIndex !== null ? `C${composerState.currentItem.chapterIndex + 1}` : "";
-        const prefix = `▶️ ${subj.title} ${paperSel}${chSel} - `;
+        const prefix = `â–¶ï¸ ${subj.title} ${paperSel}${chSel} - `;
         const inp = document.getElementById("composerStep4CustomText");
         const suffix = inp ? inp.value.trim() : "";
         if (!suffix) return;
@@ -27205,7 +27236,7 @@
       if (action === "composer-confirm-and-add-another") {
         const textInput = document.getElementById("composerLineText");
         const text = textInput ? textInput.value.trim() : "";
-        if (!text || text === "▶️" || text === "▶️ ") return;
+        if (!text || text === "â–¶ï¸" || text === "â–¶ï¸ ") return;
         composerState.currentItem.customText = text;
         composerState.addedLines.push(text);
         composerState.addedItems.push(cloneComposerItem());
@@ -27220,7 +27251,7 @@
       if (action === "composer-confirm-and-review") {
         const textInput = document.getElementById("composerLineText");
         const text = textInput ? textInput.value.trim() : "";
-        if (!text || text === "▶️" || text === "▶️ ") return;
+        if (!text || text === "â–¶ï¸" || text === "â–¶ï¸ ") return;
         composerState.currentItem.customText = text;
         composerState.addedLines.push(text);
         composerState.addedItems.push(cloneComposerItem());
@@ -27490,7 +27521,7 @@
       }
     });
 
-    // ── data/syllabus.seed.js ─────────────────────────────────────────────────────
+    // â”€â”€ data/syllabus.seed.js â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     const createTrackedChapter = (name, dl = 10, frb = 5) => ({
       name,
       isPerc: false,
@@ -27551,7 +27582,7 @@
       createSubject({ title: "ICT", icon: "ICT", hasPapers: false, chapters: chs(6) }),
     ];
 
-    // ── features/dashboard/dashboard.view.js ─────────────────────────────────────
+    // â”€â”€ features/dashboard/dashboard.view.js â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     const createSscSyllabus = () => [
       createSubject({
         title: "Bangla", icon: "Ba", hasPapers: true, papers: [
@@ -27792,7 +27823,7 @@
               <div class="dash-greet"><span class="dash-greet__salutation">${escapeHtml(greeting)},</span> <span class="dash-greet__name">${escapeHtml(name)}</span></div>
               <div class="dash-mission">
                 <span class="mdot"></span>
-                ${escapeHtml(state.userSettings.missionTitle)} &nbsp;·&nbsp; ${escapeHtml(state.userSettings.missionStart)} → ${escapeHtml(state.userSettings.missionEnd)}
+                ${escapeHtml(state.userSettings.missionTitle)} &nbsp;Â·&nbsp; ${escapeHtml(state.userSettings.missionStart)} â†’ ${escapeHtml(state.userSettings.missionEnd)}
               </div>
             </div>
             <div class="eta-pill">
@@ -27923,7 +27954,7 @@
   `;
     };
 
-    // ── features/auth/auth.view.js ────────────────────────────────────────────────
+    // â”€â”€ features/auth/auth.view.js â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     const renderAuthUnit = () =>
       sectionShell({
         id: "auth",
@@ -27950,7 +27981,7 @@
     `,
       });
 
-    // ── features/syllabus/syllabus.view.js ────────────────────────────────────────
+    // â”€â”€ features/syllabus/syllabus.view.js â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     const subjectVisuals = [
       { accent: "#38bdf8", soft: "rgba(56, 189, 248, 0.14)", width: 28, tone: "vibe-blue" },
       { accent: "#f97316", soft: "rgba(249, 115, 22, 0.14)", width: 34, tone: "vibe-warning" },
@@ -28008,7 +28039,7 @@
       return subject.chapters.length;
     };
 
-    // ── Syllabus helpers ──────────────────────────────────────────────────────────
+    // â”€â”€ Syllabus helpers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     // Priority order: dl > adv > adm > frb > os
     const TRACK_PRIORITY = [
       { key: 'dl', done: 'doneDL', total: 'totalDL' },
@@ -28191,8 +28222,8 @@
                     </label>
                   </div>
                   <div class="ch-priority-item__actions">
-                    <button class="priority-move-btn" type="button" ${d('ch-priority-move-up', si, pi, ci)} data-track="${trackKey}" title="Move Up" ${index === 0 ? 'disabled' : ''}>▲</button>
-                    <button class="priority-move-btn" type="button" ${d('ch-priority-move-down', si, pi, ci)} data-track="${trackKey}" title="Move Down" ${index === ch.prioritySettings.tracksOrder.length - 1 ? 'disabled' : ''}>▼</button>
+                    <button class="priority-move-btn" type="button" ${d('ch-priority-move-up', si, pi, ci)} data-track="${trackKey}" title="Move Up" ${index === 0 ? 'disabled' : ''}>â–²</button>
+                    <button class="priority-move-btn" type="button" ${d('ch-priority-move-down', si, pi, ci)} data-track="${trackKey}" title="Move Down" ${index === ch.prioritySettings.tracksOrder.length - 1 ? 'disabled' : ''}>â–¼</button>
                   </div>
                 </div>
               `;
@@ -28438,7 +28469,7 @@
     `,
       });
 
-    // ── features/chart/chart.view.js ──────────────────────────────────────────────
+    // â”€â”€ features/chart/chart.view.js â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     const legendItem = (label, color) => `
   <span class="legend-item">
     <span style="background:${escapeHtml(color)}"></span>
@@ -28592,7 +28623,7 @@
     `,
       });
 
-    // ── features/settings/settings.view.js ───────────────────────────────────────
+    // â”€â”€ features/settings/settings.view.js â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     const colorInput = (id, value, disabled = false) =>
       `<input class="color-picker" id="${escapeHtml(id)}" type="color" value="${escapeHtml(value)}" ${disabled ? "disabled" : ""} />`;
 
@@ -28798,7 +28829,7 @@
                 <p>Premium Edition preview shell</p>
                 <a class="settings-update-card" href="https://github.com/tanmysarker733-svg/tonustudyv2/releases/download/android/Tonu.Study.apk" target="_blank" rel="noopener noreferrer" aria-label="Download the latest Android app">
                   ${icon("download", "Update")}
-                  <span><strong>Update to latest version <em>Android v2.1.9 · Web 351</em></strong><small>Android release channel · checks the current GitHub release when you are online</small></span>
+                  <span><strong>Update to latest version <em>Android v2.1.10 · Web 352</em></strong><small>Android release channel · checks the current GitHub release when you are online</small></span>
                   ${icon("external-link", "Open")}
                 </a>
                 <p>Built by Tanmoy Sarker for HSC students who want to track smarter.</p>
@@ -28880,22 +28911,22 @@
 
           <!-- SCOPE -->
           <div class="dev-scope">
-            <h2 class="dev-section-title">⚡ Scope of Creation</h2>
+            <h2 class="dev-section-title">âš¡ Scope of Creation</h2>
             <div class="personal-note">
-              <p>"There's nothing more special than creating something you always wished existed but never did. This is my very first project — born from a genuine need I felt throughout my own HSC journey. It holds deep personal value, and I truly believe it will make a difference for you too."</p>
-              <div class="signature">— Tanmoy Sarker</div>
+              <p>"There's nothing more special than creating something you always wished existed but never did. This is my very first project â€” born from a genuine need I felt throughout my own HSC journey. It holds deep personal value, and I truly believe it will make a difference for you too."</p>
+              <div class="signature">â€” Tanmoy Sarker</div>
             </div>
 
-            <h3 style="font-size: 1.35rem; font-weight: 700; text-align: center; margin-top: 10px; margin-bottom: -15px;">📋 Powerful Features at a Glance</h3>
+            <h3 style="font-size: 1.35rem; font-weight: 700; text-align: center; margin-top: 10px; margin-bottom: -15px;">ðŸ“‹ Powerful Features at a Glance</h3>
             <div class="capabilities-grid" style="grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1.2rem;">
-              <div class="dev-card" style="padding: 1.5rem 1rem;"><div style="font-size: 1.6rem; margin-bottom: 0.5rem;">📊</div><h3 style="font-size: 1rem; margin-bottom: 0.4rem;">Live Tracking</h3><p style="font-size: 0.78rem;">Visual completion status, percentage rings and progress bars.</p></div>
-              <div class="dev-card" style="padding: 1.5rem 1rem;"><div style="font-size: 1.6rem; margin-bottom: 0.5rem;">⏱️</div><h3 style="font-size: 1rem; margin-bottom: 0.4rem;">Study Analytics</h3><p style="font-size: 0.78rem;">Log class/self hours. Drag-editable graphs track consistency.</p></div>
-              <div class="dev-card" style="padding: 1.5rem 1rem;"><div style="font-size: 1.6rem; margin-bottom: 0.5rem;">🎯</div><h3 style="font-size: 1rem; margin-bottom: 0.4rem;">Mission ETA</h3><p style="font-size: 0.78rem;">Target date countdown with live elapsed time gauges.</p></div>
-              <div class="dev-card" style="padding: 1.5rem 1rem;"><div style="font-size: 1.6rem; margin-bottom: 0.5rem;">☁️</div><h3 style="font-size: 1rem; margin-bottom: 0.4rem;">Cloud Sync</h3><p style="font-size: 0.78rem;">Secure database sync. Local backups and vault version control.</p></div>
-              <div class="dev-card" style="padding: 1.5rem 1rem;"><div style="font-size: 1.6rem; margin-bottom: 0.5rem;">🍅</div><h3 style="font-size: 1rem; margin-bottom: 0.4rem;">Pomodoro Focus</h3><p style="font-size: 0.78rem;">Built-in custom interval work timers and lap stopwatches.</p></div>
-              <div class="dev-card" style="padding: 1.5rem 1rem;"><div style="font-size: 1.6rem; margin-bottom: 0.5rem;">💬</div><h3 style="font-size: 1rem; margin-bottom: 0.4rem;">Community Chat</h3><p style="font-size: 0.78rem;">Stay motivated. Share daily updates and notes with candidates.</p></div>
-              <div class="dev-card" style="padding: 1.5rem 1rem;"><div style="font-size: 1.6rem; margin-bottom: 0.5rem;">🌙</div><h3 style="font-size: 1rem; margin-bottom: 0.4rem;">Dual Themes</h3><p style="font-size: 0.78rem;">Modern UI with premium glassmorphism theme configurations.</p></div>
-              <div class="dev-card" style="padding: 1.5rem 1rem;"><div style="font-size: 1.6rem; margin-bottom: 0.5rem;">📱</div><h3 style="font-size: 1rem; margin-bottom: 0.4rem;">Responsive</h3><p style="font-size: 0.78rem;">Optimized layout on desktop, tablet, and mobile displays.</p></div>
+              <div class="dev-card" style="padding: 1.5rem 1rem;"><div style="font-size: 1.6rem; margin-bottom: 0.5rem;">ðŸ“Š</div><h3 style="font-size: 1rem; margin-bottom: 0.4rem;">Live Tracking</h3><p style="font-size: 0.78rem;">Visual completion status, percentage rings and progress bars.</p></div>
+              <div class="dev-card" style="padding: 1.5rem 1rem;"><div style="font-size: 1.6rem; margin-bottom: 0.5rem;">â±ï¸</div><h3 style="font-size: 1rem; margin-bottom: 0.4rem;">Study Analytics</h3><p style="font-size: 0.78rem;">Log class/self hours. Drag-editable graphs track consistency.</p></div>
+              <div class="dev-card" style="padding: 1.5rem 1rem;"><div style="font-size: 1.6rem; margin-bottom: 0.5rem;">ðŸŽ¯</div><h3 style="font-size: 1rem; margin-bottom: 0.4rem;">Mission ETA</h3><p style="font-size: 0.78rem;">Target date countdown with live elapsed time gauges.</p></div>
+              <div class="dev-card" style="padding: 1.5rem 1rem;"><div style="font-size: 1.6rem; margin-bottom: 0.5rem;">â˜ï¸</div><h3 style="font-size: 1rem; margin-bottom: 0.4rem;">Cloud Sync</h3><p style="font-size: 0.78rem;">Secure database sync. Local backups and vault version control.</p></div>
+              <div class="dev-card" style="padding: 1.5rem 1rem;"><div style="font-size: 1.6rem; margin-bottom: 0.5rem;">ðŸ…</div><h3 style="font-size: 1rem; margin-bottom: 0.4rem;">Pomodoro Focus</h3><p style="font-size: 0.78rem;">Built-in custom interval work timers and lap stopwatches.</p></div>
+              <div class="dev-card" style="padding: 1.5rem 1rem;"><div style="font-size: 1.6rem; margin-bottom: 0.5rem;">ðŸ’¬</div><h3 style="font-size: 1rem; margin-bottom: 0.4rem;">Community Chat</h3><p style="font-size: 0.78rem;">Stay motivated. Share daily updates and notes with candidates.</p></div>
+              <div class="dev-card" style="padding: 1.5rem 1rem;"><div style="font-size: 1.6rem; margin-bottom: 0.5rem;">ðŸŒ™</div><h3 style="font-size: 1rem; margin-bottom: 0.4rem;">Dual Themes</h3><p style="font-size: 0.78rem;">Modern UI with premium glassmorphism theme configurations.</p></div>
+              <div class="dev-card" style="padding: 1.5rem 1rem;"><div style="font-size: 1.6rem; margin-bottom: 0.5rem;">ðŸ“±</div><h3 style="font-size: 1rem; margin-bottom: 0.4rem;">Responsive</h3><p style="font-size: 0.78rem;">Optimized layout on desktop, tablet, and mobile displays.</p></div>
             </div>
           </div>
 
@@ -28933,13 +28964,13 @@
   </div>
 `;
 
-    // ── features/time-tools/time-tools.view.js ────────────────────────────────────
+    // â”€â”€ features/time-tools/time-tools.view.js â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     const renderTimeToolsUnit = () =>
       sectionShell({
         id: "time-tools",
         eyebrow: "Unit 06",
         title: "Pomodoro & Stopwatch",
-        note: "Fully functional — work/break cycles, laps, and session tracking. Use the top bar for time adjustments.",
+        note: "Fully functional â€” work/break cycles, laps, and session tracking. Use the top bar for time adjustments.",
         actions: "",
         body: `
       <div class="pomo-sw-grid">
@@ -28975,7 +29006,7 @@
     `,
       });
 
-    // ── features/chat/chat.view.js ────────────────────────────────────────────────
+    // â”€â”€ features/chat/chat.view.js â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     const renderChatUnit = () =>
       sectionShell({
         id: "chat",
@@ -29047,13 +29078,13 @@
             </div>
           </div>
 
-          <textarea id="chatMessageInput" placeholder="Write a message… (Ctrl+Enter to send)"></textarea>
+          <textarea id="chatMessageInput" placeholder="Write a messageâ€¦ (Ctrl+Enter to send)"></textarea>
           <span class="chat-compose__char-count" id="chatCharCount"></span>
           ${scaffoldState.userSettings.aiFeaturesEnabled ? `
           <div class="chat-ai-live-preview" id="chatAiLivePreview" aria-live="polite">
             <div class="chat-ai-live-preview__head">
               <span>${icon("sparkles", "AI preview")} AI Post Preview</span>
-              <span class="chat-ai-live-preview__meta" id="chatAiLivePreviewMeta">Student · Public</span>
+              <span class="chat-ai-live-preview__meta" id="chatAiLivePreviewMeta">Student Â· Public</span>
             </div>
             <div class="chat-ai-live-preview__body" id="chatAiLivePreviewText">
               <span class="chat-ai-live-preview__placeholder">Write a study update to preview exactly how the chat post will look.</span>
@@ -29193,7 +29224,7 @@
   </div>
 `;
 
-    // ── features/backup/backup.view.js ────────────────────────────────────────────
+    // â”€â”€ features/backup/backup.view.js â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     const ACCOUNT_FIELD_META = {
       customName: { iconName: "user-round", color: "#5d7faa" },
       collegeName: { iconName: "graduation-cap", color: "#22c55e" },
@@ -29640,7 +29671,7 @@
       if (options.showBanner !== false) {
         showBackupBanner(
           options.downloadJson ? "Backup downloaded" : "Vault snapshot saved",
-          `${backupDateLabel(entry.createdAt)} • ${entry.studyMode.toUpperCase()} mode`
+          `${backupDateLabel(entry.createdAt)} â€¢ ${entry.studyMode.toUpperCase()} mode`
         );
       }
       return entry;
@@ -29693,7 +29724,7 @@
   `).join("");
     };
 
-    // ── Firebase Firestore Study Data Sync ────────────────────────────────────────
+    // â”€â”€ Firebase Firestore Study Data Sync â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     function updateLocalWriteTimestamp() {
       if (typeof isSpectateReadOnly === "function" && isSpectateReadOnly()) return;
       try {
@@ -30369,7 +30400,7 @@
         });
       })();
 
-    // ── features/admin/admin.view.js ──────────────────────────────────────────────
+    // â”€â”€ features/admin/admin.view.js â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     const renderAdminUnit = () =>
       sectionShell({
         id: "admin",
@@ -30468,7 +30499,7 @@
   </div>
 ` : "";
 
-    // ── shared/app-shell.js ───────────────────────────────────────────────────────
+    // â”€â”€ shared/app-shell.js â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     const renderAppShell = (state, units) => {
       const missionEnd = new Date(state.userSettings.missionEnd);
       const now = new Date();
@@ -30673,15 +30704,15 @@
               <div class="timer-adjuster timer-adjuster--hours">
                 <span class="timer-adjuster__label">Hours</span>
                 <div class="timer-adjuster__buttons">
-                  <button class="card-adj-btn" type="button" data-action="pomo-adj" data-delta="-3600">−1h</button>
+                  <button class="card-adj-btn" type="button" data-action="pomo-adj" data-delta="-3600">âˆ’1h</button>
                   <button class="card-adj-btn card-adj-btn--pos" type="button" data-action="pomo-adj" data-delta="3600">+1h</button>
                 </div>
               </div>
               <div class="timer-adjuster">
                 <span class="timer-adjuster__label">Minutes</span>
                 <div class="timer-adjuster__buttons">
-                  <button class="card-adj-btn" type="button" data-action="pomo-adj" data-delta="-300">−5</button>
-                  <button class="card-adj-btn" type="button" data-action="pomo-adj" data-delta="-60">−1</button>
+                  <button class="card-adj-btn" type="button" data-action="pomo-adj" data-delta="-300">âˆ’5</button>
+                  <button class="card-adj-btn" type="button" data-action="pomo-adj" data-delta="-60">âˆ’1</button>
                   <button class="card-adj-btn card-adj-btn--pos" type="button" data-action="pomo-adj" data-delta="60">+1</button>
                   <button class="card-adj-btn card-adj-btn--pos" type="button" data-action="pomo-adj" data-delta="300">+5</button>
                 </div>
@@ -30701,15 +30732,15 @@
               <div class="timer-adjuster timer-adjuster--hours">
                 <span class="timer-adjuster__label">Hours</span>
                 <div class="timer-adjuster__buttons">
-                  <button class="card-adj-btn" type="button" data-action="sw-adj" data-delta="-3600000">−1h</button>
+                  <button class="card-adj-btn" type="button" data-action="sw-adj" data-delta="-3600000">âˆ’1h</button>
                   <button class="card-adj-btn card-adj-btn--pos" type="button" data-action="sw-adj" data-delta="3600000">+1h</button>
                 </div>
               </div>
               <div class="timer-adjuster">
                 <span class="timer-adjuster__label">Minutes</span>
                 <div class="timer-adjuster__buttons">
-                  <button class="card-adj-btn" type="button" data-action="sw-adj" data-delta="-300000">−5</button>
-                  <button class="card-adj-btn" type="button" data-action="sw-adj" data-delta="-60000">−1</button>
+                  <button class="card-adj-btn" type="button" data-action="sw-adj" data-delta="-300000">âˆ’5</button>
+                  <button class="card-adj-btn" type="button" data-action="sw-adj" data-delta="-60000">âˆ’1</button>
                   <button class="card-adj-btn card-adj-btn--pos" type="button" data-action="sw-adj" data-delta="60000">+1</button>
                   <button class="card-adj-btn card-adj-btn--pos" type="button" data-action="sw-adj" data-delta="300000">+5</button>
                 </div>
@@ -30809,7 +30840,7 @@
 `;
     };
 
-    // ── shared/visual-effects.js ──────────────────────────────────────────────────
+    // â”€â”€ shared/visual-effects.js â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
     const prefersReducedMotion = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const canUseHoverTilt = () => window.matchMedia("(hover: hover) and (pointer: fine)").matches;
@@ -31065,7 +31096,7 @@
       });
     };
 
-    // ── main.js ───────────────────────────────────────────────────────────────────
+    // â”€â”€ main.js â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     const initialUserSettings = loadUserSettings();
     initialUserSettings.uiConfigs.displayResolution = applyDisplayResolutionProfile(
       initialUserSettings.uiConfigs.displayResolution
@@ -31332,7 +31363,7 @@
       const cancel = document.getElementById("anonymousCancel");
       const proceed = document.getElementById("anonymousContinue");
       if (!dialog || !cancel || !proceed) {
-        resolve(confirm("এটি একটি অস্থায়ী অ্যাকাউন্ট। আগামী ৩ দিনের মধ্যে এই অ্যাকাউন্টটি আপনার স্থায়ী ইমেইল বা গুগল অ্যাকাউন্টের সাথে লিঙ্ক না করলে আপনার সমস্ত স্টাডি ডাটা মুছে (Delete) যাবে।"));
+        resolve(confirm("à¦à¦Ÿà¦¿ à¦à¦•à¦Ÿà¦¿ à¦…à¦¸à§à¦¥à¦¾à§Ÿà§€ à¦…à§à¦¯à¦¾à¦•à¦¾à¦‰à¦¨à§à¦Ÿà¥¤ à¦†à¦—à¦¾à¦®à§€ à§© à¦¦à¦¿à¦¨à§‡à¦° à¦®à¦§à§à¦¯à§‡ à¦à¦‡ à¦…à§à¦¯à¦¾à¦•à¦¾à¦‰à¦¨à§à¦Ÿà¦Ÿà¦¿ à¦†à¦ªà¦¨à¦¾à¦° à¦¸à§à¦¥à¦¾à§Ÿà§€ à¦‡à¦®à§‡à¦‡à¦² à¦¬à¦¾ à¦—à§à¦—à¦² à¦…à§à¦¯à¦¾à¦•à¦¾à¦‰à¦¨à§à¦Ÿà§‡à¦° à¦¸à¦¾à¦¥à§‡ à¦²à¦¿à¦™à§à¦• à¦¨à¦¾ à¦•à¦°à¦²à§‡ à¦†à¦ªà¦¨à¦¾à¦° à¦¸à¦®à¦¸à§à¦¤ à¦¸à§à¦Ÿà¦¾à¦¡à¦¿ à¦¡à¦¾à¦Ÿà¦¾ à¦®à§à¦›à§‡ (Delete) à¦¯à¦¾à¦¬à§‡à¥¤"));
         return;
       }
       const cleanup = (result) => {
@@ -31980,7 +32011,48 @@
       });
     };
 
+    const captureMountUiState = () => {
+      const settingsDialog = document.getElementById("settingsDialog");
+      const settingsBody = settingsDialog?.querySelector(".settings-body");
+      return {
+        openDialogIds: [...document.querySelectorAll(".account-dialog, .settings-dialog, .backup-dialog")]
+          .filter((dialog) => !dialog.hidden && dialog.id)
+          .map((dialog) => dialog.id),
+        settingsTab: settingsDialog?.querySelector("[data-settings-tab].settings-tab--active")?.dataset.settingsTab || "look",
+        settingsScrollTop: settingsBody?.scrollTop || 0,
+        pageX: window.scrollX,
+        pageY: window.scrollY,
+      };
+    };
+
+    const restoreMountUiState = (uiState) => {
+      if (!uiState) return;
+      uiState.openDialogIds.forEach((id) => {
+        const dialog = document.getElementById(id);
+        if (dialog) dialog.hidden = false;
+      });
+      const settingsDialog = document.getElementById("settingsDialog");
+      if (settingsDialog && uiState.openDialogIds.includes("settingsDialog")) {
+        settingsDialog.querySelectorAll("[data-settings-tab]").forEach((button) => {
+          button.classList.toggle("settings-tab--active", button.dataset.settingsTab === uiState.settingsTab);
+        });
+        settingsDialog.querySelectorAll("[data-settings-pane]").forEach((pane) => {
+          pane.classList.toggle("settings-pane--active", pane.dataset.settingsPane === uiState.settingsTab);
+        });
+        const settingsBody = settingsDialog.querySelector(".settings-body");
+        if (settingsBody) settingsBody.scrollTop = uiState.settingsScrollTop;
+      }
+      const hasOpenDialog = uiState.openDialogIds.some((id) => {
+        const dialog = document.getElementById(id);
+        return dialog && !dialog.hidden;
+      });
+      document.body.style.overflow = hasOpenDialog ? "hidden" : "";
+      window.requestAnimationFrame(() => window.scrollTo(uiState.pageX, uiState.pageY));
+    };
+
     const mountApp = () => {
+      const uiState = captureMountUiState();
+      document.body.style.overflow = "";
       applyPerformanceMode();
       clearFloatingPanelPortals();
       document.querySelector("#app").innerHTML = renderAppShell(scaffoldState, buildUnits());
@@ -31992,6 +32064,7 @@
       initBrandImageBuffer();
       attachVisualEffects();
       initGroupChat();
+      restoreMountUiState(uiState);
       scheduleNonCriticalWork(() => {
         renderChronosChart?.();
         setChronosEditMode?.(false);
@@ -32091,7 +32164,7 @@
       });
     });
 
-    // ── Syllabus Interaction Engine ───────────────────────────────────────────────
+    // â”€â”€ Syllabus Interaction Engine â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     const SYL_KEY = "hsc-syllabus-v1";
 
     const saveSyllabus = (syllabus) => {
@@ -32448,7 +32521,7 @@
               <div class="chapter-quick-dialog__heading">
                 <div class="chapter-quick-dialog__eyebrow" id="chapterQuickDialogEyebrow">Chapter editor</div>
                 <h3 id="chapterQuickDialogTitle">Chapter settings</h3>
-                <p class="chapter-quick-dialog__hint">Live editor — changes save instantly</p>
+                <p class="chapter-quick-dialog__hint">Live editor â€” changes save instantly</p>
               </div>
               <button class="chapter-quick-dialog__close" type="button" data-action="close-chapter-quick-dialog" aria-label="Close chapter editor" title="Close">
                 ${icon("x", "Close")}
@@ -32498,8 +32571,8 @@
       const stats = paperProgressStats(paper.chapters || []);
       nav.innerHTML = `
         <div class="chapter-quick-dialog__nav-meta">
-          <span>${escapeHtml(paper.title || "Chapters")} · ${paper.chapters.length} chapters</span>
-          <strong>${stats.done}/${stats.total} complete · ${stats.pct}%</strong>
+          <span>${escapeHtml(paper.title || "Chapters")} Â· ${paper.chapters.length} chapters</span>
+          <strong>${stats.done}/${stats.total} complete Â· ${stats.pct}%</strong>
         </div>
         <div class="chapter-quick-dialog__nav-track" role="tablist" aria-label="${escapeHtml(paper.title || "Paper")} chapters">
           ${paper.chapters.map((chapter, index) => {
@@ -32556,7 +32629,7 @@
           : trigger instanceof HTMLElement ? trigger : document.activeElement,
       };
 
-      eyebrow.textContent = `${subject.title} · ${paper.title || "Chapters"}`;
+      eyebrow.textContent = `${subject.title} Â· ${paper.title || "Chapters"}`;
       title.textContent = chapter.name || `Chapter ${c + 1}`;
       card.style.setProperty("--chapter-accent", subjectVisuals[s % subjectVisuals.length].accent);
       plate.hidden = false;
@@ -32622,10 +32695,10 @@
       }).join("");
       picker.innerHTML = `
     <div class="mission-picker__head">
-      <button class="mission-picker__nav" type="button" data-action="mission-month" data-field="${field}" data-dir="-1">‹</button>
+      <button class="mission-picker__nav" type="button" data-action="mission-month" data-field="${field}" data-dir="-1">â€¹</button>
       <div class="mission-picker__title">${escapeHtml(missionMonthLabel(viewDate))}</div>
       <span class="mission-picker__head-actions">
-        <button class="mission-picker__nav" type="button" data-action="mission-month" data-field="${field}" data-dir="1" aria-label="Next month">›</button>
+        <button class="mission-picker__nav" type="button" data-action="mission-month" data-field="${field}" data-dir="1" aria-label="Next month">â€º</button>
         <button class="mission-picker__close" type="button" data-action="mission-close-calendar" aria-label="Close calendar">${icon("x", "Close calendar")}</button>
       </span>
     </div>
@@ -32704,10 +32777,10 @@
       }).join("");
       picker.innerHTML = `
         <div class="mission-picker__head">
-          <button class="mission-picker__nav" type="button" data-action="composer-calendar-month" data-dir="-1" aria-label="Previous month">‹</button>
+          <button class="mission-picker__nav" type="button" data-action="composer-calendar-month" data-dir="-1" aria-label="Previous month">â€¹</button>
           <div class="mission-picker__title">${escapeHtml(missionMonthLabel(viewDate))}</div>
           <span class="mission-picker__head-actions">
-            <button class="mission-picker__nav" type="button" data-action="composer-calendar-month" data-dir="1" aria-label="Next month">›</button>
+            <button class="mission-picker__nav" type="button" data-action="composer-calendar-month" data-dir="1" aria-label="Next month">â€º</button>
             <button class="mission-picker__close" type="button" data-action="composer-close-calendar" aria-label="Close calendar">${icon("x", "Close calendar")}</button>
           </span>
         </div>
@@ -32989,7 +33062,7 @@
           if (!ch.isPerc) { ch.tracks = { ...def }; refreshChapterRow(si, pi, ci, true); }
         });
         saveSyllabus(scaffoldState.syllabus);
-        btn.textContent = "✓ Applied!";
+        btn.textContent = "âœ“ Applied!";
         setTimeout(() => btn.textContent = "Apply defaults", 1500);
         return;
       }
@@ -33154,12 +33227,12 @@
       if (action === "perc-inc") mutateFull(s, p, c, ch => { ch.donePerc = Math.min(100, (ch.donePerc || 0) + 5); });
       if (action === "perc-dec") mutateFull(s, p, c, ch => { ch.donePerc = Math.max(0, (ch.donePerc || 0) - 5); });
 
-      // Toggle view style (class ↔ perc)
+      // Toggle view style (class â†” perc)
       if (action === "toggle-view") mutateStruct(s, p, c, ch => { ch.viewStyle = ch.viewStyle === "perc" ? "class" : "perc"; });
       if (action === "set-view-perc") mutateStruct(s, p, c, ch => { ch.viewStyle = "perc"; ch.isPerc = true; });
       if (action === "set-view-class") mutateStruct(s, p, c, ch => { ensureChapterShape(ch); ch.viewStyle = "class"; ch.isPerc = false; });
 
-      // Track checkboxes — handled in change event below
+      // Track checkboxes â€” handled in change event below
       // Complete / Reset
       if (action === "ch-complete") mutateFull(s, p, c, ch => {
         ch.doneDL = ch.totalDL; ch.doneAdv = ch.totalAdv; ch.doneAdm = ch.totalAdm;
@@ -33169,10 +33242,10 @@
         if (!requireTripleWarning(btn, "Reset", "Reset chapter progress")) return;
         if (false) {
           btn.dataset.confirm = "1"; btn.textContent = "? Sure? Click again"; btn.style.background = "rgba(239,68,68,.3)";
-          setTimeout(() => { if (btn.dataset.confirm === "1") { btn.dataset.confirm = "0"; btn.textContent = "↺ Reset"; btn.style.background = ""; } }, 2500);
+          setTimeout(() => { if (btn.dataset.confirm === "1") { btn.dataset.confirm = "0"; btn.textContent = "â†º Reset"; btn.style.background = ""; } }, 2500);
         } else {
           mutateFull(s, p, c, ch => { ch.doneDL = 0; ch.doneAdv = 0; ch.doneAdm = 0; ch.doneFRB = 0; ch.doneOS = 0; ch.donePerc = 0; ch.solvedQS = 0; });
-          btn.dataset.confirm = "0"; btn.textContent = "↺ Reset"; btn.style.background = "";
+          btn.dataset.confirm = "0"; btn.textContent = "â†º Reset"; btn.style.background = "";
         }
       }
       if (action === "ch-priority-move-up") {
@@ -33303,7 +33376,7 @@
       if (action === "perc-slide") mutateFull(s, p, c, ch => { ch.donePerc = v; });
     });
 
-    // ── Chronos Analytics Engine ─────────────────────────────────────────────────
+    // â”€â”€ Chronos Analytics Engine â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     const CHRONOS_LOG_KEY = "hsc-chronos-study-logs-v1";
     const CHRONOS_CFG_KEY = "hsc-chronos-graph-config-v1";
 
@@ -33934,7 +34007,7 @@
 
       // Step 3 warning
       const c3 = confirm(
-        `[Final Confirm - Step 3 of 3]\n\n🚨 FINAL WARNING: This action replaces all local browser databases immediately. Unsaved changes in the current session will be permanently replaced by the snapshot.\n\nClick OK to download the current backup and restore the snapshot.`
+        `[Final Confirm - Step 3 of 3]\n\nðŸš¨ FINAL WARNING: This action replaces all local browser databases immediately. Unsaved changes in the current session will be permanently replaced by the snapshot.\n\nClick OK to download the current backup and restore the snapshot.`
       );
       if (!c3) return;
 
@@ -33949,7 +34022,7 @@
       // 2. Apply the chosen backup payload
       try {
         applyBackupPayload(entry.payload);
-        showBackupBanner("Backup restored", `${dateStr} • ${String(entry.studyMode || "hsc").toUpperCase()} mode`);
+        showBackupBanner("Backup restored", `${dateStr} â€¢ ${String(entry.studyMode || "hsc").toUpperCase()} mode`);
         alert(`Success: Database restored to state from ${dateStr}.`);
       } catch (err) {
         alert("Restore failed: " + err.message);
@@ -34452,7 +34525,7 @@
         refreshDashboardGauge();
       }
 
-      // ── Unit 06: Pomodoro & Stopwatch actions ──────────────────────────────────
+      // â”€â”€ Unit 06: Pomodoro & Stopwatch actions â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
       if (action === "pomo-play") { pomoPlay(); return; }
       if (action === "pomo-reset") { pomoReset(); return; }
       if (action === "pomo-skip") {
@@ -34556,7 +34629,7 @@
       const td = document.getElementById("timerDialog"); if (td) td.setAttribute("hidden", "");
     });
 
-    // ── Unit 06: Pomodoro & Stopwatch Engine ──────────────────────────────────────
+    // â”€â”€ Unit 06: Pomodoro & Stopwatch Engine â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     const POMO_MODES = {
       work: { label: "Work Session", secs: 25 * 60 },
       break: { label: "Short Break", secs: 5 * 60 },
@@ -34658,7 +34731,7 @@
         if (pomoState.sessionsDone >= 4) pomoState.sessionsDone = 0;
         playPomoChime();
         pomoSetMode(next);
-        try { if (Notification.permission === "granted") new Notification(wasWork ? "Break time! 🎉" : "Back to work! 💪", { body: POMO_MODES[next].label }); } catch (_) { }
+        try { if (Notification.permission === "granted") new Notification(wasWork ? "Break time! ðŸŽ‰" : "Back to work! ðŸ’ª", { body: POMO_MODES[next].label }); } catch (_) { }
       }
     };
 
@@ -34936,7 +35009,7 @@
         }, 3200);
         if (step === 3) {
           clearTimeout(input._tripleGuardTimer);
-          label.lastChild.textContent = ` Applying…`;
+          label.lastChild.textContent = ` Applyingâ€¦`;
           input.dataset.triplePass = '1';
           window.setTimeout(() => input.click(), 0);
         }
@@ -34946,11 +35019,3 @@
 </body>
 
 </html>
-
-
-
-
-
-
-
-
