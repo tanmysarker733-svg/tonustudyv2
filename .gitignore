@@ -9,3 +9,7 @@ release-signing.properties
 captures/
 .externalNativeBuild/
 .cxx/
+
+# Numbered Study OS snapshots are local-only archives.
+# GitHub publishes the latest web build through index.html.
+hsc-study-os__*.html
