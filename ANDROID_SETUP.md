@@ -13,7 +13,9 @@ new APK.
 - Only HTTPS is allowed. The WebView bridge is usable only on
   `tonustudy.vercel.app`.
 - Browser storage, cookies, file selection, pull-to-refresh, Android back
-  navigation, external links, and a bundled offline app shell are supported.
+  navigation, and external links are supported.
+- The APK uses the same live web interface as the browser. It does not ship a
+  second bundled HTML copy that can drift behind the deployed site.
 - No legacy external-storage permission and no third-party wrapper branding or
   test-mode page.
 
@@ -61,13 +63,16 @@ adb install -r .\Tonu-Study-v2.1-universal.apk
 An `INSTALL_FAILED_UPDATE_INCOMPATIBLE` result confirms a signing-key conflict,
 not a 32-bit compatibility problem.
 
-## Offline behavior
+## Connectivity behavior
 
-- The Android client tries the live HTTPS app first.
-- Without validated internet, the same app shell is served from bundled assets.
-- Local study edits remain available and save locally.
-- Chat, Google sign-in, cloud upload, and cloud restore show a connection notice
-  instead of discarding input or pretending a sync succeeded.
+- The Android client loads the live HTTPS app directly.
+- When the device is offline, it shows a clear connection/retry screen instead
+  of loading a stale bundled copy.
+- Upload, Google sign-in, chat, and cloud restore never report success without
+  a working connection.
+- Web feature changes become available in the APK after the site deployment;
+  only native shell, signing, or Google Credential Manager changes require a
+  new APK.
 
 ## GitHub Actions secrets
 

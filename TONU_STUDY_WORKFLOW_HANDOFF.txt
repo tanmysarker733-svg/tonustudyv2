@@ -1,5 +1,5 @@
 TONU STUDY - PROJECT WORKFLOW AND HANDOFF
-Updated: 2026-07-26
+Updated: 2026-07-27
 
 This repository copy is a concise operational guide. The complete local handoff file
 is kept in the Version 2 source folder:
@@ -12,17 +12,19 @@ the next number, then edit the new file only. Never overwrite prior versions.
 WEB SOURCE / DEPLOYMENT
 - Local versioned source folder:
   E:\! Entertainment\! Editing Partition\Passive Farhan and Blog\Study Web\Version 2
-- Current latest numbered source at this handoff: hsc-study-os__357_.html
+- Current latest numbered source at this handoff: hsc-study-os__358_.html
 - Production source: this repository root index.html on branch main.
 - Before deployment, copy the validated newest numbered HTML to this index.html.
 - Copy any changed Assets into this repository Assets\ folder too.
 
 ANDROID
 - Android wrapper source: app\
-- Online launch loads production with no-cache behavior.
-- Offline launch falls back to packaged index.html.
-- android.yml copies this repository index.html and Assets into Android assets before
-  building, so keep root index.html current.
+- Android is a live WebView wrapper around https://tonustudy.vercel.app/ so the
+  deployed index.html remains the single UI/feature source for web and APK.
+- With no network, the wrapper shows a connection warning and supports pull-to-retry;
+  it does not ship a second stale offline HTML interface.
+- Native Android owns Google account selection, file picking, app-aware Back handling,
+  external links, connectivity checks, and the compact launch screen.
 - Increase versionCode and versionName in app\build.gradle.kts for every release.
 
 RELEASE
@@ -30,7 +32,7 @@ RELEASE
 - Release tag: android
 - Download URL:
   https://github.com/tanmysarker733-svg/tonustudyv2/releases/download/android/Tonu.Study.apk
-- Latest release at this handoff: Tonu Study Android v2.1.4
+- Latest source release at this handoff: Tonu Study Android v2.1.11 / Web 358
 
 SYNC LIMITATION
 Browser local storage and Android WebView local storage are separate. Real cross-device

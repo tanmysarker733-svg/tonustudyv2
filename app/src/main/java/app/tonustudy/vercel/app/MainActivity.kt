@@ -99,7 +99,7 @@ class MainActivity : ComponentActivity() {
             )
         )
         val splashSize = resources.displayMetrics.density.times(
-            if (resources.configuration.smallestScreenWidthDp >= 600) 184 else 156
+            if (resources.configuration.smallestScreenWidthDp >= 600) 144 else 112
         ).toInt()
         launchOverlay.addView(
             launchBrand,
@@ -190,16 +190,21 @@ class MainActivity : ComponentActivity() {
         }
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                when {
-                    webView.canGoBack() -> webView.goBack()
-                    SystemClock.elapsedRealtime() - lastBackPressedAt <= 2_000L -> finish()
-                    else -> {
-                        lastBackPressedAt = SystemClock.elapsedRealtime()
-                        Toast.makeText(
-                            this@MainActivity,
-                            "Press back again to exit TONU STUDY.",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                webView.evaluateJavascript(
+                    "Boolean(window.tonuHandleNativeBack && window.tonuHandleNativeBack())"
+                ) { handled ->
+                    when {
+                        handled == "true" -> Unit
+                        webView.canGoBack() -> webView.goBack()
+                        SystemClock.elapsedRealtime() - lastBackPressedAt <= 2_000L -> finish()
+                        else -> {
+                            lastBackPressedAt = SystemClock.elapsedRealtime()
+                            Toast.makeText(
+                                this@MainActivity,
+                                "Press back again to exit TONU STUDY.",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
                     }
                 }
             }
@@ -269,6 +274,9 @@ class MainActivity : ComponentActivity() {
 
         @JavascriptInterface
         fun isOnline(): Boolean = hasInternetConnection()
+
+        @JavascriptInterface
+        fun getAppVersion(): String = BuildConfig.VERSION_NAME
 
         @JavascriptInterface
         fun openExternal(url: String) {
@@ -352,7 +360,9 @@ class MainActivity : ComponentActivity() {
         ) {
             if (request.isForMainFrame) {
                 refreshLayout.isRefreshing = false
+                progressBar.visibility = android.view.View.GONE
                 launchBrand.visibility = android.view.View.GONE
+                launchOverlay.visibility = android.view.View.GONE
                 Toast.makeText(
                     this@MainActivity,
                     if (hasInternetConnection()) {
