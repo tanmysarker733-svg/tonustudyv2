@@ -23590,6 +23590,180 @@
       margin: 0 !important;
     }
 
+    /* v360: one install hub for web/PWA/APK choices. */
+    .project-banner__install {
+      display: inline-flex !important;
+      align-items: center;
+      gap: 8px;
+      min-height: 40px;
+      white-space: nowrap;
+    }
+
+    .project-banner__install small {
+      display: none !important;
+    }
+
+    html.android-shell .project-banner__install {
+      display: none !important;
+    }
+
+    #installGuideDialog .account-dialog__backdrop {
+      background: rgba(2, 8, 23, .78);
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+    }
+
+    #installGuideDialog .install-guide-card {
+      width: min(520px, calc(100vw - 24px));
+      max-height: min(680px, calc(100svh - 24px));
+      overflow: auto;
+      background: #13243b !important;
+      border: 1px solid #355372;
+      box-shadow: 0 24px 70px rgba(0, 0, 0, .38);
+    }
+
+    .install-guide-body {
+      display: grid;
+      gap: 14px;
+      padding: 16px 18px 18px;
+    }
+
+    .install-hub-status {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 11px 12px;
+      color: #cbd5e1;
+      background: #0e1d31;
+      border: 1px solid #304966;
+      border-radius: 12px;
+    }
+
+    .install-hub-status svg {
+      flex: 0 0 auto;
+      color: #38bdf8;
+    }
+
+    .install-hub-status span {
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .install-choice-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .install-choice {
+      position: relative;
+      display: grid;
+      grid-template-columns: 38px minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+      min-height: 84px;
+      padding: 12px;
+      text-align: left;
+      color: #e8f1fb;
+      background: #1a304b;
+      border: 1px solid #3e5e80;
+      border-radius: 14px;
+      cursor: pointer;
+      transition: transform 160ms ease, border-color 160ms ease, background 160ms ease;
+    }
+
+    .install-choice:hover,
+    .install-choice:focus-visible {
+      transform: translateY(-2px);
+      background: #203b5b;
+      border-color: #60a5fa;
+      outline: none;
+    }
+
+    .install-choice__icon {
+      display: grid;
+      place-items: center;
+      width: 38px;
+      height: 38px;
+      color: #dbeafe;
+      background: #2463a0;
+      border-radius: 11px;
+    }
+
+    .install-choice--android .install-choice__icon {
+      color: #dcfce7;
+      background: #16805d;
+    }
+
+    .install-choice__copy {
+      min-width: 0;
+    }
+
+    .install-choice__copy strong,
+    .install-choice__copy small {
+      display: block;
+    }
+
+    .install-choice__copy strong {
+      font-size: 14px;
+      line-height: 1.25;
+    }
+
+    .install-choice__copy small {
+      margin-top: 4px;
+      color: #a9bed5;
+      font-size: 10.5px;
+      line-height: 1.35;
+    }
+
+    .install-hub-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding-top: 2px;
+      color: #9fb3ca;
+      font-size: 11px;
+    }
+
+    .install-hub-footer a {
+      color: #7dd3fc;
+      font-weight: 800;
+      text-decoration: none;
+    }
+
+    html[data-theme="light"] #installGuideDialog .install-guide-card {
+      color: #132238;
+      background: #f8fbff !important;
+      border-color: #b8c9da;
+      box-shadow: 0 24px 70px rgba(15, 23, 42, .22);
+    }
+
+    html[data-theme="light"] .install-hub-status {
+      color: #40526a;
+      background: #edf5fc;
+      border-color: #c6d5e4;
+    }
+
+    html[data-theme="light"] .install-choice {
+      color: #14243a;
+      background: #ffffff;
+      border-color: #c1d1e1;
+      box-shadow: 0 5px 14px rgba(30, 64, 100, .07);
+    }
+
+    html[data-theme="light"] .install-choice:hover,
+    html[data-theme="light"] .install-choice:focus-visible {
+      background: #eef7ff;
+      border-color: #2986dd;
+    }
+
+    html[data-theme="light"] .install-choice__copy small,
+    html[data-theme="light"] .install-hub-footer {
+      color: #52677f;
+    }
+
     @media (max-width: 640px) {
       .system-toast.has-action {
         grid-template-columns: 30px minmax(0, 1fr) !important;
@@ -23616,6 +23790,18 @@
 
       .project-banner__install small {
         font-size: 7.5px;
+      }
+
+      .install-choice-list {
+        grid-template-columns: 1fr;
+      }
+
+      #installGuideDialog .install-guide-card {
+        width: calc(100vw - 16px);
+      }
+
+      .install-guide-body {
+        padding: 13px 14px 15px;
       }
 
       .dashboard-modern,
@@ -24005,7 +24191,7 @@
     let deferredInstallPrompt = null;
     let installManifestUrl = "";
     const TONU_APK_URL = "https://github.com/tanmysarker733-svg/tonustudyv2/releases/download/android/Tonu.Study.apk";
-    const TONU_WEB_BUILD = "359";
+    const TONU_WEB_BUILD = "360";
     const TONU_ANDROID_LATEST = "2.1.11";
 
     const isAndroidShell = () => Boolean(window.TonuAndroid);
@@ -24025,7 +24211,7 @@
       document.querySelectorAll("[data-install-context]").forEach((button) => {
         const label = button.querySelector("[data-install-label]");
         const version = button.querySelector("[data-install-version]");
-        if (label) label.textContent = shell ? "Install update" : mobileAndroid ? "Install APK for Android" : "Add as shortcut";
+        if (label) label.textContent = "Install app";
         if (version) {
           const installed = currentAndroidVersion();
           version.textContent = shell
@@ -24034,11 +24220,7 @@
               ? `Android v${TONU_ANDROID_LATEST}`
               : `Web ${TONU_WEB_BUILD}`;
         }
-        button.title = shell
-          ? `Installed ${currentAndroidVersion() || "version unknown"}; latest v${TONU_ANDROID_LATEST}`
-          : mobileAndroid
-            ? `Download Tonu Study Android v${TONU_ANDROID_LATEST}`
-            : "Add Tonu Study to this device";
+        button.title = "Install Tonu Study";
       });
     };
 
@@ -24088,47 +24270,52 @@
       showBackupBanner?.("Study OS installed", "Shortcut/app install completed.");
     });
 
-    const showInstallGuide = () => {
+    let installGuideReturnFocus = null;
+
+    const closeInstallGuide = () => {
       const dialog = document.getElementById("installGuideDialog");
-      if (dialog) {
-        const title = dialog.querySelector("#installGuideTitle span");
-        const copy = dialog.querySelector(".install-guide-body p");
-        if (title) title.textContent = isAndroidShell() ? "Install Android update" : isAndroidBrowser() ? "Install APK for Android" : "Add as shortcut";
-        if (copy) copy.textContent = isAndroidShell() || isAndroidBrowser()
-          ? `Download the current Tonu Study Android release (v${TONU_ANDROID_LATEST}).`
-          : "Use the browser install prompt to add Tonu Study as a shortcut or standalone web app.";
-        dialog.removeAttribute("hidden");
-        if (window.lucide) window.lucide.createIcons({ attrs: { "stroke-width": 1.8 } });
-      } else {
-        alert("Automatic install prompt is not available in this browser mode.");
-      }
+      if (!dialog || dialog.hasAttribute("hidden")) return;
+      dialog.setAttribute("hidden", "");
+      installGuideReturnFocus?.focus?.({ preventScroll: true });
+      installGuideReturnFocus = null;
     };
 
-    const installStudyOsApp = async () => {
-      if (isAndroidShell()) {
-        try {
-          window.TonuAndroid?.openExternal?.(TONU_APK_URL);
-          return;
-        } catch (_) { }
-      }
-      if (isAndroidBrowser()) {
-        window.location.href = TONU_APK_URL;
+    const showInstallGuide = (trigger = null) => {
+      const dialog = document.getElementById("installGuideDialog");
+      if (!dialog) {
+        showBackupBanner?.("Install options unavailable", "Reload the page and try again.");
         return;
       }
+      installGuideReturnFocus = trigger || document.activeElement;
+      dialog.removeAttribute("hidden");
+      dialog.querySelector("[data-action='add-study-shortcut']")?.focus({ preventScroll: true });
+      if (window.lucide) window.lucide.createIcons({ attrs: { "stroke-width": 1.8 } });
+    };
+
+    const installAndroidApk = () => {
+      try {
+        if (isAndroidShell() && window.TonuAndroid?.openExternal) {
+          window.TonuAndroid.openExternal(TONU_APK_URL);
+          return;
+        }
+      } catch (_) { }
+      const opened = window.open(TONU_APK_URL, "_blank", "noopener,noreferrer");
+      if (!opened) window.location.href = TONU_APK_URL;
+    };
+
+    const addStudyOsShortcut = async () => {
       ensureInstallManifest();
       if (deferredInstallPrompt) {
         deferredInstallPrompt.prompt();
         try { await deferredInstallPrompt.userChoice; } catch (_) { }
         deferredInstallPrompt = null;
+        closeInstallGuide();
         return;
       }
-      setTimeout(() => {
-        if (deferredInstallPrompt) {
-          installStudyOsApp();
-        } else {
-          showInstallGuide();
-        }
-      }, 350);
+      showBackupBanner?.(
+        "Use your browser menu",
+        "Choose “Install app” or “Add to Home screen” to create the shortcut."
+      );
     };
 
     const CHAT_PALETTE = [
@@ -31335,9 +31522,9 @@
     ${state.userSettings.uiConfigs?.showProjectBanner !== false ? `
       <section class="project-banner" aria-label="Project banner">
         <img class="project-banner__img" src="Assets/Images/A%20project%20by.jpg" data-hires-src="Assets/Images/A%20project%20by.png" data-remote-fallback="https://raw.githubusercontent.com/tanmysarker733-svg/tonustudyv2/main/Assets/Images/A%20project%20by.jpg" alt="A project by Tanmoy Sarker" loading="eager" decoding="async" fetchpriority="high" width="1920" height="1080">
-        <button class="btn-small btn-small--primary project-banner__install" type="button" data-action="install-app" data-install-context>
+        <button class="btn-small btn-small--primary project-banner__install" type="button" data-action="open-install-guide" data-install-context aria-haspopup="dialog" aria-controls="installGuideDialog">
           ${icon("download", "Install")}
-          <span data-install-label>Install as app</span>
+          <span data-install-label>Install app</span>
           <small data-install-version></small>
         </button>
       </section>
@@ -31413,15 +31600,33 @@
       <section class="account-dialog__card install-guide-card" role="dialog" aria-modal="true" aria-labelledby="installGuideTitle">
         <div class="account-dialog__head">
           <div>
-            <p class="eyebrow">Install Study OS</p>
-            <h3 id="installGuideTitle">${icon("download", "Install")} <span>Install as app</span></h3>
-            <span>Automatic shortcut prompt is unavailable in this browser mode.</span>
+            <p class="eyebrow">Install Tonu Study</p>
+            <h3 id="installGuideTitle">${icon("download", "Install")} <span>Install app</span></h3>
+            <span>Choose the version that fits this device.</span>
           </div>
           <button class="btn-small btn-small--icon" type="button" data-action="close-install-guide" aria-label="Close install guide">${icon("x", "Close")}</button>
         </div>
         <div class="install-guide-body">
-          <p>The app will open the native install/add-shortcut prompt automatically when Chrome, Edge, or Android WebView allows it.</p>
-          <button class="btn-small btn-small--primary btn-small--wide" type="button" data-action="install-app">${icon("download", "Retry")} <span>Try install prompt again</span></button>
+          <div class="install-hub-status">
+            ${icon("info", "Install availability")}
+            <span>The shortcut uses the current web app. The Android option downloads the official APK from GitHub.</span>
+          </div>
+          <div class="install-choice-list">
+            <button class="install-choice" type="button" data-action="add-study-shortcut">
+              <span class="install-choice__icon">${icon("monitor-down", "Shortcut")}</span>
+              <span class="install-choice__copy"><strong>Add as shortcut</strong><small>Browser or standalone web app</small></span>
+              ${icon("chevron-right", "Open")}
+            </button>
+            <button class="install-choice install-choice--android" type="button" data-action="install-android-apk">
+              <span class="install-choice__icon">${icon("smartphone", "Android")}</span>
+              <span class="install-choice__copy"><strong>Install APK</strong><small>Android v${TONU_ANDROID_LATEST}</small></span>
+              ${icon("download", "Download")}
+            </button>
+          </div>
+          <div class="install-hub-footer">
+            <span>Web build ${TONU_WEB_BUILD}</span>
+            <a href="${TONU_APK_URL}" target="_blank" rel="noopener noreferrer">GitHub release ${icon("external-link", "Open")}</a>
+          </div>
         </div>
       </section>
     </div>
@@ -34869,12 +35074,20 @@
         toggleThemeMode();
         return;
       }
-      if (action === "install-app") {
-        installStudyOsApp();
+      if (action === "open-install-guide") {
+        showInstallGuide(target);
+        return;
+      }
+      if (action === "add-study-shortcut") {
+        addStudyOsShortcut();
+        return;
+      }
+      if (action === "install-android-apk") {
+        installAndroidApk();
         return;
       }
       if (action === "close-install-guide") {
-        document.getElementById("installGuideDialog")?.setAttribute("hidden", "");
+        closeInstallGuide();
         return;
       }
       if (isSpectateReadOnly() && isReadOnlyBlockedAction(action)) {
@@ -35443,6 +35656,7 @@
       closeChapterQuickDialog();
       closeDeveloperDialog();
       closeChatShowAllDialog();
+      closeInstallGuide();
       const td = document.getElementById("timerDialog"); if (td) td.setAttribute("hidden", "");
     });
 

@@ -11,9 +11,9 @@ instructions are documented in [ANDROID_SETUP.md](ANDROID_SETUP.md).
 
 ## Connectivity and low-end device support
 
-- **Web 359** caches its same-origin shell after the first successful online
+- **Web 360** caches its same-origin shell after the first successful online
   visit. Study data continues to save in browser storage while offline.
-- **Web 359** pauses chat, authentication, cloud restore, and cloud upload
+- **Web 360** pauses chat, authentication, cloud restore, and cloud upload
   while offline and
   resume after connectivity returns.
 - **Android v2.1.11** loads the deployed web app directly, so browser and APK use the
@@ -30,6 +30,10 @@ The deployed `index.html` is the public web source. Numbered
 and are intentionally excluded from GitHub.
 
 ### Web builds
+
+- **Web 360** — Added a responsive install hub with separate web-shortcut and
+  official Android APK actions; the banner install control is hidden inside the
+  Android wrapper.
 
 - **Web 359** — Fixed narrow-screen quick-action label clipping, refreshed the
   service-worker cache to prevent stale UI, and made subject Settings controls
