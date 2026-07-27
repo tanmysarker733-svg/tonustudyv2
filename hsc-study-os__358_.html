@@ -35867,6 +35867,24 @@
       }, true);
     })();
   </script>
+  <script>
+    /* Android WebView back bridge fallback. Kept isolated so a non-critical
+       feature error elsewhere cannot disable native navigation. */
+    window.tonuHandleNativeBack = window.tonuHandleNativeBack || (() => {
+      const visible = Array.from(document.querySelectorAll(
+        ".account-dialog:not([hidden]), #chapterQuickDialog:not([hidden]), #chronosConfigPanel:not([hidden]), #missionSettingsDialog:not([hidden])"
+      )).filter((node) => getComputedStyle(node).display !== "none");
+      const dialog = visible[visible.length - 1];
+      if (!dialog) return false;
+      const closeButton = dialog.querySelector(
+        "[data-action^='close-'], [data-action='chronos-close-modal'], [data-action='close-chapter-quick'], .account-dialog__head [aria-label*='Close']"
+      );
+      if (closeButton instanceof HTMLElement) closeButton.click();
+      else dialog.setAttribute("hidden", "");
+      document.body.style.overflow = "";
+      return true;
+    });
+  </script>
 </body>
 
 </html>
