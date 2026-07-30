@@ -31,6 +31,9 @@ and are intentionally excluded from GitHub.
 
 ### Web builds
 
+- **Web 364** — Polished responsive edge cases: Settings tabs now reset to
+  the top when switching sections, narrow-screen tab labels remain intact, and
+  compact hero statistics no longer clip their text.
 - **Web 363** — Compacted Smart Update task text: subject-specific science
   icons, implicit Detailed classes, `O-shot` / `Adv.` / `Adm.` labels, and
   `Lec` lecture notation. Legacy `Lecture`, `Lec`, and class labels remain
