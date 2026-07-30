@@ -1,5 +1,5 @@
 TONU STUDY - PROJECT WORKFLOW AND HANDOFF
-Updated: 2026-07-27
+Updated: 2026-07-31
 
 This repository copy is a concise operational guide. The complete local handoff file
 is kept in the Version 2 source folder:
@@ -12,7 +12,7 @@ the next number, then edit the new file only. Never overwrite prior versions.
 WEB SOURCE / DEPLOYMENT
 - Local versioned source folder:
   E:\! Entertainment\! Editing Partition\Passive Farhan and Blog\Study Web\Version 2
-- Current latest numbered source at this handoff: hsc-study-os__360_.html
+- Current latest numbered source at this handoff: hsc-study-os__362_.html
 - Production source: this repository root index.html on branch main.
 - Before deployment, copy the validated newest numbered HTML to this index.html.
 - Copy any changed Assets into this repository Assets\ folder too.
@@ -32,7 +32,17 @@ RELEASE
 - Release tag: android
 - Download URL:
   https://github.com/tanmysarker733-svg/tonustudyv2/releases/download/android/Tonu.Study.apk
-- Latest source release at this handoff: Tonu Study Android v2.1.11 / Web 360
+- Latest source release at this handoff: Tonu Study Android v2.1.11 / Web 362
+
+WEB 362 NOTES
+- Native Animation controls rich mobile/Android feedback without forcing the
+  costly legacy performance profiles.
+- Settings, mission, install, and fullscreen-composer dialogs share one
+  scroll-lock/restore path to prevent frozen pages and pull-to-refresh conflicts.
+- Sliders, font scaling, and theme changes update smoothly without full-page
+  rendering on every input event.
+- Tablet quick tools expose readable labels; browser install choices and Android
+  update checks use the shared GitHub release channel.
 
 SYNC LIMITATION
 Browser local storage and Android WebView local storage are separate. Real cross-device

@@ -11,9 +11,9 @@ instructions are documented in [ANDROID_SETUP.md](ANDROID_SETUP.md).
 
 ## Connectivity and low-end device support
 
-- **Web 360** caches its same-origin shell after the first successful online
+- **Web 362** caches its same-origin shell after the first successful online
   visit. Study data continues to save in browser storage while offline.
-- **Web 360** pauses chat, authentication, cloud restore, and cloud upload
+- **Web 362** pauses chat, authentication, cloud restore, and cloud upload
   while offline and
   resume after connectivity returns.
 - **Android v2.1.11** loads the deployed web app directly, so browser and APK use the
@@ -31,6 +31,11 @@ and are intentionally excluded from GitHub.
 
 ### Web builds
 
+- **Web 362** — Added Native Animation controls for mobile/Android parity,
+  reliable modal scroll locking, responsive tablet quick-tool labels, smoother
+  sliders/font scaling/theme changes, and a GitHub-aware install/update flow.
+- **Web 361** — Consolidated the shared mobile and Android interface while
+  preserving the lightweight rendering defaults.
 - **Web 360** — Added a responsive install hub with separate web-shortcut and
   official Android APK actions; the banner install control is hidden inside the
   Android wrapper.

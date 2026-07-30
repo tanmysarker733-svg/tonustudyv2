@@ -23814,6 +23814,268 @@
       }
     }
   </style>
+  <style id="v362-mobile-native-fixes">
+    /* v362: predictable mobile motion, modal scrolling and Android parity. */
+    .theme-toggle__sun,
+    .theme-toggle__moon {
+      display: grid;
+      place-items: center;
+    }
+
+    html[data-theme="dark"] .theme-toggle__moon,
+    html[data-theme="light"] .theme-toggle__sun {
+      display: none;
+    }
+
+    html.theme-switching *,
+    html.theme-switching *::before,
+    html.theme-switching *::after {
+      transition: none !important;
+      animation: none !important;
+    }
+
+    body.dialog-scroll-locked {
+      position: fixed !important;
+      inset-inline: 0;
+      width: 100%;
+      max-width: 100%;
+      overflow: hidden !important;
+      overscroll-behavior: none;
+      touch-action: none;
+    }
+
+    :is(.account-dialog, .settings-dialog, .backup-dialog, .mission-modal) {
+      overscroll-behavior: contain;
+      touch-action: none;
+    }
+
+    :is(.account-dialog__card, .settings-dialog__card, .backup-dialog__card, .mission-card) {
+      overscroll-behavior: contain;
+    }
+
+    :is(.settings-body, .account-dialog__body, .backup-dialog__body, .mission-card__body) {
+      overscroll-behavior: contain;
+      touch-action: pan-y;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    html.android-shell .quick-action-rail {
+      bottom: max(4px, env(safe-area-inset-bottom)) !important;
+    }
+
+    html.android-shell .project-banner__install {
+      display: inline-grid !important;
+    }
+
+    .chat-list-toggle {
+      gap: 7px;
+    }
+
+    .chat-list-toggle__icon {
+      position: relative;
+      flex: 0 0 auto;
+      width: 15px;
+      height: 12px;
+      border: 1.7px solid currentColor;
+      border-radius: 4px;
+    }
+
+    .chat-list-toggle__icon::before {
+      content: "";
+      position: absolute;
+      left: 2px;
+      right: 2px;
+      top: 3px;
+      height: 1.5px;
+      background: currentColor;
+      box-shadow: 0 3px 0 currentColor;
+      border-radius: 2px;
+    }
+
+    .chat-list-toggle__icon::after {
+      content: "";
+      position: absolute;
+      left: 2px;
+      bottom: -4px;
+      width: 4px;
+      height: 4px;
+      border-left: 1.7px solid currentColor;
+      transform: skewY(-36deg);
+    }
+
+    .chat-compose__char-count:empty,
+    .chat-feedback:empty {
+      display: none !important;
+    }
+
+    .chat-compose__footer {
+      margin-top: 6px !important;
+    }
+
+    .ch-slider,
+    input[type="range"] {
+      touch-action: pan-x;
+    }
+
+    .ch-slider {
+      transition: none !important;
+      will-change: auto;
+    }
+
+    .ch-slider::-webkit-slider-thumb {
+      transition: none !important;
+    }
+
+    #chatUpdateComposer.chat-update-composer--fullscreen:not([hidden]) {
+      position: fixed !important;
+      inset: 0 !important;
+      z-index: 1500 !important;
+      display: grid !important;
+      place-items: stretch !important;
+      width: 100vw !important;
+      height: 100dvh !important;
+      padding: max(8px, env(safe-area-inset-top)) max(8px, env(safe-area-inset-right))
+        max(8px, env(safe-area-inset-bottom)) max(8px, env(safe-area-inset-left)) !important;
+      overflow: hidden !important;
+      background: rgba(3, 13, 28, .96) !important;
+      backdrop-filter: none !important;
+    }
+
+    #chatUpdateComposer.chat-update-composer--fullscreen .composer-wizard-shell {
+      width: 100% !important;
+      max-width: 980px !important;
+      height: 100% !important;
+      max-height: none !important;
+      margin: 0 auto !important;
+      overflow: hidden !important;
+    }
+
+    #chatUpdateComposer.chat-update-composer--fullscreen .composer-wizard-body {
+      min-height: 0 !important;
+      overflow-y: auto !important;
+      overscroll-behavior: contain;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .system-toast-stack {
+      z-index: 1900 !important;
+    }
+
+    .system-toast {
+      backdrop-filter: none !important;
+    }
+
+    html.native-animation-off :is(
+      .composer-go-final,
+      .footer-sparkle-action,
+      .btn-small--accent,
+      #chatUpdateComposer .btn-small--primary
+    )::before,
+    html.native-animation-off :is(
+      .composer-go-final,
+      .footer-sparkle-action,
+      .btn-small--accent,
+      #chatUpdateComposer .btn-small--primary
+    )::after {
+      animation: none !important;
+    }
+
+    html.native-animation :is(
+      .composer-go-final,
+      .btn-small--accent,
+      #chatUpdateComposer .btn-small--primary
+    )::after {
+      animation-play-state: running !important;
+    }
+
+    .settings-group input[type="range"] {
+      transition: none !important;
+    }
+
+    @media (pointer: coarse) {
+      .ch-slider {
+        min-height: 32px;
+      }
+
+      .ch-slider::-webkit-slider-thumb {
+        width: 24px !important;
+        height: 24px !important;
+      }
+
+      .ch-slider::-moz-range-thumb {
+        width: 24px !important;
+        height: 24px !important;
+      }
+    }
+
+    @media (min-width: 600px) and (max-width: 1024px) {
+      .quick-action-track {
+        gap: 6px !important;
+      }
+
+      .quick-action {
+        width: auto !important;
+        min-width: 86px !important;
+        padding-inline: 11px !important;
+        gap: 7px !important;
+      }
+
+      .quick-action__label,
+      .quick-action:hover .quick-action__label,
+      .quick-action.is-label-visible .quick-action__label,
+      .quick-action:focus-visible .quick-action__label {
+        position: static !important;
+        display: inline !important;
+        width: auto !important;
+        height: auto !important;
+        padding: 0 !important;
+        opacity: 1 !important;
+        transform: none !important;
+        color: currentColor !important;
+        background: transparent !important;
+        border: 0 !important;
+        box-shadow: none !important;
+        pointer-events: none !important;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .system-toast-stack {
+        top: max(70px, calc(env(safe-area-inset-top) + 58px)) !important;
+        right: 10px !important;
+        left: 10px !important;
+      }
+
+      .system-toast {
+        width: min(100%, 390px) !important;
+        margin-inline: auto;
+        background: #eaf9f1 !important;
+        border-color: #83d5ad !important;
+        box-shadow: 0 12px 30px rgba(2, 12, 27, .24) !important;
+      }
+
+      .system-toast strong {
+        color: #123c2b !important;
+      }
+
+      .system-toast span {
+        color: #42695a !important;
+      }
+
+      .system-toast.is-error {
+        background: #fff0f1 !important;
+        border-color: #f3a1aa !important;
+      }
+
+      .system-toast.is-error strong {
+        color: #801d2a !important;
+      }
+
+      .system-toast.is-error span {
+        color: #8d4450 !important;
+      }
+    }
+  </style>
 </head>
 
 <body class="login-locked">
@@ -24024,6 +24286,7 @@
         showScaffoldStrands: false,
         composerFullscreen: false,
         displayResolution: "device",
+        nativeAnimation: true,
         subjectNeonEnabled: true,
         extraSubjectGlow: false,
       },
@@ -24109,9 +24372,7 @@
         button.setAttribute("aria-pressed", String(isDark));
         button.setAttribute("aria-label", `Switch to ${nextThemeLabel} mode`);
         button.setAttribute("title", `Switch to ${nextThemeLabel} mode`);
-        button.innerHTML = icon(isDark ? "sun" : "moon", `Switch to ${nextThemeLabel} mode`);
       });
-      if (window.lucide) window.lucide.createIcons({ attrs: { "stroke-width": 1.8 } });
     };
 
     const applyUserThemeSettings = () => {
@@ -24129,10 +24390,16 @@
         scaffoldState.userSettings?.uiConfigs?.showScaffoldStrands === true ? "on" : "off"
       );
       root.setAttribute("data-visual-profile", "balanced");
-      const displayResolution = applyDisplayResolutionProfile(
-        scaffoldState.userSettings?.uiConfigs?.displayResolution
+      applyDisplayResolutionProfile("device");
+      scaffoldState.userSettings.uiConfigs.displayResolution = "device";
+      root.classList.toggle(
+        "native-animation",
+        scaffoldState.userSettings?.uiConfigs?.nativeAnimation !== false && !prefersReducedMotion()
       );
-      scaffoldState.userSettings.uiConfigs.displayResolution = displayResolution;
+      root.classList.toggle(
+        "native-animation-off",
+        scaffoldState.userSettings?.uiConfigs?.nativeAnimation === false || prefersReducedMotion()
+      );
       root.classList.toggle(
         "subject-neon-off",
         scaffoldState.userSettings?.uiConfigs?.subjectNeonEnabled === false
@@ -24166,7 +24433,9 @@
 
     const toggleThemeMode = () => {
       const currentTheme = normalizeThemeMode(scaffoldState.userSettings?.themeMode);
+      document.documentElement.classList.add("theme-switching");
       setThemeMode(currentTheme === "dark" ? "light" : "dark");
+      window.setTimeout(() => document.documentElement.classList.remove("theme-switching"), 90);
     };
 
     const currentStudyMode = () => (scaffoldState?.userSettings?.studyMode === "ssc" ? "ssc" : "hsc");
@@ -24191,7 +24460,7 @@
     let deferredInstallPrompt = null;
     let installManifestUrl = "";
     const TONU_APK_URL = "https://github.com/tanmysarker733-svg/tonustudyv2/releases/download/android/Tonu.Study.apk";
-    const TONU_WEB_BUILD = "360";
+    const TONU_WEB_BUILD = "362";
     const TONU_ANDROID_LATEST = "2.1.11";
 
     const isAndroidShell = () => Boolean(window.TonuAndroid);
@@ -24211,7 +24480,7 @@
       document.querySelectorAll("[data-install-context]").forEach((button) => {
         const label = button.querySelector("[data-install-label]");
         const version = button.querySelector("[data-install-version]");
-        if (label) label.textContent = "Install app";
+        if (label) label.textContent = shell ? "Update app" : "Install app";
         if (version) {
           const installed = currentAndroidVersion();
           version.textContent = shell
@@ -24220,7 +24489,8 @@
               ? `Android v${TONU_ANDROID_LATEST}`
               : `Web ${TONU_WEB_BUILD}`;
         }
-        button.title = "Install Tonu Study";
+        button.dataset.action = shell ? "install-android-apk" : "open-install-guide";
+        button.title = shell ? "Check GitHub for the latest Android app" : "Install Tonu Study";
       });
     };
 
@@ -24275,21 +24545,46 @@
     const closeInstallGuide = () => {
       const dialog = document.getElementById("installGuideDialog");
       if (!dialog || dialog.hasAttribute("hidden")) return;
-      dialog.setAttribute("hidden", "");
+      closeDialog("installGuideDialog");
       installGuideReturnFocus?.focus?.({ preventScroll: true });
       installGuideReturnFocus = null;
+    };
+
+    const refreshGithubReleaseStatus = async () => {
+      const status = document.querySelector("[data-install-release-status]");
+      if (status) status.textContent = "Checking GitHub release…";
+      if (!navigator.onLine) {
+        if (status) status.textContent = "Offline · connect to check the latest APK";
+        return false;
+      }
+      try {
+        const response = await fetch("https://api.github.com/repos/tanmysarker733-svg/tonustudyv2/releases/tags/android", {
+          cache: "no-store",
+          headers: { Accept: "application/vnd.github+json" }
+        });
+        if (!response.ok) throw new Error("release-check");
+        const release = await response.json();
+        const apk = Array.isArray(release.assets) && release.assets.some((asset) => /\.apk$/i.test(asset.name || ""));
+        if (status) status.textContent = apk
+          ? `GitHub release available · Android v${TONU_ANDROID_LATEST}`
+          : "GitHub release found · APK asset is being prepared";
+        return apk;
+      } catch (_) {
+        if (status) status.textContent = "Could not check GitHub · try again when online";
+        return false;
+      }
     };
 
     const showInstallGuide = (trigger = null) => {
       const dialog = document.getElementById("installGuideDialog");
       if (!dialog) {
-        showBackupBanner?.("Install options unavailable", "Reload the page and try again.");
+        showSystemToast?.("Install options unavailable", "Reload the page and try again.", "error");
         return;
       }
       installGuideReturnFocus = trigger || document.activeElement;
-      dialog.removeAttribute("hidden");
+      openDialog("installGuideDialog");
       dialog.querySelector("[data-action='add-study-shortcut']")?.focus({ preventScroll: true });
-      if (window.lucide) window.lucide.createIcons({ attrs: { "stroke-width": 1.8 } });
+      refreshGithubReleaseStatus();
     };
 
     const installAndroidApk = () => {
@@ -24307,14 +24602,27 @@
       ensureInstallManifest();
       if (deferredInstallPrompt) {
         deferredInstallPrompt.prompt();
-        try { await deferredInstallPrompt.userChoice; } catch (_) { }
+        try {
+          const choice = await deferredInstallPrompt.userChoice;
+          if (choice?.outcome === "accepted") {
+            showSystemToast?.("Install started", "Tonu Study is being added to this device.", "success");
+          }
+        } catch (_) { }
         deferredInstallPrompt = null;
         closeInstallGuide();
         return;
       }
-      showBackupBanner?.(
-        "Use your browser menu",
-        "Choose “Install app” or “Add to Home screen” to create the shortcut."
+      const pageUrl = /^https?:/i.test(window.location.href)
+        ? window.location.href
+        : "https://tonustudy.vercel.app/";
+      try {
+        await navigator.clipboard?.writeText(pageUrl);
+      } catch (_) { }
+      closeInstallGuide();
+      showSystemToast?.(
+        "Shortcut menu needed",
+        "Use your browser menu and choose Install app or Add to Home screen. The web address is ready to paste.",
+        "info"
       );
     };
 
@@ -25274,6 +25582,8 @@
       }
     };
 
+    const chatListToggleMarkup = () => `<span class="chat-list-toggle__icon" aria-hidden="true"></span><span>${chatState.prefs.isListVisible ? "Hide messages" : "Show messages"}</span>`;
+
     const syncChatUi = () => {
       const settingsPanel = document.getElementById("chatSettingsPanel");
       const feedShell = document.getElementById("chatFeedShell");
@@ -25296,7 +25606,7 @@
         composerMode.setAttribute("aria-label", `Post visibility: ${visibility}`);
       }
       toggleButtons.forEach((button) => {
-        button.textContent = chatState.prefs.isListVisible ? "Hide messages" : "Show messages";
+        button.innerHTML = chatListToggleMarkup();
       });
       syncChatListLockState();
       setChatFeedback(chatState.feedbackMessage, chatState.feedbackTone);
@@ -27468,6 +27778,7 @@
       } else {
         wizardNode.classList.remove("chat-update-composer--fullscreen");
       }
+      window.requestAnimationFrame(syncDialogBodyLock);
 
       // Auto-save draft on any render (state update)
       saveComposerDraft();
@@ -29676,23 +29987,14 @@
       ], userSettings.uiConfigs.auroraMode), "Animated colour mesh gradient")}
                 ${row("Project Banner", checkbox("tgl_project_banner", userSettings.uiConfigs.showProjectBanner !== false), "Top project banner")}
                 ${row("Compact Mode", checkbox("tgl_compact_mode", userSettings.uiConfigs.compactMode), "Reduces padding and sizes to fit more content")}
-                ${row("Fullscreen Composer", checkbox("tgl_composer_fs", userSettings.uiConfigs.composerFullscreen), "Show composer as full screen overlay")}
+                ${row("Fullscreen Composer", checkbox("tgl_composer_fs", userSettings.uiConfigs.composerFullscreen), "Focused full-screen Smart Update workspace")}
                 ${row("Show ETA Badge", checkbox("etaSettingToggle", userSettings.uiConfigs.etaOn))}
-                ${row("Font Scale", `<input type="range" id="fontScaleRange" min="80" max="165" step="5" value="${userSettings.fontScale || 100}" oninput="document.getElementById('fontScaleVal').textContent=this.value+'%';document.documentElement.style.setProperty('--master-font-scale', this.value/100)"><span id="fontScaleVal" style="margin-left: 8px; font-size: 0.8rem; min-width: 3ch; display: inline-block;">${userSettings.fontScale || 100}%</span>`, "Adjust overall text size up to 165%")}
+                ${row("Font Scale", `<input type="range" id="fontScaleRange" min="80" max="165" step="5" value="${userSettings.fontScale || 100}"><span id="fontScaleVal" style="margin-left: 8px; font-size: 0.8rem; min-width: 3ch; display: inline-block;">${userSettings.fontScale || 100}%</span>`, "Adjust overall text size")}
               `)}
-              ${group("Performance", `
-                ${row("Mobile Display Resolution", `
-                  <div class="display-profile-picker" role="group" aria-label="Mobile display resolution">
-                    ${["device", "720p", "900p", "1080p"].map((profile) => {
-                      const current = normalizeDisplayResolution(userSettings.uiConfigs.displayResolution);
-                      const label = profile === "device" ? "Device" : profile;
-                      return `<button class="btn-small visual-profile-picker__option ${current === profile ? "btn-small--active" : ""}" type="button" data-action="set-display-resolution" data-resolution="${profile}" aria-pressed="${current === profile}">${label}</button>`;
-                    }).join("")}
-                  </div>
-                `)}
+              ${group("Motion & Glow", `
+                ${row("Native Animation", checkbox("tgl_native_animation", userSettings.uiConfigs.nativeAnimation !== false), "Smooth feedback on mobile and Android")}
                 ${row("Paradox Scroll", checkbox("tgl_paradox_motion", userSettings.uiConfigs.paradoxMotion === true))}
-                ${row("Subject Neon", checkbox("tgl_subject_neon", userSettings.uiConfigs.subjectNeonEnabled !== false))}
-                ${row("Extra Subject Glow", checkbox("tgl_extra_subject_glow", userSettings.uiConfigs.extraSubjectGlow === true))}
+                ${row("Extra Subject Glow", checkbox("tgl_extra_subject_glow", userSettings.uiConfigs.extraSubjectGlow === true), "Adds the richer subject-card glow")}
               `)}
             `, true)}
             ${pane("data", `
@@ -30017,7 +30319,7 @@
             <div class="chat-compose__identity" style="display: flex; align-items: center; width: 100%;">
               <div class="chat-toolbar__actions" style="margin-left: auto;">
                 <button class="btn-small btn-small--icon" type="button" data-action="chat-toggle-settings" title="Message settings" aria-label="Message settings">${icon("sliders-horizontal", "Message settings")}</button>
-                <button class="btn-small btn-small--primary" type="button" data-action="chat-toggle-list" data-chat-list-toggle>${chatState.prefs.isListVisible ? "Hide messages" : "Show messages"}</button>
+                <button class="btn-small btn-small--primary chat-list-toggle" type="button" data-action="chat-toggle-list" data-chat-list-toggle>${chatListToggleMarkup()}</button>
                 <button class="btn-small" type="button" data-action="chat-expand" title="Expand Chat" aria-label="Expand Chat">${icon("maximize-2", "Expand")}</button>
               </div>
             </div>
@@ -30077,7 +30379,7 @@
               <button class="btn-small btn-small--accent" type="button" data-action="open-chat-show-all">
                 ${icon("history", "History")} <span>Show all</span>
               </button>
-              <button class="btn-small" type="button" data-action="chat-toggle-list" data-chat-list-toggle>${chatState.prefs.isListVisible ? "Hide messages" : "Show messages"}</button>
+              <button class="btn-small chat-list-toggle" type="button" data-action="chat-toggle-list" data-chat-list-toggle>${chatListToggleMarkup()}</button>
             </div>
           </div>
           <div class="chat-feed" id="chatFeed">
@@ -31513,7 +31815,8 @@
           ${icon("settings", "Settings shell")}
         </button>
         <button class="icon-button icon-button--accent theme-toggle-button" type="button" data-action="toggle-theme" data-theme-toggle aria-pressed="${currentTheme === "dark"}" title="Switch to ${nextThemeLabel} mode" aria-label="Switch to ${nextThemeLabel} mode">
-          ${icon(currentTheme === "dark" ? "sun" : "moon", `Switch to ${nextThemeLabel} mode`)}
+          <span class="theme-toggle__sun">${icon("sun", "Light mode")}</span>
+          <span class="theme-toggle__moon">${icon("moon", "Dark mode")}</span>
         </button>
       </div>
     </header>
@@ -31609,7 +31912,7 @@
         <div class="install-guide-body">
           <div class="install-hub-status">
             ${icon("info", "Install availability")}
-            <span>The shortcut uses the current web app. The Android option downloads the official APK from GitHub.</span>
+            <span data-install-release-status>The shortcut uses the current web app. The Android option downloads the official APK from GitHub.</span>
           </div>
           <div class="install-choice-list">
             <button class="install-choice" type="button" data-action="add-study-shortcut">
@@ -31822,15 +32125,13 @@
         /(^|-)2g$/.test(nav.connection?.effectiveType || "");
       return Boolean(window.TonuAndroid) || lowCpu || lowMemory || constrainedNetwork;
     };
-    const shouldUsePerformanceMode = () => true;
+    const shouldUsePerformanceMode = () => (
+      isLowPowerDevice() || scaffoldState?.userSettings?.uiConfigs?.nativeAnimation === false
+    );
     const applyPerformanceMode = () => {
       const root = document.documentElement;
-      const profile = normalizeVisualProfile(scaffoldState?.userSettings?.uiConfigs?.visualProfile);
       root.classList.toggle("performance-lite", shouldUsePerformanceMode());
-      root.classList.toggle(
-        "performance-max",
-        prefersReducedMotion() || profile === "performance" || (profile !== "beauty" && isLowPowerDevice())
-      );
+      root.classList.toggle("performance-max", prefersReducedMotion() || isLowPowerDevice());
     };
     const isPerformanceLite = () => document.documentElement.classList.contains("performance-lite");
     const isParadoxMotionEnabled = () => (
@@ -31929,7 +32230,7 @@
         node.classList.add("reveal-ready");
         node.style.setProperty("--reveal-delay", `${Math.min(index * 28, 220)}ms`);
       });
-      if (prefersReducedMotion() || isPerformanceLite()) {
+      if (prefersReducedMotion() || scaffoldState?.userSettings?.uiConfigs?.nativeAnimation === false) {
         revealNodes.forEach((node) => node.classList.add("is-visible"));
         return;
       }
@@ -33029,7 +33330,7 @@
       const settingsDialog = document.getElementById("settingsDialog");
       const settingsBody = settingsDialog?.querySelector(".settings-body");
       return {
-        openDialogIds: [...document.querySelectorAll(".account-dialog, .settings-dialog, .backup-dialog")]
+        openDialogIds: [...document.querySelectorAll(".account-dialog, .settings-dialog, .backup-dialog, .mission-modal")]
           .filter((dialog) => !dialog.hidden && dialog.id)
           .map((dialog) => dialog.id),
         settingsTab: settingsDialog?.querySelector("[data-settings-tab].settings-tab--active")?.dataset.settingsTab || "look",
@@ -33060,13 +33361,16 @@
         const dialog = document.getElementById(id);
         return dialog && !dialog.hidden;
       });
-      document.body.style.overflow = hasOpenDialog ? "hidden" : "";
+      syncDialogBodyLock();
       window.requestAnimationFrame(() => window.scrollTo(uiState.pageX, uiState.pageY));
     };
 
     const mountApp = () => {
       const uiState = captureMountUiState();
-      document.body.style.overflow = "";
+      document.body.classList.remove("dialog-scroll-locked");
+      document.body.style.removeProperty("top");
+      document.body.style.removeProperty("left");
+      dialogScrollLock = null;
       applyPerformanceMode();
       clearFloatingPanelPortals();
       document.querySelector("#app").innerHTML = renderAppShell(scaffoldState, buildUnits());
@@ -33932,20 +34236,18 @@
       }
 
       if (action === "open-mission-settings") {
-        const modal = document.getElementById("missionModal");
         const error = document.getElementById("missionError");
         setMissionDateValue("start", scaffoldState.userSettings.missionStart);
         setMissionDateValue("end", scaffoldState.userSettings.missionEnd);
         closeMissionCalendars();
         if (error) error.textContent = "";
-        if (modal) modal.hidden = false;
+        openDialog("missionModal");
         return;
       }
 
       if (action === "close-mission-settings") {
-        const modal = document.getElementById("missionModal");
         closeMissionCalendars();
-        if (modal) modal.hidden = true;
+        closeDialog("missionModal");
         return;
       }
 
@@ -33955,16 +34257,20 @@
         const error = document.getElementById("missionError");
         if (!start || !end) {
           if (error) error.textContent = "Start and end date are required.";
+          showSystemToast?.("Date needed", "Choose both the start and end date.", "error");
           return;
         }
         if (new Date(start) > new Date(end)) {
           if (error) error.textContent = "End date must be after start date.";
+          showSystemToast?.("Invalid date range", "The end date must be after the start date.", "error");
           return;
         }
         scaffoldState.userSettings.missionStart = start;
         scaffoldState.userSettings.missionEnd = end;
         saveUserSettings();
+        closeDialog("missionModal");
         mountApp();
+        showSystemToast?.("Mission updated", "Dashboard and welcome countdown are now synced.", "success");
         return;
       }
 
@@ -34312,6 +34618,19 @@
     });
 
     document.addEventListener("change", (e) => {
+      const committedSlider = e.target.closest("input[type=range][data-action$='-slide']");
+      if (committedSlider) {
+        const { si, pi, ci } = committedSlider.dataset;
+        const s = parseInt(si), p = parseInt(pi), c = parseInt(ci);
+        saveSyllabus(scaffoldState.syllabus);
+        refreshChapterRow(s, p, c);
+        refreshSubjectRing(s);
+        refreshDashboardGauge();
+        if (window.matchMedia("(pointer: coarse)").matches || isAndroidShell()) {
+          showSystemToast?.("Progress saved", "Chapter progress updated.", "success");
+        }
+        return;
+      }
       const chk = e.target.closest("input[type=checkbox][data-action]");
       if (chk) {
         const { action, si, pi, ci, track } = chk.dataset;
@@ -34353,6 +34672,16 @@
     });
 
     document.addEventListener("input", (e) => {
+      if (e.target?.id === "fontScaleRange") {
+        const value = Math.max(80, Math.min(165, parseInt(e.target.value, 10) || 100));
+        cancelAnimationFrame(window.__tonuFontScaleFrame || 0);
+        window.__tonuFontScaleFrame = requestAnimationFrame(() => {
+          document.documentElement.style.setProperty("--master-font-scale", value / 100);
+          const label = document.getElementById("fontScaleVal");
+          if (label) label.textContent = `${value}%`;
+        });
+        return;
+      }
       const progressColorInput = e.target.closest("#col_done, #col_run, #col_pend");
       if (progressColorInput) {
         if (progressColorInput.id === "col_done") scaffoldState.userSettings.barColors.done = progressColorInput.value;
@@ -34386,12 +34715,28 @@
       const s = parseInt(si), p = parseInt(pi), c = parseInt(ci);
       const v = parseInt(sl.value);
       syncSliderFill(sl);
-      if (action === "dl-slide") mutateFull(s, p, c, ch => { ch.doneDL = v; });
-      if (action === "adv-slide") mutateFull(s, p, c, ch => { ch.doneAdv = v; });
-      if (action === "adm-slide") mutateFull(s, p, c, ch => { ch.doneAdm = v; });
-      if (action === "frb-slide") mutateFull(s, p, c, ch => { ch.doneFRB = v; });
-      if (action === "os-slide") mutateFull(s, p, c, ch => { ch.doneOS = v; });
-      if (action === "perc-slide") mutateFull(s, p, c, ch => { ch.donePerc = v; });
+      const ch = getChapter(s, p, c);
+      if (!ch) return;
+      const liveMap = {
+        "dl-slide": ["doneDL", "dl"],
+        "adv-slide": ["doneAdv", "adv"],
+        "adm-slide": ["doneAdm", "adm"],
+        "frb-slide": ["doneFRB", "frb"],
+        "os-slide": ["doneOS", "os"],
+        "perc-slide": ["donePerc", "perc"],
+      };
+      const live = liveMap[action];
+      if (!live) return;
+      ch[live[0]] = v;
+      const plate = document.getElementById(`ch-${s}-${p}-${c}-plate`);
+      const valueNode = plate?.querySelector(`[data-val="${live[1]}-${s}-${p}-${c}"]`);
+      if (valueNode) valueNode.textContent = action === "perc-slide" ? `${v}%` : String(v);
+      const pct = chapterPct(ch);
+      const fill = plate?.querySelector(".ch-track__fill");
+      if (fill) {
+        fill.style.width = `${pct}%`;
+        fill.style.background = pctColor(pct);
+      }
     });
 
     // ── Chronos Analytics Engine ─────────────────────────────────────────────────
@@ -34807,18 +35152,35 @@
 
     document.addEventListener("DOMContentLoaded", initChronosAnalytics);
 
+    let dialogScrollLock = null;
     const syncDialogBodyLock = () => {
-      const anyOpen = [...document.querySelectorAll(".account-dialog, .settings-dialog, .backup-dialog")].some((dialog) => !dialog.hidden);
-      document.body.style.overflow = anyOpen ? "hidden" : "";
+      const anyOpen = [...document.querySelectorAll(
+        ".account-dialog, .settings-dialog, .backup-dialog, .mission-modal, #chatUpdateComposer.chat-update-composer--fullscreen"
+      )].some((dialog) => !dialog.hidden);
+      if (anyOpen && !dialogScrollLock) {
+        dialogScrollLock = { x: window.scrollX, y: window.scrollY };
+        document.body.classList.add("dialog-scroll-locked");
+        document.body.style.top = `-${dialogScrollLock.y}px`;
+        document.body.style.left = `-${dialogScrollLock.x}px`;
+      } else if (!anyOpen && dialogScrollLock) {
+        const { x, y } = dialogScrollLock;
+        dialogScrollLock = null;
+        document.body.classList.remove("dialog-scroll-locked");
+        document.body.style.removeProperty("top");
+        document.body.style.removeProperty("left");
+        window.scrollTo(x, y);
+      }
     };
 
     const openDialog = (id) => {
       const dialog = document.getElementById(id);
       if (!dialog) return;
       dialog.hidden = false;
-      dialog.classList.remove("is-reentering");
-      void dialog.offsetWidth;
-      dialog.classList.add("is-reentering");
+      if (scaffoldState?.userSettings?.uiConfigs?.nativeAnimation !== false && !prefersReducedMotion()) {
+        dialog.classList.remove("is-reentering");
+        void dialog.offsetWidth;
+        dialog.classList.add("is-reentering");
+      }
       syncDialogBodyLock();
       const focusTarget = dialog.querySelector("input, button, select, textarea");
       setTimeout(() => focusTarget?.focus(), 40);
@@ -35083,6 +35445,7 @@
         return;
       }
       if (action === "install-android-apk") {
+        refreshGithubReleaseStatus();
         installAndroidApk();
         return;
       }
@@ -35941,8 +36304,8 @@
         updateBackupSettings({ autoBackupNotif: !!target.checked });
         return;
       }
-      if (target.id === "tgl_project_banner" || target.id === "tgl_orbs" || target.id === "tgl_vibes" || target.id === "tgl_paradox_motion" || target.id === "tgl_aurora_mode" || target.id === "etaSettingToggle" || target.id === "tgl_composer_fs" || target.id === "tgl_compact_mode" || target.id === "tgl_subject_neon" || target.id === "tgl_extra_subject_glow") {
-        if (target.id === "tgl_subject_neon" || target.id === "tgl_extra_subject_glow") {
+      if (target.id === "tgl_project_banner" || target.id === "tgl_orbs" || target.id === "tgl_vibes" || target.id === "tgl_native_animation" || target.id === "tgl_paradox_motion" || target.id === "tgl_aurora_mode" || target.id === "etaSettingToggle" || target.id === "tgl_composer_fs" || target.id === "tgl_compact_mode" || target.id === "tgl_extra_subject_glow") {
+        if (target.id === "tgl_extra_subject_glow") {
           localStorage.setItem("tonu-visual-effects-explicit", "1");
         }
         scaffoldState.userSettings.uiConfigs = {
@@ -35950,25 +36313,26 @@
           showProjectBanner: document.getElementById("tgl_project_banner")?.checked !== false,
           showOrbs: document.getElementById("tgl_orbs")?.checked || false,
           showVibes: document.getElementById("tgl_vibes")?.checked || false,
+          nativeAnimation: document.getElementById("tgl_native_animation")?.checked !== false,
           paradoxMotion: document.getElementById("tgl_paradox_motion")?.checked || false,
           auroraMode: document.getElementById("tgl_aurora_mode")?.value || "off",
           etaOn: document.getElementById("etaSettingToggle")?.checked || false,
           composerFullscreen: document.getElementById("tgl_composer_fs")?.checked || false,
           compactMode: document.getElementById("tgl_compact_mode")?.checked || false,
-          subjectNeonEnabled: document.getElementById("tgl_subject_neon")?.checked !== false,
+          subjectNeonEnabled: true,
           extraSubjectGlow: document.getElementById("tgl_extra_subject_glow")?.checked || false
         };
         saveUserSettings();
         applyUserThemeSettings();
         applyPerformanceMode();
-        applyParadoxMotionState();
+        attachParadoxMotion();
+        attachScrollReveal();
         document.querySelector(".project-banner")?.toggleAttribute(
           "hidden",
           scaffoldState.userSettings.uiConfigs.showProjectBanner === false
         );
-        if (["tgl_compact_mode", "tgl_composer_fs", "tgl_subject_neon", "tgl_extra_subject_glow"].includes(target.id)) {
-          showRestartToast("Restart once to rebuild the layout and visual layers cleanly on this device.");
-        }
+        if (target.id === "tgl_composer_fs") renderComposerWizard();
+        showSystemToast?.("Setting updated", `${target.closest(".settings-row")?.querySelector("strong")?.textContent || "Display setting"} is now ${target.checked === false ? "off" : "on"}.`, "success");
         return;
       }
       if (target.id === "aiFeaturesToggle") {
@@ -35981,6 +36345,7 @@
         const val = parseInt(target.value, 10) || 100;
         scaffoldState.userSettings.fontScale = val;
         saveUserSettings();
+        showSystemToast?.("Font scale saved", `Interface text is now ${val}%.`, "success");
         return;
       }
       if (target.id === BACKUP_IMPORT_INPUT_ID) {
@@ -36009,7 +36374,7 @@
     let nativeSensitiveBackAt = 0;
     window.tonuHandleNativeBack = () => {
       const visibleDialogs = Array.from(document.querySelectorAll(
-        ".account-dialog:not([hidden]), #chapterQuickDialog:not([hidden]), #chronosConfigPanel:not([hidden]), #missionSettingsDialog:not([hidden])"
+        ".account-dialog:not([hidden]), #chapterQuickDialog:not([hidden]), #chronosConfigPanel:not([hidden]), #missionModal:not([hidden])"
       )).filter((node) => getComputedStyle(node).display !== "none");
       const dialog = visibleDialogs[visibleDialogs.length - 1];
       if (dialog) {
@@ -36024,7 +36389,7 @@
         );
         if (closeButton instanceof HTMLElement) closeButton.click();
         else dialog.setAttribute("hidden", "");
-        document.body.style.overflow = "";
+        syncDialogBodyLock();
         return true;
       }
       return false;
@@ -36101,7 +36466,7 @@
        feature error elsewhere cannot disable native navigation. */
     window.tonuHandleNativeBack = window.tonuHandleNativeBack || (() => {
       const visible = Array.from(document.querySelectorAll(
-        ".account-dialog:not([hidden]), #chapterQuickDialog:not([hidden]), #chronosConfigPanel:not([hidden]), #missionSettingsDialog:not([hidden])"
+        ".account-dialog:not([hidden]), #chapterQuickDialog:not([hidden]), #chronosConfigPanel:not([hidden]), #missionModal:not([hidden])"
       )).filter((node) => getComputedStyle(node).display !== "none");
       const dialog = visible[visible.length - 1];
       if (!dialog) return false;
@@ -36110,7 +36475,7 @@
       );
       if (closeButton instanceof HTMLElement) closeButton.click();
       else dialog.setAttribute("hidden", "");
-      document.body.style.overflow = "";
+      syncDialogBodyLock();
       return true;
     });
   </script>
