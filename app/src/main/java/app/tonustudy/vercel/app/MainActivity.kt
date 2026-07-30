@@ -115,6 +115,12 @@ class MainActivity : ComponentActivity() {
                 FrameLayout.LayoutParams.MATCH_PARENT
             )
         )
+        // The app is a live WebView, not a feed. SwipeRefreshLayout was
+        // stealing an upward scroll from nested shells (especially Settings)
+        // and reloading the page instead. Keep it as the host container for
+        // now, but disable its gesture completely; normal scroll remains with
+        // the page and its own modal bodies.
+        refreshLayout.isEnabled = false
         root.addView(
             progressBar,
             FrameLayout.LayoutParams(
@@ -185,9 +191,7 @@ class MainActivity : ComponentActivity() {
             }
         }
 
-        refreshLayout.setOnRefreshListener {
-            webView.reload()
-        }
+        refreshLayout.setOnRefreshListener { refreshLayout.isRefreshing = false }
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 webView.evaluateJavascript(
@@ -366,9 +370,9 @@ class MainActivity : ComponentActivity() {
                 Toast.makeText(
                     this@MainActivity,
                     if (hasInternetConnection()) {
-                        "TONU STUDY could not load. Pull down to retry."
+                        "TONU STUDY could not load. Check your connection and try again."
                     } else {
-                        "No internet connection. Connect and pull down to retry."
+                        "No internet connection. Connect and try again."
                     },
                     Toast.LENGTH_LONG
                 ).show()

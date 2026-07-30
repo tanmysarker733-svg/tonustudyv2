@@ -24112,6 +24112,65 @@
       }
     }
   </style>
+  <style id="v365-android-scroll-performance">
+    /* v365: Android scroll and composer performance. Keep the existing colour
+       language, but remove only costly glass paints from the active wizard. */
+    html.android-shell,
+    html.android-shell body,
+    html.android-shell .study-shell {
+      overscroll-behavior-y: none;
+    }
+
+    html.android-shell :is(
+      .settings-body,
+      .account-dialog__body,
+      .backup-dialog__body,
+      .mission-card__body,
+      #chatUpdateComposer .composer-wizard-body
+    ) {
+      overscroll-behavior-y: contain;
+      touch-action: pan-y;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    html.android-shell #chatUpdateComposer {
+      contain: layout style;
+    }
+
+    html.android-shell #chatUpdateComposer :is(
+      .composer-wizard-shell,
+      .composer-wizard-header,
+      .composer-wizard-footer,
+      .composer-active-panel,
+      .composer-field-card,
+      .composer-preview-pane,
+      .composer-time-card,
+      .composer-subject-card,
+      .composer-chapter-card,
+      .composer-completion-card
+    ) {
+      filter: none !important;
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+    }
+
+    html.android-shell #chatUpdateComposer :is(
+      .composer-subject-card,
+      .composer-chapter-card,
+      .composer-time-card,
+      .composer-type-chip,
+      .composer-step-tab
+    ) {
+      transition-property: background-color, border-color, color, opacity !important;
+      transition-duration: 130ms !important;
+      will-change: auto !important;
+    }
+
+    html.android-shell #chatUpdateComposer .composer-wizard-body {
+      content-visibility: auto;
+      contain-intrinsic-size: auto 520px;
+    }
+  </style>
 </head>
 
 <body class="login-locked">
@@ -27919,17 +27978,20 @@
           window.scrollTo({ top: preservedScrollY, behavior: "auto" });
         };
         restoreComposerScroll();
-        requestAnimationFrame(() => {
-          restoreComposerScroll();
-          requestAnimationFrame(restoreComposerScroll);
-        });
-        // Some mobile browsers restore focus after the replacement control
-        // paints. Counter that one late focus pass without changing normal
-        // step navigation or its intentional scroll positioning.
-        window.setTimeout(restoreComposerScroll, 220);
+        // +/- controls replace a small piece of composer state. Repeating
+        // three window scroll writes plus a delayed fourth write on every
+        // tap was the main source of Android jank. Keep the defensive late
+        // restore only for real step/layout changes, not value-only updates.
+        if (shouldReposition) {
+          requestAnimationFrame(() => {
+            restoreComposerScroll();
+            requestAnimationFrame(restoreComposerScroll);
+          });
+          window.setTimeout(restoreComposerScroll, 220);
+        }
       }
 
-      setTimeout(() => {
+      if (shouldReposition || (prevStep !== null && prevStep !== step)) setTimeout(() => {
         const wizardBody = wizardNode.querySelector(".composer-wizard-body");
         if (prevStep !== null && prevStep !== step) {
           if (wizardBody) {
@@ -27943,13 +28005,13 @@
         // (the internal chapter step), without pinning the composer header off-screen.
         if (step >= 9) {
           wizardNode.scrollIntoView({
-            behavior: prefersReducedMotion() ? "auto" : "smooth",
+          behavior: (prefersReducedMotion() || document.documentElement.classList.contains("android-shell")) ? "auto" : "smooth",
             block: "start"
           });
         } else {
           const activePanel = wizardNode.querySelector(".composer-active-panel");
           (activePanel || wizardNode).scrollIntoView({
-            behavior: prefersReducedMotion() ? "auto" : "smooth",
+          behavior: (prefersReducedMotion() || document.documentElement.classList.contains("android-shell")) ? "auto" : "smooth",
             block: "center"
           });
         }

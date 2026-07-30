@@ -18,7 +18,8 @@ instructions are documented in [ANDROID_SETUP.md](ANDROID_SETUP.md).
   resume after connectivity returns.
 - **Android v2.1.11** loads the deployed web app directly, so browser and APK use the
   same interface and receive the same feature updates. Without connectivity it
-  shows a clear warning and offers pull-to-retry.
+  shows a clear retry warning; pull-to-refresh is intentionally disabled so
+  nested settings and composer scrolling cannot reload the page by accident.
 - **Web 357 / Android v2.1.10** introduced the practical low-cost rendering
   defaults in **Look > Performance**, with
   optional Paradox Scroll, Subject Neon, and Extra Subject Glow controls.
@@ -30,6 +31,12 @@ The deployed `index.html` is the public web source. Numbered
 and are intentionally excluded from GitHub.
 
 ### Web builds
+
+- **Web 365** — Disabled Android's parent refresh gesture so upward scrolling
+  stays inside Settings and other nested shells. Smart Update now avoids
+  redundant scroll restoration for fixed-value controls and drops Android-only
+  glass repaint work inside the active wizard, keeping the existing visual
+  hierarchy while reducing input lag.
 
 - **Web 364** — Polished responsive edge cases: Settings tabs now reset to
   the top when switching sections, narrow-screen tab labels remain intact, and
