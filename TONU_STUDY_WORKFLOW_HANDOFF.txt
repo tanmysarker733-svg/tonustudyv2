@@ -12,7 +12,7 @@ the next number, then edit the new file only. Never overwrite prior versions.
 WEB SOURCE / DEPLOYMENT
 - Local versioned source folder:
   E:\! Entertainment\! Editing Partition\Passive Farhan and Blog\Study Web\Version 2
-- Current latest numbered source at this handoff: hsc-study-os__362_.html
+- Current latest numbered source at this handoff: hsc-study-os__363_.html
 - Production source: this repository root index.html on branch main.
 - Before deployment, copy the validated newest numbered HTML to this index.html.
 - Copy any changed Assets into this repository Assets\ folder too.
@@ -32,7 +32,14 @@ RELEASE
 - Release tag: android
 - Download URL:
   https://github.com/tanmysarker733-svg/tonustudyv2/releases/download/android/Tonu.Study.apk
-- Latest source release at this handoff: Tonu Study Android v2.1.11 / Web 362
+- Latest source release at this handoff: Tonu Study Android v2.1.11 / Web 363
+
+WEB 363 NOTES
+- Smart Update uses subject icons for Physics, Chemistry, Biology, Higher Math,
+  and ICT; other subjects and free-text topics retain the standard play icon.
+- Detailed is implicit and omitted. One Shot, Advanced, and Admission render as
+  O-shot, Adv., and Adm.; lecture notation renders as Lec.
+- Smart Sync continues to accept both legacy and compact lecture/class labels.
 
 WEB 362 NOTES
 - Native Animation controls rich mobile/Android feedback without forcing the

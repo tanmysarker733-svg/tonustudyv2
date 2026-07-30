@@ -24460,7 +24460,7 @@
     let deferredInstallPrompt = null;
     let installManifestUrl = "";
     const TONU_APK_URL = "https://github.com/tanmysarker733-svg/tonustudyv2/releases/download/android/Tonu.Study.apk";
-    const TONU_WEB_BUILD = "362";
+    const TONU_WEB_BUILD = "363";
     const TONU_ANDROID_LATEST = "2.1.11";
 
     const isAndroidShell = () => Boolean(window.TonuAndroid);
@@ -25080,18 +25080,19 @@
           (update.items || []).forEach((item) => {
             const paper = item.paper ? ` P${item.paper}` : "";
             const chapter = item.chapterLabel || (item.chapter ? `C${item.chapter}` : "");
-            const type = item.classType && item.classType !== "Detailed" ? ` ${item.classType}` : "";
+            const classLabel = formatSmartUpdateClassLabel(item.classType);
+            const type = classLabel ? ` ${classLabel}` : "";
             const lecture = item.lectureRange
-              ? ` Lec${item.lectureRange.from}-${item.lectureRange.to}${item.totalLectures ? `/${item.totalLectures}` : ""}`
+              ? ` Lec ${item.lectureRange.from}-${item.lectureRange.to}${item.totalLectures ? `/${item.totalLectures}` : ""}`
               : (item.lectures || []).length
-                ? ` Lec${item.lectures.join("+")}${item.totalLectures ? `/${item.totalLectures}` : ""}`
+                ? ` Lec ${item.lectures.join("+")}${item.totalLectures ? `/${item.totalLectures}` : ""}`
                 : "";
             const percent = item.completionPercent < 100 ? ` ${item.completionPercent}%` : " ✅";
-            lines.push(`▶️ ${item.subject}${paper}${chapter}${type}${lecture}${percent}`);
+            lines.push(`${getSmartUpdateSubjectIcon(item.subject)} ${item.subject}${paper}${chapter}${type}${lecture}${percent}`);
           });
-          if (update.studyQuality !== null && update.studyQuality !== undefined) lines.push(`📈 Study Quality - ${update.studyQuality}%`);
+          if (update.studyQuality !== null && update.studyQuality !== undefined) lines.push(`📊 Study Quality - ${update.studyQuality}%`);
+          if (update.selfStudyMinutes) lines.push(`🧠 Self Study - ${formatDurationShort(update.selfStudyMinutes)}`);
           if (update.classDurationMinutes) lines.push(`⌛ Class Duration - ${formatDurationShort(update.classDurationMinutes)}`);
-          if (update.selfStudyMinutes) lines.push(`👨‍🎓 Self Study - ${formatDurationShort(update.selfStudyMinutes)}`);
           if (update.studyDurationMinutes) lines.push(`🕒 Study Duration - ${formatDurationShort(update.studyDurationMinutes)}`);
           if (!(update.items || []).length && !update.classDurationMinutes && !update.studyDurationMinutes && !update.selfStudyMinutes && update.studyQuality === null) {
             lines.push(trimmed);
@@ -26310,26 +26311,37 @@
       return results;
     };
 
-    const getAiItemEmoji = (subject = "") => {
-      if (subject === "Higher Math") return "📐";
-      if (subject === "Physics") return "⚛️";
-      if (subject === "Chemistry") return "🧪";
-      if (subject === "Biology") return "🧬";
-      if (subject === "Bangla") return "🔤";
-      if (subject === "English") return "🔠";
-      if (subject === "ICT") return "💻";
+    const getSmartUpdateSubjectIcon = (subject = "") => {
+      const key = String(subject || "").trim().toLowerCase();
+      if (key === "physics") return "⚛️";
+      if (key === "chemistry") return "🧪";
+      if (key === "biology") return "🧬";
+      if (key === "higher math" || key === "math") return "🧩";
+      if (key === "ict") return "⚙️";
       return "▶️";
     };
 
+    const formatSmartUpdateClassLabel = (classType = "") => {
+      const key = String(classType || "").trim().toLowerCase().replace(/[\s_-]+/g, "");
+      if (!key || key === "detailed") return "";
+      if (key === "oneshot" || key === "1shot" || key === "oshot") return "O-shot";
+      if (key === "advanced" || key === "adv") return "Adv.";
+      if (key === "admission" || key === "adm") return "Adm.";
+      return String(classType || "").trim();
+    };
+
+    const getAiItemEmoji = (subject = "") => getSmartUpdateSubjectIcon(subject);
+
     const formatAiItemPostLine = (item = {}) => {
-      const subject = item.subject === "Higher Math" ? "Math" : (item.subject || "");
+      const subject = item.subject || "";
       const paper = item.paper ? ` P${item.paper}` : "";
       const chapter = item.chapterLabel || (item.chapter ? `C${item.chapter}` : "");
-      const type = item.classType && item.classType !== "Detailed" ? ` ${item.classType}` : "";
+      const classLabel = formatSmartUpdateClassLabel(item.classType);
+      const type = classLabel ? ` ${classLabel}` : "";
       const lecture = item.lectureRange
-        ? ` Lec${item.lectureRange.from}-${item.lectureRange.to}${item.totalLectures ? `/${item.totalLectures}` : ""}`
+        ? ` Lec ${item.lectureRange.from}-${item.lectureRange.to}${item.totalLectures ? `/${item.totalLectures}` : ""}`
         : (item.lectures || []).length
-          ? ` Lec${item.lectures.join("+")}${item.totalLectures ? `/${item.totalLectures}` : ""}`
+          ? ` Lec ${item.lectures.join("+")}${item.totalLectures ? `/${item.totalLectures}` : ""}`
           : "";
       const done = item.isRevision ? " 🟩" : (item.completionPercent < 100 ? ` ${item.completionPercent}%` : " ✅");
       return `${getAiItemEmoji(item.subject)} ${subject}${paper}${chapter}${type}${lecture}${done}`.replace(/\s+/g, " ").trim();
@@ -26340,10 +26352,10 @@
         if (update.postText && update.postText.trim()) return update.postText.trim();
         const lines = [`🚀 Update (${formatChatAiPreviewDate(update.date)})`];
         (update.items || []).forEach((item) => lines.push(formatAiItemPostLine(item)));
+        if (update.studyQuality !== null && update.studyQuality !== undefined) lines.push(`📊 Study Quality - ${update.studyQuality}%`);
+        if (update.selfStudyMinutes !== null && update.selfStudyMinutes !== undefined) lines.push(`🧠 Self Study - ${formatDurationShort(update.selfStudyMinutes)}`);
         if (update.classDurationMinutes !== null && update.classDurationMinutes !== undefined) lines.push(`⌛ Class Duration - ${formatDurationShort(update.classDurationMinutes)}`);
         if (update.studyDurationMinutes !== null && update.studyDurationMinutes !== undefined) lines.push(`🕒 Study Duration - ${formatDurationShort(update.studyDurationMinutes)}`);
-        if (update.selfStudyMinutes !== null && update.selfStudyMinutes !== undefined) lines.push(`👨‍🎓 Self Study - ${formatDurationShort(update.selfStudyMinutes)}`);
-        if (update.studyQuality !== null && update.studyQuality !== undefined) lines.push(`📈 Study Quality - ${update.studyQuality}%`);
         return lines.join("\n");
       }).filter(Boolean);
       return blocks.join("\n.\n.\n");
@@ -26787,12 +26799,12 @@
       }
       if (isConsecutive && sorted.length >= 4) {
         return {
-          text: `Lecture ${sorted[0]}-${sorted[sorted.length - 1]}`,
+          text: `Lec ${sorted[0]}-${sorted[sorted.length - 1]}`,
           isRange: true
         };
       } else {
         return {
-          text: `Lecture ${sorted.join('+')}`,
+          text: `Lec ${sorted.join('+')}`,
           isRange: false
         };
       }
@@ -26807,7 +26819,7 @@
       const subjName = subj.title;
       const paperName = subj.hasPapers ? (item.paperIndex === 0 ? "P1" : "P2") : "";
       const chName = `C${item.chapterIndex + 1}`;
-      const typeText = item.classType === "One Shot" ? "1-Shot" : item.classType;
+      const typeText = formatSmartUpdateClassLabel(item.classType);
       const lectInfo = formatSelectedLectures(item.selectedLectures);
       const lecText = lectInfo.text;
       const isRange = lectInfo.isRange;
@@ -26815,13 +26827,13 @@
 
       if (isRange) {
         const parts = [subjName, paperName + chName, typeText, lecText + totalText].filter(Boolean).join(' ');
-        return `📝 ${parts} Revision`;
+        return `${getSmartUpdateSubjectIcon(subjName)} ${parts} Revision`;
       } else {
         const parts = [subjName, paperName + chName, typeText, lecText + totalText].filter(Boolean).join(' ');
         if (item.percent === 100 || item.percent === null) {
-          return `▶️ ${parts} ✅`;
+          return `${getSmartUpdateSubjectIcon(subjName)} ${parts} ✅`;
         } else {
-          return `▶️ ${parts} 🔄 ${item.percent}%`;
+          return `${getSmartUpdateSubjectIcon(subjName)} ${parts} 🔄 ${item.percent}%`;
         }
       }
     }

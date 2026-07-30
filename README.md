@@ -11,9 +11,9 @@ instructions are documented in [ANDROID_SETUP.md](ANDROID_SETUP.md).
 
 ## Connectivity and low-end device support
 
-- **Web 362** caches its same-origin shell after the first successful online
+- **Web 363** caches its same-origin shell after the first successful online
   visit. Study data continues to save in browser storage while offline.
-- **Web 362** pauses chat, authentication, cloud restore, and cloud upload
+- **Web 363** pauses chat, authentication, cloud restore, and cloud upload
   while offline and
   resume after connectivity returns.
 - **Android v2.1.11** loads the deployed web app directly, so browser and APK use the
@@ -30,6 +30,11 @@ The deployed `index.html` is the public web source. Numbered
 and are intentionally excluded from GitHub.
 
 ### Web builds
+
+- **Web 363** — Compacted Smart Update task text: subject-specific science
+  icons, implicit Detailed classes, `O-shot` / `Adv.` / `Adm.` labels, and
+  `Lec` lecture notation. Legacy `Lecture`, `Lec`, and class labels remain
+  readable by Smart Sync.
 
 - **Web 362** — Added Native Animation controls for mobile/Android parity,
   reliable modal scroll locking, responsive tablet quick-tool labels, smoother
