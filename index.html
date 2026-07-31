@@ -20256,11 +20256,15 @@
       min-width: 32px;
       height: 32px;
       place-items: center;
+      position: relative;
+      flex: 0 0 32px;
+      overflow: visible;
       border: 1px solid rgba(148, 163, 184, .22);
       border-radius: 10px;
       background: rgba(127, 29, 29, .18);
       color: #fca5a5;
       cursor: pointer;
+      font-size: 0;
     }
 
     .mission-picker__close:hover,
@@ -20274,6 +20278,19 @@
     .mission-picker__close svg {
       width: 15px;
       height: 15px;
+    }
+
+    .mission-picker__close::before {
+      content: "\00d7";
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      font-size: 1.08rem;
+      font-weight: 900;
+      line-height: 1;
+      color: currentColor;
+      pointer-events: none;
     }
 
     html[data-theme="light"] .mission-card__head > .btn-small--icon {
