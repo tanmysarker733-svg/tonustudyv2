@@ -1,8 +1,8 @@
-const CACHE_NAME = "tonu-study-offline-v360";
+const CACHE_NAME = "tonu-study-offline-v367";
 const APP_SHELL = [
   "./",
   "./index.html",
-  "./Assets/Images/A%20project%20by.jpg"
+  "./Assets/Images/asthetic%201.jpg"
 ];
 
 self.addEventListener("install", (event) => {

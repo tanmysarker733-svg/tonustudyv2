@@ -16,7 +16,7 @@ instructions are documented in [ANDROID_SETUP.md](ANDROID_SETUP.md).
 - **Web 363** pauses chat, authentication, cloud restore, and cloud upload
   while offline and
   resume after connectivity returns.
-- **Android v2.1.11** loads the deployed web app directly, so browser and APK use the
+- **Android v2.1.12** loads the deployed web app directly, so browser and APK use the
   same interface and receive the same feature updates. Without connectivity it
   shows a clear retry warning; pull-to-refresh is intentionally disabled so
   nested settings and composer scrolling cannot reload the page by accident.
@@ -31,6 +31,11 @@ The deployed `index.html` is the public web source. Numbered
 and are intentionally excluded from GitHub.
 
 ### Web builds
+
+- **Web 367** — Normalized Smart Update motion to a calmer web-matched cadence
+  and removed document pull-to-refresh competition. The Android host now gives
+  the WebView sole ownership of vertical scrolling, so upward swipes inside
+  Settings and Smart Update no longer surface a native refresh spinner.
 
 - **Web 366** — Native Animation now selects the complete web motion profile
   inside Android: Smart Update restores its smooth step transitions and
@@ -75,7 +80,10 @@ and are intentionally excluded from GitHub.
 
 ### Android releases
 
-- **Android v2.1.11 (current)** — Optimized the shared WebView shell, hardened
+- **Android v2.1.12 (current)** — Removed the native `SwipeRefreshLayout`
+  wrapper and Android overscroll so nested upward scrolling stays reliable;
+  also removes the now-unused refresh dependency.
+- **Android v2.1.11** — Optimized the shared WebView shell, hardened
   native Back navigation, and loads the latest deployed web build.
 - **Android v2.1.10** — Fixed Settings re-render locks, restored Android subject
   neon, improved banner reliability, repaired text/icon rendering, and reduced

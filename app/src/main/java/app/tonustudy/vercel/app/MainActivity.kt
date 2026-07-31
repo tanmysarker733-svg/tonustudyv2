@@ -36,7 +36,6 @@ import androidx.credentials.GetCredentialRequest
 import androidx.credentials.exceptions.GetCredentialCancellationException
 import androidx.credentials.exceptions.GetCredentialException
 import androidx.lifecycle.lifecycleScope
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.libraries.identity.googleid.GetSignInWithGoogleOption
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
 import kotlinx.coroutines.launch
@@ -44,7 +43,6 @@ import org.json.JSONObject
 
 class MainActivity : ComponentActivity() {
     private lateinit var webView: WebView
-    private lateinit var refreshLayout: SwipeRefreshLayout
     private lateinit var progressBar: ProgressBar
     private lateinit var launchOverlay: FrameLayout
     private lateinit var launchBrand: ImageView
@@ -69,7 +67,6 @@ class MainActivity : ComponentActivity() {
         credentialManager = CredentialManager.create(this)
 
         val root = FrameLayout(this)
-        refreshLayout = SwipeRefreshLayout(this)
         webView = WebView(this)
         launchOverlay = FrameLayout(this).apply {
             setBackgroundColor(Color.rgb(7, 19, 27))
@@ -84,15 +81,8 @@ class MainActivity : ComponentActivity() {
             max = 100
         }
 
-        refreshLayout.addView(
-            webView,
-            FrameLayout.LayoutParams(
-                FrameLayout.LayoutParams.MATCH_PARENT,
-                FrameLayout.LayoutParams.MATCH_PARENT
-            )
-        )
         root.addView(
-            refreshLayout,
+            webView,
             FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.MATCH_PARENT,
                 FrameLayout.LayoutParams.MATCH_PARENT
@@ -115,12 +105,6 @@ class MainActivity : ComponentActivity() {
                 FrameLayout.LayoutParams.MATCH_PARENT
             )
         )
-        // The app is a live WebView, not a feed. SwipeRefreshLayout was
-        // stealing an upward scroll from nested shells (especially Settings)
-        // and reloading the page instead. Keep it as the host container for
-        // now, but disable its gesture completely; normal scroll remains with
-        // the page and its own modal bodies.
-        refreshLayout.isEnabled = false
         root.addView(
             progressBar,
             FrameLayout.LayoutParams(
@@ -149,6 +133,10 @@ class MainActivity : ComponentActivity() {
             mediaPlaybackRequiresUserGesture = true
             setSupportMultipleWindows(false)
         }
+        // The live app has its own page and modal scrolling. Native overscroll
+        // and pull-to-refresh make an upward swipe look like a page reload,
+        // especially inside Settings, so keep scroll ownership in the WebView.
+        webView.overScrollMode = android.view.View.OVER_SCROLL_NEVER
         WebView.setWebContentsDebuggingEnabled(BuildConfig.DEBUG)
         CookieManager.getInstance().apply {
             setAcceptCookie(true)
@@ -161,7 +149,6 @@ class MainActivity : ComponentActivity() {
                 progressBar.progress = progress
                 progressBar.visibility = if (progress >= 100) android.view.View.GONE else android.view.View.VISIBLE
                 if (progress >= 100) {
-                    refreshLayout.isRefreshing = false
                     launchOverlay.animate().alpha(0f).setDuration(180).withEndAction {
                         launchOverlay.visibility = android.view.View.GONE
                     }.start()
@@ -191,7 +178,6 @@ class MainActivity : ComponentActivity() {
             }
         }
 
-        refreshLayout.setOnRefreshListener { refreshLayout.isRefreshing = false }
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 webView.evaluateJavascript(
@@ -363,7 +349,6 @@ class MainActivity : ComponentActivity() {
             error: WebResourceError
         ) {
             if (request.isForMainFrame) {
-                refreshLayout.isRefreshing = false
                 progressBar.visibility = android.view.View.GONE
                 launchBrand.visibility = android.view.View.GONE
                 launchOverlay.visibility = android.view.View.GONE

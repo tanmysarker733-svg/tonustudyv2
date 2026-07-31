@@ -24174,6 +24174,52 @@
       contain-intrinsic-size: auto 520px;
     }
   </style>
+  <style id="v367-scroll-motion-fix">
+    /* The document and the Android wrapper must never compete for a pull-to-
+       refresh gesture. Nested modal/composer bodies keep normal pan scrolling. */
+    html,
+    body {
+      overscroll-behavior-y: none;
+    }
+
+    html.native-animation #chatUpdateComposer .composer-step-tab {
+      transition-duration: 240ms !important;
+      transition-timing-function: cubic-bezier(.2, .72, .2, 1) !important;
+    }
+
+    html.native-animation #chatUpdateComposer :is(
+      [data-action="composer-step-next"],
+      [data-action="composer-add-custom-suffix"],
+      [data-action="composer-confirm-and-review"],
+      [data-action="composer-confirm-and-add-another"],
+      [data-action="composer-send-message"]
+    ):is(:hover, .is-action-pending, .is-composer-advancing)::before {
+      animation-duration: 1.28s !important;
+    }
+
+    html.native-animation #chatUpdateComposer [data-action="composer-step-next"].is-composer-advancing::after {
+      animation-duration: 620ms !important;
+    }
+
+    html.native-animation #chatUpdateComposer [data-action="composer-step-next"].is-composer-advancing > :is(span, svg) {
+      animation-duration: 460ms !important;
+    }
+
+    html.native-animation #chatUpdateComposer.is-step-transitioning .composer-wizard-body > * {
+      animation: tonu-composer-step-enter 340ms cubic-bezier(.2, .72, .2, 1) both;
+    }
+
+    @keyframes tonu-composer-step-enter {
+      from { opacity: .72; transform: translateY(7px) scale(.996); }
+      to { opacity: 1; transform: none; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      #chatUpdateComposer.is-step-transitioning .composer-wizard-body > * {
+        animation: none !important;
+      }
+    }
+  </style>
 </head>
 
 <body class="login-locked">
@@ -24558,8 +24604,8 @@
     let deferredInstallPrompt = null;
     let installManifestUrl = "";
     const TONU_APK_URL = "https://github.com/tanmysarker733-svg/tonustudyv2/releases/download/android/Tonu.Study.apk";
-    const TONU_WEB_BUILD = "366";
-    const TONU_ANDROID_LATEST = "2.1.11";
+    const TONU_WEB_BUILD = "367";
+    const TONU_ANDROID_LATEST = "2.1.12";
 
     const isAndroidShell = () => Boolean(window.TonuAndroid);
     const isAndroidBrowser = () => /Android/i.test(navigator.userAgent || "") && !isAndroidShell();
@@ -27974,6 +28020,11 @@
   `;
 
       wizardNode.dataset.currentStep = step;
+      const stepChanged = prevStep !== null && prevStep !== step;
+      wizardNode.classList.toggle("is-step-transitioning", stepChanged && isNativeAnimationEnabled());
+      if (wizardNode.classList.contains("is-step-transitioning")) {
+        window.setTimeout(() => wizardNode.classList.remove("is-step-transitioning"), 380);
+      }
       hydrateComposerSubjectImages(wizardNode);
 
       if (preservedScrollY !== null) {
@@ -28684,7 +28735,7 @@
           composerState.furthestStep = Math.max(composerState.furthestStep || 1, nextStep);
           composerState.customSuffixExpanded = false;
           renderComposerWizard();
-        }, prefersReducedMotion() ? 0 : 360);
+        }, (prefersReducedMotion() || !isNativeAnimationEnabled()) ? 0 : 240);
         return;
       }
 
@@ -30189,7 +30240,7 @@
                 <p>Premium Edition preview shell</p>
                 <a class="settings-update-card" href="https://github.com/tanmysarker733-svg/tonustudyv2/releases/download/android/Tonu.Study.apk" target="_blank" rel="noopener noreferrer" aria-label="Download the latest Android app">
                   ${icon("download", "Update")}
-                  <span><strong>Update to latest version <em>Android v2.1.11 · Web 359</em></strong><small>Android release channel · checks the current GitHub release when you are online</small></span>
+                  <span><strong>Update to latest version <em>Android v2.1.12 · Web 367</em></strong><small>Android release channel · checks the current GitHub release when you are online</small></span>
                   ${icon("external-link", "Open")}
                 </a>
                 <p>Built by Tanmoy Sarker for HSC students who want to track smarter.</p>
