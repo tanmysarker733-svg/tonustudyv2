@@ -24061,10 +24061,16 @@
         top: max(70px, calc(env(safe-area-inset-top) + 58px)) !important;
         right: 10px !important;
         left: 10px !important;
+        bottom: auto !important;
+        height: auto !important;
+        max-height: calc(100dvh - max(92px, calc(env(safe-area-inset-top) + 80px))) !important;
+        align-content: start;
       }
 
       .system-toast {
         width: min(100%, 390px) !important;
+        height: auto !important;
+        align-self: start;
         margin-inline: auto;
         background: #eaf9f1 !important;
         border-color: #83d5ad !important;

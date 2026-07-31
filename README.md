@@ -32,6 +32,10 @@ and are intentionally excluded from GitHub.
 
 ### Web builds
 
+- **Web 369** - Fixed mobile Settings notifications stretching into a full-height
+  overlay. Native Animation updates now use a compact, non-blocking toast that
+  remains usable in both light and dark modes.
+
 - **Web 367** — Normalized Smart Update motion to a calmer web-matched cadence
   and removed document pull-to-refresh competition. The Android host now gives
   the WebView sole ownership of vertical scrolling, so upward swipes inside

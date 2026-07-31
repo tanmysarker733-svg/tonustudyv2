@@ -32,7 +32,7 @@ RELEASE
 - Release tag: android
 - Download URL:
   https://github.com/tanmysarker733-svg/tonustudyv2/releases/download/android/Tonu.Study.apk
-- Latest source release at this handoff: Tonu Study Android v2.1.11 / Web 363
+- Latest source release at this handoff: Tonu Study Android v2.1.12 / Web 369
 
 WEB 363 NOTES
 - Smart Update uses subject icons for Physics, Chemistry, Biology, Higher Math,
