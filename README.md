@@ -32,6 +32,12 @@ and are intentionally excluded from GitHub.
 
 ### Web builds
 
+- **Web 366** — Native Animation now selects the complete web motion profile
+  inside Android: Smart Update restores its smooth step transitions and
+  repositioning, while Paradox Scroll runs only when both Native Animation and
+  Paradox Scroll are enabled. Turning Native Animation off retains the
+  lightweight Android composer path for lower-power devices.
+
 - **Web 365** — Disabled Android's parent refresh gesture so upward scrolling
   stays inside Settings and other nested shells. Smart Update now avoids
   redundant scroll restoration for fixed-value controls and drops Android-only

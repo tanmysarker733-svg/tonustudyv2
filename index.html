@@ -24133,11 +24133,14 @@
       -webkit-overflow-scrolling: touch;
     }
 
-    html.android-shell #chatUpdateComposer {
+    /* Keep the low-cost compositor path only while Native Animation is off.
+       When it is on, Android intentionally follows the normal web motion
+       profile instead of a separate, shortened animation path. */
+    html.android-shell:not(.native-animation) #chatUpdateComposer {
       contain: layout style;
     }
 
-    html.android-shell #chatUpdateComposer :is(
+    html.android-shell:not(.native-animation) #chatUpdateComposer :is(
       .composer-wizard-shell,
       .composer-wizard-header,
       .composer-wizard-footer,
@@ -24154,7 +24157,7 @@
       -webkit-backdrop-filter: none !important;
     }
 
-    html.android-shell #chatUpdateComposer :is(
+    html.android-shell:not(.native-animation) #chatUpdateComposer :is(
       .composer-subject-card,
       .composer-chapter-card,
       .composer-time-card,
@@ -24166,7 +24169,7 @@
       will-change: auto !important;
     }
 
-    html.android-shell #chatUpdateComposer .composer-wizard-body {
+    html.android-shell:not(.native-animation) #chatUpdateComposer .composer-wizard-body {
       content-visibility: auto;
       contain-intrinsic-size: auto 520px;
     }
@@ -24555,7 +24558,7 @@
     let deferredInstallPrompt = null;
     let installManifestUrl = "";
     const TONU_APK_URL = "https://github.com/tanmysarker733-svg/tonustudyv2/releases/download/android/Tonu.Study.apk";
-    const TONU_WEB_BUILD = "363";
+    const TONU_WEB_BUILD = "366";
     const TONU_ANDROID_LATEST = "2.1.11";
 
     const isAndroidShell = () => Boolean(window.TonuAndroid);
@@ -28005,13 +28008,13 @@
         // (the internal chapter step), without pinning the composer header off-screen.
         if (step >= 9) {
           wizardNode.scrollIntoView({
-          behavior: (prefersReducedMotion() || document.documentElement.classList.contains("android-shell")) ? "auto" : "smooth",
+          behavior: (prefersReducedMotion() || !isNativeAnimationEnabled()) ? "auto" : "smooth",
             block: "start"
           });
         } else {
           const activePanel = wizardNode.querySelector(".composer-active-panel");
           (activePanel || wizardNode).scrollIntoView({
-          behavior: (prefersReducedMotion() || document.documentElement.classList.contains("android-shell")) ? "auto" : "smooth",
+          behavior: (prefersReducedMotion() || !isNativeAnimationEnabled()) ? "auto" : "smooth",
             block: "center"
           });
         }
@@ -30102,7 +30105,7 @@
                 ${row("Font Scale", `<input type="range" id="fontScaleRange" min="80" max="165" step="5" value="${userSettings.fontScale || 100}"><span id="fontScaleVal" style="margin-left: 8px; font-size: 0.8rem; min-width: 3ch; display: inline-block;">${userSettings.fontScale || 100}%</span>`, "Adjust overall text size")}
               `)}
               ${group("Motion & Glow", `
-                ${row("Native Animation", checkbox("tgl_native_animation", userSettings.uiConfigs.nativeAnimation !== false), "Smooth feedback on mobile and Android")}
+                ${row("Native Animation", checkbox("tgl_native_animation", userSettings.uiConfigs.nativeAnimation !== false), "Use the full web motion profile on Android and web")}
                 ${row("Paradox Scroll", checkbox("tgl_paradox_motion", userSettings.uiConfigs.paradoxMotion === true))}
                 ${row("Extra Subject Glow", checkbox("tgl_extra_subject_glow", userSettings.uiConfigs.extraSubjectGlow === true), "Adds the richer subject-card glow")}
               `)}
@@ -32233,19 +32236,22 @@
       const lowMemory = Number.isFinite(nav.deviceMemory) && nav.deviceMemory <= 4;
       const constrainedNetwork = nav.connection?.saveData === true ||
         /(^|-)2g$/.test(nav.connection?.effectiveType || "");
-      return Boolean(window.TonuAndroid) || lowCpu || lowMemory || constrainedNetwork;
+      return lowCpu || lowMemory || constrainedNetwork;
     };
+    const isNativeAnimationEnabled = () => (
+      !prefersReducedMotion() && scaffoldState?.userSettings?.uiConfigs?.nativeAnimation !== false
+    );
     const shouldUsePerformanceMode = () => (
-      isLowPowerDevice() || scaffoldState?.userSettings?.uiConfigs?.nativeAnimation === false
+      !isNativeAnimationEnabled()
     );
     const applyPerformanceMode = () => {
       const root = document.documentElement;
       root.classList.toggle("performance-lite", shouldUsePerformanceMode());
-      root.classList.toggle("performance-max", prefersReducedMotion() || isLowPowerDevice());
+      root.classList.toggle("performance-max", prefersReducedMotion());
     };
     const isPerformanceLite = () => document.documentElement.classList.contains("performance-lite");
     const isParadoxMotionEnabled = () => (
-      !prefersReducedMotion() &&
+      isNativeAnimationEnabled() &&
       scaffoldState?.userSettings?.uiConfigs?.paradoxMotion === true
     );
     const applyParadoxMotionState = () => {
