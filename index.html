@@ -34070,6 +34070,9 @@
 
     const refreshAccountSecurityDialog = () => {
       const user = getCurrentAuthUser();
+      const session = readRenderableLoginSession();
+      const canCreateFromLocal = !user && (session?.mode === "skip" || session?.mode === "demo");
+      const fieldsEnabled = !!user || canCreateFromLocal;
       const authMeta = getAuthIdentitySnapshot(user);
       const username = currentLoginUsername(user);
       const list = document.getElementById("securityProviderList");
@@ -34080,12 +34083,40 @@
       if (chips) chips.innerHTML = renderProviderChips(authMeta.providerLabels);
       const title = document.getElementById("securityIdentityTitle");
       const detail = document.getElementById("securityIdentityDetail");
-      if (title && user) title.textContent = user.isAnonymous ? "Temporary secure identity" : username ? `@${username}` : user.displayName || user.email || "Secure Firebase account";
-      if (detail && user) detail.textContent = user.isAnonymous
-        ? "Add username/password or Google to make this profile recoverable."
-        : "Your login methods below protect one synced study profile.";
+      if (title) title.textContent = user
+        ? user.isAnonymous ? "Temporary secure identity" : username ? `@${username}` : user.displayName || user.email || "Secure Firebase account"
+        : canCreateFromLocal ? "Local-only profile" : "Authentication required";
+      if (detail) detail.textContent = user
+        ? user.isAnonymous
+          ? "Add username/password or Google to make this profile recoverable."
+          : "Your login methods below protect one synced study profile."
+        : canCreateFromLocal
+          ? "Create a secure username account without losing the progress saved on this device."
+          : "Sign in again to manage recovery methods.";
+      const usernameInput = document.getElementById("securityUsername");
+      const passwordInput = document.getElementById("securityPassword");
+      const passwordToggle = document.querySelector('#accountSecurityDialog [data-action="security-toggle-password"]');
+      const saveButton = document.querySelector('#accountSecurityDialog [data-action="security-link-email"]');
+      [usernameInput, passwordInput, passwordToggle, saveButton].forEach((control) => {
+        if (!control) return;
+        control.disabled = !fieldsEnabled;
+        if (fieldsEnabled) control.removeAttribute("aria-disabled");
+        else control.setAttribute("aria-disabled", "true");
+      });
+      if (usernameInput && document.activeElement !== usernameInput && !usernameInput.value) {
+        usernameInput.value = username;
+      }
+      const passwordLabel = document.querySelector('#accountSecurityDialog label[for="securityPassword"] > span:first-child');
+      const passwordHelp = document.getElementById("securityPasswordHelp");
+      const hasPasswordProvider = !!passwordProviderEmail(user);
+      if (passwordLabel) passwordLabel.textContent = hasPasswordProvider ? "New password" : "Password";
+      if (passwordHelp) passwordHelp.textContent = hasPasswordProvider
+        ? "Enter a new password to replace the current one."
+        : "Use 6 or more characters. Your password is never displayed or stored by Tonu Study.";
       const saveLabel = document.querySelector('.security-credential-save span:not(.sr-only)');
-      if (saveLabel && user) saveLabel.textContent = passwordProviderEmail(user) ? "Update username & password" : "Set username & password";
+      if (saveLabel) saveLabel.textContent = hasPasswordProvider
+        ? "Update username & password"
+        : canCreateFromLocal ? "Create secure account" : "Set username & password";
       if (window.lucide) window.lucide.createIcons({ attrs: { "stroke-width": 1.8 } });
     };
 
@@ -34384,6 +34415,13 @@
           ensureFirebaseInitialized();
           window.firebase.auth().onAuthStateChanged((user) => {
             const session = readLocalLoginSession();
+            const securityDialog = document.getElementById("accountSecurityDialog");
+            if (securityDialog && !securityDialog.hidden) {
+              refreshAccountSecurityDialog();
+              setSecurityFeedback(user
+                ? "Account ready. You can set or update username and password."
+                : "Firebase session is not active. Sign in again to manage credentials.", user ? "success" : "error");
+            }
             if (session && ["admin", "skip", "demo"].includes(session.mode)) {
               // Explicit local modes stay local even if a remembered Firebase session exists.
               return;

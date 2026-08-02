@@ -11,16 +11,16 @@ instructions are documented in [ANDROID_SETUP.md](ANDROID_SETUP.md).
 
 ## Connectivity and low-end device support
 
-- **Web 372** caches its same-origin shell after the first successful online
+- **Web 374** caches its same-origin shell after the first successful online
   visit. Study data continues to save in browser storage while offline.
-- **Web 372** pauses chat, authentication, cloud restore, and cloud upload
+- **Web 374** pauses chat, authentication, cloud restore, and cloud upload
   while offline and
   resume after connectivity returns.
 - **Android v2.1.12** loads the deployed web app directly, so browser and APK use the
   same interface and receive the same feature updates. Without connectivity it
   shows a clear retry warning; pull-to-refresh is intentionally disabled so
   nested settings and composer scrolling cannot reload the page by accident.
-- **Web 372 / Android v2.1.12** retain practical low-cost rendering defaults,
+- **Web 374 / Android v2.1.12** retain practical low-cost rendering defaults,
   with optional Native Animation and Paradox Scroll controls.
 
 ## Version history
@@ -30,6 +30,14 @@ The deployed `index.html` is the public web source. Numbered
 and are intentionally excluded from GitHub.
 
 ### Web builds
+
+- **Web 374** - Fixed the Username & Password controls remaining disabled after
+  delayed Firebase Auth restoration. The Security dialog now synchronizes its
+  fields, password toggle, action button, labels, and feedback whenever the
+  live auth/provider state changes, including after unlinking a provider.
+
+- **Web 373** - Fixed the Account Settings close control overlapping the
+  Security action and kept its responsive top-right placement in both themes.
 
 - **Web 372** - Rebuilt Account Security into a compact, responsive credential
   workspace with one reliable scroll surface, clearer linked/unavailable states,
