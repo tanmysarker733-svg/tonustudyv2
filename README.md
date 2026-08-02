@@ -11,16 +11,16 @@ instructions are documented in [ANDROID_SETUP.md](ANDROID_SETUP.md).
 
 ## Connectivity and low-end device support
 
-- **Web 374** caches its same-origin shell after the first successful online
+- **Web 375** caches its same-origin shell after the first successful online
   visit. Study data continues to save in browser storage while offline.
-- **Web 374** pauses chat, authentication, cloud restore, and cloud upload
+- **Web 375** pauses chat, authentication, cloud restore, and cloud upload
   while offline and
   resume after connectivity returns.
 - **Android v2.1.12** loads the deployed web app directly, so browser and APK use the
   same interface and receive the same feature updates. Without connectivity it
   shows a clear retry warning; pull-to-refresh is intentionally disabled so
   nested settings and composer scrolling cannot reload the page by accident.
-- **Web 374 / Android v2.1.12** retain practical low-cost rendering defaults,
+- **Web 375 / Android v2.1.12** retain practical low-cost rendering defaults,
   with optional Native Animation and Paradox Scroll controls.
 
 ## Version history
@@ -30,6 +30,13 @@ The deployed `index.html` is the public web source. Numbered
 and are intentionally excluded from GitHub.
 
 ### Web builds
+
+- **Web 375** - Added one reusable read-only Account viewer for community
+  profiles. Public Chatbox posts now expose a compact account icon beside the
+  visibility badge; Spectate rows provide labelled Spectate and Account actions.
+  Visible UIDs and the redundant Spectate instruction row were removed, Refresh
+  moved beside the red close control, and profile/message details remain strictly
+  non-editable.
 
 - **Web 374** - Fixed the Username & Password controls remaining disabled after
   delayed Firebase Auth restoration. The Security dialog now synchronizes its

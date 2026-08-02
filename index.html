@@ -25187,6 +25187,139 @@
         transition-duration: .01ms !important;
       }
     }
+
+    /* v375: one safe read-only account flow for Spectate and Chatbox. */
+    .chat-author-account {
+      display: inline-grid;
+      place-items: center;
+      width: 25px;
+      height: 25px;
+      flex: 0 0 25px;
+      padding: 0;
+      border: 1px solid rgba(125, 211, 252, .42);
+      border-radius: 8px;
+      color: #bae6fd;
+      background: rgba(14, 116, 144, .18);
+      cursor: pointer;
+    }
+
+    .chat-author-account:hover,
+    .chat-author-account:focus-visible {
+      color: #fff;
+      border-color: #38bdf8;
+      background: rgba(14, 165, 233, .32);
+      outline: none;
+    }
+
+    .chat-author-account svg { width: 14px; height: 14px; }
+
+    .spectate-dialog-tools,
+    .spectate-user-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    #spectateDialog .spectate-user-row {
+      grid-template-columns: minmax(130px, .8fr) minmax(180px, 1.2fr) auto;
+    }
+
+    .spectate-user-action {
+      min-width: 108px;
+      justify-content: center;
+    }
+
+    .spectate-user-action--view {
+      color: #e0f2fe;
+      border-color: rgba(56, 189, 248, .46);
+      background: rgba(14, 165, 233, .18);
+    }
+
+    .readonly-account-dialog__card {
+      width: min(920px, calc(100vw - 28px));
+      max-height: calc(100dvh - 28px);
+      overflow: hidden;
+    }
+
+    .readonly-account-body {
+      min-height: 0;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      touch-action: pan-y;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .readonly-account-summary {
+      display: grid;
+      gap: 14px;
+    }
+
+    .readonly-account-identity {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 12px;
+      padding: 14px;
+      border: 1px solid rgba(56, 189, 248, .28);
+      border-radius: 14px;
+      background: rgba(8, 47, 73, .35);
+    }
+
+    .readonly-account-avatar {
+      display: grid;
+      place-items: center;
+      width: 42px;
+      height: 42px;
+      color: #7dd3fc;
+      border-radius: 12px;
+      background: rgba(14, 116, 144, .34);
+    }
+
+    .readonly-account-identity > div { min-width: 0; display: grid; gap: 3px; }
+    .readonly-account-identity strong { color: #f8fafc; font-size: 1rem; }
+    .readonly-account-identity > div span { overflow: hidden; color: #bae6fd; text-overflow: ellipsis; white-space: nowrap; }
+
+    .readonly-account-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 9px;
+    }
+
+    .readonly-account-field {
+      display: grid;
+      gap: 4px;
+      min-width: 0;
+      padding: 11px 12px;
+      border: 1px solid rgba(148, 163, 184, .2);
+      border-radius: 11px;
+      background: rgba(15, 23, 42, .58);
+    }
+
+    .readonly-account-field span { color: #94a3b8; font-size: .72rem; font-weight: 800; text-transform: uppercase; }
+    .readonly-account-field strong { overflow-wrap: anywhere; color: #e2e8f0; font-size: .88rem; }
+    .readonly-account-feed { min-height: 0; padding: 12px; border: 1px solid rgba(148, 163, 184, .2); border-radius: 14px; background: rgba(15, 23, 42, .38); }
+    .readonly-account-feed .account-feed { max-height: min(34vh, 320px); overflow-y: auto; overscroll-behavior: contain; }
+
+    html[data-theme="light"] .chat-author-account { color: #075985; border-color: #7dd3fc; background: #e0f2fe; }
+    html[data-theme="light"] .readonly-account-identity { border-color: #bae6fd; background: #f0f9ff; }
+    html[data-theme="light"] .readonly-account-avatar { color: #0369a1; background: #e0f2fe; }
+    html[data-theme="light"] .readonly-account-identity strong { color: #0f172a; }
+    html[data-theme="light"] .readonly-account-identity > div span { color: #475569; }
+    html[data-theme="light"] .readonly-account-field,
+    html[data-theme="light"] .readonly-account-feed { border-color: #cbd5e1; background: #f8fafc; }
+    html[data-theme="light"] .readonly-account-field span { color: #64748b; }
+    html[data-theme="light"] .readonly-account-field strong { color: #0f172a; }
+
+    @media (max-width: 640px) {
+      #spectateDialog .spectate-user-row { grid-template-columns: minmax(0, 1fr) !important; gap: 7px; }
+      .spectate-user-actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); width: 100%; }
+      .spectate-user-action { min-width: 0; min-height: 38px; }
+      .readonly-account-dialog__card { width: calc(100vw - 16px); max-height: calc(100dvh - 16px); }
+      .readonly-account-grid { grid-template-columns: 1fr; }
+      .readonly-account-identity { grid-template-columns: auto minmax(0, 1fr); }
+      .readonly-account-identity > .chat-visibility-pill { grid-column: 1 / -1; justify-self: start; }
+      .chat-item__meta { row-gap: 5px !important; }
+    }
   </style>
 </head>
 
@@ -25578,7 +25711,7 @@
     let deferredInstallPrompt = null;
     let installManifestUrl = "";
     const TONU_APK_URL = "https://github.com/tanmysarker733-svg/tonustudyv2/releases/download/android/Tonu.Study.apk";
-    const TONU_WEB_BUILD = "372";
+    const TONU_WEB_BUILD = "375";
     const TONU_ANDROID_LATEST = "2.1.12";
 
     const isAndroidShell = () => Boolean(window.TonuAndroid);
@@ -26288,6 +26421,64 @@
     const getAccountMessages = () =>
       chatState.messages.filter((message) => message.authorId === getAuthUid());
 
+    let readOnlyAccountTarget = null;
+
+    const getMessagesForAccountUid = (uid = "") =>
+      chatState.messages.filter((message) => message.authorId === uid);
+
+    const readOnlyAccountField = (label, value) => {
+      const cleanValue = String(value || "").trim() || "Not provided";
+      return `
+        <div class="readonly-account-field">
+          <span>${escapeHtml(label)}</span>
+          <strong>${escapeHtml(cleanValue)}</strong>
+        </div>
+      `;
+    };
+
+    const renderReadOnlyAccountBody = (user) => {
+      const settings = user?.payload?.userSettings || {};
+      const messages = getMessagesForAccountUid(user?.uid || "");
+      return `
+        <div class="readonly-account-summary">
+          <div class="readonly-account-identity">
+            <span class="readonly-account-avatar">${icon("user-round", "Account")}</span>
+            <div>
+              <strong>${escapeHtml(user?.name || "Student")}</strong>
+              <span>${escapeHtml(user?.email || "No email saved")}</span>
+            </div>
+            <span class="chat-visibility-pill">Read only</span>
+          </div>
+          <div class="readonly-account-grid">
+            ${readOnlyAccountField("Name", settings.customName || user?.name)}
+            ${readOnlyAccountField("College", settings.collegeName)}
+            ${readOnlyAccountField("SSC batch", settings.sscBatch)}
+            ${readOnlyAccountField("SSC roll", settings.sscRoll)}
+            ${readOnlyAccountField("SSC registration", settings.sscReg)}
+            ${readOnlyAccountField("HSC batch", settings.hscBatch)}
+            ${readOnlyAccountField("HSC roll", settings.hscRoll)}
+            ${readOnlyAccountField("HSC registration", settings.hscReg)}
+          </div>
+          <section class="readonly-account-feed">
+            <div class="account-card__head">
+              <div><strong>Message feed</strong><span>${messages.length} post${messages.length === 1 ? "" : "s"}</span></div>
+            </div>
+            <div class="account-feed">
+              ${messages.length ? messages.map((message) => `
+                <article class="account-feed-item">
+                  <div class="account-feed-item__meta">
+                    <span>${escapeHtml(formatChatTime(message))}</span>
+                    <span class="${message.visibility === "private" ? "chat-visibility-pill chat-visibility-pill--private" : "chat-visibility-pill"}">${escapeHtml(message.visibility || "public")}</span>
+                  </div>
+                  <div class="account-feed-item__body">${escapeChatBody(message.text)}</div>
+                </article>
+              `).join("") : `<div class="account-feed-empty">No public messages from this account yet.</div>`}
+            </div>
+          </section>
+        </div>
+      `;
+    };
+
     const renderAccountMessageFeed = () => {
       const feed = document.getElementById("accountMessageFeed");
       const count = document.getElementById("accountMessageCount");
@@ -26417,6 +26608,7 @@
               <div class="chat-item__meta" style="display: inline-flex; align-items: center; gap: 6px; margin: 0;">
                 <strong>${escapeHtml(message.authorName || "Student")}</strong>
                 <span class="${visibilityClass}">${escapeHtml(message.visibility || "public")}</span>
+                ${message.visibility === "private" ? "" : `<button class="chat-author-account" type="button" data-action="open-readonly-account" data-uid="${escapeHtml(message.authorId || "")}" data-name="${escapeHtml(message.authorName || "Student")}" aria-label="View ${escapeHtml(message.authorName || "Student")} account" title="View account">${icon("contact-round", "Account")}</button>`}
                 <span>${escapeHtml(formatChatTime(message))}</span>
               </div>
             </div>
@@ -26567,6 +26759,7 @@
               <div class="chat-item__meta" style="display: inline-flex; align-items: center; gap: 6px; margin: 0;">
                 <strong>${escapeHtml(message.authorName || "Student")}</strong>
                 <span class="${visibilityClass}">${escapeHtml(message.visibility || "public")}</span>
+                ${message.visibility === "private" ? "" : `<button class="chat-author-account" type="button" data-action="open-readonly-account" data-uid="${escapeHtml(message.authorId || "")}" data-name="${escapeHtml(message.authorName || "Student")}" aria-label="View ${escapeHtml(message.authorName || "Student")} account" title="View account">${icon("contact-round", "Account")}</button>`}
                 <span>${escapeHtml(formatChatTime(message))}</span>
               </div>
             </div>
@@ -31999,6 +32192,27 @@
   </div>
 `;
 
+    const renderReadOnlyAccountDialog = () => `
+  <div class="account-dialog readonly-account-dialog" id="readOnlyAccountDialog" hidden>
+    <div class="account-dialog__backdrop" data-action="close-readonly-account" aria-hidden="true"></div>
+    <section class="account-dialog__card readonly-account-dialog__card" role="dialog" aria-modal="true" aria-labelledby="readOnlyAccountTitle">
+      <div class="account-dialog__head">
+        <div>
+          <p class="eyebrow">Community profile</p>
+          <h3 id="readOnlyAccountTitle">${icon("contact-round", "Account")} <span>Account</span></h3>
+          <span>Profile and public message history. This view cannot change account data.</span>
+        </div>
+        <button class="btn-small btn-small--icon account-dialog-close" type="button" data-action="close-readonly-account" aria-label="Close read-only account">
+          ${icon("x", "Close")}
+        </button>
+      </div>
+      <div id="readOnlyAccountBody" class="readonly-account-body">
+        <div class="spectate-empty">Loading account...</div>
+      </div>
+    </section>
+  </div>
+`;
+
     const backupDateLabel = (value) => {
       if (!value) return "Just now";
       try {
@@ -32602,12 +32816,6 @@
     const refreshSpectateDialogBody = () => {
       const list = document.getElementById("spectateUserList");
       if (list) list.innerHTML = renderSpectateUserRows();
-      const status = document.getElementById("spectateStatusText");
-      if (status) {
-        status.textContent = spectateState.active
-          ? `Currently viewing ${spectateLabel()}`
-          : "Choose a user to inspect their dashboard snapshot.";
-      }
       if (window.lucide) window.lucide.createIcons({ attrs: { "stroke-width": 1.8 } });
     };
 
@@ -32882,9 +33090,7 @@
 
     const spectateLabel = () => {
       if (!spectateState.active) return "";
-      const name = spectateState.targetName || "Target user";
-      const uid = spectateState.targetUid || "unknown";
-      return `${name} (${uid})`;
+      return spectateState.targetName || spectateState.targetEmail || "Selected user";
     };
     const spectateDisplayName = () => spectateState.targetName || "Selected user";
 
@@ -32900,12 +33106,16 @@
       }
       return spectateState.users.map((user) => `
     <div class="spectate-user-row">
-      <span class="spectate-uid" title="${escapeHtml(user.uid)}">${escapeHtml(user.uid)}</span>
       <strong class="spectate-user-name" title="${escapeHtml(user.name)}">${escapeHtml(user.name)}</strong>
       <span class="spectate-user-email" title="${escapeHtml(user.email)}">${escapeHtml(user.email)}</span>
-      <button class="btn-small btn-small--icon" type="button" data-action="spectate-inspect-user" data-uid="${escapeHtml(user.uid)}" title="Inspect ${escapeHtml(user.name)}" aria-label="Inspect ${escapeHtml(user.name)}">
-        ${icon("eye", "Inspect")}
-      </button>
+      <div class="spectate-user-actions">
+        <button class="btn-small spectate-user-action spectate-user-action--view" type="button" data-action="spectate-inspect-user" data-uid="${escapeHtml(user.uid)}" title="Spectate ${escapeHtml(user.name)}">
+          ${icon("eye", "Spectate")} <span>Spectate</span>
+        </button>
+        <button class="btn-small spectate-user-action" type="button" data-action="open-readonly-account" data-uid="${escapeHtml(user.uid)}" data-name="${escapeHtml(user.name)}" title="View ${escapeHtml(user.name)} account">
+          ${icon("contact-round", "Account")} <span>Account</span>
+        </button>
+      </div>
     </div>
   `).join("");
     };
@@ -32918,20 +33128,15 @@
         <div>
           <p class="eyebrow">Community users</p>
           <h3 id="spectateDialogTitle">${icon("eye", "Spectate")} <span>Spectate Users</span></h3>
-          <span>Read-only inspection for saved Study OS cloud snapshots. UID is shown first in each row.</span>
+          <span>Read-only inspection for saved Study OS cloud snapshots.</span>
         </div>
-        <button class="btn-small btn-small--icon" type="button" data-action="close-spectate-dialog" aria-label="Close spectate users">
-          ${icon("x", "Close")}
-        </button>
+        <div class="spectate-dialog-tools">
+          <button class="btn-small btn-small--icon" type="button" data-action="spectate-refresh-users" aria-label="Refresh users" title="Refresh users">${icon("refresh-cw", "Refresh")}</button>
+          <button class="btn-small btn-small--icon account-dialog-close" type="button" data-action="close-spectate-dialog" aria-label="Close spectate users">${icon("x", "Close")}</button>
+        </div>
       </div>
       <div class="spectate-shell">
-        <div class="spectate-status">
-          <span id="spectateStatusText">${spectateState.active ? `Currently viewing ${escapeHtml(spectateLabel())}` : "Choose a user to inspect their dashboard snapshot."}</span>
-          <div class="backup-actions" style="margin-top:0;">
-            <button class="btn-small" type="button" data-action="spectate-refresh-users">${icon("refresh-cw", "Refresh")} <span>Refresh</span></button>
-            ${spectateState.active ? `<button class="btn-small btn-small--primary" type="button" data-action="spectate-exit">${icon("log-out", "Exit")} <span>Exit View</span></button>` : ""}
-          </div>
-        </div>
+        ${spectateState.active ? `<div class="spectate-status"><span>Currently viewing ${escapeHtml(spectateLabel())}</span><button class="btn-small btn-small--primary" type="button" data-action="spectate-exit">${icon("log-out", "Exit")} <span>Exit View</span></button></div>` : ""}
         <div class="spectate-user-list" id="spectateUserList">
           ${renderSpectateUserRows()}
         </div>
@@ -33139,6 +33344,7 @@
     </div>
     <div class="backup-banner" id="backupBanner" hidden></div>
     ${renderAccountDialog(state)}
+    ${renderReadOnlyAccountDialog()}
     ${renderAccountSecurityDialog()}
     ${renderSpectateDialog(state)}
     ${renderSettingsDialog(state)}
@@ -36502,6 +36708,32 @@
 
     const openAccountDialog = () => openDialog("accountDialog");
     const closeAccountDialog = () => closeDialog("accountDialog");
+    const closeReadOnlyAccountDialog = () => {
+      readOnlyAccountTarget = null;
+      closeDialog("readOnlyAccountDialog");
+    };
+    const openReadOnlyAccountForUid = async (uid = "", fallbackName = "Student") => {
+      if (!uid) return;
+      let user = spectateState.users.find((item) => item.uid === uid);
+      const activeSession = readRenderableLoginSession();
+      if (!user && uid === getAuthUid() && !isSpectateReadOnly()) {
+        user = {
+          uid,
+          name: scaffoldState.userSettings.customName || fallbackName,
+          email: activeSession?.email || "No email saved",
+          payload: { userSettings: cloneSpectateData(scaffoldState.userSettings, {}) },
+        };
+      }
+      if (!user && !spectateState.loading) {
+        await loadSpectateUsers();
+        user = spectateState.users.find((item) => item.uid === uid);
+      }
+      readOnlyAccountTarget = user || { uid, name: fallbackName, email: "No email saved", payload: null };
+      const body = document.getElementById("readOnlyAccountBody");
+      if (body) body.innerHTML = renderReadOnlyAccountBody(readOnlyAccountTarget);
+      openDialog("readOnlyAccountDialog");
+      if (window.lucide) window.lucide.createIcons({ attrs: { "stroke-width": 1.8 } });
+    };
     const openAccountSecurityDialog = () => {
       openDialog("accountSecurityDialog");
       refreshAccountSecurityDialog();
@@ -36758,6 +36990,15 @@
       }
       if (action === "close-install-guide") {
         closeInstallGuide();
+        return;
+      }
+      if (action === "open-readonly-account") {
+        e.preventDefault();
+        openReadOnlyAccountForUid(target?.dataset?.uid || "", target?.dataset?.name || "Student");
+        return;
+      }
+      if (action === "close-readonly-account") {
+        closeReadOnlyAccountDialog();
         return;
       }
       if (isSpectateReadOnly() && isReadOnlyBlockedAction(action)) {
