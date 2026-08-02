@@ -24005,6 +24005,15 @@
       animation-play-state: running !important;
     }
 
+    /* A toggle can be changed after the page is already visible.  This brief
+       class restarts only the authored hero/composer motion, not every card. */
+    html.native-animation.native-animation-refresh :is(
+      .hero-strip__content.reveal-ready,
+      #chatUpdateComposer.reveal-ready
+    ) {
+      animation: none !important;
+    }
+
     .settings-group input[type="range"] {
       transition: none !important;
     }
@@ -25241,6 +25250,11 @@
       overflow: hidden;
     }
 
+    /* Account is a separate dialog from Spectate, so it must never open
+       underneath the user list on compact viewports. */
+    #readOnlyAccountDialog { z-index: 1260; }
+    #readOnlyAccountDialog .readonly-account-dialog__card { overscroll-behavior: contain; }
+
     .readonly-account-body {
       min-height: 0;
       overflow-y: auto;
@@ -25711,7 +25725,7 @@
     let deferredInstallPrompt = null;
     let installManifestUrl = "";
     const TONU_APK_URL = "https://github.com/tanmysarker733-svg/tonustudyv2/releases/download/android/Tonu.Study.apk";
-    const TONU_WEB_BUILD = "375";
+    const TONU_WEB_BUILD = "376";
     const TONU_ANDROID_LATEST = "2.1.12";
 
     const isAndroidShell = () => Boolean(window.TonuAndroid);
@@ -26422,6 +26436,7 @@
       chatState.messages.filter((message) => message.authorId === getAuthUid());
 
     let readOnlyAccountTarget = null;
+    let readOnlyAccountReturn = null;
 
     const getMessagesForAccountUid = (uid = "") =>
       chatState.messages.filter((message) => message.authorId === uid);
@@ -33660,6 +33675,30 @@
       revealNodes.forEach((node) => revealObserver.observe(node));
     };
 
+    // Settings can turn Native Animation on after the page has already mounted.
+    // Reset only the observable state, then let the existing observers rebuild it;
+    // this keeps the web and Android paths identical without a page reload.
+    const refreshNativeAnimationMotion = () => {
+      const nativeEnabled = scaffoldState?.userSettings?.uiConfigs?.nativeAnimation !== false && !prefersReducedMotion();
+      const revealNodes = [...document.querySelectorAll(".reveal-ready")];
+      const paradoxNodes = [...document.querySelectorAll(".paradox-ready")];
+      if (!nativeEnabled) {
+        attachParadoxMotion();
+        attachScrollReveal();
+        return;
+      }
+      revealNodes.forEach((node) => node.classList.remove("is-visible"));
+      paradoxNodes.forEach((node) => node.classList.remove("is-paradox-visible"));
+      document.documentElement.classList.add("native-animation-refresh");
+      // Force the browser to commit the cleared state before the observers reveal it.
+      void document.documentElement.offsetWidth;
+      requestAnimationFrame(() => {
+        attachParadoxMotion();
+        attachScrollReveal();
+        requestAnimationFrame(() => document.documentElement.classList.remove("native-animation-refresh"));
+      });
+    };
+
     let scrollNavCleanup = null;
 
     const attachScrollNav = () => {
@@ -36709,11 +36748,28 @@
     const openAccountDialog = () => openDialog("accountDialog");
     const closeAccountDialog = () => closeDialog("accountDialog");
     const closeReadOnlyAccountDialog = () => {
+      const returnState = readOnlyAccountReturn;
       readOnlyAccountTarget = null;
+      readOnlyAccountReturn = null;
       closeDialog("readOnlyAccountDialog");
+      if (!returnState?.spectateOpen) return;
+      openDialog("spectateDialog");
+      requestAnimationFrame(() => {
+        const list = document.querySelector("#spectateDialog .spectate-users");
+        if (list) list.scrollTop = returnState.scrollTop || 0;
+      });
     };
     const openReadOnlyAccountForUid = async (uid = "", fallbackName = "Student") => {
       if (!uid) return;
+      const spectateDialog = document.getElementById("spectateDialog");
+      const spectateList = spectateDialog?.querySelector(".spectate-users");
+      const spectateOpen = Boolean(spectateDialog && !spectateDialog.hidden);
+      if (spectateOpen) {
+        readOnlyAccountReturn = { spectateOpen: true, scrollTop: spectateList?.scrollTop || 0 };
+        closeDialog("spectateDialog");
+      } else {
+        readOnlyAccountReturn = null;
+      }
       let user = spectateState.users.find((item) => item.uid === uid);
       const activeSession = readRenderableLoginSession();
       if (!user && uid === getAuthUid() && !isSpectateReadOnly()) {
@@ -36724,14 +36780,19 @@
           payload: { userSettings: cloneSpectateData(scaffoldState.userSettings, {}) },
         };
       }
+      // Open immediately from the list. A slower cloud refresh must never make
+      // the Account action feel conditional on first pressing Spectate.
+      readOnlyAccountTarget = user || { uid, name: fallbackName, email: "Loading account…", payload: null };
+      const body = document.getElementById("readOnlyAccountBody");
+      if (body) body.innerHTML = renderReadOnlyAccountBody(readOnlyAccountTarget);
+      openDialog("readOnlyAccountDialog");
+      if (window.lucide) window.lucide.createIcons({ attrs: { "stroke-width": 1.8 } });
       if (!user && !spectateState.loading) {
         await loadSpectateUsers();
         user = spectateState.users.find((item) => item.uid === uid);
       }
       readOnlyAccountTarget = user || { uid, name: fallbackName, email: "No email saved", payload: null };
-      const body = document.getElementById("readOnlyAccountBody");
       if (body) body.innerHTML = renderReadOnlyAccountBody(readOnlyAccountTarget);
-      openDialog("readOnlyAccountDialog");
       if (window.lucide) window.lucide.createIcons({ attrs: { "stroke-width": 1.8 } });
     };
     const openAccountSecurityDialog = () => {
@@ -37886,8 +37947,7 @@
         saveUserSettings();
         applyUserThemeSettings();
         applyPerformanceMode();
-        attachParadoxMotion();
-        attachScrollReveal();
+        refreshNativeAnimationMotion();
         document.querySelector(".project-banner")?.toggleAttribute(
           "hidden",
           scaffoldState.userSettings.uiConfigs.showProjectBanner === false

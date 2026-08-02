@@ -11,16 +11,16 @@ instructions are documented in [ANDROID_SETUP.md](ANDROID_SETUP.md).
 
 ## Connectivity and low-end device support
 
-- **Web 375** caches its same-origin shell after the first successful online
+- **Web 376** caches its same-origin shell after the first successful online
   visit. Study data continues to save in browser storage while offline.
-- **Web 375** pauses chat, authentication, cloud restore, and cloud upload
+- **Web 376** pauses chat, authentication, cloud restore, and cloud upload
   while offline and
   resume after connectivity returns.
 - **Android v2.1.12** loads the deployed web app directly, so browser and APK use the
   same interface and receive the same feature updates. Without connectivity it
   shows a clear retry warning; pull-to-refresh is intentionally disabled so
   nested settings and composer scrolling cannot reload the page by accident.
-- **Web 375 / Android v2.1.12** retain practical low-cost rendering defaults,
+- **Web 376 / Android v2.1.12** retain practical low-cost rendering defaults,
   with optional Native Animation and Paradox Scroll controls.
 
 ## Version history
@@ -30,6 +30,12 @@ The deployed `index.html` is the public web source. Numbered
 and are intentionally excluded from GitHub.
 
 ### Web builds
+
+- **Web 376** - Made the community Account action fully independent from
+  Spectate: it opens immediately, stays above the user list, keeps one safe
+  scroll surface, and returns to the prior list position when closed. Native
+  Animation now rebuilds the existing reveal/paradox observers after its toggle
+  changes, so the enabled state has a visible effect without reloading the page.
 
 - **Web 375** - Added one reusable read-only Account viewer for community
   profiles. Public Chatbox posts now expose a compact account icon beside the

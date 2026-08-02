@@ -1,5 +1,5 @@
 TONU STUDY - PROJECT WORKFLOW AND HANDOFF
-Updated: 2026-08-02 | Current web build: 375
+Updated: 2026-08-02 | Current web build: 376
 
 PURPOSE
 This is the operational handoff for the next AI/developer. Read this before editing.
@@ -16,7 +16,7 @@ PROJECT MAP
 - Historical numbered HTML mirror:
   E:\! Entertainment\! Editing Partition\Passive Farhan and Blog\Study Web\Version 2
 - Canonical deployed file in this repository: index.html
-- Current local numbered source: hsc-study-os__375_.html
+- Current local numbered source: hsc-study-os__376_.html
 
 NON-NEGOTIABLE N+1 RULE
 1. Find the highest hsc-study-os__NNN_.html in the Version 2 mirror.
@@ -66,19 +66,21 @@ DATA AND AUTH BOUNDARIES
 - Username/password linking uses a Firebase Auth alias for the current Firebase UID.
 - Firebase configuration/rules are in firestore.rules, firebase.json, and .firebaserc.
 
-CURRENT WEB 375 CHANGESET
-- Commit: 439dabe Add read-only community account viewer
-- Chat messages with PUBLIC visibility show a compact account icon beside PUBLIC.
-- That icon opens the author's read-only community account view.
-- Spectate rows now hide raw UID and show display name/username plus email.
-- Spectate has clear Spectate and Account actions. Account opens the same read-only
-  profile viewer with no Security action and no ability to edit/write data.
-- Spectate header has Refresh next to the red Close control; redundant selection copy
-  was removed.
-- index.html and hsc-study-os__375_.html were SHA-256 identical when committed.
-- Live Vercel response was verified for TONU_WEB_BUILD=375 and the account-view code.
+CURRENT WEB 376 CHANGESET
+- Spectate and Account are intentionally independent. Account opens its read-only
+  profile immediately, even before a background user refresh completes; it is not
+  gated by a preceding Spectate action.
+- Opening Account closes the list rather than stacking below it. Closing the
+  read-only profile returns to the same Spectate list and restores its scroll position.
+- Native Animation changes are applied at runtime: reveal/paradox visibility is
+  reset and rebuilt through the existing observers, so enabling it visibly starts
+  the normal hero/composer/sparkle motion without a reload.
+- The read-only account dialog uses a higher overlay layer and a contained scroll
+  surface for mobile and Android WebView.
+- Before commit, mirror hsc-study-os__376_.html to index.html and verify equal hashes.
 
 RECENT WEB HISTORY
+- Web 375: added one reusable read-only Account viewer for community profiles.
 - Web 374: account security rechecks Firebase auth after delayed restore so password
   controls do not stay disabled after Google/email identity becomes available.
 - Web 373: account close control remains top-right and avoids Security-button overlap.
@@ -125,6 +127,6 @@ USEFUL COMMANDS (PowerShell, run from repository root)
 
 HANDOFF STATUS AT LAST UPDATE
 - Git main last verified commit: 439dabe.
-- Production web last verified build: 375.
+- Production web last verified build: 376 after the matching push and live check.
 - There may be an untracked build-artifacts\ folder. Preserve it.
-- The next change must start at Web 376 using the n+1 rule.
+- The next change must start at Web 377 using the n+1 rule.
