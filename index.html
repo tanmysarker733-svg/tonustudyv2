@@ -24243,6 +24243,377 @@
       }
     }
   </style>
+  <style id="v370-mobile-motion-slider-polish">
+    /* One motion master: lightweight by default on compact/touch screens, with
+       the full hero/composer treatment restored only when Native Animation is on. */
+    html.native-animation-off :is(
+      #chatUpdateComposer,
+      .chat-compose,
+      .hero-strip,
+      .footer-sparkle-action
+    ) :is(button, .btn-small)::before,
+    html.native-animation-off :is(
+      #chatUpdateComposer,
+      .chat-compose,
+      .hero-strip,
+      .footer-sparkle-action
+    ) :is(button, .btn-small)::after {
+      animation: none !important;
+      opacity: 0 !important;
+    }
+
+    html.native-animation-off :is(
+      .hero-strip__content,
+      .hero-strip__content *,
+      #chatUpdateComposer.is-step-transitioning .composer-wizard-body > *,
+      #chatUpdateComposer .composer-step-tab,
+      #chatUpdateComposer .composer-active-panel
+    ) {
+      animation: none !important;
+      transition-duration: 0s !important;
+    }
+
+    html.native-animation-off .reveal-ready,
+    html.native-animation-off .reveal-ready.is-visible {
+      opacity: 1 !important;
+      transform: none !important;
+      transition: none !important;
+    }
+
+    .ch-track__fill {
+      transition: none !important;
+    }
+
+    @media (pointer: coarse), (max-width: 820px) {
+      .ch-slider::-webkit-slider-runnable-track {
+        border-color: rgba(148, 163, 184, .38) !important;
+        background: linear-gradient(
+          90deg,
+          var(--slider-color) 0 var(--slider-pct),
+          #718297 var(--slider-pct) 100%
+        ) !important;
+        box-shadow: none !important;
+      }
+
+      .ch-slider::-moz-range-track {
+        border-color: rgba(148, 163, 184, .38) !important;
+        background: #718297 !important;
+        box-shadow: none !important;
+      }
+
+      .ch-slider::-moz-range-progress {
+        background: var(--slider-color) !important;
+      }
+
+      .ch-slider::-webkit-slider-thumb,
+      .ch-slider::-moz-range-thumb {
+        box-shadow: 0 2px 5px rgba(2, 6, 23, .24) !important;
+      }
+    }
+
+    html:not([data-theme="light"]) .chapter-quick-dialog__card {
+      background: #10243a !important;
+    }
+
+    html:not([data-theme="light"]) .chapter-quick-dialog__nav {
+      background: #132a43 !important;
+    }
+
+    html:not([data-theme="light"]) .chapter-quick-dialog__body > .ch-plate,
+    html:not([data-theme="light"]) .chapter-quick-dialog__body .ch-plate__inner {
+      background: #17314d !important;
+    }
+
+    html:not([data-theme="light"]) .chapter-quick-dialog__body :is(
+      .ch-name,
+      .ch-track-card,
+      .ch-priority
+    ) {
+      background-color: #1b3857 !important;
+    }
+
+    @media (max-width: 380px) {
+      #loginGate .login-primary-row {
+        grid-template-columns: minmax(0, .92fr) minmax(0, 1.08fr) !important;
+        gap: 6px !important;
+      }
+
+      #loginGate .login-primary-row :is(.login-submit, .login-google) {
+        min-width: 0 !important;
+        gap: 4px !important;
+        padding-inline: 6px !important;
+        font-size: 11px !important;
+      }
+
+      #loginGate .login-primary-row .login-google > span:not(.login-google-mark) {
+        min-width: 0 !important;
+        overflow: hidden !important;
+        font-size: 11px !important;
+        line-height: 1.1 !important;
+        text-overflow: ellipsis !important;
+        white-space: nowrap !important;
+      }
+
+      #chat .chat-compose__footer-actions {
+        grid-template-columns: minmax(0, 1.18fr) minmax(0, .82fr) !important;
+        gap: 6px !important;
+      }
+
+      #chat .chat-compose__footer-actions > .btn-small {
+        min-width: 0 !important;
+        padding-inline: 6px !important;
+      }
+
+      #chat .chat-compose__footer-actions > .btn-small > span {
+        min-width: 0 !important;
+        overflow: hidden !important;
+        font-size: .7rem !important;
+        text-overflow: ellipsis !important;
+        white-space: nowrap !important;
+      }
+    }
+  </style>
+  <style id="v371-account-security-responsive-polish">
+    /* Compact, stable feedback: notices never become a modal-sized layer. */
+    .system-toast-stack {
+      width: min(324px, calc(100vw - 20px)) !important;
+      max-width: 324px !important;
+      gap: 7px !important;
+      pointer-events: none;
+    }
+
+    .system-toast {
+      grid-template-columns: 30px minmax(0, 1fr) !important;
+      width: 100% !important;
+      min-height: 0 !important;
+      max-height: 108px !important;
+      padding: 8px 10px !important;
+      gap: 8px !important;
+      border-radius: 12px !important;
+      overflow: hidden !important;
+      pointer-events: auto;
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+    }
+
+    .system-toast__icon {
+      width: 30px !important;
+      height: 30px !important;
+      border-radius: 9px !important;
+    }
+
+    .system-toast strong {
+      font-size: .78rem !important;
+      line-height: 1.15 !important;
+    }
+
+    .system-toast span {
+      min-width: 0;
+      font-size: .68rem !important;
+      line-height: 1.28 !important;
+      overflow-wrap: anywhere;
+    }
+
+    .system-toast__action {
+      min-height: 28px !important;
+      padding: 4px 9px !important;
+      font-size: .68rem !important;
+    }
+
+    #accountDialog .account-dialog__card,
+    #accountSecurityDialog .account-dialog__card {
+      position: relative;
+    }
+
+    #accountDialog .account-dialog__head,
+    #accountSecurityDialog .account-dialog__head {
+      position: relative;
+      padding-right: 54px !important;
+    }
+
+    #accountDialog .account-dialog__tools {
+      margin-right: 2px;
+    }
+
+    #accountDialog .account-dialog-close,
+    #accountSecurityDialog button[data-action="close-account-security-dialog"] {
+      position: absolute !important;
+      top: 12px !important;
+      right: 12px !important;
+      width: 36px !important;
+      min-width: 36px !important;
+      height: 36px !important;
+      padding: 0 !important;
+      color: #fff !important;
+      background: #b42332 !important;
+      border-color: #fb7185 !important;
+      box-shadow: 0 6px 16px rgba(127, 29, 29, .24) !important;
+      z-index: 2;
+    }
+
+    .security-password-field {
+      padding-right: 5px !important;
+    }
+
+    .security-password-field input {
+      min-width: 0;
+    }
+
+    .security-password-toggle {
+      display: grid;
+      place-items: center;
+      flex: 0 0 34px;
+      width: 34px;
+      height: 34px;
+      padding: 0;
+      color: #d9e9fa;
+      background: #25415f;
+      border: 1px solid #547392;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    .security-note {
+      margin: -2px 4px 2px;
+      color: #9fb6cc;
+      font-size: .7rem;
+      line-height: 1.4;
+    }
+
+    .security-sms-unavailable,
+    .security-provider-row.is-unavailable {
+      opacity: .58;
+      filter: grayscale(.82);
+    }
+
+    .security-sms-unavailable {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      min-height: 44px;
+      padding: 9px 12px;
+      color: #adbac8;
+      background: #263548;
+      border: 1px dashed #657487;
+      border-radius: 12px;
+    }
+
+    .security-sms-unavailable > span {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .security-sms-unavailable small {
+      white-space: nowrap;
+      font-weight: 800;
+    }
+
+    html[data-theme="light"] .security-password-toggle {
+      color: #16314d;
+      background: #e4edf6;
+      border-color: #a9bdcf;
+    }
+
+    html[data-theme="light"] .security-sms-unavailable {
+      color: #5c6876;
+      background: #e5e9ee;
+      border-color: #aab3be;
+    }
+
+    /* Spectate stays visible without exposing UID or moving the page/nav. */
+    .spectate-banner {
+      position: fixed !important;
+      top: max(68px, calc(env(safe-area-inset-top) + 58px)) !important;
+      left: 50% !important;
+      z-index: 1160 !important;
+      width: min(540px, calc(100vw - 20px)) !important;
+      min-height: 48px !important;
+      margin: 0 !important;
+      padding: 8px 9px 8px 12px !important;
+      transform: translateX(-50%);
+      border-radius: 13px !important;
+      box-shadow: 0 10px 26px rgba(2, 10, 24, .28) !important;
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+    }
+
+    .spectate-banner > div {
+      min-width: 0;
+    }
+
+    .spectate-banner strong {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .spectate-banner > div > span {
+      display: block;
+      margin-top: 2px;
+      font-size: .68rem;
+      line-height: 1.25;
+    }
+
+    /* Retain the orange action concept, with cleaner hierarchy and no label clipping. */
+    #chat .chat-compose__footer-actions > button.chat-smart-update {
+      min-width: 0 !important;
+      padding: 0 40px 0 12px !important;
+      color: #281305 !important;
+      background: linear-gradient(120deg, #ffc247 0%, #ff9f1c 58%, #f97316 100%) !important;
+      border: 1px solid #ffd28a !important;
+      border-radius: 11px !important;
+      box-shadow: 0 5px 13px rgba(194, 84, 9, .18) !important;
+      text-shadow: none !important;
+    }
+
+    #chat .chat-compose__footer-actions > button.chat-smart-update > span {
+      min-width: 0 !important;
+      overflow: hidden !important;
+      color: inherit !important;
+      font-weight: 900 !important;
+      text-overflow: ellipsis !important;
+      white-space: nowrap !important;
+    }
+
+    @media (max-width: 420px) {
+      .system-toast-stack {
+        top: max(62px, calc(env(safe-area-inset-top) + 52px)) !important;
+        right: 8px !important;
+        left: auto !important;
+      }
+
+      .spectate-banner {
+        top: max(62px, calc(env(safe-area-inset-top) + 52px)) !important;
+        width: calc(100vw - 16px) !important;
+      }
+
+      .spectate-banner > div > span {
+        display: none;
+      }
+
+      .spectate-banner .btn-small {
+        min-height: 32px !important;
+        padding-inline: 9px !important;
+      }
+
+      #chat .chat-compose__footer-actions > button.chat-smart-update {
+        padding-right: 30px !important;
+        padding-left: 8px !important;
+      }
+
+      #chat .chat-compose__footer-actions > button.chat-smart-update > span {
+        font-size: .69rem !important;
+      }
+
+      .security-sms-unavailable {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 3px;
+      }
+    }
+  </style>
 </head>
 
 <body class="login-locked">
@@ -24412,6 +24783,7 @@
     })();
     const defaultUserSettings = {
       customName: "",
+      loginUsername: "",
       collegeName: "",
       sscBatch: "",
       hscBatch: "",
@@ -24455,7 +24827,6 @@
         displayResolution: "device",
         nativeAnimation: true,
         subjectNeonEnabled: true,
-        extraSubjectGlow: false,
       },
       autoBackupEnabled: true,
       backupTiming: "daily",
@@ -24470,8 +24841,7 @@
     const loadUserSettings = () => {
       try {
         const raw = localStorage.getItem(USER_SETTINGS_KEY);
-        if (!raw) return { ...defaultUserSettings };
-        const parsed = JSON.parse(raw);
+        const parsed = raw ? JSON.parse(raw) : {};
         const merged = {
           ...defaultUserSettings,
           ...parsed,
@@ -24480,11 +24850,16 @@
           uiConfigs: { ...defaultUserSettings.uiConfigs, ...(parsed.uiConfigs || {}) },
         };
         const isAndroidShell = Boolean(window.TonuAndroid);
+        const isCompactMobile = isAndroidShell || window.matchMedia("(max-width: 820px), (pointer: coarse)").matches;
+        const nativeAnimationExplicitKey = "tonu-native-animation-explicit";
+        if (isCompactMobile && localStorage.getItem(nativeAnimationExplicitKey) !== "1") {
+          merged.uiConfigs.nativeAnimation = false;
+          localStorage.setItem(USER_SETTINGS_KEY, JSON.stringify(merged));
+        }
         const neonMigrationKey = "tonu-android-full-web-visual-v357";
         const visualExplicitKey = "tonu-visual-effects-explicit";
         if (isAndroidShell && localStorage.getItem(neonMigrationKey) !== "done" && localStorage.getItem(visualExplicitKey) !== "1") {
           merged.uiConfigs.subjectNeonEnabled = true;
-          merged.uiConfigs.extraSubjectGlow = false;
           localStorage.setItem(neonMigrationKey, "done");
           localStorage.setItem(USER_SETTINGS_KEY, JSON.stringify(merged));
         }
@@ -24572,7 +24947,9 @@
         scaffoldState.userSettings?.uiConfigs?.subjectNeonEnabled === false
       );
       root.classList.remove("subject-neon-single", "blue-vibe-lite");
-      root.classList.toggle("subject-neon-extra", scaffoldState.userSettings?.uiConfigs?.extraSubjectGlow === true);
+      root.classList.remove("subject-neon-extra");
+      const fontScale = Math.max(80, Math.min(165, Number(scaffoldState.userSettings?.fontScale) || 100));
+      root.style.setProperty("--master-font-scale", String(fontScale / 100));
       if (scaffoldState.userSettings?.uiConfigs?.compactMode) {
         document.body.classList.add("compact-mode");
       } else {
@@ -24627,7 +25004,7 @@
     let deferredInstallPrompt = null;
     let installManifestUrl = "";
     const TONU_APK_URL = "https://github.com/tanmysarker733-svg/tonustudyv2/releases/download/android/Tonu.Study.apk";
-    const TONU_WEB_BUILD = "367";
+    const TONU_WEB_BUILD = "371";
     const TONU_ANDROID_LATEST = "2.1.12";
 
     const isAndroidShell = () => Boolean(window.TonuAndroid);
@@ -30179,9 +30556,8 @@
                 ${row("Font Scale", `<input type="range" id="fontScaleRange" min="80" max="165" step="5" value="${userSettings.fontScale || 100}"><span id="fontScaleVal" style="margin-left: 8px; font-size: 0.8rem; min-width: 3ch; display: inline-block;">${userSettings.fontScale || 100}%</span>`, "Adjust overall text size")}
               `)}
               ${group("Motion & Glow", `
-                ${row("Native Animation", checkbox("tgl_native_animation", userSettings.uiConfigs.nativeAnimation !== false), "Use the full web motion profile on Android and web")}
+                ${row("Native Animation", checkbox("tgl_native_animation", userSettings.uiConfigs.nativeAnimation !== false), "Hero, composer and sparkle motion")}
                 ${row("Paradox Scroll", checkbox("tgl_paradox_motion", userSettings.uiConfigs.paradoxMotion === true))}
-                ${row("Extra Subject Glow", checkbox("tgl_extra_subject_glow", userSettings.uiConfigs.extraSubjectGlow === true), "Adds the richer subject-card glow")}
               `)}
             `, true)}
             ${pane("data", `
@@ -30775,6 +31151,34 @@
       "anonymous": "Guest",
     };
 
+    const USERNAME_AUTH_DOMAIN = "users.tonustudy.app";
+    const normalizeLoginUsername = (value = "") => String(value)
+      .trim()
+      .toLowerCase()
+      .replace(/[^a-z0-9._-]+/g, "")
+      .slice(0, 30);
+    const isValidLoginUsername = (value = "") => /^[a-z0-9][a-z0-9._-]{2,29}$/.test(normalizeLoginUsername(value));
+    const usernameToAuthEmail = (value = "") => `${normalizeLoginUsername(value)}@${USERNAME_AUTH_DOMAIN}`;
+    const usernameFromAuthEmail = (value = "") => {
+      const email = String(value || "").trim().toLowerCase();
+      const suffix = `@${USERNAME_AUTH_DOMAIN}`;
+      return email.endsWith(suffix) ? email.slice(0, -suffix.length) : "";
+    };
+    const resolvePasswordLoginId = (value = "") => {
+      const clean = String(value || "").trim();
+      if (clean.includes("@")) return { email: clean.toLowerCase(), username: usernameFromAuthEmail(clean) };
+      const username = normalizeLoginUsername(clean);
+      if (!isValidLoginUsername(username)) throw new Error("Username needs 3-30 letters, numbers, dots, dashes, or underscores.");
+      return { email: usernameToAuthEmail(username), username };
+    };
+    const passwordProviderEmail = (user = getCurrentAuthUser()) => (
+      (user?.providerData || []).find((item) => item?.providerId === "password")?.email || ""
+    );
+    const currentLoginUsername = (user = getCurrentAuthUser()) => (
+      usernameFromAuthEmail(passwordProviderEmail(user)) ||
+      normalizeLoginUsername(scaffoldState?.userSettings?.loginUsername || readRenderableLoginSession()?.loginUsername || "")
+    );
+
     const getAuthIdentitySnapshot = (user = getCurrentAuthUser()) => {
       const providerData = Array.isArray(user?.providerData) ? user.providerData : [];
       const providerIds = providerData.map((item) => item?.providerId).filter(Boolean);
@@ -30816,7 +31220,7 @@
         { id: "password", label: "Link Email", iconName: "mail", detail: providerDetailMap.get("password")?.email || user?.email || "Make this temporary data recoverable with email/password.", action: "security-link-email", actionText: "Link" },
         { id: "google.com", label: "Link Google", iconName: "badge-check", detail: providerDetailMap.get("google.com")?.email || "Link Google to this same UID and sync the current study data.", action: "security-link-google", actionText: "Link" },
         { id: "facebook.com", label: "Facebook", iconName: "users", detail: providerDetailMap.get("facebook.com")?.email || "Use Facebook login after Firebase provider setup.", action: "security-link-facebook", actionText: "Link" },
-        { id: "phone", label: "Phone", iconName: "phone", detail: providerDetailMap.get("phone")?.phoneNumber || user?.phoneNumber || "Recover and login with SMS verification.", action: "security-phone-send", actionText: "Send SMS" },
+        { id: "phone", label: "Phone", iconName: "phone", detail: providerDetailMap.get("phone")?.phoneNumber || user?.phoneNumber || "SMS sign-in is not available yet.", action: "security-phone-send", actionText: "Unavailable", available: false },
       ];
       if (!user) {
         return `<div class="spectate-empty">No Firebase Auth user is active. SKIP mode is local-only, so provider linking and cloud sync stay disabled. Use Anonymous Login, Google, or Email first to create a linkable account.</div>`;
@@ -30824,7 +31228,7 @@
       return rows.map((row) => {
         const linked = providers.has(row.id);
         return `
-      <div class="security-provider-row">
+      <div class="security-provider-row ${row.available === false && !linked ? "is-unavailable" : ""}">
         <div class="security-provider-main">
           <strong>${icon(row.iconName, row.label)} <span>${escapeHtml(row.label)}</span></strong>
           <span>${escapeHtml(row.detail)}</span>
@@ -30833,6 +31237,8 @@
           <span class="security-provider-status ${linked ? "is-linked" : "is-open"}">${linked ? "Linked" : "Open"}</span>
           ${linked ? `
             <button class="btn-small" type="button" data-action="security-unlink-provider" data-provider="${escapeHtml(row.id)}">${icon("unlink", "Unlink")} <span>Unlink</span></button>
+          ` : row.available === false ? `
+            <button class="btn-small" type="button" disabled aria-disabled="true">${icon("clock-3", "Unavailable")} <span>Not available</span></button>
           ` : `
             <button class="btn-small btn-small--primary" type="button" data-action="${escapeHtml(row.action)}">${icon("link", "Link")} <span>${escapeHtml(row.actionText)}</span></button>
           `}
@@ -30846,6 +31252,8 @@
       const user = getCurrentAuthUser();
       const session = readRenderableLoginSession();
       const authMeta = getAuthIdentitySnapshot(user);
+      const providerEmail = passwordProviderEmail(user);
+      const usesUsernameAlias = !!usernameFromAuthEmail(providerEmail);
       const identity = user
         ? `${user.uid}${user.email ? " - " + user.email : user.phoneNumber ? " - " + user.phoneNumber : user.isAnonymous ? " - temporary anonymous account" : ""}`
         : session?.mode === "admin"
@@ -30881,28 +31289,24 @@
               </div>
             </div>
             <div class="security-card">
-              <h4>Link credentials</h4>
+              <h4>Username & password</h4>
               <div class="security-form">
                 <label class="login-field">
-                  <i data-lucide="mail" aria-hidden="true"></i>
-                  <input id="securityEmail" type="email" autocomplete="email" placeholder="Email for password login" value="${escapeHtml(user?.email || session?.email || "")}" />
+                  <i data-lucide="at-sign" aria-hidden="true"></i>
+                  <input id="securityUsername" type="text" autocomplete="username" autocapitalize="none" spellcheck="false" maxlength="30" placeholder="Username (3-30 chars)" value="${escapeHtml(currentLoginUsername(user))}" ${user ? "" : "disabled"} />
                 </label>
-                <label class="login-field">
+                <label class="login-field security-password-field">
                   <i data-lucide="lock-keyhole" aria-hidden="true"></i>
-                  <input id="securityPassword" type="password" autocomplete="new-password" placeholder="New password (6+ chars)" />
+                  <input id="securityPassword" type="password" autocomplete="new-password" placeholder="New password (6+ chars)" ${user ? "" : "disabled"} />
+                  <button class="security-password-toggle" type="button" data-action="security-toggle-password" aria-label="Show typed password" aria-pressed="false" ${user ? "" : "disabled"}>${icon("eye", "Show")}</button>
                 </label>
-                <button class="btn-small btn-small--primary btn-small--wide" type="button" data-action="security-link-email">${icon("link", "Link")} <span>Link email/password</span></button>
-                <label class="login-field">
-                  <i data-lucide="phone" aria-hidden="true"></i>
-                  <input id="securityPhoneNumber" type="tel" autocomplete="tel" placeholder="+8801XXXXXXXXX" value="${escapeHtml(user?.phoneNumber || "")}" />
-                </label>
-                <button class="btn-small btn-small--wide" type="button" data-action="security-phone-send">${icon("message-circle-code", "SMS")} <span>Send phone code</span></button>
-                <label class="login-field">
-                  <i data-lucide="key-round" aria-hidden="true"></i>
-                  <input id="securityPhoneCode" type="text" inputmode="numeric" autocomplete="one-time-code" placeholder="SMS code" />
-                </label>
-                <button class="btn-small btn-small--primary btn-small--wide" type="button" data-action="security-phone-confirm">${icon("shield-check", "Confirm")} <span>Confirm phone link</span></button>
-                <button class="btn-small btn-small--wide" type="button" data-action="security-send-reset">${icon("mail-check", "Reset")} <span>Send password reset</span></button>
+                <p class="security-note">Creates or updates a username login on this same Firebase account. Saved passwords are never displayed.</p>
+                <button class="btn-small btn-small--primary btn-small--wide security-credential-save" type="button" data-action="security-link-email" ${user ? "" : "disabled"}>${icon("key-round", "Save")} <span>${passwordProviderEmail(user) ? "Update username/password" : "Set username/password"}</span></button>
+                <div class="security-sms-unavailable" aria-disabled="true">
+                  <span>${icon("phone-off", "Unavailable")} <strong>SMS login</strong></span>
+                  <small>Not available yet</small>
+                </div>
+                <button class="btn-small btn-small--wide" type="button" data-action="security-send-reset" ${!user || usesUsernameAlias ? "disabled aria-disabled=\"true\"" : ""}>${icon("mail-check", "Reset")} <span>${usesUsernameAlias ? "Change password above" : "Send password reset"}</span></button>
                 
                 <p class="security-feedback" id="securityFeedback" role="status"></p>
               </div>
@@ -30975,7 +31379,7 @@
           <button class="btn-small btn-small--primary" type="button" data-action="open-account-security-dialog">
             ${icon("shield-check", "Security")} <span>Security</span>
           </button>
-          <button class="btn-small btn-small--icon" type="button" data-action="close-account-dialog" aria-label="Close account settings">
+          <button class="btn-small btn-small--icon account-dialog-close" type="button" data-action="close-account-dialog" aria-label="Close account settings">
             ${icon("x", "Close")}
           </button>
         </div>
@@ -31324,6 +31728,7 @@
           payload: JSON.stringify(payload),
           updatedAt: new Date().toISOString(),
           email: authMeta.email || session.email || "guest",
+          loginUsername: scaffoldState.userSettings.loginUsername || session.loginUsername || usernameFromAuthEmail(authMeta.email) || "",
           phoneNumber: authMeta.phoneNumber || session.phoneNumber || "",
           name: scaffoldState.userSettings.customName || authMeta.displayName || "",
           profileId: chatState.profile?.id || "unknown",
@@ -31870,6 +32275,7 @@
       const uid = spectateState.targetUid || "unknown";
       return `${name} (${uid})`;
     };
+    const spectateDisplayName = () => spectateState.targetName || "Selected user";
 
     const renderSpectateUserRows = () => {
       if (spectateState.loading) {
@@ -31926,8 +32332,8 @@
     const renderSpectateBanner = () => spectateState.active ? `
   <div class="spectate-banner" role="status">
     <div>
-      <strong>${icon("eye", "Spectating")} Spectating read-only</strong>
-      <span>${escapeHtml(spectateLabel())}. Browse and export JSON only. Edits, imports, uploads, and message sends are blocked.</span>
+      <strong>${icon("eye", "Spectating")} Spectating ${escapeHtml(spectateDisplayName())}</strong>
+      <span>Read-only view. Export is available; changes and messages are blocked.</span>
     </div>
     <button class="btn-small btn-small--primary" type="button" data-action="spectate-exit">${icon("log-out", "Exit")} <span>Exit</span></button>
   </div>
@@ -32641,7 +33047,6 @@
     };
 
     let phoneLoginConfirmation = null;
-    let phoneLinkConfirmation = null;
     let authRecaptchaVerifier = null;
 
     const getFirebaseAuth = () => {
@@ -32673,6 +33078,7 @@
       completeLocalLogin({
         mode: getSessionModeFromFirebaseUser(user, fallbackMode),
         email: authMeta.email || "",
+        loginUsername: usernameFromAuthEmail(passwordProviderEmail(user)) || extra.loginUsername || "",
         phoneNumber: authMeta.phoneNumber || "",
         uid: user.uid,
         authProviders: authMeta.providers,
@@ -33070,6 +33476,7 @@
         ...(current || {}),
         mode: getSessionModeFromFirebaseUser(user, current?.mode || "email"),
         email: authMeta.email || current?.email || "",
+        loginUsername: usernameFromAuthEmail(passwordProviderEmail(user)) || current?.loginUsername || "",
         phoneNumber: authMeta.phoneNumber || current?.phoneNumber || "",
         uid: user.uid,
         authProviders: authMeta.providers,
@@ -33117,57 +33524,31 @@
       }
     };
 
-    const linkEmailPasswordToCurrentUser = () => {
+    const linkEmailPasswordToCurrentUser = async () => {
       try {
         const user = requireSecurityAuthUser();
-        const email = document.getElementById("securityEmail")?.value.trim();
+        const username = normalizeLoginUsername(document.getElementById("securityUsername")?.value || "");
         const password = document.getElementById("securityPassword")?.value || "";
-        if (!email || !email.includes("@")) throw new Error("Enter a valid email address.");
+        if (!isValidLoginUsername(username)) throw new Error("Username needs 3-30 letters, numbers, dots, dashes, or underscores.");
         if (password.length < 6) throw new Error("Password must be at least 6 characters.");
+        const email = usernameToAuthEmail(username);
         const credential = window.firebase.auth.EmailAuthProvider.credential(email, password);
-        setSecurityFeedback("Linking email/password...");
-        user.linkWithCredential(credential)
-          .then(() => afterProviderLinked("Email/password linked to this account."))
-          .catch((error) => setSecurityFeedback(error.message, "error"));
+        const hasPasswordProvider = (user.providerData || []).some((item) => item?.providerId === "password");
+        setSecurityFeedback(hasPasswordProvider ? "Updating username/password..." : "Setting username/password...");
+        if (hasPasswordProvider) {
+          if (String(user.email || "").toLowerCase() !== email) await user.updateEmail(email);
+          await user.updatePassword(password);
+        } else {
+          await user.linkWithCredential(credential);
+        }
+        scaffoldState.userSettings.loginUsername = username;
+        saveUserSettings();
+        await afterProviderLinked(hasPasswordProvider
+          ? "Username and password updated."
+          : "Username and password linked to this account.");
       } catch (error) {
-        setSecurityFeedback(error.message, "error");
-      }
-    };
-
-    const sendPhoneLinkCode = () => {
-      try {
-        const user = requireSecurityAuthUser();
-        const phone = document.getElementById("securityPhoneNumber")?.value.trim();
-        if (!phone || !phone.startsWith("+")) throw new Error("Enter phone number with country code, e.g. +8801XXXXXXXXX.");
-        setSecurityFeedback("Sending phone verification SMS...");
-        user.linkWithPhoneNumber(phone, ensureAuthRecaptcha())
-          .then((confirmation) => {
-            phoneLinkConfirmation = confirmation;
-            setSecurityFeedback("SMS sent", "success");
-          })
-          .catch((error) => {
-            resetAuthRecaptcha();
-            setSecurityFeedback(error.message, "error");
-          });
-      } catch (error) {
-        setSecurityFeedback(error.message, "error");
-      }
-    };
-
-    const confirmPhoneLinkCode = () => {
-      try {
-        const code = document.getElementById("securityPhoneCode")?.value.trim();
-        if (!phoneLinkConfirmation) throw new Error("Send phone verification SMS first.");
-        if (!code) throw new Error("Enter the SMS verification code.");
-        setSecurityFeedback("Confirming phone link...");
-        phoneLinkConfirmation.confirm(code)
-          .then(() => {
-            phoneLinkConfirmation = null;
-            afterProviderLinked("Phone number linked to this account.");
-          })
-          .catch((error) => setSecurityFeedback(error.message, "error"));
-      } catch (error) {
-        setSecurityFeedback(error.message, "error");
+        const needsLogin = error?.code === "auth/requires-recent-login";
+        setSecurityFeedback(needsLogin ? "Please sign out, sign in again, then retry this security change." : error.message, "error");
       }
     };
 
@@ -33175,8 +33556,12 @@
       try {
         ensureFirebaseInitialized();
         const user = getCurrentAuthUser();
-        const email = document.getElementById("securityEmail")?.value.trim() || user?.email || "";
+        const typedUsername = document.getElementById("securityUsername")?.value.trim() || "";
+        const email = typedUsername
+          ? resolvePasswordLoginId(typedUsername).email
+          : passwordProviderEmail(user) || user?.email || "";
         if (!email || !email.includes("@")) throw new Error("Enter the account email first.");
+        if (usernameFromAuthEmail(email)) throw new Error("Username accounts change their password in this panel; no reset email is sent.");
         setSecurityFeedback("Sending password reset email...");
         window.firebase.auth().sendPasswordResetEmail(email)
           .then(() => setSecurityFeedback("Password reset email sent.", "success"))
@@ -33243,20 +33628,19 @@
     let currentLoginMode = "login";
 
     const handleEmailLoginSubmit = () => {
-      const email = document.getElementById("loginEmail")?.value.trim();
+      const identifier = document.getElementById("loginEmail")?.value.trim();
       const password = document.getElementById("loginPassword")?.value || "";
       const remember = document.getElementById("loginRemember")?.checked !== false;
-      const isEmailLike = email.includes("@");
 
-      const isLocalAdmin = (email === "admin" && password === "admin") ||
-        (email === "admin@test.com" && password === "admin123");
+      const isLocalAdmin = (identifier === "admin" && password === "admin") ||
+        (identifier === "admin@test.com" && password === "admin123");
 
       if (isLocalAdmin) {
         showLoginFeedback("Logging in as Local Test Admin...");
         setTimeout(() => {
           completeLocalLogin({
             mode: "admin",
-            email: email.includes("@") ? email : "admin@test.com",
+            email: identifier.includes("@") ? identifier : "admin@test.com",
             uid: "test-admin-uid",
             createdAt: Date.now()
           }, remember);
@@ -33265,7 +33649,7 @@
         return;
       }
 
-      if (!email) {
+      if (!identifier) {
         showLoginFeedback("Enter an email or username to continue.");
         return;
       }
@@ -33274,47 +33658,34 @@
         return;
       }
 
-      if (currentLoginMode === "login" && !isEmailLike) {
-        showLoginFeedback("Logging in locally...");
-        setTimeout(() => {
-          completeLocalLogin({
-            mode: "skip",
-            email,
-            uid: `local-${String(email).toLowerCase().replace(/[^a-z0-9]+/g, "-").slice(0, 32) || "user"}`,
-            createdAt: Date.now(),
-            noCloud: true
-          }, remember);
-          showLoginFeedback("");
-        }, 180);
-        return;
-      }
-
       if (!requireInternetConnection(currentLoginMode === "login" ? "sign in" : "create an account")) {
-        showLoginFeedback("No internet connection. Local username and SKIP mode still work offline.");
+        showLoginFeedback("No internet connection. Connect to the internet, or use SKIP for local-only access.");
         return;
       }
 
       try {
         ensureFirebaseInitialized();
+        const loginId = resolvePasswordLoginId(identifier);
+        const email = loginId.email;
         showLoginFeedback(currentLoginMode === "login" ? "Logging in..." : "Creating account...");
 
         if (currentLoginMode === "login") {
           window.firebase.auth().signInWithEmailAndPassword(email, password)
             .then((result) => {
-              completeFirebaseUserLogin(result.user, remember, "email");
+              completeFirebaseUserLogin(result.user, remember, "email", { loginUsername: loginId.username });
               showLoginFeedback("");
             })
             .catch((error) => {
-              showLoginFeedback(error.message);
+              showLoginFeedback(["auth/invalid-credential", "auth/wrong-password", "auth/user-not-found"].includes(error?.code)
+                ? "Incorrect email/username or password."
+                : error.message);
             });
         } else {
-          if (!isEmailLike) {
-            showLoginFeedback("Registration needs a real email address.");
-            return;
-          }
           window.firebase.auth().createUserWithEmailAndPassword(email, password)
             .then((result) => {
-              completeFirebaseUserLogin(result.user, remember, "email");
+              if (loginId.username) scaffoldState.userSettings.loginUsername = loginId.username;
+              completeFirebaseUserLogin(result.user, remember, "email", { loginUsername: loginId.username });
+              if (loginId.username) saveUserSettings();
               showLoginFeedback("");
             })
             .catch((error) => {
@@ -33342,6 +33713,7 @@
                 completeLocalLogin({
                   mode: getSessionModeFromFirebaseUser(user, "email"),
                   email: user.email || "",
+                  loginUsername: usernameFromAuthEmail(passwordProviderEmail(user)),
                   phoneNumber: user.phoneNumber || "",
                   uid: user.uid,
                   createdAt: Date.now()
@@ -34812,9 +35184,56 @@
       }
     });
 
+    const chapterSliderFrames = new WeakMap();
+
+    const applyChapterSliderPreview = (slider) => {
+      const { action, si, pi, ci } = slider.dataset;
+      const s = parseInt(si), p = parseInt(pi), c = parseInt(ci);
+      const value = parseInt(slider.value);
+      const chapter = getChapter(s, p, c);
+      if (!chapter) return;
+      const liveMap = {
+        "dl-slide": ["doneDL", "dl"],
+        "adv-slide": ["doneAdv", "adv"],
+        "adm-slide": ["doneAdm", "adm"],
+        "frb-slide": ["doneFRB", "frb"],
+        "os-slide": ["doneOS", "os"],
+        "perc-slide": ["donePerc", "perc"],
+      };
+      const live = liveMap[action];
+      if (!live) return;
+      chapter[live[0]] = value;
+      const plate = document.getElementById(`ch-${s}-${p}-${c}-plate`);
+      const valueNode = plate?.querySelector(`[data-val="${live[1]}-${s}-${p}-${c}"]`);
+      if (valueNode) valueNode.textContent = action === "perc-slide" ? `${value}%` : String(value);
+      const percent = chapterPct(chapter);
+      const fill = plate?.querySelector(".ch-track__fill");
+      if (fill) {
+        fill.style.width = `${percent}%`;
+        fill.style.background = pctColor(percent);
+      }
+    };
+
+    const queueChapterSliderPreview = (slider) => {
+      const pending = chapterSliderFrames.get(slider);
+      if (pending) cancelAnimationFrame(pending);
+      chapterSliderFrames.set(slider, requestAnimationFrame(() => {
+        chapterSliderFrames.delete(slider);
+        applyChapterSliderPreview(slider);
+      }));
+    };
+
+    const flushChapterSliderPreview = (slider) => {
+      const pending = chapterSliderFrames.get(slider);
+      if (pending) cancelAnimationFrame(pending);
+      chapterSliderFrames.delete(slider);
+      applyChapterSliderPreview(slider);
+    };
+
     document.addEventListener("change", (e) => {
       const committedSlider = e.target.closest("input[type=range][data-action$='-slide']");
       if (committedSlider) {
+        flushChapterSliderPreview(committedSlider);
         const { si, pi, ci } = committedSlider.dataset;
         const s = parseInt(si), p = parseInt(pi), c = parseInt(ci);
         saveSyllabus(scaffoldState.syllabus);
@@ -34906,32 +35325,8 @@
       // Range sliders
       const sl = e.target.closest("input[type=range][data-action]");
       if (!sl) return;
-      const { action, si, pi, ci } = sl.dataset;
-      const s = parseInt(si), p = parseInt(pi), c = parseInt(ci);
-      const v = parseInt(sl.value);
       syncSliderFill(sl);
-      const ch = getChapter(s, p, c);
-      if (!ch) return;
-      const liveMap = {
-        "dl-slide": ["doneDL", "dl"],
-        "adv-slide": ["doneAdv", "adv"],
-        "adm-slide": ["doneAdm", "adm"],
-        "frb-slide": ["doneFRB", "frb"],
-        "os-slide": ["doneOS", "os"],
-        "perc-slide": ["donePerc", "perc"],
-      };
-      const live = liveMap[action];
-      if (!live) return;
-      ch[live[0]] = v;
-      const plate = document.getElementById(`ch-${s}-${p}-${c}-plate`);
-      const valueNode = plate?.querySelector(`[data-val="${live[1]}-${s}-${p}-${c}"]`);
-      if (valueNode) valueNode.textContent = action === "perc-slide" ? `${v}%` : String(v);
-      const pct = chapterPct(ch);
-      const fill = plate?.querySelector(".ch-track__fill");
-      if (fill) {
-        fill.style.width = `${pct}%`;
-        fill.style.background = pctColor(pct);
-      }
+      queueChapterSliderPreview(sl);
     });
 
     // ── Chronos Analytics Engine ─────────────────────────────────────────────────
@@ -35188,12 +35583,13 @@
         options: {
           responsive: true,
           maintainAspectRatio: false,
-          animation: { duration: 220 },
+          animation: { duration: isNativeAnimationEnabled() ? 220 : 0 },
+          layout: { padding: { bottom: 8 } },
           interaction: { mode: "nearest", intersect: false },
           scales: {
             x: {
               grid: { display: true, color: "rgba(148,163,184,.14)", drawTicks: false },
-              ticks: { color: "#a1a1aa", minRotation: 90, maxRotation: 90, autoSkip: false, padding: 4 },
+              ticks: { color: "#a1a1aa", minRotation: 90, maxRotation: 90, autoSkip: false, padding: 10 },
             },
             y: {
               beginAtZero: true,
@@ -35868,12 +36264,23 @@
         linkEmailPasswordToCurrentUser();
         return;
       }
+      if (action === "security-toggle-password") {
+        const input = document.getElementById("securityPassword");
+        if (!input) return;
+        const reveal = input.type === "password";
+        input.type = reveal ? "text" : "password";
+        target?.setAttribute("aria-pressed", String(reveal));
+        target?.setAttribute("aria-label", reveal ? "Hide typed password" : "Show typed password");
+        if (target) target.innerHTML = icon(reveal ? "eye-off" : "eye", reveal ? "Hide" : "Show");
+        input.focus({ preventScroll: true });
+        return;
+      }
       if (action === "security-phone-send") {
-        sendPhoneLinkCode();
+        setSecurityFeedback("SMS login is not available yet.", "error");
         return;
       }
       if (action === "security-phone-confirm") {
-        confirmPhoneLinkCode();
+        setSecurityFeedback("SMS login is not available yet.", "error");
         return;
       }
       if (action === "security-send-reset") {
@@ -35886,13 +36293,11 @@
       }
       if (action === "login-forgot") {
         e.preventDefault();
-        const email = document.getElementById("loginEmail")?.value.trim();
-        if (!email || !email.includes("@")) {
-          showLoginFeedback("Please enter your email above to reset password.");
-          return;
-        }
+        const identifier = document.getElementById("loginEmail")?.value.trim();
+        if (!identifier) return showLoginFeedback("Enter your email or username above first.");
         try {
           ensureFirebaseInitialized();
+          const email = resolvePasswordLoginId(identifier).email;
           showLoginFeedback("Sending reset link...");
           window.firebase.auth().sendPasswordResetEmail(email)
             .then(() => {
@@ -36499,9 +36904,9 @@
         updateBackupSettings({ autoBackupNotif: !!target.checked });
         return;
       }
-      if (target.id === "tgl_project_banner" || target.id === "tgl_orbs" || target.id === "tgl_vibes" || target.id === "tgl_native_animation" || target.id === "tgl_paradox_motion" || target.id === "tgl_aurora_mode" || target.id === "etaSettingToggle" || target.id === "tgl_composer_fs" || target.id === "tgl_compact_mode" || target.id === "tgl_extra_subject_glow") {
-        if (target.id === "tgl_extra_subject_glow") {
-          localStorage.setItem("tonu-visual-effects-explicit", "1");
+      if (target.id === "tgl_project_banner" || target.id === "tgl_orbs" || target.id === "tgl_vibes" || target.id === "tgl_native_animation" || target.id === "tgl_paradox_motion" || target.id === "tgl_aurora_mode" || target.id === "etaSettingToggle" || target.id === "tgl_composer_fs" || target.id === "tgl_compact_mode") {
+        if (target.id === "tgl_native_animation") {
+          localStorage.setItem("tonu-native-animation-explicit", "1");
         }
         scaffoldState.userSettings.uiConfigs = {
           ...(scaffoldState.userSettings.uiConfigs || {}),
@@ -36514,8 +36919,7 @@
           etaOn: document.getElementById("etaSettingToggle")?.checked || false,
           composerFullscreen: document.getElementById("tgl_composer_fs")?.checked || false,
           compactMode: document.getElementById("tgl_compact_mode")?.checked || false,
-          subjectNeonEnabled: true,
-          extraSubjectGlow: document.getElementById("tgl_extra_subject_glow")?.checked || false
+          subjectNeonEnabled: true
         };
         saveUserSettings();
         applyUserThemeSettings();

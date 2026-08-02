@@ -11,18 +11,17 @@ instructions are documented in [ANDROID_SETUP.md](ANDROID_SETUP.md).
 
 ## Connectivity and low-end device support
 
-- **Web 363** caches its same-origin shell after the first successful online
+- **Web 371** caches its same-origin shell after the first successful online
   visit. Study data continues to save in browser storage while offline.
-- **Web 363** pauses chat, authentication, cloud restore, and cloud upload
+- **Web 371** pauses chat, authentication, cloud restore, and cloud upload
   while offline and
   resume after connectivity returns.
 - **Android v2.1.12** loads the deployed web app directly, so browser and APK use the
   same interface and receive the same feature updates. Without connectivity it
   shows a clear retry warning; pull-to-refresh is intentionally disabled so
   nested settings and composer scrolling cannot reload the page by accident.
-- **Web 357 / Android v2.1.10** introduced the practical low-cost rendering
-  defaults in **Look > Performance**, with
-  optional Paradox Scroll, Subject Neon, and Extra Subject Glow controls.
+- **Web 371 / Android v2.1.12** retain practical low-cost rendering defaults,
+  with optional Native Animation and Paradox Scroll controls.
 
 ## Version history
 
@@ -31,6 +30,18 @@ The deployed `index.html` is the public web source. Numbered
 and are intentionally excluded from GitHub.
 
 ### Web builds
+
+- **Web 371** - Added secure username/password credentials to an existing
+  Firebase identity without changing its UID, including Google-linked accounts.
+  Passwords remain Firebase-managed and are never stored or revealed by the
+  app. Phone/SMS linking is now clearly unavailable, account close placement,
+  spectate feedback, notifications, and the orange Smart Update action were
+  refined for narrow screens. Firestore ownership rules and deploy config are
+  included at the repository root.
+
+- **Web 370** - Reduced mobile motion by default, made Native Animation an
+  explicit opt-in on mobile/Android, batched chapter-slider updates with
+  requestAnimationFrame, and tightened narrow login/composer controls.
 
 - **Web 369** - Fixed mobile Settings notifications stretching into a full-height
   overlay. Native Animation updates now use a compact, non-blocking toast that
@@ -112,3 +123,19 @@ and are intentionally excluded from GitHub.
   release backup rules.
 - **Android v2.0.0** — Introduced the first first-party Tonu Study Android
   client.
+
+## Firebase rules
+
+The deployable Firestore policy is [`firestore.rules`](firestore.rules), with
+project selection in `.firebaserc` and rule mapping in `firebase.json`.
+Authenticated study documents remain keyed by the Firebase UID, so Google and
+username/password login methods linked to one account write to the same record.
+
+To publish the rule file after authenticating Firebase CLI:
+
+```powershell
+npx firebase-tools login
+npx firebase-tools deploy --only firestore:rules --project tonustudy
+```
+
+Email/Password and Google providers must also be enabled in Firebase Console.

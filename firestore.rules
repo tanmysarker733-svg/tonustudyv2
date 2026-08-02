@@ -1,0 +1,56 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return signedIn()
+        && request.auth.token.email in [
+          'prituone@gmail.com',
+          'tanmoygogrow@gmail.com',
+          'tannysarker733@gmail.com'
+        ];
+    }
+
+    function ownsStudyDocument(docId) {
+      return signedIn()
+        && request.auth.uid == docId
+        && request.resource.data.authUid == request.auth.uid;
+    }
+
+    match /hsc_study_data_forever/{docId} {
+      // Signed-in users may browse cloud snapshots in Spectate read-only mode.
+      allow get, list: if signedIn();
+
+      // A user can create or update only the document keyed by their Firebase UID.
+      // Admins retain the existing cross-account maintenance access.
+      allow create, update: if ownsStudyDocument(docId) || isAdmin();
+
+      // Preserve the existing admin-only deletion policy.
+      allow delete: if isAdmin();
+    }
+
+    match /hsc_group_chat_forever_v1/{messageId} {
+      allow read: if true;
+
+      allow create: if signedIn()
+        && request.resource.data.authorId == request.auth.uid;
+
+      // Authors may edit their own messages but cannot transfer ownership.
+      allow update: if signedIn()
+        && (
+          isAdmin()
+          || (
+            resource.data.authorId == request.auth.uid
+            && request.resource.data.authorId == resource.data.authorId
+          )
+        );
+
+      allow delete: if signedIn()
+        && (resource.data.authorId == request.auth.uid || isAdmin());
+    }
+  }
+}

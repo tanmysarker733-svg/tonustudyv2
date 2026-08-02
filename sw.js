@@ -1,4 +1,4 @@
-const CACHE_NAME = "tonu-study-offline-v369";
+const CACHE_NAME = "tonu-study-offline-v371";
 const APP_SHELL = [
   "./",
   "./index.html",

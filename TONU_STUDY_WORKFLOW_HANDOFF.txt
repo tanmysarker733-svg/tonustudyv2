@@ -1,5 +1,5 @@
 TONU STUDY - PROJECT WORKFLOW AND HANDOFF
-Updated: 2026-07-31
+Updated: 2026-08-02
 
 This repository copy is a concise operational guide. The complete local handoff file
 is kept in the Version 2 source folder:
@@ -12,7 +12,7 @@ the next number, then edit the new file only. Never overwrite prior versions.
 WEB SOURCE / DEPLOYMENT
 - Local versioned source folder:
   E:\! Entertainment\! Editing Partition\Passive Farhan and Blog\Study Web\Version 2
-- Current latest numbered source at this handoff: hsc-study-os__363_.html
+- Current latest numbered source at this handoff: hsc-study-os__371_.html
 - Production source: this repository root index.html on branch main.
 - Before deployment, copy the validated newest numbered HTML to this index.html.
 - Copy any changed Assets into this repository Assets\ folder too.
@@ -32,7 +32,26 @@ RELEASE
 - Release tag: android
 - Download URL:
   https://github.com/tanmysarker733-svg/tonustudyv2/releases/download/android/Tonu.Study.apk
-- Latest source release at this handoff: Tonu Study Android v2.1.12 / Web 369
+- Latest source release at this handoff: Tonu Study Android v2.1.12 / Web 371
+
+WEB 371 NOTES
+- A Firebase user can set or change a username/password login in Account >
+  Security. It links to the current Firebase UID, including Google-created
+  accounts, so cloud progress remains attached to one account.
+- The username uses a private Firebase Auth email alias. Passwords are managed
+  only by Firebase Authentication and must never be stored or displayed by the
+  page.
+- Phone/SMS linking remains disabled and visually marked unavailable.
+- Firestore rules are maintained in firestore.rules; firebase.json and
+  .firebaserc point the Firebase CLI to project tonustudy.
+- Narrow notifications, account close placement, spectate status, and Smart
+  Update layout were compacted without adding expensive blur effects.
+
+WEB 370 NOTES
+- Native Animation defaults off on mobile/Android until the user explicitly
+  enables it.
+- Chapter slider input is requestAnimationFrame-batched to avoid redundant
+  rerenders, and narrow login/composer controls no longer clip labels.
 
 WEB 363 NOTES
 - Smart Update uses subject icons for Physics, Chemistry, Biology, Higher Math,
