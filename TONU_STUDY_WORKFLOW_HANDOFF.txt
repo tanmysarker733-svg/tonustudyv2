@@ -1,104 +1,130 @@
 TONU STUDY - PROJECT WORKFLOW AND HANDOFF
-Updated: 2026-08-02
+Updated: 2026-08-02 | Current web build: 375
 
-This repository copy is a concise operational guide. The complete local handoff file
-is kept in the Version 2 source folder:
-E:\! Entertainment\! Editing Partition\Passive Farhan and Blog\Study Web\Version 2\TONU_STUDY_WORKFLOW_HANDOFF.txt
+PURPOSE
+This is the operational handoff for the next AI/developer. Read this before editing.
+It explains where the real web source lives, how numbered versions are preserved,
+how GitHub/Vercel/APK are related, and what must be tested before claiming a fix.
 
-CORE RULE
-Use the n+1 rule for numbered web files: copy the latest hsc-study-os__NNN_.html to
-the next number, then edit the new file only. Never overwrite prior versions.
-
-WEB SOURCE / DEPLOYMENT
-- Local versioned source folder:
+PROJECT MAP
+- Repository working copy:
+  C:\Users\tonmo\Documents\Codex\2026-06-29\tonustudyv2
+- GitHub repository:
+  https://github.com/tanmysarker733-svg/tonustudyv2
+- Production web app:
+  https://tonustudy.vercel.app/
+- Historical numbered HTML mirror:
   E:\! Entertainment\! Editing Partition\Passive Farhan and Blog\Study Web\Version 2
-- Current latest numbered source at this handoff: hsc-study-os__374_.html
-- Production source: this repository root index.html on branch main.
-- Before deployment, copy the validated newest numbered HTML to this index.html.
-- Copy any changed Assets into this repository Assets\ folder too.
+- Canonical deployed file in this repository: index.html
+- Current local numbered source: hsc-study-os__375_.html
 
-ANDROID
-- Android wrapper source: app\
-- Android is a live WebView wrapper around https://tonustudy.vercel.app/ so the
-  deployed index.html remains the single UI/feature source for web and APK.
-- With no network, the wrapper shows a connection warning and supports pull-to-retry;
-  it does not ship a second stale offline HTML interface.
-- Native Android owns Google account selection, file picking, app-aware Back handling,
-  external links, connectivity checks, and the compact launch screen.
-- Increase versionCode and versionName in app\build.gradle.kts for every release.
+NON-NEGOTIABLE N+1 RULE
+1. Find the highest hsc-study-os__NNN_.html in the Version 2 mirror.
+2. Copy it to hsc-study-os__NNN+1_.html. Never overwrite the prior number.
+3. Make all feature/style/script edits in the new numbered copy.
+4. Validate that new copy.
+5. Copy that validated file into this repository as index.html.
+6. Mirror the new numbered copy and index.html back to the Version 2 folder.
 
-RELEASE
-- GitHub Actions workflow: .github\workflows\android.yml
+The numbered snapshots are local preservation history. Do not add every numbered
+snapshot to GitHub unless the user explicitly asks. Normally GitHub receives only
+index.html, README.md, this handoff file when changed, and required assets/source.
+
+WEB -> GITHUB -> VERCEL SYNC
+- main branch is the production source.
+- Vercel deploys the root index.html automatically after a successful push to main.
+- Always update TONU_WEB_BUILD in the HTML to the new version number.
+- After pushing, fetch https://tonustudy.vercel.app/?verify=NNN with cache bypass and
+  confirm BOTH the matching TONU_WEB_BUILD and a string unique to the new feature.
+- A Git push is not proof of a live deployment; the live response check is required.
+
+ANDROID APK SYNC MODEL
+- Android wrapper source is app\.
+- The wrapper loads https://tonustudy.vercel.app/ in a WebView. Therefore ordinary
+  HTML/CSS/JS changes reach the installed APK after the Vercel deployment without
+  rebuilding the APK, subject to WebView/network cache refresh.
+- Fully close/reopen the app after a web deployment if the old interface remains.
+- Native code owns Android-only behavior: app back handling, Android account picker,
+  file selection, launch screen, connectivity treatment, and external links.
+- Only change app\ and rebuild/upload the APK when native behavior, app icon,
+  splash, package/version, Google Sign-In, or WebView configuration changes.
+- For an APK release, increment versionCode and versionName in app\build.gradle.kts,
+  run the Android workflow, install the generated APK, and test it before replacing
+  the GitHub release asset. Never label an APK working without an install test.
+- Release workflow: .github\workflows\android.yml
 - Release tag: android
-- Download URL:
+- Android download URL:
   https://github.com/tanmysarker733-svg/tonustudyv2/releases/download/android/Tonu.Study.apk
-- Latest source release at this handoff: Tonu Study Android v2.1.12 / Web 374
 
-WEB 374 NOTES
-- Account Security now re-evaluates Firebase Auth after delayed session restore,
-  so Username, Password, password visibility, and Set/Change controls cannot stay
-  incorrectly disabled while a Google or email identity is already active.
-- Provider unlink and auth-state changes refresh the credential workspace without
-  requiring the user to close the dialog or restart the web app.
+DATA AND AUTH BOUNDARIES
+- Browser localStorage and Android WebView localStorage are separate.
+- Cross-device study-data sync is only real when Firebase Auth plus Firestore save
+  and restore are configured and verified for the same signed-in user.
+- Do not claim cloud sync, Google sign-in, username/password, or APK native sign-in
+  works based solely on visible UI. Test successful sign-in and a write/read round trip.
+- Passwords must never be stored, displayed, or written to Firestore by page code.
+- Username/password linking uses a Firebase Auth alias for the current Firebase UID.
+- Firebase configuration/rules are in firestore.rules, firebase.json, and .firebaserc.
 
-WEB 373 NOTES
-- Account Settings close control keeps a clear top-right position without
-  overlapping the Security action on desktop or narrow screens.
+CURRENT WEB 375 CHANGESET
+- Commit: 439dabe Add read-only community account viewer
+- Chat messages with PUBLIC visibility show a compact account icon beside PUBLIC.
+- That icon opens the author's read-only community account view.
+- Spectate rows now hide raw UID and show display name/username plus email.
+- Spectate has clear Spectate and Account actions. Account opens the same read-only
+  profile viewer with no Security action and no ability to edit/write data.
+- Spectate header has Refresh next to the red Close control; redundant selection copy
+  was removed.
+- index.html and hsc-study-os__375_.html were SHA-256 identical when committed.
+- Live Vercel response was verified for TONU_WEB_BUILD=375 and the account-view code.
 
-WEB 372 NOTES
-- Account Security has one responsive scroll surface, clearer provider states,
-  keyboard submission, a correctly placed password visibility control, and
-  balanced dark/light styling.
-- SKIP users can create a recoverable Firebase username/password account from
-  the Security panel without discarding their local study progress. The first
-  cloud snapshot is queued immediately after successful account creation.
-- Local-only SKIP/admin sessions no longer expose a stale Firebase provider
-  state from a previous browser session.
+RECENT WEB HISTORY
+- Web 374: account security rechecks Firebase auth after delayed restore so password
+  controls do not stay disabled after Google/email identity becomes available.
+- Web 373: account close control remains top-right and avoids Security-button overlap.
+- Web 372: responsive Account Security; Firebase username/password creation for SKIP;
+  provider states refresh safely; SMS stays unavailable.
+- Web 371: linked username/password flows, Firebase rules, compact notification and
+  account/spectate/Smart Update layout refinements.
+- Web 370: Native Animation opt-in on mobile/Android; RAF-batched sliders and narrow
+  login/composer label fixes.
+- Web 363: compact Smart Update labels/icons and backwards-compatible Smart Sync text.
+- Web 362: common dialog scroll-lock/restore path; smooth slider/font/theme updates;
+  tablet labels and install/update channel work.
 
-WEB 371 NOTES
-- A Firebase user can set or change a username/password login in Account >
-  Security. It links to the current Firebase UID, including Google-created
-  accounts, so cloud progress remains attached to one account.
-- The username uses a private Firebase Auth email alias. Passwords are managed
-  only by Firebase Authentication and must never be stored or displayed by the
-  page.
-- Phone/SMS linking remains disabled and visually marked unavailable.
-- Firestore rules are maintained in firestore.rules; firebase.json and
-  .firebaserc point the Firebase CLI to project tonustudy.
-- Narrow notifications, account close placement, spectate status, and Smart
-  Update layout were compacted without adding expensive blur effects.
+SAFE EDITING PRACTICE
+- This is a large single-file application. Prefer targeted replacements around stable
+  IDs/classes; do not reformat the entire HTML or rewrite unrelated markup.
+- Preserve existing working functions. Add new behavior through isolated helpers and
+  delegated data-action click handling where the application already uses it.
+- Use UTF-8 without BOM. Windows/PowerShell writes can corrupt emoji/Bengali encoding;
+  inspect visible strings after modifications.
+- Use apply_patch for edits. Do not use destructive git reset/checkout.
+- build-artifacts\ is user-owned and often untracked; do not stage, delete, or modify
+  it unless the user directly requests an artifact operation.
 
-WEB 370 NOTES
-- Native Animation defaults off on mobile/Android until the user explicitly
-  enables it.
-- Chapter slider input is requestAnimationFrame-batched to avoid redundant
-  rerenders, and narrow login/composer controls no longer clip labels.
+MINIMUM VALIDATION FOR EVERY WEB CHANGE
+1. Confirm the n+1 file exists and the older version is unchanged.
+2. Extract every <script> block and run node --check on each extracted script.
+3. Run git diff --check.
+4. Check expected feature strings/data-actions exist and stale strings are absent.
+5. Hash-compare the numbered file, repository index.html, and Version 2 mirror.
+6. Inspect desktop + narrow mobile layout and dark + light mode where affected.
+7. Test the interaction itself: click, close/back, scroll, and a second invocation.
+8. Commit only intended tracked files. Keep unrelated/untracked user files out.
+9. Push main, verify remote commit hash, then verify live Vercel content.
 
-WEB 363 NOTES
-- Smart Update uses subject icons for Physics, Chemistry, Biology, Higher Math,
-  and ICT; other subjects and free-text topics retain the standard play icon.
-- Detailed is implicit and omitted. One Shot, Advanced, and Admission render as
-  O-shot, Adv., and Adm.; lecture notation renders as Lec.
-- Smart Sync continues to accept both legacy and compact lecture/class labels.
+USEFUL COMMANDS (PowerShell, run from repository root)
+  git status --short
+  git diff --check
+  git add -- index.html README.md TONU_STUDY_WORKFLOW_HANDOFF.txt
+  git commit -m "Describe the intentional change"
+  git push origin main
+  git log -1 --oneline
+  git ls-remote origin refs/heads/main
 
-WEB 362 NOTES
-- Native Animation controls rich mobile/Android feedback without forcing the
-  costly legacy performance profiles.
-- Settings, mission, install, and fullscreen-composer dialogs share one
-  scroll-lock/restore path to prevent frozen pages and pull-to-refresh conflicts.
-- Sliders, font scaling, and theme changes update smoothly without full-page
-  rendering on every input event.
-- Tablet quick tools expose readable labels; browser install choices and Android
-  update checks use the shared GitHub release channel.
-
-SYNC LIMITATION
-Browser local storage and Android WebView local storage are separate. Real cross-device
-sync requires a configured authenticated cloud backend/API. Never claim sync works
-unless remote save and restore are tested.
-
-FINAL CHECKLIST
-1. n+1 file created.
-2. Validate scripts and responsive dark/light layouts.
-3. Replace root index.html with the final numbered HTML.
-4. Commit/push to main and verify production.
-5. For APK changes, run successful GitHub build, upload release, and test install.
+HANDOFF STATUS AT LAST UPDATE
+- Git main last verified commit: 439dabe.
+- Production web last verified build: 375.
+- There may be an untracked build-artifacts\ folder. Preserve it.
+- The next change must start at Web 376 using the n+1 rule.
