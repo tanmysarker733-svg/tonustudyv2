@@ -24431,8 +24431,23 @@
       padding-right: 54px !important;
     }
 
+    /* Account header owns two independent actions: Security stays in the
+       action lane; Close owns a reserved top-right slot.  Keeping them out
+       of the same flex group prevents their hit areas from overlapping. */
+    #accountDialog .account-dialog__head {
+      min-height: 92px;
+      padding-right: 58px !important;
+    }
+
     #accountDialog .account-dialog__tools {
-      margin-right: 2px;
+      flex: 0 0 auto;
+      flex-wrap: nowrap;
+      margin: 30px 46px 0 0;
+      max-width: calc(100% - 46px);
+    }
+
+    #accountDialog .account-dialog__tools .btn-small {
+      white-space: nowrap;
     }
 
     #accountDialog .account-dialog-close,
@@ -24449,6 +24464,33 @@
       border-color: #fb7185 !important;
       box-shadow: 0 6px 16px rgba(127, 29, 29, .24) !important;
       z-index: 2;
+    }
+
+    #accountDialog .account-dialog-close {
+      display: inline-grid !important;
+      place-items: center;
+      border-radius: 10px !important;
+    }
+
+    #accountDialog .account-dialog-close:focus-visible {
+      outline: 3px solid rgba(96, 165, 250, .9);
+      outline-offset: 3px;
+    }
+
+    @media (max-width: 640px) {
+      #accountDialog .account-dialog__head {
+        min-height: 104px;
+        padding-right: 50px !important;
+      }
+
+      #accountDialog .account-dialog__tools {
+        margin: 42px 38px 0 0;
+      }
+
+      #accountDialog .account-dialog__tools .btn-small {
+        min-height: 34px;
+        padding-inline: 10px;
+      }
     }
 
     .security-password-field {
@@ -31947,10 +31989,10 @@
           <button class="btn-small btn-small--primary" type="button" data-action="open-account-security-dialog">
             ${icon("shield-check", "Security")} <span>Security</span>
           </button>
-          <button class="btn-small btn-small--icon account-dialog-close" type="button" data-action="close-account-dialog" aria-label="Close account settings">
-            ${icon("x", "Close")}
-          </button>
         </div>
+        <button class="btn-small btn-small--icon account-dialog-close" type="button" data-action="close-account-dialog" aria-label="Close account settings">
+          ${icon("x", "Close")}
+        </button>
       </div>
       ${renderAccountPanelBody(state)}
     </section>
