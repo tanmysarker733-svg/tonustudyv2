@@ -12,7 +12,7 @@ the next number, then edit the new file only. Never overwrite prior versions.
 WEB SOURCE / DEPLOYMENT
 - Local versioned source folder:
   E:\! Entertainment\! Editing Partition\Passive Farhan and Blog\Study Web\Version 2
-- Current latest numbered source at this handoff: hsc-study-os__371_.html
+- Current latest numbered source at this handoff: hsc-study-os__372_.html
 - Production source: this repository root index.html on branch main.
 - Before deployment, copy the validated newest numbered HTML to this index.html.
 - Copy any changed Assets into this repository Assets\ folder too.
@@ -32,7 +32,17 @@ RELEASE
 - Release tag: android
 - Download URL:
   https://github.com/tanmysarker733-svg/tonustudyv2/releases/download/android/Tonu.Study.apk
-- Latest source release at this handoff: Tonu Study Android v2.1.12 / Web 371
+- Latest source release at this handoff: Tonu Study Android v2.1.12 / Web 372
+
+WEB 372 NOTES
+- Account Security has one responsive scroll surface, clearer provider states,
+  keyboard submission, a correctly placed password visibility control, and
+  balanced dark/light styling.
+- SKIP users can create a recoverable Firebase username/password account from
+  the Security panel without discarding their local study progress. The first
+  cloud snapshot is queued immediately after successful account creation.
+- Local-only SKIP/admin sessions no longer expose a stale Firebase provider
+  state from a previous browser session.
 
 WEB 371 NOTES
 - A Firebase user can set or change a username/password login in Account >
