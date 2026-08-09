@@ -24665,6 +24665,80 @@
       }
     }
   </style>
+  <style id="v377-resume-scroll-motion-guard">
+    /* v377: do not let an Android pull-to-refresh gesture win over an upward
+       page or modal scroll.  The outer overlay remains locked only while a
+       dialog is open; its actual scroll body still receives vertical pans. */
+    html,
+    body,
+    .study-shell {
+      overscroll-behavior-y: none;
+    }
+
+    html.android-shell body:not(.dialog-scroll-locked),
+    html.android-shell .study-shell {
+      touch-action: pan-y pinch-zoom;
+      overflow-x: clip;
+    }
+
+    body.dialog-scroll-locked :is(
+      .account-dialog,
+      .settings-dialog,
+      .backup-dialog,
+      .mission-modal,
+      #chapterQuickDialog,
+      #chatUpdateComposer.chat-update-composer--fullscreen
+    ) {
+      touch-action: pan-y !important;
+    }
+
+    body.dialog-scroll-locked :is(
+      .settings-body,
+      .account-dialog__body,
+      .backup-dialog__body,
+      .mission-card__body,
+      .chapter-quick-dialog__body,
+      #chatUpdateComposer .composer-wizard-body
+    ) {
+      overscroll-behavior-y: contain !important;
+      touch-action: pan-y !important;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    /* Native Animation is a visual-only master switch.  Notifications keep
+       their normal timing and accessibility while button sparkles/shines and
+       composer entry flourishes are stopped completely. */
+    html.native-animation-off :is(
+      .composer-go-final,
+      .footer-sparkle-action,
+      .chat-compose__footer-actions .btn-small,
+      #chatUpdateComposer .btn-small--primary,
+      #chatUpdateComposer .btn-small--accent,
+      #chatUpdateComposer [data-action^="composer-"]
+    ) {
+      animation: none !important;
+    }
+
+    html.native-animation-off :is(
+      .composer-go-final,
+      .footer-sparkle-action,
+      .chat-compose__footer-actions .btn-small,
+      #chatUpdateComposer .btn-small--primary,
+      #chatUpdateComposer .btn-small--accent,
+      #chatUpdateComposer [data-action^="composer-"]
+    )::before,
+    html.native-animation-off :is(
+      .composer-go-final,
+      .footer-sparkle-action,
+      .chat-compose__footer-actions .btn-small,
+      #chatUpdateComposer .btn-small--primary,
+      #chatUpdateComposer .btn-small--accent,
+      #chatUpdateComposer [data-action^="composer-"]
+    )::after {
+      animation: none !important;
+      opacity: 0 !important;
+    }
+  </style>
   <style id="v372-security-and-ui-audit">
     /* v372: dense account-security hierarchy, reliable modal scrolling and low-cost polish. */
     :root {
@@ -25725,7 +25799,7 @@
     let deferredInstallPrompt = null;
     let installManifestUrl = "";
     const TONU_APK_URL = "https://github.com/tanmysarker733-svg/tonustudyv2/releases/download/android/Tonu.Study.apk";
-    const TONU_WEB_BUILD = "376";
+    const TONU_WEB_BUILD = "377";
     const TONU_ANDROID_LATEST = "2.1.12";
 
     const isAndroidShell = () => Boolean(window.TonuAndroid);
@@ -34919,6 +34993,43 @@
       });
     };
 
+    /* A tab/app resume must never throw away an in-progress interaction.  The
+       normal composer draft is already saved separately; this short-lived
+       checkpoint adds the current page/modal position and unsent chat text so
+       an unavoidable WebView recreation can resume in the same place. */
+    const INTERRUPTION_CHECKPOINT_KEY = "tonu-interruption-checkpoint-v1";
+    const saveInterruptionCheckpoint = () => {
+      try {
+        const chatInput = document.getElementById("chatMessageInput");
+        sessionStorage.setItem(INTERRUPTION_CHECKPOINT_KEY, JSON.stringify({
+          savedAt: Date.now(),
+          mountUi: captureMountUiState(),
+          chatDraft: chatInput?.value || ""
+        }));
+        saveComposerDraft();
+      } catch (_) { }
+    };
+
+    const restoreInterruptionCheckpoint = () => {
+      try {
+        const raw = sessionStorage.getItem(INTERRUPTION_CHECKPOINT_KEY);
+        if (!raw) return;
+        const checkpoint = JSON.parse(raw);
+        if (!checkpoint || Date.now() - Number(checkpoint.savedAt || 0) > 1000 * 60 * 60 * 12) return;
+        const chatInput = document.getElementById("chatMessageInput");
+        if (chatInput && checkpoint.chatDraft && !chatInput.value) chatInput.value = checkpoint.chatDraft;
+        restoreMountUiState(checkpoint.mountUi);
+      } catch (_) { }
+    };
+
+    document.addEventListener("visibilitychange", () => {
+      if (document.visibilityState === "hidden") saveInterruptionCheckpoint();
+    }, { passive: true });
+    window.addEventListener("pagehide", saveInterruptionCheckpoint, { passive: true });
+    window.addEventListener("pageshow", () => {
+      window.requestAnimationFrame(restoreInterruptionCheckpoint);
+    }, { passive: true });
+
     document.documentElement.classList.add("effects-pending");
     applyPerformanceMode();
     document.querySelector("#app").innerHTML = renderAppShell(scaffoldState, buildUnits());
@@ -34930,6 +35041,7 @@
     updateInstallContext();
 
     document.addEventListener("DOMContentLoaded", () => {
+      restoreInterruptionCheckpoint();
       updateNetworkStatus(hasInternetConnection(), false);
       window.addEventListener("offline", () => updateNetworkStatus(false, true), { passive: true });
       window.addEventListener("online", () => updateNetworkStatus(true, true), { passive: true });
