@@ -25799,7 +25799,7 @@
     let deferredInstallPrompt = null;
     let installManifestUrl = "";
     const TONU_APK_URL = "https://github.com/tanmysarker733-svg/tonustudyv2/releases/download/android/Tonu.Study.apk";
-    const TONU_WEB_BUILD = "377";
+    const TONU_WEB_BUILD = "378";
     const TONU_ANDROID_LATEST = "2.1.12";
 
     const isAndroidShell = () => Boolean(window.TonuAndroid);
@@ -34998,6 +34998,7 @@
        checkpoint adds the current page/modal position and unsent chat text so
        an unavoidable WebView recreation can resume in the same place. */
     const INTERRUPTION_CHECKPOINT_KEY = "tonu-interruption-checkpoint-v1";
+    let interruptionCheckpointRestored = false;
     const saveInterruptionCheckpoint = () => {
       try {
         const chatInput = document.getElementById("chatMessageInput");
@@ -35012,10 +35013,18 @@
 
     const restoreInterruptionCheckpoint = () => {
       try {
+        if (interruptionCheckpointRestored) return;
         const raw = sessionStorage.getItem(INTERRUPTION_CHECKPOINT_KEY);
         if (!raw) return;
         const checkpoint = JSON.parse(raw);
-        if (!checkpoint || Date.now() - Number(checkpoint.savedAt || 0) > 1000 * 60 * 60 * 12) return;
+        if (!checkpoint || Date.now() - Number(checkpoint.savedAt || 0) > 1000 * 60 * 60 * 12) {
+          sessionStorage.removeItem(INTERRUPTION_CHECKPOINT_KEY);
+          return;
+        }
+        interruptionCheckpointRestored = true;
+        // This is deliberately single-use.  Keeping a checkpoint after it has
+        // restored would reopen dialogs the user subsequently closed.
+        sessionStorage.removeItem(INTERRUPTION_CHECKPOINT_KEY);
         const chatInput = document.getElementById("chatMessageInput");
         if (chatInput && checkpoint.chatDraft && !chatInput.value) chatInput.value = checkpoint.chatDraft;
         restoreMountUiState(checkpoint.mountUi);
@@ -35026,8 +35035,10 @@
       if (document.visibilityState === "hidden") saveInterruptionCheckpoint();
     }, { passive: true });
     window.addEventListener("pagehide", saveInterruptionCheckpoint, { passive: true });
-    window.addEventListener("pageshow", () => {
-      window.requestAnimationFrame(restoreInterruptionCheckpoint);
+    window.addEventListener("pageshow", (event) => {
+      // Only restore after a browser/WebView back-forward cache resume.  Initial
+      // load already restores once in DOMContentLoaded below.
+      if (event.persisted) window.requestAnimationFrame(restoreInterruptionCheckpoint);
     }, { passive: true });
 
     document.documentElement.classList.add("effects-pending");
