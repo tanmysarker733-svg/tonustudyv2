@@ -25408,6 +25408,28 @@
       .readonly-account-identity > .chat-visibility-pill { grid-column: 1 / -1; justify-self: start; }
       .chat-item__meta { row-gap: 5px !important; }
     }
+    /* v379: mobile dialog reachability, resilient resource thumbnails, and compact controls. */
+    .readonly-account-dialog__card { display: flex; flex-direction: column; }
+    .readonly-account-body { flex: 1 1 auto; min-height: 0; padding-right: 4px; }
+    .readonly-account-feed { display: grid; gap: 10px; }
+    .readonly-account-feed .account-feed { max-height: min(52dvh, 520px); min-height: 260px; touch-action: pan-y; -webkit-overflow-scrolling: touch; }
+    .readonly-account-feed__actions { display: flex; justify-content: flex-end; gap: 8px; }
+    .readonly-account-feed__more { justify-self: stretch; }
+    .drive-explorer__resource-card { position: relative; overflow: hidden; }
+    .drive-explorer__resource-card img { background: #0f2743; color: #e0f2fe; font-weight: 800; }
+    .drive-explorer__image-label { position: absolute; inset: 0 auto auto 0; min-width: 48px; padding: 4px 6px; border-radius: 0 0 9px 0; color: #fff; background: rgba(15, 23, 42, .74); font-size: .68rem; font-weight: 900; letter-spacing: .04em; pointer-events: none; }
+    #cloudSyncIndicator { display: inline-flex; max-width: 100%; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    #chatUpdateComposer .composer-after-completion-actions .btn-small { min-width: 0; overflow: hidden; }
+    #chatUpdateComposer .composer-after-completion-actions .btn-small span { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+    html[data-theme="dark"] .chapter-quick-dialog :is(.ch-btn, .track-chk, .ch-style-option:not(.is-active)) { color: #e5eef8 !important; }
+    html[data-theme="dark"] .chapter-quick-dialog :is(input, select) { color: #e5eef8 !important; background: #172c45 !important; border-color: #55799f !important; }
+    html[data-theme="dark"] .chronos-chip:not(.is-active) { color: #bfd2e7 !important; background: #172c45 !important; }
+    html[data-theme="dark"] .chronos-chip.is-active { color: #eff6ff !important; background: #0c4a6e !important; border-color: #38bdf8 !important; }
+    @media (max-width: 640px) {
+      .readonly-account-feed .account-feed { max-height: 48dvh; min-height: 310px; }
+      .drive-explorer__image-label { min-width: 42px; font-size: .62rem; }
+      #cloudSyncIndicator { font-size: .72rem !important; padding-inline: 7px !important; }
+    }
   </style>
 </head>
 
@@ -25799,8 +25821,8 @@
     let deferredInstallPrompt = null;
     let installManifestUrl = "";
     const TONU_APK_URL = "https://github.com/tanmysarker733-svg/tonustudyv2/releases/download/android/Tonu.Study.apk";
-    const TONU_WEB_BUILD = "378";
-    const TONU_ANDROID_LATEST = "2.1.12";
+    const TONU_WEB_BUILD = "379";
+const TONU_ANDROID_LATEST = "2.1.13";
 
     const isAndroidShell = () => Boolean(window.TonuAndroid);
     const isAndroidBrowser = () => /Android/i.test(navigator.userAgent || "") && !isAndroidShell();
@@ -26511,6 +26533,7 @@
 
     let readOnlyAccountTarget = null;
     let readOnlyAccountReturn = null;
+    let readOnlyAccountFeedLimit = 50;
 
     const getMessagesForAccountUid = (uid = "") =>
       chatState.messages.filter((message) => message.authorId === uid);
@@ -26528,6 +26551,7 @@
     const renderReadOnlyAccountBody = (user) => {
       const settings = user?.payload?.userSettings || {};
       const messages = getMessagesForAccountUid(user?.uid || "");
+      const visibleMessages = messages.slice(-readOnlyAccountFeedLimit);
       return `
         <div class="readonly-account-summary">
           <div class="readonly-account-identity">
@@ -26552,8 +26576,12 @@
             <div class="account-card__head">
               <div><strong>Message feed</strong><span>${messages.length} post${messages.length === 1 ? "" : "s"}</span></div>
             </div>
-            <div class="account-feed">
-              ${messages.length ? messages.map((message) => `
+            <div class="readonly-account-feed__actions" aria-label="Message feed controls">
+              <button class="btn-small btn-small--icon" type="button" data-action="readonly-account-feed-start" aria-label="Jump to first message" title="Jump to first message">${icon("chevron-up", "First")}</button>
+              <button class="btn-small btn-small--icon" type="button" data-action="readonly-account-feed-end" aria-label="Jump to latest message" title="Jump to latest message">${icon("chevron-down", "Latest")}</button>
+            </div>
+            <div class="account-feed" id="readOnlyAccountFeed">
+              ${messages.length ? visibleMessages.map((message) => `
                 <article class="account-feed-item">
                   <div class="account-feed-item__meta">
                     <span>${escapeHtml(formatChatTime(message))}</span>
@@ -26563,6 +26591,7 @@
                 </article>
               `).join("") : `<div class="account-feed-empty">No public messages from this account yet.</div>`}
             </div>
+            ${messages.length > visibleMessages.length ? `<button class="btn-small readonly-account-feed__more" type="button" data-action="readonly-account-feed-more">Load ${Math.min(50, messages.length - visibleMessages.length)} more</button>` : ""}
           </section>
         </div>
       `;
@@ -28110,6 +28139,29 @@
       customSuffixExpanded: false
     };
 
+    function syncComposerTotalToTracker() {
+      const item = composerState.currentItem;
+      if (!item || item.subjectIndex === null || item.chapterIndex === null) return;
+      const subject = scaffoldState.syllabus[item.subjectIndex];
+      if (!subject) return;
+      const chapters = subject.hasPapers ? subject.papers?.[item.paperIndex || 0]?.chapters : subject.chapters;
+      const chapter = chapters?.[item.chapterIndex];
+      if (!chapter || chapter.isPerc || chapter.viewStyle === "perc") return;
+      const totals = {
+        Detailed: "totalDL",
+        Advanced: "totalAdv",
+        Admission: "totalAdm",
+        FRB: "totalFRB",
+        "One Shot": "totalOS"
+      };
+      const field = totals[item.classType] || "totalDL";
+      ensureChapterShape(chapter);
+      chapter[field] = Math.max(1, Number(item.totalLectures) || 1);
+      saveSyllabus(scaffoldState.syllabus);
+      refreshSyllabusGrid();
+      triggerCloudSaveDebounced?.();
+    }
+
     function resetComposerCurrentItem() {
       composerState.currentItem = {
         subjectIndex: null,
@@ -29315,13 +29367,13 @@
         // (the internal chapter step), without pinning the composer header off-screen.
         if (step >= 9) {
           wizardNode.scrollIntoView({
-          behavior: (prefersReducedMotion() || !isNativeAnimationEnabled()) ? "auto" : "smooth",
+          behavior: prefersReducedMotion() ? "auto" : "smooth",
             block: "start"
           });
         } else {
           const activePanel = wizardNode.querySelector(".composer-active-panel");
           (activePanel || wizardNode).scrollIntoView({
-          behavior: (prefersReducedMotion() || !isNativeAnimationEnabled()) ? "auto" : "smooth",
+          behavior: prefersReducedMotion() ? "auto" : "smooth",
             block: "center"
           });
         }
@@ -29674,6 +29726,7 @@
         const val = (composerState.currentItem.totalLectures || 10) + delta;
         composerState.currentItem.totalLectures = Math.max(1, val);
         composerState.currentItem.selectedLectures = composerState.currentItem.selectedLectures.filter(l => l <= composerState.currentItem.totalLectures);
+        syncComposerTotalToTracker();
         const preservedScrollY = composerControlScrollY;
         composerControlScrollY = null;
         renderComposerWizard({ reposition: false, preserveScroll: true, preservedScrollY });
@@ -30177,6 +30230,7 @@
         const val = parseInt(e.target.value, 10) || 1;
         composerState.currentItem.totalLectures = Math.max(1, val);
         composerState.currentItem.selectedLectures = composerState.currentItem.selectedLectures.filter(l => l <= val);
+        syncComposerTotalToTracker();
         renderComposerWizard();
         return;
       } else if (e.target.id === "composerPercentRange") {
@@ -31495,7 +31549,7 @@
                 <p>Premium Edition preview shell</p>
                 <a class="settings-update-card" href="https://github.com/tanmysarker733-svg/tonustudyv2/releases/download/android/Tonu.Study.apk" target="_blank" rel="noopener noreferrer" aria-label="Download the latest Android app">
                   ${icon("download", "Update")}
-                  <span><strong>Update to latest version <em>Android v2.1.12 · Web 367</em></strong><small>Android release channel · checks the current GitHub release when you are online</small></span>
+                  <span><strong>Update to latest version <em>Android v2.1.13 · Web 379</em></strong><small>Android release channel · checks the current GitHub release when you are online</small></span>
                   ${icon("external-link", "Open")}
                 </a>
                 <p>Built by Tanmoy Sarker for HSC students who want to track smarter.</p>
@@ -32335,8 +32389,26 @@
       }
     };
 
+    const pruneVaultBackups = (items) => {
+      const now = Date.now();
+      const daily = new Map();
+      return items
+        .sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0))
+        .filter((item) => {
+          if (item.source !== "auto") return true;
+          const ageDays = Math.max(0, (now - new Date(item.createdAt || 0).getTime()) / 86400000);
+          if (ageDays <= 15) return true;
+          if (ageDays > 40) return false;
+          const bucket = Math.ceil((ageDays - 15) / 5);
+          if (daily.has(bucket)) return false;
+          daily.set(bucket, true);
+          return true;
+        })
+        .slice(0, 40);
+    };
+
     const writeVaultBackups = (items) => {
-      try { localStorage.setItem(BACKUP_VAULT_KEY, JSON.stringify(items.slice(0, 90))); } catch (_) { }
+      try { localStorage.setItem(BACKUP_VAULT_KEY, JSON.stringify(pruneVaultBackups(items))); } catch (_) { }
     };
 
     const loadModeSnapshot = (suffix = "") => {
@@ -33089,7 +33161,7 @@
             <div class="backup-card__head">
               <div>
                 <h5>Vault Restore</h5>
-                <span class="backup-card__meta">Latest 90 local snapshots. Restore replaces current local state immediately.</span>
+              <span class="backup-card__meta">Keeps every auto snapshot from the last 15 days, plus five spaced older checkpoints. Restore replaces current local state immediately.</span>
               </div>
             </div>
             <div class="backup-vault-list" id="backupVaultList">${backupVaultMarkup()}</div>
@@ -36939,7 +37011,18 @@
       renderSyncStatusUI();
     };
     const closeBackupDialog = () => closeDialog("backupDialog");
-    const openDriveExplorer = () => openDialog("driveExplorerDialog");
+    const openDriveExplorer = () => {
+      openDialog("driveExplorerDialog");
+      document.querySelectorAll(".drive-explorer__resource-card img").forEach((image) => {
+        if (image.parentElement?.querySelector(".drive-explorer__image-label")) return;
+        const label = document.createElement("span");
+        const alt = String(image.alt || "").toLowerCase();
+        label.className = "drive-explorer__image-label";
+        label.textContent = alt.includes("bangla") ? "BN" : alt.includes("english") ? "EN" : alt.includes("physics") ? "PH" : alt.includes("chemistry") ? "CH" : alt.includes("biology") ? "BIO" : alt.includes("math") ? "HM" : "ICT";
+        label.setAttribute("aria-hidden", "true");
+        image.parentElement?.append(label);
+      });
+    };
     const closeDriveExplorer = () => closeDialog("driveExplorerDialog");
 
     const openChatShowAllDialog = () => {
@@ -37178,7 +37261,19 @@
       }
       if (action === "open-readonly-account") {
         e.preventDefault();
+        readOnlyAccountFeedLimit = 50;
         openReadOnlyAccountForUid(target?.dataset?.uid || "", target?.dataset?.name || "Student");
+        return;
+      }
+      if (action === "readonly-account-feed-more") {
+        readOnlyAccountFeedLimit += 50;
+        const body = document.getElementById("readOnlyAccountBody");
+        if (body) body.innerHTML = renderReadOnlyAccountBody(readOnlyAccountTarget);
+        return;
+      }
+      if (action === "readonly-account-feed-start" || action === "readonly-account-feed-end") {
+        const feed = document.getElementById("readOnlyAccountFeed");
+        if (feed) feed.scrollTo({ top: action.endsWith("start") ? 0 : feed.scrollHeight, behavior: prefersReducedMotion() ? "auto" : "smooth" });
         return;
       }
       if (action === "close-readonly-account") {
@@ -38222,6 +38317,14 @@
       syncDialogBodyLock();
       return true;
     });
+  </script>
+  <script>
+    document.addEventListener("click", (event) => {
+      const contact = event.target.closest("#developerDialog .contact-pill");
+      if (!contact) return;
+      event.preventDefault();
+      showSystemToast?.("Contact unavailable", "Developer set information to private. Not available to contact.", "info");
+    }, true);
   </script>
 </body>
 
