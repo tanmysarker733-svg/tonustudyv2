@@ -25821,7 +25821,7 @@
     let deferredInstallPrompt = null;
     let installManifestUrl = "";
     const TONU_APK_URL = "https://github.com/tanmysarker733-svg/tonustudyv2/releases/download/android/Tonu.Study.apk";
-    const TONU_WEB_BUILD = "379";
+    const TONU_WEB_BUILD = "380";
 const TONU_ANDROID_LATEST = "2.1.13";
 
     const isAndroidShell = () => Boolean(window.TonuAndroid);
@@ -36176,33 +36176,6 @@ const TONU_ANDROID_LATEST = "2.1.13";
       if (!btn) return;
       const { si, pi, ci } = btn.dataset;
       const s = parseInt(si), p = parseInt(pi), c = parseInt(ci);
-
-      // Double tap/click shortcut: sets to Max/Min instantly
-      const now = Date.now();
-      const lastClick = btn.lastClickTime || 0;
-      btn.lastClickTime = now;
-      const isDouble = (now - lastClick < 300);
-
-      if (isDouble && (action.endsWith("-inc") || action.endsWith("-dec")) && !action.includes("-total-")) {
-        let handled = true;
-        if (action === "perc-inc") mutateFull(s, p, c, ch => { ch.donePerc = 100; });
-        else if (action === "perc-dec") mutateFull(s, p, c, ch => { ch.donePerc = 0; });
-        else if (action === "dl-inc") mutateFull(s, p, c, ch => { ch.doneDL = ch.totalDL; });
-        else if (action === "dl-dec") mutateFull(s, p, c, ch => { ch.doneDL = 0; });
-        else if (action === "adv-inc") mutateFull(s, p, c, ch => { ch.doneAdv = ch.totalAdv; });
-        else if (action === "adv-dec") mutateFull(s, p, c, ch => { ch.doneAdv = 0; });
-        else if (action === "adm-inc") mutateFull(s, p, c, ch => { ch.doneAdm = ch.totalAdm; });
-        else if (action === "adm-dec") mutateFull(s, p, c, ch => { ch.doneAdm = 0; });
-        else if (action === "frb-inc") mutateFull(s, p, c, ch => { ch.doneFRB = ch.totalFRB; });
-        else if (action === "frb-dec") mutateFull(s, p, c, ch => { ch.doneFRB = 0; });
-        else if (action === "os-inc") mutateFull(s, p, c, ch => { ch.doneOS = ch.totalOS; });
-        else if (action === "os-dec") mutateFull(s, p, c, ch => { ch.doneOS = 0; });
-        else if (action === "qs-inc") mutateFull(s, p, c, ch => { ch.solvedQS = ch.totalQS; });
-        else if (action === "qs-dec") mutateFull(s, p, c, ch => { ch.solvedQS = 0; });
-        else handled = false;
-
-        if (handled) return;
-      }
 
       if (action === "ch-remove") {
         const paper = getPaper(s, p);
