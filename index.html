@@ -25409,6 +25409,7 @@
       .chat-item__meta { row-gap: 5px !important; }
     }
     /* v379: mobile dialog reachability, resilient resource thumbnails, and compact controls. */
+    html.android-shell .quick-action-rail { bottom: max(4px, var(--tonu-android-bottom-inset, 0px)) !important; }
     .readonly-account-dialog__card { display: flex; flex-direction: column; }
     .readonly-account-body { flex: 1 1 auto; min-height: 0; padding-right: 4px; }
     .readonly-account-feed { display: grid; gap: 10px; }
@@ -25821,8 +25822,8 @@
     let deferredInstallPrompt = null;
     let installManifestUrl = "";
     const TONU_APK_URL = "https://github.com/tanmysarker733-svg/tonustudyv2/releases/download/android/Tonu.Study.apk";
-    const TONU_WEB_BUILD = "380";
-const TONU_ANDROID_LATEST = "2.1.13";
+    const TONU_WEB_BUILD = "381";
+const TONU_ANDROID_LATEST = "2.1.14";
 
     const isAndroidShell = () => Boolean(window.TonuAndroid);
     const isAndroidBrowser = () => /Android/i.test(navigator.userAgent || "") && !isAndroidShell();
@@ -25837,7 +25838,10 @@ const TONU_ANDROID_LATEST = "2.1.13";
     const updateInstallContext = () => {
       const shell = isAndroidShell();
       const mobileAndroid = isAndroidBrowser();
-      document.documentElement.classList.toggle("android-shell", shell);
+      const root = document.documentElement;
+      root.classList.toggle("android-shell", shell);
+      const bottomInset = shell ? Number(window.TonuAndroid?.getBottomInsetPx?.() || 0) / Math.max(1, window.devicePixelRatio || 1) : 0;
+      root.style.setProperty("--tonu-android-bottom-inset", `${Math.max(0, Math.round(bottomInset))}px`);
       document.querySelectorAll("[data-install-context]").forEach((button) => {
         const label = button.querySelector("[data-install-label]");
         const version = button.querySelector("[data-install-version]");
@@ -31549,7 +31553,7 @@ const TONU_ANDROID_LATEST = "2.1.13";
                 <p>Premium Edition preview shell</p>
                 <a class="settings-update-card" href="https://github.com/tanmysarker733-svg/tonustudyv2/releases/download/android/Tonu.Study.apk" target="_blank" rel="noopener noreferrer" aria-label="Download the latest Android app">
                   ${icon("download", "Update")}
-                  <span><strong>Update to latest version <em>Android v2.1.13 · Web 379</em></strong><small>Android release channel · checks the current GitHub release when you are online</small></span>
+                  <span><strong>Update to latest version <em>Android v2.1.14 · Web 381</em></strong><small>Android release channel · checks the current GitHub release when you are online</small></span>
                   ${icon("external-link", "Open")}
                 </a>
                 <p>Built by Tanmoy Sarker for HSC students who want to track smarter.</p>
