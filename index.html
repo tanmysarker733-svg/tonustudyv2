@@ -25431,6 +25431,54 @@
       .drive-explorer__image-label { min-width: 42px; font-size: .62rem; }
       #cloudSyncIndicator { font-size: .72rem !important; padding-inline: 7px !important; }
     }
+    /* v382: update discovery, account target controls, and feed navigation. */
+    .update-available-banner {
+      position: fixed;
+      z-index: 10020;
+      right: max(12px, env(safe-area-inset-right));
+      bottom: max(14px, calc(env(safe-area-inset-bottom) + 12px));
+      width: min(330px, calc(100vw - 28px));
+      padding: 0;
+      overflow: hidden;
+      color: inherit;
+      background: #102946;
+      border: 1px solid rgba(125, 211, 252, .78);
+      border-radius: 20px;
+      box-shadow: 0 16px 38px rgba(2, 6, 23, .34), 0 0 0 3px rgba(14, 165, 233, .12);
+      cursor: pointer;
+      animation: update-banner-in 300ms ease-out both;
+    }
+    .update-available-banner img { display: block; width: 100%; aspect-ratio: 16 / 7; object-fit: cover; background: #102946; }
+    .update-available-banner__close { position: absolute; top: 8px; right: 8px; display: grid; place-items: center; width: 30px; height: 30px; color: #f8fafc; border: 1px solid rgba(255,255,255,.45); border-radius: 50%; background: rgba(15, 23, 42, .72); backdrop-filter: blur(8px); }
+    .update-available-banner__close svg { width: 16px; height: 16px; pointer-events: none; }
+    @keyframes update-banner-in { from { opacity: 0; transform: translateY(14px) scale(.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+    .install-choice--android { overflow: hidden; border-color: #2dd4bf; box-shadow: 0 0 0 1px rgba(45, 212, 191, .16), 0 10px 20px rgba(15, 118, 110, .16); }
+    .install-choice--android::after { content: ""; position: absolute; inset: -50% auto -50% -35%; width: 28%; pointer-events: none; transform: rotate(14deg); background: linear-gradient(90deg, transparent, rgba(255,255,255,.7), transparent); animation: install-android-shine 3.6s ease-in-out infinite; }
+    @keyframes install-android-shine { 0%, 56% { left: -35%; } 78%, 100% { left: 115%; } }
+    html.performance-lite .install-choice--android::after { animation: none; opacity: .28; }
+    @media (prefers-reduced-motion: reduce) { .install-choice--android::after { animation: none; opacity: .28; } }
+    .account-mission-target { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 12px; align-items: center; margin: 4px 0 16px; padding: 14px; color: #e0f2fe; border: 1px solid rgba(34, 211, 238, .5); border-radius: 16px; background: linear-gradient(135deg, rgba(8, 47, 73, .96), rgba(30, 41, 96, .9)); box-shadow: inset 0 1px rgba(255,255,255,.1), 0 10px 22px rgba(14, 116, 144, .16); }
+    .account-mission-target span, .account-mission-target strong, .account-mission-target small { display: block; }
+    .account-mission-target span { color: #67e8f9; font-size: .7rem; font-weight: 900; letter-spacing: .09em; text-transform: uppercase; }
+    .account-mission-target strong { margin-top: 3px; color: #f8fafc; font-size: .92rem; }
+    .account-mission-target small { margin-top: 3px; color: #bae6fd; font-size: .74rem; }
+    .account-mission-target__actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 6px; }
+    .account-mission-target__preset { padding: 6px 7px; color: #cffafe; border: 1px solid rgba(103, 232, 249, .42); border-radius: 999px; background: rgba(8, 47, 73, .58); font-size: .68rem; font-weight: 800; cursor: pointer; }
+    .account-feed-tools { display: flex; align-items: center; justify-content: flex-end; gap: 6px; }
+    .account-feed-jump { display: grid; place-items: center; width: 30px; height: 30px; padding: 0; color: #dbeafe; border: 1px solid rgba(96, 165, 250, .58); border-radius: 9px; background: #17385d; cursor: pointer; }
+    .account-feed-jump:hover, .account-feed-jump:focus-visible { color: #fff; border-color: #38bdf8; background: #075985; outline: none; }
+    .account-feed-jump svg { width: 16px; height: 16px; }
+    html[data-theme="light"] .account-mission-target { color: #0c4a6e; border-color: #67e8f9; background: linear-gradient(135deg, #ecfeff, #eff6ff); }
+    html[data-theme="light"] .account-mission-target strong { color: #0f172a; }
+    html[data-theme="light"] .account-mission-target small { color: #155e75; }
+    html[data-theme="light"] .account-mission-target__preset { color: #155e75; background: #fff; }
+    @media (max-width: 640px) {
+      .update-available-banner { bottom: max(84px, calc(env(safe-area-inset-bottom) + 74px)); }
+      .account-mission-target { grid-template-columns: 1fr; }
+      .account-mission-target__actions { justify-content: flex-start; }
+      .account-feed-tools { gap: 4px; }
+      .account-feed-tools .chat-visibility-pill { display: none; }
+    }
   </style>
 </head>
 
@@ -25822,8 +25870,11 @@
     let deferredInstallPrompt = null;
     let installManifestUrl = "";
     const TONU_APK_URL = "https://github.com/tanmysarker733-svg/tonustudyv2/releases/download/android/Tonu.Study.apk";
-    const TONU_WEB_BUILD = "381";
-const TONU_ANDROID_LATEST = "2.1.14";
+    const TONU_WEB_BUILD = "382";
+    const TONU_ANDROID_LATEST = "2.1.14";
+    const TONU_UPDATE_BANNER_SEEN_KEY = "tonu-update-banner-seen-build-v1";
+    const TONU_UPDATE_BANNER_PREVIEW = "https://raw.githubusercontent.com/tanmysarker733-svg/tonustudyv2/main/Assets/Images/Update%20Available%20VSD.png";
+    const TONU_UPDATE_BANNER_HD = "https://raw.githubusercontent.com/tanmysarker733-svg/tonustudyv2/main/Assets/Images/Update%20Available%20SD.png";
 
     const isAndroidShell = () => Boolean(window.TonuAndroid);
     const isAndroidBrowser = () => /Android/i.test(navigator.userAgent || "") && !isAndroidShell();
@@ -25913,6 +25964,37 @@ const TONU_ANDROID_LATEST = "2.1.14";
       closeDialog("installGuideDialog");
       installGuideReturnFocus?.focus?.({ preventScroll: true });
       installGuideReturnFocus = null;
+    };
+
+    const closeUpdateAvailableBanner = () => {
+      document.getElementById("updateAvailableBanner")?.remove();
+    };
+
+    const ensureUpdateAvailableBanner = () => {
+      if (document.getElementById("updateAvailableBanner")) return;
+      const compactScreen = window.matchMedia?.("(max-width: 760px)")?.matches;
+      const installed = currentAndroidVersion();
+      const nativeUpdate = isAndroidShell() && installed && installed !== TONU_ANDROID_LATEST;
+      let seenBuild = "";
+      try { seenBuild = localStorage.getItem(TONU_UPDATE_BANNER_SEEN_KEY) || ""; } catch (_) { }
+      if (!compactScreen && !isAndroidShell()) return;
+      if (!nativeUpdate && seenBuild === TONU_WEB_BUILD) return;
+      const banner = document.createElement("button");
+      banner.id = "updateAvailableBanner";
+      banner.className = "update-available-banner";
+      banner.type = "button";
+      banner.dataset.action = "open-install-guide";
+      banner.setAttribute("aria-label", "Update available. Open install options.");
+      banner.innerHTML = `<img src="${TONU_UPDATE_BANNER_PREVIEW}" alt="Update available" decoding="async"><span class="update-available-banner__close" data-action="close-update-banner" aria-label="Dismiss update banner">${icon("x", "Close")}</span>`;
+      document.body.appendChild(banner);
+      try { localStorage.setItem(TONU_UPDATE_BANNER_SEEN_KEY, TONU_WEB_BUILD); } catch (_) { }
+      const image = new Image();
+      image.onload = () => {
+        const visibleImage = banner.querySelector("img");
+        if (visibleImage && document.body.contains(banner)) visibleImage.src = TONU_UPDATE_BANNER_HD;
+      };
+      image.src = TONU_UPDATE_BANNER_HD;
+      window.setTimeout(closeUpdateAvailableBanner, 5000);
     };
 
     const refreshGithubReleaseStatus = async () => {
@@ -32283,6 +32365,19 @@ const TONU_ANDROID_LATEST = "2.1.14";
           </div>
           <div class="account-form">
             ${renderLoginStatusCard()}
+            <section class="account-mission-target" aria-label="Study target">
+              <div>
+                <span>Study target</span>
+                <strong>Syllabus completion target</strong>
+                <small>${escapeHtml(formatMissionDateLabel(user.missionEnd))}</small>
+              </div>
+              <div class="account-mission-target__actions">
+                <button class="account-mission-target__preset" type="button" data-action="set-mission-preset" data-end="2027-12-31">Dec 2027</button>
+                <button class="account-mission-target__preset" type="button" data-action="set-mission-preset" data-end="2028-12-31">Dec 2028</button>
+                <button class="account-mission-target__preset" type="button" data-action="set-mission-preset" data-end="2029-12-31">Dec 2029</button>
+                <button class="btn-small btn-small--primary" type="button" data-action="open-mission-settings">Set target</button>
+              </div>
+            </section>
             ${accountField("customName", "Name", user.customName, "Your name")}
             ${accountField("collegeName", "College name", user.collegeName, "College")}
             ${accountField("sscBatch", "SSC batch", user.sscBatch)}
@@ -32305,7 +32400,11 @@ const TONU_ANDROID_LATEST = "2.1.14";
               <strong>My message feed</strong>
               <span id="accountMessageCount">0 posts</span>
             </div>
-            <span class="chat-visibility-pill">this account</span>
+            <div class="account-feed-tools">
+              <button class="account-feed-jump" type="button" data-action="account-feed-start" aria-label="Jump to first message" title="Jump to first message">${icon("chevron-up", "Top")}</button>
+              <button class="account-feed-jump" type="button" data-action="account-feed-end" aria-label="Jump to latest message" title="Jump to latest message">${icon("chevron-down", "Latest")}</button>
+              <span class="chat-visibility-pill">this account</span>
+            </div>
           </div>
           <div class="account-feed" id="accountMessageFeed">
             <div class="account-feed-empty">Messages from this account will appear here.</div>
@@ -33496,7 +33595,7 @@ const TONU_ANDROID_LATEST = "2.1.14";
             </button>
             <button class="install-choice install-choice--android" type="button" data-action="install-android-apk">
               <span class="install-choice__icon">${icon("smartphone", "Android")}</span>
-              <span class="install-choice__copy"><strong>Install APK</strong><small>Android v${TONU_ANDROID_LATEST}</small></span>
+              <span class="install-choice__copy"><strong>Install Android APP</strong><small>Android v${TONU_ANDROID_LATEST}</small></span>
               ${icon("download", "Download")}
             </button>
           </div>
@@ -35059,6 +35158,7 @@ const TONU_ANDROID_LATEST = "2.1.14";
       initNavBrandLogo();
       initBrandImageBuffer();
       updateInstallContext();
+      ensureUpdateAvailableBanner();
       attachVisualEffects();
       initGroupChat();
       bindChatEdgeJump();
@@ -35126,6 +35226,7 @@ const TONU_ANDROID_LATEST = "2.1.14";
     initNavBrandLogo();
     initBrandImageBuffer();
     updateInstallContext();
+    ensureUpdateAvailableBanner();
 
     document.addEventListener("DOMContentLoaded", () => {
       restoreInterruptionCheckpoint();
@@ -35969,6 +36070,18 @@ const TONU_ANDROID_LATEST = "2.1.14";
         closeMissionCalendars();
         if (error) error.textContent = "";
         openDialog("missionModal");
+        return;
+      }
+
+      if (action === "set-mission-preset") {
+        const end = btn.dataset.end || "";
+        const error = document.getElementById("missionError");
+        setMissionDateValue("start", scaffoldState.userSettings.missionStart);
+        setMissionDateValue("end", end);
+        closeMissionCalendars();
+        if (error) error.textContent = "";
+        openDialog("missionModal");
+        showSystemToast?.("Target preset selected", `Review and save the ${formatMissionDateLabel(end)} target.`, "success");
         return;
       }
 
@@ -37223,6 +37336,12 @@ const TONU_ANDROID_LATEST = "2.1.14";
         showInstallGuide(target);
         return;
       }
+      if (action === "close-update-banner") {
+        e.preventDefault();
+        e.stopPropagation();
+        closeUpdateAvailableBanner();
+        return;
+      }
       if (action === "add-study-shortcut") {
         addStudyOsShortcut();
         return;
@@ -37234,6 +37353,11 @@ const TONU_ANDROID_LATEST = "2.1.14";
       }
       if (action === "close-install-guide") {
         closeInstallGuide();
+        return;
+      }
+      if (action === "account-feed-start" || action === "account-feed-end") {
+        const feed = document.getElementById("accountMessageFeed");
+        if (feed) feed.scrollTo({ top: action === "account-feed-start" ? 0 : feed.scrollHeight, behavior: "smooth" });
         return;
       }
       if (action === "open-readonly-account") {
