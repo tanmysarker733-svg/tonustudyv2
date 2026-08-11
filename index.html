@@ -25871,8 +25871,8 @@
     let deferredInstallPrompt = null;
     let installManifestUrl = "";
     const TONU_APK_URL = "https://github.com/tanmysarker733-svg/tonustudyv2/releases/download/android/Tonu.Study.apk";
-    const TONU_WEB_BUILD = "386";
-    const TONU_ANDROID_LATEST = "2.1.14";
+    const TONU_WEB_BUILD = "387";
+    const TONU_ANDROID_LATEST = "2.1.15";
     const TONU_UPDATE_BANNER_SEEN_KEY = "tonu-update-banner-seen-build-v1";
     const TONU_UPDATE_BANNER_PREVIEW = "https://raw.githubusercontent.com/tanmysarker733-svg/tonustudyv2/main/Assets/Images/Update%20Available%20VSD.png";
     const TONU_UPDATE_BANNER_HD = "https://raw.githubusercontent.com/tanmysarker733-svg/tonustudyv2/main/Assets/Images/Update%20Available%20SD.png";
@@ -25885,6 +25885,12 @@
       } catch (_) {
         return "";
       }
+    };
+
+    const setNativePullToRefreshEnabled = (enabled) => {
+      try {
+        window.TonuAndroid?.setPullToRefreshEnabled?.(Boolean(enabled));
+      } catch (_) { }
     };
 
     const updateInstallContext = () => {
@@ -25990,6 +25996,7 @@
       updateAvailableAutoCloseTimer = 0;
       document.getElementById("updateAvailableBackdrop")?.remove();
       document.body.classList.remove("update-banner-open");
+      setNativePullToRefreshEnabled(!hasActiveStudyDialog());
       window.requestAnimationFrame(releaseOrphanedBodyScrollLock);
     };
 
@@ -26016,6 +26023,7 @@
       backdrop.appendChild(banner);
       document.body.appendChild(backdrop);
       document.body.classList.add("update-banner-open");
+      setNativePullToRefreshEnabled(false);
       try { localStorage.setItem(TONU_UPDATE_BANNER_SEEN_KEY, TONU_WEB_BUILD); } catch (_) { }
       const image = new Image();
       image.onload = () => {
@@ -37036,6 +37044,7 @@
       const anyOpen = [...document.querySelectorAll(
         ".account-dialog, .settings-dialog, .backup-dialog, .mission-modal, #chatUpdateComposer.chat-update-composer--fullscreen"
       )].some((dialog) => !dialog.hidden);
+      setNativePullToRefreshEnabled(!anyOpen && !document.body.classList.contains("update-banner-open"));
       if (anyOpen && !dialogScrollLock) {
         dialogScrollLock = { x: window.scrollX, y: window.scrollY };
         document.body.classList.add("dialog-scroll-locked");
