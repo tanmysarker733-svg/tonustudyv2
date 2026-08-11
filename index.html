@@ -25871,7 +25871,7 @@
     let deferredInstallPrompt = null;
     let installManifestUrl = "";
     const TONU_APK_URL = "https://github.com/tanmysarker733-svg/tonustudyv2/releases/download/android/Tonu.Study.apk";
-    const TONU_WEB_BUILD = "384";
+    const TONU_WEB_BUILD = "385";
     const TONU_ANDROID_LATEST = "2.1.14";
     const TONU_UPDATE_BANNER_SEEN_KEY = "tonu-update-banner-seen-build-v1";
     const TONU_UPDATE_BANNER_PREVIEW = "https://raw.githubusercontent.com/tanmysarker733-svg/tonustudyv2/main/Assets/Images/Update%20Available%20VSD.png";
@@ -25967,13 +25967,35 @@
       installGuideReturnFocus = null;
     };
 
-    const closeUpdateAvailableBanner = () => {
-      document.getElementById("updateAvailableBackdrop")?.remove();
-      document.body.classList.remove("update-banner-open");
+    let updateAvailableBannerTimer = 0;
+    let updateAvailableAutoCloseTimer = 0;
+
+    const hasActiveStudyDialog = () => [...document.querySelectorAll(
+      ".account-dialog, .settings-dialog, .backup-dialog, .mission-modal, #chatUpdateComposer.chat-update-composer--fullscreen"
+    )].some((dialog) => !dialog.hidden && getComputedStyle(dialog).display !== "none");
+
+    const releaseOrphanedBodyScrollLock = () => {
+      if (hasActiveStudyDialog()) return;
+      const lockedY = Math.max(0, -(parseFloat(document.body.style.top || "0") || 0));
+      const lockedX = Math.max(0, -(parseFloat(document.body.style.left || "0") || 0));
+      document.body.classList.remove("dialog-scroll-locked");
+      document.body.style.removeProperty("top");
+      document.body.style.removeProperty("left");
+      dialogScrollLock = null;
+      window.scrollTo(lockedX, lockedY);
     };
 
-    const ensureUpdateAvailableBanner = () => {
+    const closeUpdateAvailableBanner = () => {
+      window.clearTimeout(updateAvailableAutoCloseTimer);
+      updateAvailableAutoCloseTimer = 0;
+      document.getElementById("updateAvailableBackdrop")?.remove();
+      document.body.classList.remove("update-banner-open");
+      window.requestAnimationFrame(releaseOrphanedBodyScrollLock);
+    };
+
+    const showUpdateAvailableBanner = () => {
       if (document.getElementById("updateAvailableBanner")) return;
+      if (document.body.classList.contains("login-locked") || hasActiveStudyDialog()) return;
       const compactScreen = window.matchMedia?.("(max-width: 760px)")?.matches;
       const installed = currentAndroidVersion();
       const nativeUpdate = isAndroidShell() && installed && installed !== TONU_ANDROID_LATEST;
@@ -26001,7 +26023,16 @@
         if (visibleImage && document.body.contains(banner)) visibleImage.src = TONU_UPDATE_BANNER_HD;
       };
       image.src = TONU_UPDATE_BANNER_HD;
-      window.setTimeout(closeUpdateAvailableBanner, 10000);
+      updateAvailableAutoCloseTimer = window.setTimeout(closeUpdateAvailableBanner, 10000);
+    };
+
+    const ensureUpdateAvailableBanner = () => {
+      if (document.body.classList.contains("login-locked")) return;
+      if (document.getElementById("updateAvailableBanner") || updateAvailableBannerTimer) return;
+      updateAvailableBannerTimer = window.setTimeout(() => {
+        updateAvailableBannerTimer = 0;
+        showUpdateAvailableBanner();
+      }, 2000);
     };
 
     const refreshGithubReleaseStatus = async () => {
@@ -34435,6 +34466,7 @@
       document.body.classList.toggle("is-demo-session", session.mode === "demo" || session.mode === "skip" || !!session.noCloud);
       document.body.classList.toggle("is-skip-session", session.mode === "skip");
       syncLoginMediaVideo();
+      ensureUpdateAvailableBanner();
     };
 
     const parseFirebaseError = (message) => {
@@ -34828,6 +34860,9 @@
       document.body.classList.remove("login-ready");
       document.body.classList.remove("is-demo-session");
       document.body.classList.remove("is-skip-session");
+      window.clearTimeout(updateAvailableBannerTimer);
+      updateAvailableBannerTimer = 0;
+      closeUpdateAvailableBanner();
       syncLoginMediaVideo();
       showLoginFeedback("");
       try {
@@ -35091,7 +35126,7 @@
       if (image.complete) finish();
     };
 
-    const FLOATING_PANEL_PORTAL_IDS = ["chronosConfigPanel", "chatSettingsPanel"];
+    const FLOATING_PANEL_PORTAL_IDS = ["chronosConfigPanel", "chatSettingsPanel", "missionModal"];
 
     const clearFloatingPanelPortals = () => {
       FLOATING_PANEL_PORTAL_IDS.forEach((id) => {
@@ -37035,6 +37070,7 @@
       if (!dialog) return;
       dialog.hidden = true;
       syncDialogBodyLock();
+      if (!hasActiveStudyDialog()) ensureUpdateAvailableBanner();
     };
 
     const openAccountDialog = () => openDialog("accountDialog");
