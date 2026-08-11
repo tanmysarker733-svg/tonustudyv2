@@ -25431,13 +25431,16 @@
       .drive-explorer__image-label { min-width: 42px; font-size: .62rem; }
       #cloudSyncIndicator { font-size: .72rem !important; padding-inline: 7px !important; }
     }
-    /* v382: update discovery, account target controls, and feed navigation. */
+    /* v383: full-width update banner, account target controls, and feed navigation. */
     .update-available-banner {
       position: fixed;
       z-index: 10020;
-      right: max(12px, env(safe-area-inset-right));
-      bottom: max(14px, calc(env(safe-area-inset-bottom) + 12px));
-      width: min(330px, calc(100vw - 28px));
+      top: max(68px, calc(env(safe-area-inset-top) + 58px));
+      right: max(16px, env(safe-area-inset-right));
+      left: max(16px, env(safe-area-inset-left));
+      width: auto;
+      max-width: 520px;
+      margin-inline: auto;
       padding: 0;
       overflow: hidden;
       color: inherit;
@@ -25448,10 +25451,10 @@
       cursor: pointer;
       animation: update-banner-in 300ms ease-out both;
     }
-    .update-available-banner img { display: block; width: 100%; aspect-ratio: 16 / 7; object-fit: cover; background: #102946; }
+    .update-available-banner img { display: block; width: 100%; aspect-ratio: 1 / 1; object-fit: contain; background: #102946; }
     .update-available-banner__close { position: absolute; top: 8px; right: 8px; display: grid; place-items: center; width: 30px; height: 30px; color: #f8fafc; border: 1px solid rgba(255,255,255,.45); border-radius: 50%; background: rgba(15, 23, 42, .72); backdrop-filter: blur(8px); }
     .update-available-banner__close svg { width: 16px; height: 16px; pointer-events: none; }
-    @keyframes update-banner-in { from { opacity: 0; transform: translateY(14px) scale(.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+    @keyframes update-banner-in { from { opacity: 0; transform: translateY(-14px) scale(.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
     .install-choice--android { overflow: hidden; border-color: #2dd4bf; box-shadow: 0 0 0 1px rgba(45, 212, 191, .16), 0 10px 20px rgba(15, 118, 110, .16); }
     .install-choice--android::after { content: ""; position: absolute; inset: -50% auto -50% -35%; width: 28%; pointer-events: none; transform: rotate(14deg); background: linear-gradient(90deg, transparent, rgba(255,255,255,.7), transparent); animation: install-android-shine 3.6s ease-in-out infinite; }
     @keyframes install-android-shine { 0%, 56% { left: -35%; } 78%, 100% { left: 115%; } }
@@ -25473,7 +25476,7 @@
     html[data-theme="light"] .account-mission-target small { color: #155e75; }
     html[data-theme="light"] .account-mission-target__preset { color: #155e75; background: #fff; }
     @media (max-width: 640px) {
-      .update-available-banner { bottom: max(84px, calc(env(safe-area-inset-bottom) + 74px)); }
+      .update-available-banner { top: max(64px, calc(env(safe-area-inset-top) + 54px)); }
       .account-mission-target { grid-template-columns: 1fr; }
       .account-mission-target__actions { justify-content: flex-start; }
       .account-feed-tools { gap: 4px; }
@@ -25870,7 +25873,7 @@
     let deferredInstallPrompt = null;
     let installManifestUrl = "";
     const TONU_APK_URL = "https://github.com/tanmysarker733-svg/tonustudyv2/releases/download/android/Tonu.Study.apk";
-    const TONU_WEB_BUILD = "382";
+    const TONU_WEB_BUILD = "383";
     const TONU_ANDROID_LATEST = "2.1.14";
     const TONU_UPDATE_BANNER_SEEN_KEY = "tonu-update-banner-seen-build-v1";
     const TONU_UPDATE_BANNER_PREVIEW = "https://raw.githubusercontent.com/tanmysarker733-svg/tonustudyv2/main/Assets/Images/Update%20Available%20VSD.png";
